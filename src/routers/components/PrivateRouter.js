@@ -5,9 +5,7 @@ import ErrorPage from "../../pages/ErrorPage/ErrorPage";
 import React from "react";
 
 const PrivateRouter = ({ component: Component, accessibleRoles, ...rest }) => {
-  const { testUser, isAuthUser } = useSelector((state) => state.authentication);
-  const user = {};
-  user.role = "Patient";
+  const { user, isAuthUser } = useSelector((state) => state.authentication);
   const resultComponent = (props) => {
     if (isAuthUser && accessibleRoles.includes(user.role)) {
       //check if current role are "ATTENDANT" allow to access current component
