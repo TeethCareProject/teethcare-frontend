@@ -1,6 +1,14 @@
 import React, { Fragment } from "react";
 import { Form, Input, Button, Tabs } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  LockOutlined,
+  MedicineBoxOutlined,
+  KeyOutlined,
+  PhoneOutlined,
+  MailOutlined,
+  EnvironmentOutlined,
+} from "@ant-design/icons";
 import registerImg from "../../assets/register_image.png";
 import "./RegisterPage.css";
 
@@ -184,7 +192,9 @@ const RegisterPage = () => {
                     ]}
                   >
                     <Input
-                      prefix={<UserOutlined className="site-form-item-icon" />}
+                      prefix={
+                        <MedicineBoxOutlined className="site-form-item-icon" />
+                      }
                       placeholder="Clinic's Name"
                     />
                   </Form.Item>
@@ -198,7 +208,7 @@ const RegisterPage = () => {
                     ]}
                   >
                     <Input
-                      prefix={<UserOutlined className="site-form-item-icon" />}
+                      prefix={<KeyOutlined className="site-form-item-icon" />}
                       placeholder="Clinic's Tax Code"
                     />
                   </Form.Item>
@@ -212,7 +222,7 @@ const RegisterPage = () => {
                     ]}
                   >
                     <Input
-                      prefix={<UserOutlined className="site-form-item-icon" />}
+                      prefix={<PhoneOutlined className="site-form-item-icon" />}
                       placeholder="Clinic's Phone Number"
                     />
                   </Form.Item>
@@ -226,7 +236,7 @@ const RegisterPage = () => {
                     ]}
                   >
                     <Input
-                      prefix={<UserOutlined className="site-form-item-icon" />}
+                      prefix={<MailOutlined className="site-form-item-icon" />}
                       placeholder="Clinic's Email"
                     />
                   </Form.Item>
@@ -241,7 +251,9 @@ const RegisterPage = () => {
                     ]}
                   >
                     <Input
-                      prefix={<UserOutlined className="site-form-item-icon" />}
+                      prefix={
+                        <EnvironmentOutlined className="site-form-item-icon" />
+                      }
                       placeholder="Clinic's Address"
                     />
                   </Form.Item>
