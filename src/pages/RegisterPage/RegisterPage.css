@@ -1,0 +1,22 @@
+.register-page {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.register-form-button {
+  display: block;
+  margin: 0 auto;
+}
+
+.manager-register-form {
+  display: flex;
+}
+
+.user-register-form {
+  margin-right: 20px;
+}
+
+h1 {
+  color: linear-gradient(96.14deg, #3a8ef6 -10.84%, #6f3afa 196.74%);
+}

@@ -2,6 +2,7 @@ import React from "react";
 import NavigationBar from "../components/NavigationBar/NavigationBar.component";
 import { Redirect, Route, Switch } from "react-router-dom";
 import LoginPage from "../pages/LoginPage/LoginPage";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import HomePage from "../pages/HomePage/HomePage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import PrivateRouter from "./components/PrivateRouter";
@@ -20,6 +21,9 @@ const AppRouter = () => {
         </Route>
         <Route path="/login" exact>
           <LoginPage />
+        </Route>
+        <Route path="/register" exact>
+          <RegisterPage />
         </Route>
         <PrivateRouter
           key="cs-dashboard"
