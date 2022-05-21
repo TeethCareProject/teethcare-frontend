@@ -9,12 +9,8 @@
   margin: 0 auto;
 }
 
-.manager-register-form {
-  display: flex;
-}
-
 .user-register-form {
-  margin-right: 20px;
+  margin-right: 40px;
 }
 
 .title {
