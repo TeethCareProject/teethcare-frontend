@@ -17,6 +17,12 @@
   margin-right: 20px;
 }
 
-h1 {
-  color: linear-gradient(96.14deg, #3a8ef6 -10.84%, #6f3afa 196.74%);
+.title {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: bold;
+  background: linear-gradient(96.14deg, #3a8ef6 -10.84%, #6f3afa 196.74%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
