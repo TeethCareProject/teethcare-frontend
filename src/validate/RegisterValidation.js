@@ -35,6 +35,9 @@ export const ClinicRegisterValidation = {
     REQUIRED_VALIDATOR("Address"),
     MAX_LENGTH_VALIDATOR("Address", 300),
   ],
+  province: [REQUIRED_VALIDATOR("Province")],
+  district: [REQUIRED_VALIDATOR("District")],
+  ward: [REQUIRED_VALIDATOR("Ward")],
   phone: [REQUIRED_VALIDATOR("Phone number")],
   password: [REQUIRED_VALIDATOR("Password")],
   rePassword: [

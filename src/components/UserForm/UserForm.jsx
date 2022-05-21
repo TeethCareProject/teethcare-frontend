@@ -1,10 +1,18 @@
 import React from "react";
 import { Form, Input, Button, Select } from "antd";
-import {
-  AttendantRegisterValidation,
-  ClinicRegisterValidation,
-} from "../../validate/RegisterValidation";
+import { AttendantRegisterValidation } from "../../validate/RegisterValidation";
 import "./UserForm.style.css";
+
+const genderType = [
+  {
+    title: "Male",
+    value: "MALE",
+  },
+  {
+    title: "Female",
+    value: "FEMALE",
+  },
+];
 
 const UserForm = () => {
   const onFinish = (values) => {
@@ -13,14 +21,7 @@ const UserForm = () => {
 
   const { Option } = Select;
   return (
-    <Form
-      name="normal_register"
-      className="register-form"
-      initialValues={{
-        remember: true,
-      }}
-      onFinish={onFinish}
-    >
+    <Form name="normal_register" className="register-form" onFinish={onFinish}>
       <Form.Item name="username" rules={AttendantRegisterValidation.username}>
         <Input placeholder="Username" />
       </Form.Item>
@@ -42,17 +43,26 @@ const UserForm = () => {
         <Input placeholder="Last Name" />
       </Form.Item>
 
-      <Form.Item>
-        <div className="gender-input">
-          <div className="gender-label">Gender</div>
-          <Select defaultValue="Male">
-            <Option value="Female">Female</Option>
-            <Option value="Others">Others</Option>
-          </Select>
-        </div>
+      <Form.Item
+        name="gender"
+        label="Gender"
+        rules={AttendantRegisterValidation.gender}
+        initialValue="MALE"
+      >
+        <Select defaultValue="MALE" placeholder="select your gender">
+          {genderType.map((gender) => (
+            <Option key={gender.value} value={gender.value}>
+              {gender.title}
+            </Option>
+          ))}
+        </Select>
       </Form.Item>
 
-      <Form.Item name="phone" rules={AttendantRegisterValidation.phone}>
+      <Form.Item name="patientEmail" rules={AttendantRegisterValidation.email}>
+        <Input placeholder="Email" />
+      </Form.Item>
+
+      <Form.Item name="phoneNumber" rules={AttendantRegisterValidation.phone}>
         <Input placeholder="Phone number" />
       </Form.Item>
 

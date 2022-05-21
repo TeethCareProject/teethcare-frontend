@@ -6,6 +6,36 @@ import {
   ClinicRegisterValidation,
 } from "../../validate/RegisterValidation";
 
+const genderType = [
+  {
+    title: "Male",
+    value: "MALE",
+  },
+  {
+    title: "Female",
+    value: "FEMALE",
+  },
+];
+
+const provinces = [
+  {
+    title: "Ho Chi Minh",
+    value: "Ho Chi Minh",
+  },
+];
+const districts = [
+  {
+    title: "Quan 1",
+    value: "Quan 1",
+  },
+];
+const wards = [
+  {
+    title: "Linh Trung",
+    value: "Linh Trung",
+  },
+];
+
 const ClinicForm = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
@@ -58,14 +88,19 @@ const ClinicForm = () => {
               <Input placeholder="Last Name" />
             </Form.Item>
 
-            <Form.Item>
-              <div className="gender-input">
-                <div className="gender-label">Gender</div>
-                <Select defaultValue="Male">
-                  <Option value="Female">Female</Option>
-                  <Option value="Others">Others</Option>
-                </Select>
-              </div>
+            <Form.Item
+              name="gender"
+              label="Gender"
+              rules={AttendantRegisterValidation.gender}
+              initialValue="MALE"
+            >
+              <Select defaultValue="MALE" placeholder="select your gender">
+                {genderType.map((gender) => (
+                  <Option key={gender.value} value={gender.value}>
+                    {gender.title}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
 
             <Form.Item name="phone" rules={AttendantRegisterValidation.phone}>
@@ -107,17 +142,47 @@ const ClinicForm = () => {
               <Input placeholder="Clinic's Address" />
             </Form.Item>
 
-            <Form.Item>
-              <div className="gender-input">
-                <div className="gender-label">Province</div>
-                <Select defaultValue="Province"></Select>
-              </div>
+            <Form.Item
+              name="province"
+              label="Province"
+              rules={ClinicRegisterValidation.province}
+              initialValue="Ho Chi Minh"
+            >
+              <Select defaultValue="Ho Chi Minh" placeholder="select province">
+                {provinces.map((province) => (
+                  <Option key={province.value} value={province.value}>
+                    {province.title}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
-            <Form.Item>
-              <div className="gender-input">
-                <div className="gender-label">District</div>
-                <Select defaultValue="District"></Select>
-              </div>
+            <Form.Item
+              name="district"
+              label="district"
+              rules={ClinicRegisterValidation.district}
+              initialValue="Thu Duc"
+            >
+              <Select defaultValue="Thu Duc" placeholder="select district">
+                {districts.map((district) => (
+                  <Option key={district.value} value={district.value}>
+                    {district.title}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="ward"
+              label="ward"
+              rules={ClinicRegisterValidation.ward}
+              initialValue="Linh Trung"
+            >
+              <Select defaultValue="Linh Trung" placeholder="select ward">
+                {wards.map((ward) => (
+                  <Option key={ward.value} value={ward.value}>
+                    {ward.title}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
           </div>
         </Col>
