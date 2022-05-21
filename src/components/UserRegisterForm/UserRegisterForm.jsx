@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Select } from "antd";
 import { AttendantRegisterValidation } from "../../validate/RegisterValidation";
-import "./UserForm.style.css";
+import "./UserRegisterForm.style.css";
 
 const genderType = [
   {
@@ -14,7 +14,7 @@ const genderType = [
   },
 ];
 
-const UserForm = () => {
+const UserRegisterForm = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
@@ -79,4 +79,4 @@ const UserForm = () => {
   );
 };
 
-export default UserForm;
+export default UserRegisterForm;

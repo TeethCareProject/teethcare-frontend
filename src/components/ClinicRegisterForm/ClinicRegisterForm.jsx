@@ -36,7 +36,7 @@ const wards = [
   },
 ];
 
-const ClinicForm = () => {
+const ClinicRegisterForm = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
@@ -202,4 +202,4 @@ const ClinicForm = () => {
   );
 };
 
-export default ClinicForm;
+export default ClinicRegisterForm;
