@@ -26,3 +26,8 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+img {
+  width: 40vw;
+  height: 40vw;
+}

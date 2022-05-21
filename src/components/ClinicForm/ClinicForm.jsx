@@ -1,19 +1,17 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Select } from "antd";
+
 import {
-  UserOutlined,
-  LockOutlined,
-  MedicineBoxOutlined,
-  KeyOutlined,
-  PhoneOutlined,
-  MailOutlined,
-  EnvironmentOutlined,
-} from "@ant-design/icons";
+  AttendantRegisterValidation,
+  ClinicRegisterValidation,
+} from "../../validate/RegisterValidation";
 
 const ClinicForm = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
+
+  const { Option } = Select;
 
   return (
     <Form
@@ -25,133 +23,69 @@ const ClinicForm = () => {
       onFinish={onFinish}
     >
       <div className="user-register-form">
-        <Form.Item
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Username!",
-            },
-          ]}
-        >
-          <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
-          />
+        <Form.Item name="username" rules={AttendantRegisterValidation.username}>
+          <Input placeholder="Username" />
         </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Password!",
-            },
-          ]}
-        >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Password"
-          />
+        <Form.Item name="password" rules={AttendantRegisterValidation.password}>
+          <Input type="password" placeholder="Password" />
         </Form.Item>
         <Form.Item
           name="confirmPassword"
           dependencies={["password"]}
-          rules={[
-            {
-              required: true,
-              message: "Please input your confirmPassword!",
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  new Error("The two passwords that you entered do not match!")
-                );
-              },
-            }),
-          ]}
+          rules={AttendantRegisterValidation.rePassword}
         >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Confirm Password"
-          />
+          <Input type="password" placeholder="Confirm Password" />
+        </Form.Item>
+        <Form.Item
+          name="firstName"
+          rules={AttendantRegisterValidation.firstName}
+        >
+          <Input placeholder="First Name" />
+        </Form.Item>
+
+        <Form.Item name="lastName" rules={AttendantRegisterValidation.lastName}>
+          <Input placeholder="Last Name" />
+        </Form.Item>
+
+        <Form.Item>
+          <div className="gender-input">
+            <div className="gender-label">Gender</div>
+            <Select defaultValue="Male">
+              <Option value="Female">Female</Option>
+              <Option value="Others">Others</Option>
+            </Select>
+          </div>
+        </Form.Item>
+
+        <Form.Item name="phone" rules={AttendantRegisterValidation.phone}>
+          <Input placeholder="Phone number" />
         </Form.Item>
       </div>
       <div className="hospital-register-form">
         <Form.Item
           name="clinicName"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Clinic's Name!",
-            },
-          ]}
+          rules={ClinicRegisterValidation.clinicName}
         >
-          <Input
-            prefix={<MedicineBoxOutlined className="site-form-item-icon" />}
-            placeholder="Clinic's Name"
-          />
+          <Input placeholder="Clinic's Name" />
         </Form.Item>
-        <Form.Item
-          name="clinicTaxCode"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Clinic's Tax Code!",
-            },
-          ]}
-        >
-          <Input
-            prefix={<KeyOutlined className="site-form-item-icon" />}
-            placeholder="Clinic's Tax Code"
-          />
+        <Form.Item name="clinicTaxCode" rules={ClinicRegisterValidation.taxId}>
+          <Input placeholder="Clinic's Tax Code" />
         </Form.Item>
         <Form.Item
           name="clinicPhoneNumber"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Clinic's Phone Number!",
-            },
-          ]}
+          rules={ClinicRegisterValidation.phone}
         >
-          <Input
-            prefix={<PhoneOutlined className="site-form-item-icon" />}
-            placeholder="Clinic's Phone Number"
-          />
+          <Input placeholder="Clinic's Phone Number" />
         </Form.Item>
-        <Form.Item
-          name="clinicEmail"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Clinic's Email!",
-            },
-          ]}
-        >
-          <Input
-            prefix={<MailOutlined className="site-form-item-icon" />}
-            placeholder="Clinic's Email"
-          />
+        <Form.Item name="clinicEmail" rules={ClinicRegisterValidation.email}>
+          <Input placeholder="Clinic's Email" />
         </Form.Item>
 
         <Form.Item
           name="clinicAddress"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Clinic's Address!",
-            },
-          ]}
+          rules={ClinicRegisterValidation.address}
         >
-          <Input
-            prefix={<EnvironmentOutlined className="site-form-item-icon" />}
-            placeholder="Clinic's Address"
-          />
+          <Input placeholder="Clinic's Address" />
         </Form.Item>
 
         <Form.Item>

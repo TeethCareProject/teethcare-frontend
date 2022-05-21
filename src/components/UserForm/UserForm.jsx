@@ -1,11 +1,17 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Form, Input, Button, Select } from "antd";
+import {
+  AttendantRegisterValidation,
+  ClinicRegisterValidation,
+} from "../../validate/RegisterValidation";
+import "./UserForm.style.css";
 
 const UserForm = () => {
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
+
+  const { Option } = Select;
   return (
     <Form
       name="normal_register"
@@ -15,60 +21,39 @@ const UserForm = () => {
       }}
       onFinish={onFinish}
     >
-      <Form.Item
-        name="username"
-        rules={[
-          {
-            required: true,
-            message: "Please input your Username!",
-          },
-        ]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
-        />
+      <Form.Item name="username" rules={AttendantRegisterValidation.username}>
+        <Input placeholder="Username" />
       </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[
-          {
-            required: true,
-            message: "Please input your Password!",
-          },
-        ]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
+      <Form.Item name="password" rules={AttendantRegisterValidation.password}>
+        <Input type="password" placeholder="Password" />
       </Form.Item>
       <Form.Item
         name="confirmPassword"
         dependencies={["password"]}
-        rules={[
-          {
-            required: true,
-            message: "Please input your confirmPassword!",
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue("password") === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(
-                new Error("The two passwords that you entered do not match!")
-              );
-            },
-          }),
-        ]}
+        rules={AttendantRegisterValidation.rePassword}
       >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Confirm Password"
-        />
+        <Input type="password" placeholder="Confirm Password" />
+      </Form.Item>
+      <Form.Item name="firstName" rules={AttendantRegisterValidation.firstName}>
+        <Input placeholder="First Name" />
+      </Form.Item>
+
+      <Form.Item name="lastName" rules={AttendantRegisterValidation.lastName}>
+        <Input placeholder="Last Name" />
+      </Form.Item>
+
+      <Form.Item>
+        <div className="gender-input">
+          <div className="gender-label">Gender</div>
+          <Select defaultValue="Male">
+            <Option value="Female">Female</Option>
+            <Option value="Others">Others</Option>
+          </Select>
+        </div>
+      </Form.Item>
+
+      <Form.Item name="phone" rules={AttendantRegisterValidation.phone}>
+        <Input placeholder="Phone number" />
       </Form.Item>
 
       <Form.Item>
