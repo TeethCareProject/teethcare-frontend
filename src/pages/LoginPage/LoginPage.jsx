@@ -1,10 +1,21 @@
 import React, { Fragment } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, notification } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { SigninHandler } from "../../redux/authentication/authentication.action";
 
 const LoginPage = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const dispatch = useDispatch();
+
+  const onFinish = async (values) => {
+    //call api
+    try {
+    } catch (e) {
+      notification["error"]({
+        message: `Login failed - Invalid email or password.`,
+        duration: 1,
+      });
+    }
   };
 
   return (
