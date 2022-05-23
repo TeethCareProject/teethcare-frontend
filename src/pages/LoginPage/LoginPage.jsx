@@ -1,19 +1,53 @@
 import React, { Fragment } from "react";
-import { Form, Input, Button, Checkbox, notification } from "antd";
+import { Form, Input, Button, notification, Spin } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
-import { SigninHandler } from "../../redux/authentication/authentication.action";
+import { useDispatch, useSelector } from "react-redux";
+import { loginStorageHandler } from "../../redux/authentication/authentication.action";
+import { loginAPI } from "../../services/teeth-apis/AuthController";
+import { useHistory } from "react-router-dom";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const isAuthUser = useSelector((state) => state.authentication.isAuthUser);
+  const role = useSelector((state) => state.authentication.user?.role);
+
+  const redirectMainPage = (role) => {
+    switch (role) {
+      case "ADMIN":
+        history.push("/admin-dashboard");
+        break;
+      case "PATIENT":
+        history.push("/patient-patient");
+        break;
+      case "MANAGER":
+        history.push("/manager-dashboard");
+        break;
+      case "DENTIST":
+        history.push("/dentist-dashboard");
+        break;
+      case "CUSTOMER_SERVICE":
+        history.push("/cs-dashboard");
+        break;
+    }
+  };
+
+  if (isAuthUser) {
+    redirectMainPage(role);
+  }
 
   const onFinish = async (values) => {
     //call api
     try {
+      const { data } = await loginAPI(values.username, values.password);
+      dispatch(loginStorageHandler(data));
+      //go to page
+      redirectMainPage(role);
     } catch (e) {
       notification["error"]({
-        message: `Login failed - Invalid email or password.`,
-        duration: 1,
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while login, try again later`,
+        duration: 2,
       });
     }
   };
@@ -21,14 +55,7 @@ const LoginPage = () => {
   return (
     <Fragment>
       <h1>Login page</h1>
-      <Form
-        name="normal_login"
-        className="login-form"
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-      >
+      <Form name="normal_login" className="login-form" onFinish={onFinish}>
         <Form.Item
           name="username"
           rules={[

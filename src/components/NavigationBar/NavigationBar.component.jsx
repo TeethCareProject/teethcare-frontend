@@ -1,73 +1,53 @@
 import React, { useState } from "react";
 import { Menu } from "antd";
-import {
-  MailOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { MailOutlined, AppstoreOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { logoutHandler } from "../../redux/authentication/authentication.action";
 const items = [
   {
-    label: "Navigation One",
-    key: "mail",
+    label: "Home",
+    key: "home",
     icon: <MailOutlined />,
   },
   {
-    label: "Navigation Two",
-    key: "app",
+    label: "Logout",
+    key: "logout",
     icon: <AppstoreOutlined />,
-    disabled: true,
+  },
+];
+
+const defaultItems = [
+  {
+    label: "Home",
+    key: "home",
+    icon: <MailOutlined />,
   },
   {
-    label: "Navigation Three - Submenu",
-    key: "SubMenu",
-    icon: <SettingOutlined />,
-    children: [
-      {
-        type: "group",
-        label: "Item 1",
-        children: [
-          {
-            label: "Option 1",
-            key: "setting:1",
-          },
-          {
-            label: "Option 2",
-            key: "setting:2",
-          },
-        ],
-      },
-      {
-        type: "group",
-        label: "Item 2",
-        children: [
-          {
-            label: "Option 3",
-            key: "setting:3",
-          },
-          {
-            label: "Option 4",
-            key: "setting:4",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        Navigation Four - Link
-      </a>
-    ),
-    key: "alipay",
+    label: "Login",
+    key: "login",
+    icon: <AppstoreOutlined />,
   },
 ];
 
 const NavigationBar = () => {
   const [current, setCurrent] = useState("mail");
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const isAuthUser = useSelector((state) => state.authentication.isAuthUser);
 
   const onClick = (e) => {
-    console.log("click ", e);
-    setCurrent(e.key);
+    if (e.key === "logout") {
+      //call logout
+      dispatch(logoutHandler());
+      history.push("/");
+    } else if (e.key === "login") {
+      history.push("/login");
+      setCurrent(e.key);
+    } else if (e.key === "home") {
+      history.push("/");
+      setCurrent(e.key);
+    }
   };
 
   return (
@@ -76,7 +56,7 @@ const NavigationBar = () => {
         onClick={onClick}
         selectedKeys={[current]}
         mode="horizontal"
-        items={items}
+        items={isAuthUser ? items : defaultItems}
       />
     </>
   );
