@@ -1,20 +1,18 @@
 import { authenticationActions } from "./authentication.slice";
-import * as cookie from "js-cookie";
+import Cookies from "js-cookie";
 
-import { TOKEN_KEY, USER_STORAGE } from "../../constants/AppConst";
-
-export const SigninHandler = (data) => {
-  return async (dispatch) => {
-    cookie.set(TOKEN_KEY, data.token);
-    localStorage.setItem(USER_STORAGE, JSON.stringify(data));
-    dispatch(authenticationActions.fetchingLoginSuccess(data));
+export const loginStorageHandler = (loginData) => {
+  return (dispatch) => {
+    Cookies.set("token", loginData.token);
+    localStorage.setItem("user", JSON.stringify(loginData));
+    dispatch(authenticationActions.setUser(loginData));
   };
 };
 
 export const logoutHandler = () => {
   return (dispatch) => {
-    cookie.remove(TOKEN_KEY);
-    localStorage.removeItem(USER_STORAGE);
+    Cookies.remove("token");
+    localStorage.removeItem("user");
     dispatch(authenticationActions.logout());
   };
 };

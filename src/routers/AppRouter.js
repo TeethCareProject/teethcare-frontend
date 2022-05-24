@@ -7,6 +7,10 @@ import HomePage from "../pages/HomePage/HomePage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import PrivateRouter from "./components/PrivateRouter";
 import CustomerServiceDashboardPage from "../pages/CustomerServiceDashboardPage/CustomerServiceDashboardPage";
+import DentistDashboardPage from "../pages/DentistDashboardPage/DentistDashboardPage";
+import ManagerDashboardPage from "../pages/ManagerDashboardPage/ManagerDashboardPage";
+import AdminDashboardPage from "../pages/AdminDashboardPage/AdminDashboardPage";
+import PatientDashboardPage from "../pages/PatientDashboardPage/PatientDashboardPage";
 
 const AppRouter = () => {
   return (
@@ -30,9 +34,36 @@ const AppRouter = () => {
           component={() => <CustomerServiceDashboardPage />}
           path="/cs-dashboard"
           exact
-          accessibleRoles={"CS"}
+          accessibleRoles={"CUSTOMER_SERVICE"}
         ></PrivateRouter>
-
+        <PrivateRouter
+          key="dentist-dashboard"
+          component={() => <DentistDashboardPage />}
+          path="/dentist-dashboard"
+          exact
+          accessibleRoles={"DENTIST"}
+        ></PrivateRouter>
+        <PrivateRouter
+          key="manager-dashboard"
+          component={() => <ManagerDashboardPage />}
+          path="/manager-dashboard"
+          exact
+          accessibleRoles={"MANAGER"}
+        ></PrivateRouter>
+        <PrivateRouter
+          key="admin-dashboard"
+          component={() => <AdminDashboardPage />}
+          path="/admin-dashboard"
+          exact
+          accessibleRoles={"ADMIN"}
+        ></PrivateRouter>
+        <PrivateRouter
+          key="patient-dashboard"
+          component={() => <PatientDashboardPage />}
+          path="/patient-dashboard"
+          exact
+          accessibleRoles={"PATIENT"}
+        ></PrivateRouter>
         {/* for production deployment*/}
         <Route path="/index.html">
           <Redirect to="/" />
