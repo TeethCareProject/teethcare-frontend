@@ -1,5 +1,6 @@
 .introduction-part {
   margin-top: 5vh;
+  margin-bottom: 10vh;
 }
 
 img {
@@ -20,4 +21,13 @@ img {
 
 .findBtn {
   font-weight: 600;
+}
+
+.site-card-wrapper {
+  background-color: #8cc1ff;
+  padding: 45px;
+}
+
+.card {
+  border-radius: 5%;
 }
