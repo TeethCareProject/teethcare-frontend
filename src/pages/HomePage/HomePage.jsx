@@ -3,18 +3,34 @@ import { Col, Row, Button, Card, notification } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
 import CardHomePageContent from "../../components/CardHomePageContent/CardHomePageContent";
+import CardHomePageClinic from "../../components/CardHomePageClinic/CardHomePageClinic";
 
 import homePageImg from "../../assets/homepage_image.png";
 import cardHomePage1 from "../../assets/cardImg1.png";
 import cardHomePage2 from "../../assets/cardImg2.png";
 import cardHomePage3 from "../../assets/cardImg3.png";
 
+import { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { getClinicsAPI } from "../../services/teeth-apis/ClinicController";
+import setClinicStorageHandler from "../../redux/clinic/clinic.action";
+import { useHistory } from "react-router-dom";
 
 import "./HomePage.style.css";
 
 const HomePage = () => {
-  console.log(getClinicsAPI());
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const clinics = useSelector((state) => state.clinics.clinics);
+  console.log(clinics);
+
+  useEffect(() => {
+    const getClinic = async () => {
+      const clinicsArray = await getClinicsAPI();
+      dispatch(setClinicStorageHandler(clinicsArray.data));
+    };
+    getClinic().catch(console.error);
+  }, []);
   return (
     <div>
       <div className="introduction-part">
@@ -78,6 +94,18 @@ const HomePage = () => {
               />
             </Card>
           </Col>
+        </Row>
+      </div>
+      <div className="card-clinic-container">
+        <div className="card-clinic-title">Top rated dental clinics</div>
+        <Row justify="space-between">
+          {clinics
+            .filter((clinic) => clinic.id <= 4)
+            .map((clinic) => (
+              <Col span={7}>
+                <CardHomePageClinic key={clinic.id} clinic={clinic} />
+              </Col>
+            ))}
         </Row>
       </div>
     </div>

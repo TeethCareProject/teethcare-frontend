@@ -2,6 +2,7 @@ import { authenticationActions } from "./authentication.slice";
 import Cookies from "js-cookie";
 
 export const loginStorageHandler = (loginData) => {
+  console.log(loginData);
   return (dispatch) => {
     Cookies.set("token", loginData.token);
     localStorage.setItem("user", JSON.stringify(loginData));
