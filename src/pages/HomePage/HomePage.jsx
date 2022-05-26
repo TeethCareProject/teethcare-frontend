@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Col, Row, Button, Card } from "antd";
+import { Col, Row, Button, Card, notification } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
 import CardHomePageContent from "../../components/CardHomePageContent/CardHomePageContent";
@@ -9,9 +9,12 @@ import cardHomePage1 from "../../assets/cardImg1.png";
 import cardHomePage2 from "../../assets/cardImg2.png";
 import cardHomePage3 from "../../assets/cardImg3.png";
 
+import { getClinicsAPI } from "../../services/teeth-apis/ClinicController";
+
 import "./HomePage.style.css";
 
 const HomePage = () => {
+  console.log(getClinicsAPI());
   return (
     <div>
       <div className="introduction-part">

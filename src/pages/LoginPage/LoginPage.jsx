@@ -10,10 +10,11 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const isAuthUser = useSelector((state) => state.authentication.isAuthUser);
-  const role = useSelector((state) => state.authentication.user?.role);
+  const roleName = useSelector((state) => state.authentication.user?.roleName);
 
-  const redirectMainPage = (role) => {
-    switch (role) {
+  const redirectMainPage = (roleName) => {
+    // eslint-disable-next-line default-case
+    switch (roleName) {
       case "ADMIN":
         history.push("/admin-dashboard");
         break;
@@ -33,16 +34,17 @@ const LoginPage = () => {
   };
 
   if (isAuthUser) {
-    redirectMainPage(role);
+    redirectMainPage(roleName);
   }
 
   const onFinish = async (values) => {
     //call api
     try {
       const { data } = await loginAPI(values.username, values.password);
+      console.log(loginAPI(values.username, values.password));
       dispatch(loginStorageHandler(data));
       //go to page
-      redirectMainPage(role);
+      redirectMainPage(roleName);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
