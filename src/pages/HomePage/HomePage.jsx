@@ -108,6 +108,17 @@ const HomePage = () => {
             ))}
         </Row>
       </div>
+      <Row justify="center">
+        <Button
+          className="viewClinicBtn"
+          type="primary"
+          shape="round"
+          size="large"
+          onClick={() => history.push("/clinic")}
+        >
+          <span>View all dental clinics</span>
+        </Button>
+      </Row>
     </div>
   );
 };

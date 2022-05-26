@@ -11,6 +11,7 @@ import DentistDashboardPage from "../pages/DentistDashboardPage/DentistDashboard
 import ManagerDashboardPage from "../pages/ManagerDashboardPage/ManagerDashboardPage";
 import AdminDashboardPage from "../pages/AdminDashboardPage/AdminDashboardPage";
 import PatientDashboardPage from "../pages/PatientDashboardPage/PatientDashboardPage";
+import ClinicPage from "../pages/ClinicPage/ClinicPage";
 
 const AppRouter = () => {
   return (
@@ -28,6 +29,9 @@ const AppRouter = () => {
         </Route>
         <Route path="/register" exact>
           <RegisterPage />
+        </Route>
+        <Route path="/clinic" exact>
+          <ClinicPage />
         </Route>
         <PrivateRouter
           key="cs-dashboard"
