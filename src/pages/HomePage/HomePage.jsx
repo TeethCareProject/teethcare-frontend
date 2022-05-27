@@ -26,10 +26,18 @@ const HomePage = () => {
 
   useEffect(() => {
     const getClinic = async () => {
-      const clinicsArray = await getClinicsAPI();
-      dispatch(setClinicStorageHandler(clinicsArray.data));
+      try {
+        const clinicsArray = await getClinicsAPI();
+        dispatch(setClinicStorageHandler(clinicsArray.data));
+      } catch (e) {
+        notification["error"]({
+          message: `Something went wrong! Try again latter!`,
+          description: `There is problem while fetching clinic, try again later`,
+          duration: 2,
+        });
+      }
     };
-    getClinic().catch(console.error);
+    getClinic();
   }, []);
   return (
     <div>

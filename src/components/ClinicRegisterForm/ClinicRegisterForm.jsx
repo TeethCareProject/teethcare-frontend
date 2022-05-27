@@ -1,5 +1,11 @@
-import React from "react";
-import { Form, Input, Button, Select, Row, Col } from "antd";
+import React, { useState } from "react";
+import { Form, Input, Button, Select, Row, Col, notification } from "antd";
+
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getLocationApi } from "../../services/teeth-apis/LocationController";
+import setProvincesHandler from "../../redux/location/location.action";
+import { useHistory } from "react-router-dom";
 
 import {
   AttendantRegisterValidation,
@@ -17,26 +23,38 @@ const genderType = [
   },
 ];
 
-const provinces = [
-  {
-    title: "Ho Chi Minh",
-    value: "Ho Chi Minh",
-  },
-];
-const districts = [
-  {
-    title: "Quan 1",
-    value: "Quan 1",
-  },
-];
-const wards = [
-  {
-    title: "Linh Trung",
-    value: "Linh Trung",
-  },
-];
-
 const ClinicRegisterForm = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const provinces = useSelector((state) => state.provinces.provinces);
+
+  const [selectedProvince, setSelectedProvince] = useState();
+  const [selectedDistrict, setSelectedDistrict] = useState();
+  const [selectedWard, setSelectedWard] = useState();
+
+  useEffect(() => {
+    const getClinic = async () => {
+      try {
+        const provinceArray = await getLocationApi();
+        dispatch(setProvincesHandler(provinceArray.data));
+      } catch (e) {
+        notification["error"]({
+          message: `Something went wrong! Try again latter!`,
+          description: `There is problem while fetching clinic, try again later`,
+          duration: 2,
+        });
+      }
+    };
+    getClinic();
+  }, []);
+
+  const availableDistrict = provinces?.find(
+    (c) => c.name === selectedProvince
+  )?.districtList;
+  const availableWard = availableDistrict?.find(
+    (s) => s.name === selectedDistrict
+  )?.wardList;
+
   const onFinish = (values) => {
     console.log("Received values of form: ", values);
   };
@@ -146,12 +164,17 @@ const ClinicRegisterForm = () => {
               name="province"
               label="Province"
               rules={ClinicRegisterValidation.province}
-              initialValue="Ho Chi Minh"
             >
-              <Select defaultValue="Ho Chi Minh" placeholder="select province">
-                {provinces.map((province) => (
-                  <Option key={province.value} value={province.value}>
-                    {province.title}
+              <Select
+                value={selectedProvince}
+                onChange={(e) => {
+                  setSelectedProvince(e);
+                }}
+                placeholder="Select province"
+              >
+                {provinces?.map((province, index) => (
+                  <Option key={index} value={province.name}>
+                    {province.name}
                   </Option>
                 ))}
               </Select>
@@ -160,12 +183,18 @@ const ClinicRegisterForm = () => {
               name="district"
               label="district"
               rules={ClinicRegisterValidation.district}
-              initialValue="Thu Duc"
             >
-              <Select defaultValue="Thu Duc" placeholder="select district">
-                {districts.map((district) => (
-                  <Option key={district.value} value={district.value}>
-                    {district.title}
+              <Select
+                value={selectedDistrict}
+                placeholder="select district"
+                onChange={(e) => {
+                  setSelectedDistrict(e);
+                  console.log(availableWard);
+                }}
+              >
+                {availableDistrict?.map((district, index) => (
+                  <Option key={index} value={district.name}>
+                    {district.name}
                   </Option>
                 ))}
               </Select>
@@ -174,12 +203,15 @@ const ClinicRegisterForm = () => {
               name="ward"
               label="ward"
               rules={ClinicRegisterValidation.ward}
-              initialValue="Linh Trung"
             >
-              <Select defaultValue="Linh Trung" placeholder="select ward">
-                {wards.map((ward) => (
-                  <Option key={ward.value} value={ward.value}>
-                    {ward.title}
+              <Select
+                value={selectedWard}
+                placeholder="select ward"
+                onChange={(e) => setSelectedWard(e)}
+              >
+                {availableWard?.map((ward, index) => (
+                  <Option key={index} value={ward.name}>
+                    {ward.name}
                   </Option>
                 ))}
               </Select>

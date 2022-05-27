@@ -12,7 +12,7 @@ const CardHomePageClinic = ({ clinic }) => {
       </div>
       <div className="card-home-page-detail">
         <div>
-          {clinic.name} - {clinic.location.ward.district.name}
+          {clinic?.name} - {clinic.location?.ward?.district?.name}
         </div>
         <div className="card-home-page-rating">
           <div>{clinic.avgRatingScore}</div>

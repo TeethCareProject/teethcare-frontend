@@ -43,14 +43,14 @@ img {
   margin-bottom: 20px;
 }
 
+.viewClinicBtn {
+  margin-bottom: 20px;
+}
+
 .viewClinicBtn span {
   font-weight: 600;
   font-size: 1.1em;
   line-height: 1.1em;
   padding-left: 10px;
   padding-right: 10px;
-}
-
-.viewClinicBtn {
-  margin: 0 auto;
 }
