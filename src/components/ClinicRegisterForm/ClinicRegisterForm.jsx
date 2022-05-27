@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Select, Row, Col, notification } from "antd";
-
+import { managerRegisterAPI } from "../../services/teeth-apis/RegisterController";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationApi } from "../../services/teeth-apis/LocationController";
@@ -55,8 +55,30 @@ const ClinicRegisterForm = () => {
     (s) => s.id === selectedDistrict
   )?.wardList;
 
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const onFinish = async (values) => {
+    try {
+      const { data } = await managerRegisterAPI(
+        values.username,
+        values.password,
+        values.confirmPassword,
+        values.firstName,
+        values.lastName,
+        values.gender,
+        values.phoneNumber,
+        values.clinicName,
+        values.clinicTaxCode,
+        values.clinicAddress,
+        values.ward
+      );
+      console.log(data);
+      history.push("/login");
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while register, try again later`,
+        duration: 2,
+      });
+    }
   };
 
   const { Option } = Select;
@@ -121,8 +143,17 @@ const ClinicRegisterForm = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item name="phone" rules={AttendantRegisterValidation.phone}>
+            <Form.Item
+              name="phoneNumber"
+              rules={AttendantRegisterValidation.phone}
+            >
               <Input placeholder="Phone number" />
+            </Form.Item>
+            <Form.Item
+              name="managerEmail"
+              rules={AttendantRegisterValidation.email}
+            >
+              <Input placeholder="Email" />
             </Form.Item>
           </div>
         </Col>
@@ -145,12 +176,6 @@ const ClinicRegisterForm = () => {
               rules={ClinicRegisterValidation.phone}
             >
               <Input placeholder="Clinic's Phone Number" />
-            </Form.Item>
-            <Form.Item
-              name="clinicEmail"
-              rules={ClinicRegisterValidation.email}
-            >
-              <Input placeholder="Clinic's Email" />
             </Form.Item>
 
             <Form.Item
@@ -181,7 +206,7 @@ const ClinicRegisterForm = () => {
             </Form.Item>
             <Form.Item
               name="district"
-              label="district"
+              label="District"
               rules={ClinicRegisterValidation.district}
             >
               <Select
@@ -201,7 +226,7 @@ const ClinicRegisterForm = () => {
             </Form.Item>
             <Form.Item
               name="ward"
-              label="ward"
+              label="Ward"
               rules={ClinicRegisterValidation.ward}
             >
               <Select

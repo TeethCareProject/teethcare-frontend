@@ -28,13 +28,10 @@ export const managerRegisterAPI = (
   firstName,
   lastName,
   gender,
-  managerEmail,
-  managerPhoneNumber,
+  phoneNumber,
   clinicName,
   clinicTaxCode,
   clinicAddress,
-  provinceId,
-  districtId,
   wardId
 ) =>
   CallAPI("/managers", "POST", {
@@ -44,12 +41,9 @@ export const managerRegisterAPI = (
     firstName,
     lastName,
     gender,
-    managerEmail,
-    managerPhoneNumber,
+    phoneNumber,
     clinicName,
     clinicTaxCode,
     clinicAddress,
-    provinceId,
-    districtId,
     wardId,
   });
