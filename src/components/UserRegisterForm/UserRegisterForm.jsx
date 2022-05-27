@@ -1,6 +1,9 @@
 import React from "react";
-import { Form, Input, Button, Select } from "antd";
+import { Form, Input, Button, Select, notification } from "antd";
+import { patientRegisterAPI } from "../../services/teeth-apis/RegisterController";
 import { AttendantRegisterValidation } from "../../validate/RegisterValidation";
+import { useHistory } from "react-router-dom";
+
 import "./UserRegisterForm.style.css";
 
 const genderType = [
@@ -15,8 +18,28 @@ const genderType = [
 ];
 
 const UserRegisterForm = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
+  const history = useHistory();
+  const onFinish = async (values) => {
+    try {
+      const { data } = await patientRegisterAPI(
+        values.username,
+        values.password,
+        values.confirmPassword,
+        values.firstName,
+        values.lastName,
+        values.gender,
+        values.patientEmail,
+        values.phoneNumber
+      );
+      console.log(data);
+      history.push("/login");
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while register, try again later`,
+        duration: 2,
+      });
+    }
   };
 
   const { Option } = Select;

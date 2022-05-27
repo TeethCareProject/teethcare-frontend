@@ -49,10 +49,10 @@ const ClinicRegisterForm = () => {
   }, []);
 
   const availableDistrict = provinces?.find(
-    (c) => c.name === selectedProvince
+    (c) => c.id === selectedProvince
   )?.districtList;
   const availableWard = availableDistrict?.find(
-    (s) => s.name === selectedDistrict
+    (s) => s.id === selectedDistrict
   )?.wardList;
 
   const onFinish = (values) => {
@@ -173,7 +173,7 @@ const ClinicRegisterForm = () => {
                 placeholder="Select province"
               >
                 {provinces?.map((province, index) => (
-                  <Option key={index} value={province.name}>
+                  <Option key={index} value={province.id}>
                     {province.name}
                   </Option>
                 ))}
@@ -193,7 +193,7 @@ const ClinicRegisterForm = () => {
                 }}
               >
                 {availableDistrict?.map((district, index) => (
-                  <Option key={index} value={district.name}>
+                  <Option key={index} value={district.id}>
                     {district.name}
                   </Option>
                 ))}
@@ -210,7 +210,7 @@ const ClinicRegisterForm = () => {
                 onChange={(e) => setSelectedWard(e)}
               >
                 {availableWard?.map((ward, index) => (
-                  <Option key={index} value={ward.name}>
+                  <Option key={index} value={ward.id}>
                     {ward.name}
                   </Option>
                 ))}
