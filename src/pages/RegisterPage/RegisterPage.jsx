@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 import { Tabs } from "antd";
 import registerImg from "../../assets/register_image.png";
 
-import UserRegisterForm from "../../components/UserRegisterForm/UserRegisterForm";
-import ClinicRegisterForm from "../../components/ClinicRegisterForm/ClinicRegisterForm";
+import UserRegisterForm from "../../components/forms/UserRegisterForm/UserRegisterForm";
+import ClinicRegisterForm from "../../components/forms/ClinicRegisterForm/ClinicRegisterForm";
 
 import "./RegisterPage.style.css";
 

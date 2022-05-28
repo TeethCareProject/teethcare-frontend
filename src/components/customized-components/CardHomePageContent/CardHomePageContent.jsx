@@ -1,6 +1,4 @@
 import React from "react";
-import { Button } from "antd";
-import { PhoneOutlined } from "@ant-design/icons";
 import "./CardHomePageContent.style.css";
 
 const CardHomePageContent = ({ context }) => {
@@ -17,14 +15,6 @@ const CardHomePageContent = ({ context }) => {
         <div className="homepage_card_title">{context.title}</div>
         <div className="homepage_card_description">{context.description}</div>
       </div>
-      <Button
-        type="primary"
-        shape="round"
-        size="large"
-        icon={<PhoneOutlined />}
-      >
-        Contact
-      </Button>
     </div>
   );
 };

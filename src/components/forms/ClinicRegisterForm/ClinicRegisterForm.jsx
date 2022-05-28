@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Select, Row, Col, notification } from "antd";
-import { managerRegisterAPI } from "../../services/teeth-apis/RegisterController";
+import { managerRegisterAPI } from "../../../services/teeth-apis/RegisterController";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLocationApi } from "../../services/teeth-apis/LocationController";
-import setProvincesHandler from "../../redux/location/location.action";
+import { getLocationApi } from "../../../services/teeth-apis/LocationController";
+import setProvincesHandler from "../../../redux/location/location.action";
 import { useHistory } from "react-router-dom";
 
 import {
   AttendantRegisterValidation,
   ClinicRegisterValidation,
-} from "../../validate/RegisterValidation";
+} from "../../../validate/RegisterValidation";
 
 const genderType = [
   {

@@ -1,5 +1,5 @@
 import React from "react";
-import NavigationBar from "../components/NavigationBar/NavigationBar.component";
+import NavigationBar from "../components/commons/NavigationBar/NavigationBar.component";
 import { Redirect, Route, Switch } from "react-router-dom";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";

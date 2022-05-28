@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Input, Button, Select, notification } from "antd";
-import { patientRegisterAPI } from "../../services/teeth-apis/RegisterController";
-import { AttendantRegisterValidation } from "../../validate/RegisterValidation";
+import { patientRegisterAPI } from "../../../services/teeth-apis/RegisterController";
+import { AttendantRegisterValidation } from "../../../validate/RegisterValidation";
 import { useHistory } from "react-router-dom";
 
 import "./UserRegisterForm.style.css";

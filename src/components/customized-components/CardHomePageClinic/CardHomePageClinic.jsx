@@ -1,8 +1,7 @@
 import React from "react";
-import { Button, Row, Col } from "antd";
-import { PhoneOutlined, StarFilled } from "@ant-design/icons";
+import { StarFilled } from "@ant-design/icons";
 import "./CardHomePageClinic.style.css";
-import clinicImage from "../../assets/clinicImg.png";
+import clinicImage from "../../../assets/clinicImg.png";
 
 const CardHomePageClinic = ({ clinic }) => {
   return (

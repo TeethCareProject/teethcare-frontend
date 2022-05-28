@@ -3,7 +3,7 @@ import { Menu } from "antd";
 import { MailOutlined, AppstoreOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { logoutHandler } from "../../redux/authentication/authentication.action";
+import { logoutHandler } from "../../../redux/authentication/authentication.action";
 const items = [
   {
     label: "Home",
