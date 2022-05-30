@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "username": "sa",
+    "roleId": 2,
+    "roleName": "CUSTOMER_SERVICE",
+    "firstName": "Duy",
+    "lastName": "Tuong",
+    "avatarImage": "abc.png",
+    "dateOfBirth": "26/02/2002",
+    "email": null,
+    "phone": null,
+    "gender": "FEMALE",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 2,
+    "username": "sa1",
+    "roleId": 1,
+    "roleName": "CUSTOMER_SERVICE",
+    "firstName": "Ha",
+    "lastName": "Nguyen",
+    "avatarImage": "s1.png",
+    "dateOfBirth": "03/02/2002",
+    "email": null,
+    "phone": null,
+    "gender": "FEMALE",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 3,
+    "username": "sa2",
+    "roleId": 3,
+    "roleName": "DENTIST",
+    "firstName": "Nhan",
+    "lastName": "Ho",
+    "avatarImage": "s2.png",
+    "dateOfBirth": "11/11/2002",
+    "email": null,
+    "phone": null,
+    "gender": "FEMALE",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 4,
+    "username": "sa3",
+    "roleId": 4,
+    "roleName": "DENTIST",
+    "firstName": "Tin",
+    "lastName": "Nguyen",
+    "avatarImage": "s3.png",
+    "dateOfBirth": "26/10/2002",
+    "email": null,
+    "phone": null,
+    "gender": "FEMALE",
+    "status": "ACTIVE"
+  },
+  {
+    "id": 5,
+    "username": "sa4",
+    "roleId": 5,
+    "roleName": "CUSTOMER_SERVICE",
+    "firstName": "Kim Anh",
+    "lastName": "Tran",
+    "avatarImage": "s4.png",
+    "dateOfBirth": "02/02/2002",
+    "email": null,
+    "phone": null,
+    "gender": "FEMALE",
+    "status": "ACTIVE"
+  }
+]

@@ -15,7 +15,7 @@ export const CallAPI = (
     : {
         "content-type": "application/json",
       };
-  token = Cookies.get("user");
+  token = Cookies.get("token");
   if (token && token !== "undefined") headers.Authorization = `Bearer ${token}`;
 
   return axios({

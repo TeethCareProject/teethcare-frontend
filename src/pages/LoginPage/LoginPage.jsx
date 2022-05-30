@@ -10,7 +10,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const isAuthUser = useSelector((state) => state.authentication.isAuthUser);
-  const role = useSelector((state) => state.authentication.user?.role);
+  const role = useSelector((state) => state.authentication.user?.roleName);
 
   const redirectMainPage = (role) => {
     switch (role) {
