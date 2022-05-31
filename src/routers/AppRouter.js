@@ -12,6 +12,10 @@ import PatientDashboardPage from "../pages/PatientDashboardPage/PatientDashboard
 import DynamicRouter from "./components/DynamicRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
+import ServiceDetailPage from "../pages/ServiceDetailPage/ServiceDetailPage";
+import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
+import BookingSuccessfulPage from "../pages/BookingResultPage/BookingSuccessfulPage";
+import BookingFailedPage from "../pages/BookingResultPage/BookingFailedPage";
 
 const AppRouter = () => {
   return (
@@ -26,6 +30,18 @@ const AppRouter = () => {
         </Route>
         <Route path={RoutePath.LOGIN_PAGE} exact>
           <LoginPage />
+        </Route>
+        <Route path={RoutePath.SERVICE_DETAIL_PAGE} exact>
+          <ServiceDetailPage />
+        </Route>
+        <Route path={RoutePath.BOOKING_PAGE}>
+          <BookingServicePage />
+        </Route>
+        <Route path={RoutePath.BOOKING_SUCCESSFUL_PAGE}>
+          <BookingSuccessfulPage />
+        </Route>
+        <Route path={RoutePath.BOOKING_FAILED_PAGE}>
+          <BookingFailedPage />
         </Route>
         <DynamicRouter
           key="dashboard"
