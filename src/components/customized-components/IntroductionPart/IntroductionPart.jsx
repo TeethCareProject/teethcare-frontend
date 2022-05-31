@@ -2,6 +2,8 @@ import React from "react";
 import { Col, Row, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
+import "./IntroductionPart.style.css";
+
 const IntroductionPart = ({ homePageImg }) => {
   return (
     <div className="introduction-part">

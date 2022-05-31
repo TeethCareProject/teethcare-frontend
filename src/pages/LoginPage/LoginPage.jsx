@@ -19,7 +19,7 @@ const LoginPage = () => {
         history.push("/admin-dashboard");
         break;
       case "PATIENT":
-        history.push("/patient-patient");
+        history.push("/patient-dashboard");
         break;
       case "MANAGER":
         history.push("/manager-dashboard");

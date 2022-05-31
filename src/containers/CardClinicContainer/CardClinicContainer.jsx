@@ -38,8 +38,8 @@ const CardClinicContainer = ({ layoutDirection }) => {
         <Row justify="space-between">
           {clinics
             .filter((clinic) => clinic.id <= 4)
-            .map((clinic) => (
-              <Col span={6}>
+            .map((clinic, index) => (
+              <Col key={index} span={6}>
                 <Card
                   className="clinic-card-homepage"
                   hoverable
@@ -53,11 +53,18 @@ const CardClinicContainer = ({ layoutDirection }) => {
                   }
                 >
                   <Meta
-                    title={`${clinic?.name} - ${clinic.location?.ward?.district?.name}`}
+                    className="card-clinic-content"
                     description={
-                      <div className="card-home-page-rating">
-                        <div> {clinic.avgRatingScore}</div>
-                        <StarFilled style={{ color: "#FFCB45" }} />
+                      <div>
+                        <div>
+                          {clinic?.name} - {clinic.location?.address}
+                        </div>
+                        <div className="card-home-page-rating">
+                          <div style={{ color: "#FFCB45" }}>
+                            {`${clinic.avgRatingScore} `}
+                          </div>
+                          <StarFilled style={{ color: "#FFCB45" }} />
+                        </div>
                       </div>
                     }
                   />

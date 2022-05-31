@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Button, Select, Row, Col, notification } from "antd";
 import { managerRegisterAPI } from "../../../services/teeth-apis/RegisterController";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLocationApi } from "../../../services/teeth-apis/LocationController";
 import setProvincesHandler from "../../../redux/location/location.action";
@@ -32,7 +32,7 @@ const ClinicRegisterForm = () => {
   const [selectedDistrict, setSelectedDistrict] = useState();
   const [selectedWard, setSelectedWard] = useState();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getClinic = async () => {
       try {
         const provinceArray = await getLocationApi();
