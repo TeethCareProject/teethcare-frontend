@@ -10,10 +10,11 @@ import { getClinicsAPI } from "../../services/teeth-apis/ClinicController";
 import setClinicStorageHandler from "../../redux/clinic/clinic.action";
 
 import CardClinicComponent from "../../components/customized-components/CardClinic/CardClinicComponent";
-import "./CardClinicContainer.style.css";
+import "./CardClinicContainer.style.scss";
 
-const CardClinicContainer = ({ layoutDirection }) => {
+const CardClinicContainer = ({ clinicData, layoutDirection }) => {
   const { Meta } = Card;
+  console.log(clinicData);
   const dispatch = useDispatch();
   const clinics = useSelector((state) => state.clinics.clinics);
   console.log(clinics);
@@ -74,8 +75,8 @@ const CardClinicContainer = ({ layoutDirection }) => {
             ))}
         </Row>
       ) : (
-        <div>
-          {clinics?.content?.map((clinic, index) => (
+        <div className="card-clinic-preview">
+          {clinicData?.map((clinic, index) => (
             <div key={index}>
               <CardClinicComponent
                 imgSrc={clinicImg}
@@ -104,7 +105,6 @@ const CardClinicContainer = ({ layoutDirection }) => {
           ))}
         </div>
       )}
-      ;
     </Fragment>
   );
 };

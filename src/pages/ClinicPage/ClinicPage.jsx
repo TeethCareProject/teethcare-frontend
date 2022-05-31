@@ -1,13 +1,11 @@
 import React from "react";
 import CardClinicContainer from "../../containers/CardClinicContainer/CardClinicContainer";
 
+import "./ClinicPage.style.scss";
+import ClinicContainer from "../../containers/ClinicContainer/ClinicContainer";
+
 const ClinicPage = () => {
-  return (
-    <>
-      <h1>Clinic Page</h1>
-      <CardClinicContainer layoutDirection="column" />
-    </>
-  );
+  return <ClinicContainer />;
 };
 
 export default ClinicPage;

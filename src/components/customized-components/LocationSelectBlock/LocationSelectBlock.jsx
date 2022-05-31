@@ -7,9 +7,9 @@ const LocationSelectBlock = (props) => {
   return (
     <>
       <Form.Item
-        name="province"
+        name="provinceId"
         label="Province"
-        rules={ClinicRegisterValidation.province}
+        // rules={ClinicRegisterValidation.province}
       >
         <LocationSelect
           optionArray={props.provinces}
@@ -19,9 +19,9 @@ const LocationSelectBlock = (props) => {
         />
       </Form.Item>
       <Form.Item
-        name="district"
+        name="districtId"
         label="District"
-        rules={ClinicRegisterValidation.district}
+        // rules={ClinicRegisterValidation.district}
       >
         <LocationSelect
           optionArray={props.availableDistrict}
@@ -30,7 +30,8 @@ const LocationSelectBlock = (props) => {
           onChange={props.handleDistrictChange}
         />
       </Form.Item>
-      <Form.Item name="ward" label="Ward" rules={ClinicRegisterValidation.ward}>
+      <Form.Item name="wardId" label="Ward">
+        {/* // rules={ClinicRegisterValidation.ward} */}
         <LocationSelect
           optionArray={props.availableWard}
           placeholder="Select ward"

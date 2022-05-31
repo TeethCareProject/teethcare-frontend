@@ -1,38 +1,44 @@
 import React, { useState } from "react";
-import { useLayoutEffect } from "react";
-import { Form, Input, Button, Select, Row, Col, notification } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { getLocationApi } from "../../../services/teeth-apis/LocationController";
-import setProvincesHandler from "../../../redux/location/location.action";
-import { useHistory } from "react-router-dom";
+import { notification } from "antd";
+import ClinicFilter from "../../components/customized-components/ClinicFilter/ClinicFilter";
+import CardClinicContainer from "../../containers/CardClinicContainer/CardClinicContainer";
+import { filterClinicAPI } from "../../services/teeth-apis/ClinicController";
+import { useSelector } from "react-redux";
+
+import "./ClinicContainer.style.scss";
 
 const ClinicContainer = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const provinces = useSelector((state) => state.provinces.provinces);
+  var data = {
+    data: {
+      content: useSelector((state) => state.clinics.clinics),
+    },
+  };
+  console.log(data.data.content.content);
 
-  const [selectedProvince, setSelectedProvince] = useState();
-  const [selectedDistrict, setSelectedDistrict] = useState();
-  const [selectedWard, setSelectedWard] = useState();
+  const [filteredClinic, setFilteredClinic] = useState(
+    data.data.content.content
+  );
 
-  useLayoutEffect(() => {
-    const getClinic = async () => {
-      try {
-        const provinceArray = await getLocationApi();
-        dispatch(setProvincesHandler(provinceArray.data));
-      } catch (e) {
-        notification["error"]({
-          message: `Something went wrong! Try again latter!`,
-          description: `There is problem while fetching clinic, try again later`,
-          duration: 2,
-        });
-      }
-    };
-    getClinic();
-  }, []);
+  const onFinish = async (values) => {
+    try {
+      data = await filterClinicAPI(values);
+      console.log(data.data.content);
+      setFilteredClinic(data.data.content);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while filter, try again later`,
+        duration: 2,
+      });
+    }
+  };
   return (
-    <div>
-      <div>ClinicContainer</div>
+    <div className="clinic-page">
+      <ClinicFilter onFinish={onFinish} />
+      <CardClinicContainer
+        clinicData={filteredClinic}
+        layoutDirection="column"
+      />
     </div>
   );
 };

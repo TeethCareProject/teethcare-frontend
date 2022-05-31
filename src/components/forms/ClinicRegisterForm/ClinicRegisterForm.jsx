@@ -5,8 +5,7 @@ import {
   AttendantRegisterValidation,
   ClinicRegisterValidation,
 } from "../../../validate/RegisterValidation";
-import LocationSelect from "../../customized-components/LocationSelect/LocationSelect.component";
-import LocationSelectBlock from "../../customized-components/LocationSelectBlock/LocationSelectBlock";
+
 import LocationContainer from "../../../containers/LocationContainer/LocationContainer.container";
 
 const genderType = [
@@ -27,9 +26,6 @@ const ClinicRegisterForm = (props) => {
     <Form
       name="normal_register"
       className="manager-register-form"
-      initialValues={{
-        remember: true,
-      }}
       onFinish={props.onFinishHandle}
     >
       <Row>
