@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout.component";
-import {
-  elementList,
-  navigationList,
-} from "./CustomerServiceDashboardPage.tabs";
+import { elementList, navigationList } from "./DentistDashboardPage.tabs";
 
-const CustomerServiceDashboardPage = () => {
+const DentistDashboardPage = () => {
   const [currentTab, setCurrentTab] = useState(0);
 
   return (
     <>
       <div style={{ padding: "1rem 0" }}>
-        <h1>Customer service Dashboard</h1>
+        <h1>Dentist Dashboard</h1>
       </div>
       <DashboardLayout
         navigationList={navigationList.map((item, index) => ({
@@ -25,4 +22,4 @@ const CustomerServiceDashboardPage = () => {
   );
 };
 
-export default CustomerServiceDashboardPage;
+export default DentistDashboardPage;

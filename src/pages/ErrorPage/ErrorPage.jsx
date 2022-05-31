@@ -2,6 +2,7 @@ import { Button, Result } from "antd";
 import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import React, { useMemo } from "react";
+import RoutePath from "../../routers/Path";
 
 const ErrorPage = ({ code = 404 }) => {
   const { isAuthUser } = useSelector((state) => state.authentication);
@@ -29,7 +30,7 @@ const ErrorPage = ({ code = 404 }) => {
             key="backhome-button"
             className="main-button"
             onClick={() => {
-              history.push("/");
+              history.push(RoutePath.HOME_PAGE);
             }}
             type="default"
             style={{ width: "10rem" }}
@@ -41,7 +42,7 @@ const ErrorPage = ({ code = 404 }) => {
               key="login-button"
               className="main-button"
               onClick={() => {
-                history.push("/login");
+                history.push(RoutePath.LOGIN_PAGE);
               }}
               type="primary"
               style={{ width: "10rem" }}

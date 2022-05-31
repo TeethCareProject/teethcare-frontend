@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout.component";
-import {
-  elementList,
-  navigationList,
-} from "./CustomerServiceDashboardPage.tabs";
+import { elementList, navigationList } from "./AdminDashboardPage.tabs";
+import { Space, Typography } from "antd";
 
-const CustomerServiceDashboardPage = () => {
+const AdminDashboardPage = () => {
   const [currentTab, setCurrentTab] = useState(0);
 
   return (
     <>
-      <div style={{ padding: "1rem 0" }}>
-        <h1>Customer service Dashboard</h1>
-      </div>
+      <Space style={{ padding: "1rem 0" }}>
+        <Typography.Title level={2}>Admin Dashboard</Typography.Title>
+      </Space>
       <DashboardLayout
         navigationList={navigationList.map((item, index) => ({
           ...item,
@@ -25,4 +23,4 @@ const CustomerServiceDashboardPage = () => {
   );
 };
 
-export default CustomerServiceDashboardPage;
+export default AdminDashboardPage;

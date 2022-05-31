@@ -1,69 +1,29 @@
-import React, { Fragment } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Typography } from "antd";
+import React from "react";
+import { useSelector } from "react-redux";
+
+import { useHistory } from "react-router-dom";
+import LoginFormContainer from "../../containers/LoginForm/LoginForm.container";
+import RoutePath from "../../routers/Path";
+import "./LoginPage.style.scss";
 
 const LoginPage = () => {
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-  };
+  const history = useHistory();
+  const isAuthUser = useSelector((state) => state.authentication.isAuthUser);
+
+  if (isAuthUser) {
+    history.push(RoutePath.DASHBOARD_PAGE);
+  }
 
   return (
-    <Fragment>
-      <h1>Login page</h1>
-      <Form
-        name="normal_login"
-        className="login-form"
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-      >
-        <Form.Item
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Username!",
-            },
-          ]}
-        >
-          <Input
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
-          />
-        </Form.Item>
-        <Form.Item
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: "Please input your Password!",
-            },
-          ]}
-        >
-          <Input
-            prefix={<LockOutlined className="site-form-item-icon" />}
-            type="password"
-            placeholder="Password"
-          />
-        </Form.Item>
-        <Form.Item>
-          <a className="login-form-forgot" href="">
-            Forgot password
-          </a>
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            Log in
-          </Button>
-        </Form.Item>
-      </Form>
-    </Fragment>
+    <div className="page login-page">
+      <div className="login-container">
+        <Typography.Title>Login</Typography.Title>
+        <div style={{ width: "30%", margin: "3rem auto" }}>
+          <LoginFormContainer />
+        </div>
+      </div>
+    </div>
   );
 };
 
