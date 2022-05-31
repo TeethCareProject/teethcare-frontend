@@ -1,16 +1,7 @@
 import React, { useState } from "react";
-import AccountManagementTableContainer from "../../containers/AccountManagementTable/AccountManagementTable.container";
-import ReportManagementTableContainer from "../../containers/ReportManagementTable/ReportManagementTable.container";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout.component";
-import { navigationList } from "./AdminDashboardPage.tabs";
+import { elementList, navigationList } from "./AdminDashboardPage.tabs";
 import { Space, Typography } from "antd";
-
-const elementList = [
-  <div>Dashboard element</div>,
-  <AccountManagementTableContainer />,
-  <ReportManagementTableContainer />,
-  <div>account request</div>,
-];
 
 const AdminDashboardPage = () => {
   const [currentTab, setCurrentTab] = useState(0);

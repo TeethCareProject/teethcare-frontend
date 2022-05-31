@@ -18,3 +18,9 @@ export const navigationList = [
   getItem("Booking management", "sub2", <AppstoreOutlined />),
   getItem("My clinic", "sub3", <SettingOutlined />),
 ];
+
+export const elementList = [
+  <div>Dashboard element</div>,
+  <div>Booking managemnt</div>,
+  <div>My clinic</div>,
+];

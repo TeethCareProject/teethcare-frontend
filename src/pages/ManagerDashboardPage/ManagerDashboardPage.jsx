@@ -1,13 +1,6 @@
 import React, { useState } from "react";
-import StaffManagementTableContainer from "../../containers/StaffManagementTable/StaffManagementTable.container";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout.component";
-import { navigationList } from "./ManagerDashboardPage.tabs";
-
-const elementList = [
-  <div>Dashboard element</div>,
-  <StaffManagementTableContainer />,
-  <div>Report request</div>,
-];
+import { elementList, navigationList } from "./ManagerDashboardPage.tabs";
 
 const ManagerDashboardPage = () => {
   const [currentTab, setCurrentTab] = useState(0);

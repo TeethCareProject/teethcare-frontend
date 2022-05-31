@@ -15,12 +15,12 @@ function getItem(label, key, icon, onClick) {
 
 export const navigationList = [
   getItem("Dashboard", "sub1", <MailOutlined />),
-  getItem("My booking", "sub2", <AppstoreOutlined />),
-  getItem("My appointment", "sub3", <SettingOutlined />),
+  getItem("Assigned booking", "sub2", <AppstoreOutlined />),
+  getItem("My clinic", "sub3", <SettingOutlined />),
 ];
 
 export const elementList = [
   <div>Dashboard element</div>,
-  <div>My booking</div>,
-  <div>My appointment</div>,
+  <div>Assigned Booking</div>,
+  <div>My clinic</div>,
 ];

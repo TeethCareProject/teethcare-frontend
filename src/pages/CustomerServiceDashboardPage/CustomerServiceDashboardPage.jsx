@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout.component";
-import { navigationList } from "./CustomerServiceDashboardPage.tabs";
-
-const elementList = [
-  <div>Dashboard element</div>,
-  <div>Booking managemnt</div>,
-  <div>My clinic</div>,
-];
+import {
+  elementList,
+  navigationList,
+} from "./CustomerServiceDashboardPage.tabs";
 
 const CustomerServiceDashboardPage = () => {
   const [currentTab, setCurrentTab] = useState(0);
