@@ -14,8 +14,8 @@ import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
 import ServiceDetailPage from "../pages/ServiceDetailPage/ServiceDetailPage";
 import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
-import BookingSuccessfulPage from "../pages/BookingResultPage/BookingSuccessfulPage";
-import BookingFailedPage from "../pages/BookingResultPage/BookingFailedPage";
+import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
+import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
 
 const AppRouter = () => {
   return (
@@ -49,7 +49,7 @@ const AppRouter = () => {
             MANAGER: () => <ManagerDashboardPage />,
             CUSTOMER_SERVICE: () => <CustomerServiceDashboardPage />,
             DENTIST: () => <DentistDashboardPage />,
-            CUSTOMER: () => <PatientDashboardPage />,
+            PATIENT: () => <PatientDashboardPage />,
             ADMIN: () => <AdminDashboardPage />,
           }}
           path={RoutePath.DASHBOARD_PAGE}
