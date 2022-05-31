@@ -8,7 +8,7 @@ const ManagerDashboardPage = () => {
   return (
     <>
       <div style={{ padding: "1rem 0" }}>
-        <h1>My Dashboard</h1>
+        <h1>Patient Dashboard</h1>
       </div>
       <DashboardLayout
         navigationList={navigationList.map((item, index) => ({

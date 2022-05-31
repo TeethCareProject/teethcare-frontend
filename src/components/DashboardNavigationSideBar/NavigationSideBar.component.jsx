@@ -2,7 +2,6 @@ import { Menu } from "antd";
 import React from "react";
 
 const DashboardSideBarComponent = ({ items }) => {
-  console.log(items);
   const onClick = (e) => {
     //handle onclick item
     items.find((item) => item.key === e.key)?.onClick();

@@ -11,7 +11,7 @@ const CustomerServiceDashboardPage = () => {
   return (
     <>
       <div style={{ padding: "1rem 0" }}>
-        <h1>Manager Dashboard</h1>
+        <h1>Customer service Dashboard</h1>
       </div>
       <DashboardLayout
         navigationList={navigationList.map((item, index) => ({

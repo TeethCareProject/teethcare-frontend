@@ -1,0 +1,7 @@
+export const RoleConstant = {
+  MANAGER: "MANAGER",
+  CUSTOMER_SERVICE: "CUSTOMER_SERVICE",
+  DENTIST: "DENTIST",
+  CUSTOMER: "CUSTOMER",
+  ADMIN: "ADMIN",
+};

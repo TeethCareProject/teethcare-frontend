@@ -4,6 +4,7 @@ import { MailOutlined, AppstoreOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { logoutHandler } from "../../redux/authentication/authentication.action";
+import RoutePath from "../../routers/Path";
 const items = [
   {
     label: "Home",
@@ -40,12 +41,12 @@ const NavigationBar = () => {
     if (e.key === "logout") {
       //call logout
       dispatch(logoutHandler());
-      history.push("/");
+      history.push(RoutePath.HOME_PAGE);
     } else if (e.key === "login") {
-      history.push("/login");
+      history.push(RoutePath.LOGIN_PAGE);
       setCurrent(e.key);
     } else if (e.key === "home") {
-      history.push("/");
+      history.push(RoutePath.HOME_PAGE);
       setCurrent(e.key);
     }
   };

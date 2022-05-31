@@ -1,11 +1,10 @@
-import { Avatar, Col, Descriptions, Modal, notification, Row } from "antd";
+import { Col, Descriptions, Modal, notification, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import {
   getReportById,
   getAllReports,
 } from "../../services/teeth-apis/ReportController";
-import { UserOutlined } from "@ant-design/icons";
 import ReportManagementTableColumn from "./ReportManagementTable.column";
 
 const ReportManagementTableContainer = () => {
@@ -53,6 +52,7 @@ const ReportManagementTableContainer = () => {
   );
 };
 
+//Please move this into a separate file if the logic becomes bigger
 const DetailForm = ({ reportId, setNeededReport }) => {
   const [reportDetail, setReportDetail] = useState({});
 

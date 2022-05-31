@@ -1,7 +1,6 @@
-import { CallAPI, CallAPIOutsite } from "./axiosBase";
+import { CallAPI } from "./axiosBase";
 
 export const getAllStaffs = (clinicId) =>
   CallAPI("/clinics/" + clinicId + "/staffs", "GET");
 
-export const getStaffById = () =>
-  CallAPIOutsite(window.location.origin + "/staff-fake-data.json", "GET");
+export const getStaffById = (staffId) => CallAPI("/accounts/" + staffId, "GET");

@@ -1,4 +1,5 @@
 import { Space, Tag, Button } from "antd";
+import AccountStatusConstants from "../../constants/AccountStatusConstants";
 
 const StaffManagementTableColumn = [
   {
@@ -39,9 +40,9 @@ const StaffManagementTableColumn = [
     render: (_, { status }) => {
       let color = "green";
 
-      if (status === "INACTIVE") {
+      if (status === AccountStatusConstants.INACTIVE) {
         color = "volcano";
-      } else if (status === "PENDING") {
+      } else if (status === AccountStatusConstants.PENDING) {
         color = "geekblue";
       }
 

@@ -8,7 +8,7 @@ const DentistDashboardPage = () => {
   return (
     <>
       <div style={{ padding: "1rem 0" }}>
-        <h1>Manager Dashboard</h1>
+        <h1>Dentist Dashboard</h1>
       </div>
       <DashboardLayout
         navigationList={navigationList.map((item, index) => ({

@@ -57,6 +57,7 @@ const StaffManagementTableContainer = () => {
   );
 };
 
+//Please move this into a separate file if the logic becomes bigger
 const DetailForm = ({ accountId, setNeededStaff }) => {
   const [accountDetail, setStaffDetail] = useState({});
 
@@ -64,9 +65,7 @@ const DetailForm = ({ accountId, setNeededStaff }) => {
     try {
       const { data } = await getStaffById(accountId);
 
-      //TODO: remove later
-      const detail = data.find((account) => account.id === accountId);
-      setStaffDetail(detail);
+      setStaffDetail(data);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,

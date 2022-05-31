@@ -4,37 +4,15 @@ import { useSelector } from "react-redux";
 
 import { useHistory } from "react-router-dom";
 import LoginFormContainer from "../../containers/LoginForm/LoginForm.container";
+import RoutePath from "../../routers/Path";
 import "./LoginPage.style.scss";
-
-export const redirectMainPage = (history, role) => {
-  switch (role) {
-    case "ADMIN":
-      history.push("/admin-dashboard");
-      break;
-    case "PATIENT":
-      history.push("/patient-patient");
-      break;
-    case "MANAGER":
-      history.push("/manager-dashboard");
-      break;
-    case "DENTIST":
-      history.push("/dentist-dashboard");
-      break;
-    case "CUSTOMER_SERVICE":
-      history.push("/cs-dashboard");
-      break;
-    default:
-      break;
-  }
-};
 
 const LoginPage = () => {
   const history = useHistory();
   const isAuthUser = useSelector((state) => state.authentication.isAuthUser);
-  const role = useSelector((state) => state.authentication.user?.roleName);
 
   if (isAuthUser) {
-    redirectMainPage(history, role);
+    history.push(RoutePath.DASHBOARD_PAGE);
   }
 
   return (

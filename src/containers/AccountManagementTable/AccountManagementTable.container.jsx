@@ -53,6 +53,7 @@ const AccountManagementTableContainer = () => {
   );
 };
 
+//Please move this into a separate file if the logic becomes bigger
 const DetailForm = ({ accountId, setNeededAccount }) => {
   const [accountDetail, setAccountDetail] = useState({});
 

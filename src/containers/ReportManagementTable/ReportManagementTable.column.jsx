@@ -24,6 +24,7 @@ const AccountManagementTableColumn = [
     render: (_, { status }) => {
       let color = "green";
 
+      //TODO:check this again with backend for real status
       if (status === "INACTIVE") {
         color = "volcano";
       } else if (status === "PENDING") {
