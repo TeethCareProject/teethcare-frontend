@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import DashboardLayout from "../../components/DashboardLayout/DashboardLayout.component";
+import { elementList, navigationList } from "./PatientDashboardPage.tabs";
 
-const PatientDashboardPage = () => {
+const ManagerDashboardPage = () => {
+  const [currentTab, setCurrentTab] = useState(0);
+
   return (
     <>
-      <h1>Patien Dashboard</h1>
+      <div style={{ padding: "1rem 0" }}>
+        <h1>Patient Dashboard</h1>
+      </div>
+      <DashboardLayout
+        navigationList={navigationList.map((item, index) => ({
+          ...item,
+          onClick: () => setCurrentTab(index),
+        }))}
+        elementList={elementList}
+        currentTab={currentTab}
+      />
     </>
   );
 };
 
-export default PatientDashboardPage;
+export default ManagerDashboardPage;

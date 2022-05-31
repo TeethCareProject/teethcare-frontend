@@ -1,16 +1,13 @@
-import React, { useState } from "react";
-import { Form, Input, Button, Select, Row, Col, notification } from "antd";
-import { managerRegisterAPI } from "../../../services/teeth-apis/RegisterController";
-import { useLayoutEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getLocationApi } from "../../../services/teeth-apis/LocationController";
-import setProvincesHandler from "../../../redux/location/location.action";
-import { useHistory } from "react-router-dom";
+import React from "react";
 
+import { Form, Input, Button, Select, Row, Col } from "antd";
 import {
   AttendantRegisterValidation,
   ClinicRegisterValidation,
 } from "../../../validate/RegisterValidation";
+import LocationSelect from "../../customized-components/LocationSelect/LocationSelect.component";
+import LocationSelectBlock from "../../customized-components/LocationSelectBlock/LocationSelectBlock";
+import LocationContainer from "../../../containers/LocationContainer/LocationContainer.container";
 
 const genderType = [
   {
@@ -23,64 +20,7 @@ const genderType = [
   },
 ];
 
-const ClinicRegisterForm = () => {
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const provinces = useSelector((state) => state.provinces.provinces);
-
-  const [selectedProvince, setSelectedProvince] = useState();
-  const [selectedDistrict, setSelectedDistrict] = useState();
-  const [selectedWard, setSelectedWard] = useState();
-
-  useLayoutEffect(() => {
-    const getClinic = async () => {
-      try {
-        const provinceArray = await getLocationApi();
-        dispatch(setProvincesHandler(provinceArray.data));
-      } catch (e) {
-        notification["error"]({
-          message: `Something went wrong! Try again latter!`,
-          description: `There is problem while fetching clinic, try again later`,
-          duration: 2,
-        });
-      }
-    };
-    getClinic();
-  }, []);
-
-  const availableDistrict = provinces?.find(
-    (c) => c.id === selectedProvince
-  )?.districtList;
-  const availableWard = availableDistrict?.find(
-    (s) => s.id === selectedDistrict
-  )?.wardList;
-
-  const onFinish = async (values) => {
-    try {
-      const { data } = await managerRegisterAPI(
-        values.username,
-        values.password,
-        values.confirmPassword,
-        values.firstName,
-        values.lastName,
-        values.gender,
-        values.phoneNumber,
-        values.clinicName,
-        values.clinicTaxCode,
-        values.clinicAddress,
-        values.ward
-      );
-      console.log(data);
-      history.push("/login");
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while register, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
+const ClinicRegisterForm = (props) => {
   const { Option } = Select;
 
   return (
@@ -90,7 +30,7 @@ const ClinicRegisterForm = () => {
       initialValues={{
         remember: true,
       }}
-      onFinish={onFinish}
+      onFinish={props.onFinishHandle}
     >
       <Row>
         <Col>
@@ -184,63 +124,7 @@ const ClinicRegisterForm = () => {
             >
               <Input placeholder="Clinic's Address" />
             </Form.Item>
-
-            <Form.Item
-              name="province"
-              label="Province"
-              rules={ClinicRegisterValidation.province}
-            >
-              <Select
-                value={selectedProvince}
-                onChange={(e) => {
-                  setSelectedProvince(e);
-                }}
-                placeholder="Select province"
-              >
-                {provinces?.map((province, index) => (
-                  <Option key={index} value={province.id}>
-                    {province.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item
-              name="district"
-              label="District"
-              rules={ClinicRegisterValidation.district}
-            >
-              <Select
-                value={selectedDistrict}
-                placeholder="select district"
-                onChange={(e) => {
-                  setSelectedDistrict(e);
-                  console.log(availableWard);
-                }}
-              >
-                {availableDistrict?.map((district, index) => (
-                  <Option key={index} value={district.id}>
-                    {district.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item
-              name="ward"
-              label="Ward"
-              rules={ClinicRegisterValidation.ward}
-            >
-              <Select
-                value={selectedWard}
-                placeholder="select ward"
-                onChange={(e) => setSelectedWard(e)}
-              >
-                {availableWard?.map((ward, index) => (
-                  <Option key={index} value={ward.id}>
-                    {ward.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
+            <LocationContainer />
           </div>
         </Col>
       </Row>

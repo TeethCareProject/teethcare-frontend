@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Col, Row, Button, notification, Card } from "antd";
+import { Col, Row, notification, Card } from "antd";
 import { StarFilled } from "@ant-design/icons";
 
 import clinicImg from "../../assets/clinicImg.png";
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getClinicsAPI } from "../../services/teeth-apis/ClinicController";
 import setClinicStorageHandler from "../../redux/clinic/clinic.action";
 
+import CardClinicComponent from "../../components/customized-components/CardClinic/CardClinicComponent";
 import "./CardClinicContainer.style.css";
 
 const CardClinicContainer = ({ layoutDirection }) => {
@@ -36,8 +37,8 @@ const CardClinicContainer = ({ layoutDirection }) => {
     <Fragment>
       {layoutDirection === "row" ? (
         <Row justify="space-between">
-          {clinics
-            .filter((clinic) => clinic.id <= 4)
+          {clinics?.content
+            ?.filter((clinic) => clinic.id <= 4)
             .map((clinic, index) => (
               <Col key={index} span={6}>
                 <Card
@@ -56,7 +57,7 @@ const CardClinicContainer = ({ layoutDirection }) => {
                     className="card-clinic-content"
                     description={
                       <div>
-                        <div>
+                        <div className="card-clinic-description">
                           {clinic?.name} - {clinic.location?.address}
                         </div>
                         <div className="card-home-page-rating">
@@ -74,15 +75,23 @@ const CardClinicContainer = ({ layoutDirection }) => {
         </Row>
       ) : (
         <div>
-          {clinics.map((clinic) => (
-            <Row>
-              <Card
+          {clinics?.content?.map((clinic, index) => (
+            <div key={index}>
+              <CardClinicComponent
+                imgSrc={clinicImg}
+                name={clinic.name}
+                serviceArray={clinic.serviceOfClinicResponses}
+                district={clinic.location.ward.district.name}
+                province={clinic.location.ward.district.province.name}
+                avgRatingScore={clinic.avgRatingScore}
+              />
+              {/* <Card
                 hoverable
                 style={{ width: 240 }}
                 cover={<img alt="example" src={clinicImg} />}
               >
                 <Meta
-                  title={`${clinic?.name} - ${clinic.location?.ward?.district?.name}`}
+                  title={`${clinic?.name} - ${clinic.location?.address}`}
                   description={
                     <div className="card-home-page-rating">
                       <div>{clinic.avgRatingScore}</div>
@@ -90,8 +99,8 @@ const CardClinicContainer = ({ layoutDirection }) => {
                     </div>
                   }
                 />
-              </Card>
-            </Row>
+              </Card> */}
+            </div>
           ))}
         </div>
       )}

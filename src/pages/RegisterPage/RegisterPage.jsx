@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 import { Tabs } from "antd";
 import registerImg from "../../assets/register_image.png";
 
-import UserRegisterForm from "../../components/forms/UserRegisterForm/UserRegisterForm";
-import ClinicRegisterForm from "../../components/forms/ClinicRegisterForm/ClinicRegisterForm";
+import UserRegisterFormContainer from "../../containers/RegisterForm/UserRegisterForm/UserRegisterForm.container";
+import ClinicRegisterFormContainer from "../../containers/RegisterForm/ClinicRegisterForm/ClinicRegisterForm.container";
 
 import "./RegisterPage.style.css";
 
@@ -27,10 +27,10 @@ const RegisterPage = () => {
           </h2>
           <Tabs defaultActiveKey="1" onChange={callback}>
             <TabPane tab="User" key="1">
-              <UserRegisterForm />
+              <UserRegisterFormContainer />
             </TabPane>
             <TabPane tab="Manager" key="2">
-              <ClinicRegisterForm />
+              <ClinicRegisterFormContainer />
             </TabPane>
           </Tabs>
         </div>

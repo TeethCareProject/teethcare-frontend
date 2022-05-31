@@ -14,6 +14,14 @@
   margin-bottom: 20px;
 }
 
+.card-clinic-description {
+  display: -webkit-box;
+  max-width: 80%;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .card-home-page-clinic img {
   width: 100%;
   height: 60%;

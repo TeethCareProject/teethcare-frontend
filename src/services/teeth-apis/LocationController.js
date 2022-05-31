@@ -1,3 +1,3 @@
 import { CallAPI } from "./axiosBase";
 
-export const getLocationApi = () => CallAPI("/locationmetadata", "GET");
+export const getLocationApi = () => CallAPI("/provinces", "GET");
