@@ -9,3 +9,6 @@ export const bookService = (bookingData) =>
 
 export const getAllBooking = (options) =>
   CallAPI("/bookings", "GET", {}, { ...options });
+
+export const getBookingById = (bookingId) =>
+  CallAPI("/bookings/" + bookingId, "GET");

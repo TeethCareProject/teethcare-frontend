@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Input, Form, Row, Col, notification, Button, Pagination } from "antd";
+import {
+  Input,
+  Form,
+  Row,
+  Col,
+  notification,
+  Button,
+  Pagination,
+  Modal,
+} from "antd";
 import BookingListComponent from "../../components/BookingList/BookingList.component";
 import { useForm } from "antd/lib/form/Form";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
+import BookingDetailContainer from "../BookingDetail/BookingDetail.container";
+import { CalendarOutlined, ContainerOutlined } from "@ant-design/icons";
 
 const BookingListContainer = () => {
   const [searchValue, setSearchValue] = useState({
@@ -24,7 +35,18 @@ const BookingListContainer = () => {
         data = (await getAllBooking({ ...options })).data;
       }
 
-      setBookingListData(data.content);
+      const mapperData = data?.content?.map((booking) => ({
+        ...booking,
+        onClick: () => {
+          Modal.info({
+            closable: true,
+            icon: <CalendarOutlined />,
+            content: <BookingDetailContainer bookingId={booking.id} />,
+          });
+        },
+      }));
+
+      setBookingListData(mapperData);
       setTotalElements(data.totalElements);
     } catch (e) {
       notification["error"]({
@@ -65,7 +87,6 @@ const BookingListContainer = () => {
   return (
     <>
       <SearchForm form={form} onFinish={onFinish} resetAction={resetAction} />
-
       <BookingListComponent bookingListData={bookingListData} />
       <div style={{ marginTop: "1rem" }}>
         <Pagination
