@@ -30,7 +30,7 @@ const AppRouter = () => {
         <Route path={RoutePath.CLINIC_PAGE} exact>
           <ClinicPage />
         </Route>
-        <Route path={"/clinic/:id"} exact>
+        <Route path={"/clinics/:id"} exact>
           <ClinicDetailPage />
         </Route>
         <Route path={RoutePath.REGISTER_PARE} exact>
