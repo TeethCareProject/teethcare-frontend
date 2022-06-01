@@ -3,24 +3,15 @@ import { managerRegisterAPI } from "../../../services/teeth-apis/RegisterControl
 import { notification } from "antd";
 import { useHistory } from "react-router-dom";
 
-import ClinicRegisterForm from "../../../components/forms/ClinicRegisterForm/ClinicRegisterForm";
+import ClinicRegisterForm from "../../../components/forms/ClinicRegisterForm/ClinicRegisterForm.component";
+import ClinicFormValueToClinicRegisterData from "../../../mapper/ClinicFormValueToClinicRegisterData";
 
 const ClinicRegisterFormContainer = () => {
   const history = useHistory();
   const onFinish = async (values) => {
     try {
       const { data } = await managerRegisterAPI(
-        values.username,
-        values.password,
-        values.confirmPassword,
-        values.firstName,
-        values.lastName,
-        values.gender,
-        values.phoneNumber,
-        values.clinicName,
-        values.clinicTaxCode,
-        values.clinicAddress,
-        values.ward
+        ClinicFormValueToClinicRegisterData(values)
       );
       console.log(data);
       history.push("/login");

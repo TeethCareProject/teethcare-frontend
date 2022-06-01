@@ -1,20 +1,20 @@
-.homepage_card_img {
+.homepage-card-img {
   width: 60px;
   height: 60px;
   margin-bottom: 10px;
 }
 
-.homepage_card_container {
+.homepage-card-container {
   display: flex;
   flex-direction: column;
 }
 
-.homepage_card_title {
+.homepage-card-title {
   font-size: 1.8em;
   font-weight: 600;
 }
 
-.homepage_card_description {
+.homepage-card-description {
   font-size: 1.1em;
   font-weight: 400;
   color: #6c87ae;

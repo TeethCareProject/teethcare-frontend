@@ -1,49 +1,7 @@
 import { CallAPI } from "./axiosBase";
 
-export const patientRegisterAPI = (
-  username,
-  password,
-  confirmPassword,
-  firstName,
-  lastName,
-  gender,
-  email,
-  phoneNumber
-) =>
-  CallAPI("/patients", "POST", {
-    username,
-    password,
-    confirmPassword,
-    firstName,
-    lastName,
-    gender,
-    email,
-    phoneNumber,
-  });
+export const patientRegisterAPI = (values) =>
+  CallAPI("/patients", "POST", values);
 
-export const managerRegisterAPI = (
-  username,
-  password,
-  confirmPassword,
-  firstName,
-  lastName,
-  gender,
-  phoneNumber,
-  clinicName,
-  clinicTaxCode,
-  clinicAddress,
-  wardId
-) =>
-  CallAPI("/managers", "POST", {
-    username,
-    password,
-    confirmPassword,
-    firstName,
-    lastName,
-    gender,
-    phoneNumber,
-    clinicName,
-    clinicTaxCode,
-    clinicAddress,
-    wardId,
-  });
+export const managerRegisterAPI = (values) =>
+  CallAPI("/managers", "POST", values);

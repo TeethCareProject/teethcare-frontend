@@ -1,8 +1,6 @@
 import React from "react";
-import CardClinicContainer from "../../containers/CardClinicContainer/CardClinicContainer";
-
 import "./ClinicPage.style.scss";
-import ClinicContainer from "../../containers/ClinicContainer/ClinicContainer";
+import ClinicContainer from "../../containers/ClinicContainer/ClinicContainer.container";
 
 const ClinicPage = () => {
   return <ClinicContainer />;

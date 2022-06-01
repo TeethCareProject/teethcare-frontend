@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { notification } from "antd";
 import { useLayoutEffect } from "react";
 import { getLocationApi } from "../../services/teeth-apis/LocationController";
-import LocationSelectBlock from "../../components/customized-components/LocationSelectBlock/LocationSelectBlock";
+import LocationSelectBlock from "../../components/customized-components/LocationSelectBlock/LocationSelectBlock.component";
 
 const LocationContainer = () => {
   // const provinces = useSelector((state) => state.provinces.provinces);

@@ -2,24 +2,14 @@ import React from "react";
 import { notification } from "antd";
 import { patientRegisterAPI } from "../../../services/teeth-apis/RegisterController";
 import { useHistory } from "react-router-dom";
-import UserRegisterForm from "../../../components/forms/UserRegisterForm/UserRegisterForm";
-
+import UserRegisterForm from "../../../components/forms/UserRegisterForm/UserRegisterForm.component";
+import UserFormValueToUserRegisterData from "../../../mapper/UserFormValueToUserRegisterData";
 const UserRegisterFormContainer = () => {
   const history = useHistory();
 
   const onFinish = async (values) => {
     try {
-      const { data } = await patientRegisterAPI(
-        values.username,
-        values.password,
-        values.confirmPassword,
-        values.firstName,
-        values.lastName,
-        values.gender,
-        values.patientEmail,
-        values.phoneNumber
-      );
-      console.log(data);
+      await patientRegisterAPI(UserFormValueToUserRegisterData(values));
       history.push("/login");
     } catch (e) {
       notification["error"]({

@@ -1,11 +1,11 @@
 import React from "react";
 import { Row, Button } from "antd";
 
-import CardHomePageContentPreview from "../../components/customized-components/CardHomePageContentPreview/CardHomePageContentPreview";
-import CardClinicContainer from "../../containers/CardClinicContainer/CardClinicContainer";
+import HomePageContentCardPreview from "../../components/customized-components/HomePageContentCardPreview/HomePageContentCardPreview.component";
+import ClinicCardContainer from "../../containers/ClinicCardContainer/ClinicCardContainer.container";
 
 import homePageImg from "../../assets/homepage_image.png";
-import IntroductionPart from "../../components/customized-components/IntroductionPart/IntroductionPart";
+import IntroductionPart from "../../components/customized-components/IntroductionPart/IntroductionPart.component";
 import { useHistory } from "react-router-dom";
 
 import "./HomePage.style.css";
@@ -15,10 +15,10 @@ const HomePage = () => {
   return (
     <div>
       <IntroductionPart homePageImg={homePageImg} />
-      <CardHomePageContentPreview />
+      <HomePageContentCardPreview />
       <div className="card-clinic-container">
         <div className="card-clinic-title">Top rated dental clinics</div>
-        <CardClinicContainer layoutDirection="row" />
+        <ClinicCardContainer layoutDirection="row" />
       </div>
       <Row justify="center">
         <Button

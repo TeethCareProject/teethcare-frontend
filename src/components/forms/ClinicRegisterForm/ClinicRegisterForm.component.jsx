@@ -7,17 +7,7 @@ import {
 } from "../../../validate/RegisterValidation";
 
 import LocationContainer from "../../../containers/LocationContainer/LocationContainer.container";
-
-const genderType = [
-  {
-    title: "Male",
-    value: "MALE",
-  },
-  {
-    title: "Female",
-    value: "FEMALE",
-  },
-];
+import { GenderType } from "../../../constants/GenderConstants";
 
 const ClinicRegisterForm = (props) => {
   const { Option } = Select;
@@ -71,7 +61,7 @@ const ClinicRegisterForm = (props) => {
               initialValue="MALE"
             >
               <Select defaultValue="MALE" placeholder="select your gender">
-                {genderType.map((gender) => (
+                {GenderType.map((gender) => (
                   <Option key={gender.value} value={gender.value}>
                     {gender.title}
                   </Option>
@@ -84,12 +74,6 @@ const ClinicRegisterForm = (props) => {
               rules={AttendantRegisterValidation.phone}
             >
               <Input placeholder="Phone number" />
-            </Form.Item>
-            <Form.Item
-              name="managerEmail"
-              rules={AttendantRegisterValidation.email}
-            >
-              <Input placeholder="Email" />
             </Form.Item>
           </div>
         </Col>
@@ -119,6 +103,12 @@ const ClinicRegisterForm = (props) => {
               rules={ClinicRegisterValidation.address}
             >
               <Input placeholder="Clinic's Address" />
+            </Form.Item>
+            <Form.Item
+              name="clinicEmail"
+              rules={ClinicRegisterValidation.email}
+            >
+              <Input placeholder="Email" />
             </Form.Item>
             <LocationContainer />
           </div>

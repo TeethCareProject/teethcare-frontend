@@ -2,19 +2,9 @@ import React from "react";
 import { Form, Input, Button, Select } from "antd";
 
 import { AttendantRegisterValidation } from "../../../validate/RegisterValidation";
+import { GenderType } from "../../../constants/GenderConstants";
 
 import "./UserRegisterForm.style.css";
-
-const genderType = [
-  {
-    title: "Male",
-    value: "MALE",
-  },
-  {
-    title: "Female",
-    value: "FEMALE",
-  },
-];
 
 const UserRegisterForm = (props) => {
   const { Option } = Select;
@@ -52,7 +42,7 @@ const UserRegisterForm = (props) => {
         initialValue="MALE"
       >
         <Select defaultValue="MALE" placeholder="select your gender">
-          {genderType.map((gender) => (
+          {GenderType.map((gender) => (
             <Option key={gender.value} value={gender.value}>
               {gender.title}
             </Option>

@@ -10,10 +10,6 @@ import "./RegisterPage.style.css";
 const RegisterPage = () => {
   const { TabPane } = Tabs;
 
-  function callback(key) {
-    console.log(key);
-  }
-
   return (
     <Fragment>
       <div className="register-page">
@@ -25,7 +21,7 @@ const RegisterPage = () => {
           <h2>
             Already have an account? <a href="/login">Login</a>
           </h2>
-          <Tabs defaultActiveKey="1" onChange={callback}>
+          <Tabs defaultActiveKey="1">
             <TabPane tab="User" key="1">
               <UserRegisterFormContainer />
             </TabPane>

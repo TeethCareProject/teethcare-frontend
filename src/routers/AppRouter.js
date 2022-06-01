@@ -5,6 +5,7 @@ import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import HomePage from "../pages/HomePage/HomePage";
 import ClinicPage from "../pages/ClinicPage/ClinicPage";
+import ClinicDetailPage from "../pages/ClinicDetailPage/ClinicDetailPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import CustomerServiceDashboardPage from "../pages/CustomerServiceDashboardPage/CustomerServiceDashboardPage";
 import DentistDashboardPage from "../pages/DentistDashboardPage/DentistDashboardPage";
@@ -28,6 +29,9 @@ const AppRouter = () => {
         </Route>
         <Route path={RoutePath.CLINIC_PAGE} exact>
           <ClinicPage />
+        </Route>
+        <Route path={"/clinic/:id"} exact>
+          <ClinicDetailPage />
         </Route>
         <Route path={RoutePath.REGISTER_PARE} exact>
           <RegisterPage />

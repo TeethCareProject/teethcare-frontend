@@ -1,16 +1,9 @@
 import React from "react";
 import { Button } from "antd";
 import { EnvironmentFilled, StarFilled } from "@ant-design/icons";
-import { useHistory } from "react-router-dom";
-import "./CardClinic.style.scss";
+import "./ClinicCard.style.scss";
 
-const CardClinicComponent = (props) => {
-  const history = useHistory();
-  const idClinic = props.id;
-
-  const onClick = (idClinic) => {
-    history.push("/clinics/" + idClinic);
-  };
+const ClinicCardComponent = (props) => {
   return (
     <div className="card-clinic-clinic-page-container">
       <div className="card-clinic-clinic-page-image">
@@ -38,7 +31,7 @@ const CardClinicComponent = (props) => {
             type="primary"
             shape="round"
             size="large"
-            onClick={() => onClick(idClinic)}
+            onClick={() => props.onClick(props.id)}
           >
             View details
           </Button>
@@ -48,4 +41,4 @@ const CardClinicComponent = (props) => {
   );
 };
 
-export default CardClinicComponent;
+export default ClinicCardComponent;

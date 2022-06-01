@@ -1,19 +1,18 @@
 import React from "react";
-import { Col, Row, Card } from "antd";
 import cardHomePage1 from "../../../assets/cardImg1.png";
 import cardHomePage2 from "../../../assets/cardImg2.png";
 import cardHomePage3 from "../../../assets/cardImg3.png";
 
-import CardHomePageContent from "../CardHomePageContent/CardHomePageContent";
+import HomePageContentCard from "../HomePageContentCard/HomePageContentCard.component";
 
-import "./CardHomePageContentPreview.style.css";
+import "./HomePageContentCardPreview.style.css";
 
-const CardHomePageContentPreview = () => {
+const HomePageContentCardPreview = () => {
   return (
     <div>
       <div className="site-card-wrapper" justify="space-around">
         <div className="site-card">
-          <CardHomePageContent
+          <HomePageContentCard
             context={{
               imgUrl: cardHomePage1,
               title: "24/24 Supporting",
@@ -23,7 +22,7 @@ const CardHomePageContentPreview = () => {
           />
         </div>
         <div className="site-card">
-          <CardHomePageContent
+          <HomePageContentCard
             context={{
               imgUrl: cardHomePage2,
               title: "Medical Check Up",
@@ -33,7 +32,7 @@ const CardHomePageContentPreview = () => {
           />
         </div>
         <div className="site-card">
-          <CardHomePageContent
+          <HomePageContentCard
             context={{
               imgUrl: cardHomePage3,
               title: "Best Offer",
@@ -47,4 +46,4 @@ const CardHomePageContentPreview = () => {
   );
 };
 
-export default CardHomePageContentPreview;
+export default HomePageContentCardPreview;

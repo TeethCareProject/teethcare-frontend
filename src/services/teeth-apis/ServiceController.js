@@ -1,3 +1,3 @@
 import { CallAPI } from "./axiosBase";
 
-export const getAllServicesAPI = () => CallAPI("/services", "GET");
+export const getAllServices = () => CallAPI("/services", "GET");

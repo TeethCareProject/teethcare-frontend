@@ -1,26 +1,31 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Col, Row, notification, Card } from "antd";
 import { StarFilled } from "@ant-design/icons";
 
 import clinicImg from "../../assets/clinicImg.png";
-
+import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { getClinicsAPI } from "../../services/teeth-apis/ClinicController";
-import setClinicStorageHandler from "../../redux/clinic/clinic.action";
 
-import CardClinicComponent from "../../components/customized-components/CardClinic/CardClinicComponent";
-import "./CardClinicContainer.style.scss";
+import ClinicCardComponent from "../../components/customized-components/ClinicCard/ClinicCard.component";
+import "./ClinicCardContainer.style.scss";
 
-const CardClinicContainer = ({ clinicData, layoutDirection }) => {
+const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
+  const history = useHistory();
+  const onClick = (idClinic) => {
+    history.push("/clinics/" + idClinic);
+  };
+
   const { Meta } = Card;
-  const dispatch = useDispatch();
-  const clinics = useSelector((state) => state.clinics.clinics);
+  const [clinics, setClinics] = useState([]);
+
+  var filterClinicArray = clinicData || clinics;
+
   useEffect(() => {
     const getClinic = async () => {
       try {
-        const clinicsArray = await getClinicsAPI();
-        dispatch(setClinicStorageHandler(clinicsArray.data));
+        const { data } = await getClinicsAPI();
+        setClinics(data.content);
       } catch (e) {
         notification["error"]({
           message: `Something went wrong! Try again latter!`,
@@ -36,7 +41,7 @@ const CardClinicContainer = ({ clinicData, layoutDirection }) => {
     <Fragment>
       {layoutDirection === "row" ? (
         <Row justify="space-between">
-          {clinics?.content
+          {clinics
             ?.filter((clinic) => clinic.id <= 4)
             .map((clinic, index) => (
               <Col key={index} span={6}>
@@ -74,9 +79,9 @@ const CardClinicContainer = ({ clinicData, layoutDirection }) => {
         </Row>
       ) : (
         <div className="card-clinic-preview">
-          {clinicData?.map((clinic, index) => (
+          {filterClinicArray?.map((clinic, index) => (
             <div key={index}>
-              <CardClinicComponent
+              <ClinicCardComponent
                 id={clinic.id}
                 imgSrc={clinicImg}
                 name={clinic.name}
@@ -84,6 +89,7 @@ const CardClinicContainer = ({ clinicData, layoutDirection }) => {
                 district={clinic.location.ward.district.name}
                 province={clinic.location.ward.district.province.name}
                 avgRatingScore={clinic.avgRatingScore}
+                onClick={onClick}
               />
             </div>
           ))}
@@ -93,4 +99,4 @@ const CardClinicContainer = ({ clinicData, layoutDirection }) => {
   );
 };
 
-export default CardClinicContainer;
+export default ClinicCardContainer;
