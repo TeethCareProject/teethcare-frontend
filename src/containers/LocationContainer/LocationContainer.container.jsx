@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { notification } from "antd";
 import { useLayoutEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { getLocationApi } from "../../services/teeth-apis/LocationController";
-import setProvincesHandler from "../../redux/location/location.action";
 import LocationSelectBlock from "../../components/customized-components/LocationSelectBlock/LocationSelectBlock";
 
 const LocationContainer = () => {
-  const dispatch = useDispatch();
-  const provinces = useSelector((state) => state.provinces.provinces);
+  // const provinces = useSelector((state) => state.provinces.provinces);
+  const [provinces, setProvinces] = useState([]);
 
   const [selectedProvince, setSelectedProvince] = useState();
   const [selectedDistrict, setSelectedDistrict] = useState();
@@ -17,8 +15,8 @@ const LocationContainer = () => {
   useLayoutEffect(() => {
     const getClinic = async () => {
       try {
-        const provinceArray = await getLocationApi();
-        dispatch(setProvincesHandler(provinceArray.data));
+        const { data } = await getLocationApi();
+        setProvinces(data);
       } catch (e) {
         notification["error"]({
           message: `Something went wrong! Try again latter!`,

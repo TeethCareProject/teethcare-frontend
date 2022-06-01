@@ -1,9 +1,16 @@
 import React from "react";
 import { Button } from "antd";
 import { EnvironmentFilled, StarFilled } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 import "./CardClinic.style.scss";
 
 const CardClinicComponent = (props) => {
+  const history = useHistory();
+  const idClinic = props.id;
+
+  const onClick = (idClinic) => {
+    history.push("/clinics/" + idClinic);
+  };
   return (
     <div className="card-clinic-clinic-page-container">
       <div className="card-clinic-clinic-page-image">
@@ -14,7 +21,7 @@ const CardClinicComponent = (props) => {
         <div className="card-clinic-specialization">
           {props.serviceArray?.map((service, index) => (
             <span key={index}>
-              {index == 0 ? "" : "-"} {service?.name}
+              {index === 0 ? "" : "-"} {service?.name}
             </span>
           ))}
         </div>
@@ -27,7 +34,12 @@ const CardClinicComponent = (props) => {
           <StarFilled style={{ color: "#FFCB45" }} />
         </div>
         <div className="card-clinic-clinic-page-button">
-          <Button type="primary" shape="round" size="large">
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            onClick={() => onClick(idClinic)}
+          >
             View details
           </Button>
         </div>

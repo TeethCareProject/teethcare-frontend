@@ -1,9 +1,15 @@
 import React from "react";
 import { Form, Button } from "antd";
 import LocationContainer from "../../../containers/LocationContainer/LocationContainer.container";
+import SelectComponent from "../../customized-components/SelectComponent/SelectComponent";
 import "./ClinicFilter.style.scss";
 
-const ClinicFilter = ({ onFinish }) => {
+const ClinicFilter = ({
+  onFinish,
+  services,
+  selectedService,
+  handleServiceChange,
+}) => {
   return (
     <div className="clinic-filter-part">
       <div>
@@ -18,7 +24,16 @@ const ClinicFilter = ({ onFinish }) => {
           className="clinic-filter"
           onFinish={onFinish}
         >
+          <Form.Item name="serviceList" label="Service">
+            <SelectComponent
+              optionArray={services}
+              placeholder="Select services"
+              value={selectedService}
+              onChange={handleServiceChange}
+            />
+          </Form.Item>
           <LocationContainer />
+
           <Form.Item>
             <Button
               type="primary"

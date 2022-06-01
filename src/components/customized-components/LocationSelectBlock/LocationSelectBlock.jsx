@@ -1,5 +1,5 @@
 import React from "react";
-import LocationSelect from "../LocationSelect/LocationSelect.component";
+import SelectComponent from "../SelectComponent/SelectComponent";
 import { Form } from "antd";
 import { ClinicRegisterValidation } from "../../../validate/RegisterValidation";
 
@@ -11,7 +11,7 @@ const LocationSelectBlock = (props) => {
         label="Province"
         // rules={ClinicRegisterValidation.province}
       >
-        <LocationSelect
+        <SelectComponent
           optionArray={props.provinces}
           placeholder="Select province"
           value={props.selectedProvince}
@@ -23,7 +23,7 @@ const LocationSelectBlock = (props) => {
         label="District"
         // rules={ClinicRegisterValidation.district}
       >
-        <LocationSelect
+        <SelectComponent
           optionArray={props.availableDistrict}
           placeholder="Select district"
           value={props.selectedDistrict}
@@ -32,7 +32,7 @@ const LocationSelectBlock = (props) => {
       </Form.Item>
       <Form.Item name="wardId" label="Ward">
         {/* // rules={ClinicRegisterValidation.ward} */}
-        <LocationSelect
+        <SelectComponent
           optionArray={props.availableWard}
           placeholder="Select ward"
           value={props.selectedWard}

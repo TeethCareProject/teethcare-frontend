@@ -14,10 +14,8 @@ import "./CardClinicContainer.style.scss";
 
 const CardClinicContainer = ({ clinicData, layoutDirection }) => {
   const { Meta } = Card;
-  console.log(clinicData);
   const dispatch = useDispatch();
   const clinics = useSelector((state) => state.clinics.clinics);
-  console.log(clinics);
   useEffect(() => {
     const getClinic = async () => {
       try {
@@ -79,6 +77,7 @@ const CardClinicContainer = ({ clinicData, layoutDirection }) => {
           {clinicData?.map((clinic, index) => (
             <div key={index}>
               <CardClinicComponent
+                id={clinic.id}
                 imgSrc={clinicImg}
                 name={clinic.name}
                 serviceArray={clinic.serviceOfClinicResponses}
@@ -86,21 +85,6 @@ const CardClinicContainer = ({ clinicData, layoutDirection }) => {
                 province={clinic.location.ward.district.province.name}
                 avgRatingScore={clinic.avgRatingScore}
               />
-              {/* <Card
-                hoverable
-                style={{ width: 240 }}
-                cover={<img alt="example" src={clinicImg} />}
-              >
-                <Meta
-                  title={`${clinic?.name} - ${clinic.location?.address}`}
-                  description={
-                    <div className="card-home-page-rating">
-                      <div>{clinic.avgRatingScore}</div>
-                      <StarFilled style={{ color: "#FFCB45" }} />
-                    </div>
-                  }
-                />
-              </Card> */}
             </div>
           ))}
         </div>
