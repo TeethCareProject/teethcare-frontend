@@ -46,6 +46,7 @@ const ClinicPreviewContainer = () => {
     try {
       const { data } = await getClinicsAPI();
       setClinics(data);
+      console.log(data);
     } catch (e) {
       notification["error"]({
         message: e,
