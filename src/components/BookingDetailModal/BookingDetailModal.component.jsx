@@ -5,12 +5,10 @@ import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
 
 const BookingDetailModalComponent = ({ bookingData }) => {
-  console.log(bookingData);
-
   return (
     <>
-      <Row>
-        <Col span={4}>
+      <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
+        <Col>
           <Avatar size={48} icon={<CalendarOutlined />} />
         </Col>
         <Col span={10}>
@@ -43,29 +41,24 @@ const BookingDetailModalComponent = ({ bookingData }) => {
         <DescriptionsItem label="Description">
           {bookingData?.description}
         </DescriptionsItem>
-        <Row align="center">
-          <Col span={21}>
-            <Descriptions title="Services"></Descriptions>
-            <List
-              itemLayout="horizontal"
-              dataSource={bookingData?.services ? bookingData?.services : []}
-              renderItem={(service) => (
-                <List.Item>
-                  <List.Item.Meta
-                    avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
-                    title={
-                      <Typography.Title
-                        level={5}
-                      >{`Service name: ${service.name}`}</Typography.Title>
-                    }
-                    description={`Description: ${service.description}`}
-                  />
-                </List.Item>
-              )}
-            />
-          </Col>
-        </Row>
       </Descriptions>
+      <List
+        itemLayout="horizontal"
+        dataSource={bookingData?.services ? bookingData?.services : []}
+        renderItem={(service) => (
+          <List.Item>
+            <List.Item.Meta
+              avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
+              title={
+                <Typography.Title
+                  level={5}
+                >{`Service name: ${service.name}`}</Typography.Title>
+              }
+              description={`Description: ${service.description}`}
+            />
+          </List.Item>
+        )}
+      />
     </>
   );
 };

@@ -12,3 +12,6 @@ export const getAllBooking = (options) =>
 
 export const getBookingById = (bookingId) =>
   CallAPI("/bookings/" + bookingId, "GET");
+
+export const evaluateBooking = (bookingId, isAccepted) =>
+  CallAPI("/bookings/", "PUT", { bookingId, isAccepted });
