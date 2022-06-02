@@ -13,7 +13,6 @@ const ServiceDetailContainer = ({ serviceId }) => {
     try {
       const { data } = await getServiceById(serviceId);
       setService(data);
-      console.log(data);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
