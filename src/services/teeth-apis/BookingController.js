@@ -1,17 +1,18 @@
+import { BOOKING_END_POINT } from "../end-points/BookingEndPoints";
 import { CallAPI } from "./axiosBase";
 
 export const bookService = (bookingData) =>
-  CallAPI("/bookings", "POST", {
+  CallAPI(`${BOOKING_END_POINT}`, "POST", {
     description: bookingData.description,
     desiredCheckingTime: bookingData.desiredCheckingTime,
     serviceId: bookingData.serviceId,
   });
 
 export const getAllBooking = (options) =>
-  CallAPI("/bookings", "GET", {}, { ...options });
+  CallAPI(`${BOOKING_END_POINT}`, "GET", {}, { ...options });
 
 export const getBookingById = (bookingId) =>
-  CallAPI("/bookings/" + bookingId, "GET");
+  CallAPI(`${BOOKING_END_POINT}/${bookingId}`, "GET");
 
 export const evaluateBooking = (bookingId, isAccepted) =>
-  CallAPI("/bookings/", "PUT", { bookingId, isAccepted });
+  CallAPI(`${BOOKING_END_POINT}`, "PUT", { bookingId, isAccepted });
