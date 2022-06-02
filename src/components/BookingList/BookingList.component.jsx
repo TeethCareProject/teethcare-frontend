@@ -14,11 +14,11 @@ const BookingListComponent = ({ bookingListData }) => {
             title={
               <Typography.Title
                 level={5}
-              >{`Booking Id: ${booking.id}`}</Typography.Title>
+              >{`Booking Id: ${booking?.id} - Status: ${booking?.status}`}</Typography.Title>
             }
-            description={`Service: ${booking?.services[0]?.name} - Clinic: ${booking?.clinicName}`}
+            description={`Service: ${booking?.services[0]?.name} - Clinic: ${booking?.clinic?.name}`}
           />
-          <Typography>{`${booking.description}`}</Typography>
+          <Typography>{`${booking?.description}`}</Typography>
           <Button type="link" onClick={() => booking?.onClick()}>
             Xem chi tiết
           </Button>

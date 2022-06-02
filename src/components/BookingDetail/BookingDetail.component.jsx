@@ -10,7 +10,6 @@ import {
 import { ContainerOutlined } from "@ant-design/icons";
 import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import { convertMomentToMilliseconds } from "../../utils/convert.utils";
 
 const BookingDetailComponent = ({ bookingData }) => {
   return (
@@ -18,10 +17,12 @@ const BookingDetailComponent = ({ bookingData }) => {
       <Row>
         <Col span={16}>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Typography.Title level={5}>{bookingData?.id}</Typography.Title>
+            <Typography.Title
+              level={5}
+            >{`Booking Id: ${bookingData?.id}`}</Typography.Title>
             <Typography>{`Status: ${bookingData?.status}`}</Typography>
           </div>
-          <Typography.Text>{bookingData?.clinicName}</Typography.Text>
+          <Typography.Text>{`Clinic: ${bookingData?.clinic?.name}`}</Typography.Text>
         </Col>
       </Row>
       <Divider />
@@ -29,10 +30,12 @@ const BookingDetailComponent = ({ bookingData }) => {
         <Col span={21}>
           <Descriptions title="Booking Info">
             <DescriptionsItem label="Patient name" span={24}>
-              Hellu
+              {bookingData?.patient?.firstName +
+                " " +
+                bookingData?.patient?.lastName}
             </DescriptionsItem>
             <DescriptionsItem label="Phone number" span={24}>
-              0986354698
+              {bookingData?.patient?.phone}
             </DescriptionsItem>
             <DescriptionsItem label="Examination time" span={24}>
               {bookingData?.examinationTime}
@@ -41,13 +44,13 @@ const BookingDetailComponent = ({ bookingData }) => {
         </Col>
       </Row>
       <Divider />
-      {bookingData?.customerServiceName ? (
+      {bookingData?.customerService ? (
         <>
           <Row align="center">
             <Col span={21}>
               <Descriptions title="Customer service incharge">
                 <DescriptionsItem label="Name" span={24}>
-                  {bookingData.customerServiceName}
+                  {bookingData?.customerService?.name}
                 </DescriptionsItem>
               </Descriptions>
             </Col>
@@ -55,13 +58,13 @@ const BookingDetailComponent = ({ bookingData }) => {
           <Divider />
         </>
       ) : null}
-      {bookingData?.dentistName ? (
+      {bookingData?.dentist ? (
         <>
           <Row align="center">
             <Col span={21}>
               <Descriptions title="Dentist incharge">
                 <DescriptionsItem label="Name" span={24}>
-                  {bookingData.dentistName}
+                  {bookingData.dentist?.name}
                 </DescriptionsItem>
               </Descriptions>
             </Col>
