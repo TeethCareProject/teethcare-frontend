@@ -3,9 +3,11 @@ import { StarOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import { Button, Card } from "antd";
 import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
+import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";
 
-const ClinicDetailComponent = ({ currentClinic }) => {
+const ClinicDetailComponent = ({ currentClinic, feedback }) => {
   const { Meta } = Card;
+  console.log(feedback);
 
   return (
     <>
@@ -21,7 +23,6 @@ const ClinicDetailComponent = ({ currentClinic }) => {
             {currentClinic?.location?.ward?.district.name}{" "}
           </div>
           <div>
-            <div></div>
             <div className="clinic-detail-page-information-rating">
               <StarOutlined /> {currentClinic?.avgRatingScore}
             </div>
@@ -43,6 +44,10 @@ const ClinicDetailComponent = ({ currentClinic }) => {
       </div>
       <div className="clinic-detail-page-description">
         {currentClinic.description}
+      </div>
+      <div className="clinic-detail-page-feedback-container">
+        <div style={{ fontSize: "2em", fontWeight: "bold" }}>Feedbacks</div>
+        <FeedbackPreviewComponent feedbacks={feedback.content} />
       </div>
       <div className="clinic-detail-page-service-container">
         <div className="clinic-detail-page-services-title">Our services:</div>

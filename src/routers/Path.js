@@ -5,6 +5,7 @@ const RoutePath = {
   DASHBOARD_PAGE: "/dashboard",
   INTERNAL_ERROR_PAGE: "/internal-error",
   LOGIN_PAGE: "/login",
+  FEEDBACK: "/feedbacks",
 };
 
 export default RoutePath;
