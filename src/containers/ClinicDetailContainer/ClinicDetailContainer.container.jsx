@@ -8,20 +8,35 @@ import "./ClinicDetailContainer.style.scss";
 
 const ClinicDetailContainer = ({ clinicId }) => {
   const [currentClinic, setCurrentClinic] = useState({});
+  const [feedback, setFeedback] = useState([]);
+
+  const getClinic = async () => {
+    try {
+      const { data } = await getClinicById(clinicId);
+      setCurrentClinic(data);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching clinic, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
+  const getFeedback = async () => {
+    try {
+      const { data } = await getClinicById(clinicId);
+      setCurrentClinic(data);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching clinic, try again later`,
+        duration: 2,
+      });
+    }
+  };
 
   useEffect(() => {
-    const getClinic = async () => {
-      try {
-        const { data } = await getClinicById(clinicId);
-        setCurrentClinic(data);
-      } catch (e) {
-        notification["error"]({
-          message: `Something went wrong! Try again latter!`,
-          description: `There is problem while fetching clinic, try again later`,
-          duration: 2,
-        });
-      }
-    };
     getClinic();
   }, []);
   return (

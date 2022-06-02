@@ -45,17 +45,32 @@ const LocationInputContainer = () => {
   };
 
   return (
-    <LocationInputComponent
-      provinces={provinces}
-      selectedProvince={selectedProvince}
-      selectedDistrict={selectedDistrict}
-      selectedWard={selectedWard}
-      handleProvinceChange={handleProvinceChange}
-      handleDistrictChange={handleDistrictChange}
-      handleWardChange={handleWardChange}
-      availableDistrict={availableDistrict}
-      availableWard={availableWard}
-    />
+    <>
+      <LocationInputComponent
+        name="provinceId"
+        label="Province"
+        placeholder="Select province"
+        arrayOption={provinces}
+        selectedValue={selectedProvince}
+        handleValueChange={handleProvinceChange}
+      />
+      <LocationInputComponent
+        name="districtId"
+        label="District"
+        placeholder="Select district"
+        selectedValue={selectedDistrict}
+        handleValueChange={handleDistrictChange}
+        arrayOption={availableDistrict}
+      />
+      <LocationInputComponent
+        name="wardId"
+        label="Ward"
+        placeholder="Select district"
+        selectedValue={selectedWard}
+        handleValueChange={handleWardChange}
+        arrayOption={availableWard}
+      />
+    </>
   );
 };
 
