@@ -3,18 +3,17 @@ import { managerRegisterAPI } from "../../../services/teeth-apis/RegisterControl
 import { notification } from "antd";
 import { useHistory } from "react-router-dom";
 
-import ClinicRegisterForm from "../../../components/forms/ClinicRegisterForm/ClinicRegisterForm.component";
+import RoutePath from "../../../routers/Path";
+
+import ClinicRegisterFormComponent from "../../../components/forms/ClinicRegisterFormComponent/ClinicRegisterForm.component";
 import ClinicFormValueToClinicRegisterData from "../../../mapper/ClinicFormValueToClinicRegisterData";
 
 const ClinicRegisterFormContainer = () => {
   const history = useHistory();
   const onFinish = async (values) => {
     try {
-      const { data } = await managerRegisterAPI(
-        ClinicFormValueToClinicRegisterData(values)
-      );
-      console.log(data);
-      history.push("/login");
+      await managerRegisterAPI(ClinicFormValueToClinicRegisterData(values));
+      history.push(RoutePath.LOGIN_PAGE);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -26,7 +25,7 @@ const ClinicRegisterFormContainer = () => {
 
   return (
     <>
-      <ClinicRegisterForm onFinishHandle={onFinish} />
+      <ClinicRegisterFormComponent onFinishHandle={onFinish} />
     </>
   );
 };

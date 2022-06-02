@@ -4,11 +4,11 @@ import ClinicCardContainer from "../ClinicCardContainer/ClinicCardContainer.cont
 import { filterClinicAPI } from "../../services/teeth-apis/ClinicController";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
 import { getClinicsAPI } from "../../services/teeth-apis/ClinicController";
-import LocationContainer from "../LocationContainer/LocationContainer.container";
+import LocationInputContainer from "../LocationInputContainer/LocationInputContainer.container";
 
-import "./ClinicContainer.style.scss";
+import "./ClinicPreviewContainer.style.scss";
 
-const ClinicContainer = () => {
+const ClinicPreviewContainer = () => {
   const { Option } = Select;
 
   const [clinics, setClinics] = useState([]);
@@ -30,29 +30,31 @@ const ClinicContainer = () => {
     }
   };
 
+  const getService = async () => {
+    try {
+      const { data } = await getAllServices();
+      setServices(data.content);
+    } catch (e) {
+      notification["error"]({
+        message: e,
+        duration: 2,
+      });
+    }
+  };
+
+  const getClinic = async () => {
+    try {
+      const { data } = await getClinicsAPI();
+      setClinics(data);
+    } catch (e) {
+      notification["error"]({
+        message: e,
+        duration: 2,
+      });
+    }
+  };
+
   useLayoutEffect(() => {
-    const getService = async () => {
-      try {
-        const { data } = await getAllServices();
-        setServices(data.content);
-      } catch (e) {
-        notification["error"]({
-          message: e,
-          duration: 2,
-        });
-      }
-    };
-    const getClinic = async () => {
-      try {
-        const { data } = await getClinicsAPI();
-        setClinics(data);
-      } catch (e) {
-        notification["error"]({
-          message: e,
-          duration: 2,
-        });
-      }
-    };
     getService();
     getClinic();
     onFinish();
@@ -93,7 +95,7 @@ const ClinicContainer = () => {
                 ))}
               </Select>
             </Form.Item>
-            <LocationContainer />
+            <LocationInputContainer />
 
             <Form.Item>
               <Button
@@ -117,4 +119,4 @@ const ClinicContainer = () => {
   );
 };
 
-export default ClinicContainer;
+export default ClinicPreviewContainer;

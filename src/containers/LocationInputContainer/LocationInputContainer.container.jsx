@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { notification } from "antd";
 import { useLayoutEffect } from "react";
 import { getLocationApi } from "../../services/teeth-apis/LocationController";
-import LocationSelectBlock from "../../components/customized-components/LocationSelectBlock/LocationSelectBlock.component";
+import LocationInputComponent from "../../components/customized-components/LocationInput/LocationInput.component";
 
-const LocationContainer = () => {
+const LocationInputContainer = () => {
   // const provinces = useSelector((state) => state.provinces.provinces);
   const [provinces, setProvinces] = useState([]);
 
@@ -45,7 +45,7 @@ const LocationContainer = () => {
   };
 
   return (
-    <LocationSelectBlock
+    <LocationInputComponent
       provinces={provinces}
       selectedProvince={selectedProvince}
       selectedDistrict={selectedDistrict}
@@ -59,4 +59,4 @@ const LocationContainer = () => {
   );
 };
 
-export default LocationContainer;
+export default LocationInputContainer;

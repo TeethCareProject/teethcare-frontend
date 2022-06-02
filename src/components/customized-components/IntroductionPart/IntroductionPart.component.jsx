@@ -4,7 +4,7 @@ import { SearchOutlined } from "@ant-design/icons";
 
 import "./IntroductionPart.style.css";
 
-const IntroductionPart = ({ homePageImg }) => {
+const IntroductionPartComponent = ({ homePageImg }) => {
   return (
     <div className="introduction-part">
       <Row justify="space-around" align="middle">
@@ -32,4 +32,4 @@ const IntroductionPart = ({ homePageImg }) => {
   );
 };
 
-export default IntroductionPart;
+export default IntroductionPartComponent;

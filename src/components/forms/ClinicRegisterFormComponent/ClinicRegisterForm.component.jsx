@@ -6,10 +6,10 @@ import {
   ClinicRegisterValidation,
 } from "../../../validate/RegisterValidation";
 
-import LocationContainer from "../../../containers/LocationContainer/LocationContainer.container";
+import LocationInputContainer from "../../../containers/LocationInputContainer/LocationInputContainer.container";
 import { GenderType } from "../../../constants/GenderConstants";
 
-const ClinicRegisterForm = (props) => {
+const ClinicRegisterFormComponent = (props) => {
   const { Option } = Select;
 
   return (
@@ -110,7 +110,7 @@ const ClinicRegisterForm = (props) => {
             >
               <Input placeholder="Email" />
             </Form.Item>
-            <LocationContainer />
+            <LocationInputContainer />
           </div>
         </Col>
       </Row>
@@ -129,4 +129,4 @@ const ClinicRegisterForm = (props) => {
   );
 };
 
-export default ClinicRegisterForm;
+export default ClinicRegisterFormComponent;

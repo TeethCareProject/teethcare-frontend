@@ -2,15 +2,17 @@ import React from "react";
 import { notification } from "antd";
 import { patientRegisterAPI } from "../../../services/teeth-apis/RegisterController";
 import { useHistory } from "react-router-dom";
-import UserRegisterForm from "../../../components/forms/UserRegisterForm/UserRegisterForm.component";
+import UserRegisterFormComponent from "../../../components/forms/UserRegisterForm/UserRegisterForm.component";
 import UserFormValueToUserRegisterData from "../../../mapper/UserFormValueToUserRegisterData";
+
+import RoutePath from "../../../routers/Path";
 const UserRegisterFormContainer = () => {
   const history = useHistory();
 
   const onFinish = async (values) => {
     try {
       await patientRegisterAPI(UserFormValueToUserRegisterData(values));
-      history.push("/login");
+      history.push(RoutePath.LOGIN_PAGE);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -21,7 +23,7 @@ const UserRegisterFormContainer = () => {
   };
   return (
     <>
-      <UserRegisterForm onFinish={onFinish} />
+      <UserRegisterFormComponent onFinish={onFinish} />
     </>
   );
 };

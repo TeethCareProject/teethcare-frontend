@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Col, Row, notification, Card } from "antd";
 import { StarFilled } from "@ant-design/icons";
+import RoutePath from "../../routers/Path";
 
 import clinicImg from "../../assets/clinicImg.png";
 import { useHistory } from "react-router-dom";
@@ -12,8 +13,9 @@ import "./ClinicCardContainer.style.scss";
 
 const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
   const history = useHistory();
+
   const onClick = (idClinic) => {
-    history.push("/clinics/" + idClinic);
+    history.push(RoutePath.CLINIC_PAGE + "/" + idClinic);
   };
 
   const { Meta } = Card;
@@ -21,19 +23,20 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
 
   var filterClinicArray = clinicData || clinics;
 
+  const getClinic = async () => {
+    try {
+      const { data } = await getClinicsAPI();
+      setClinics(data.content);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching clinic, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
   useEffect(() => {
-    const getClinic = async () => {
-      try {
-        const { data } = await getClinicsAPI();
-        setClinics(data.content);
-      } catch (e) {
-        notification["error"]({
-          message: `Something went wrong! Try again latter!`,
-          description: `There is problem while fetching clinic, try again later`,
-          duration: 2,
-        });
-      }
-    };
     getClinic();
   }, []);
 
@@ -82,14 +85,8 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
           {filterClinicArray?.map((clinic, index) => (
             <div key={index}>
               <ClinicCardComponent
-                id={clinic.id}
-                imgSrc={clinicImg}
-                name={clinic.name}
-                serviceArray={clinic.serviceOfClinicResponses}
-                district={clinic.location.ward.district.name}
-                province={clinic.location.ward.district.province.name}
-                avgRatingScore={clinic.avgRatingScore}
-                onClick={onClick}
+                clinic={clinic}
+                onClick={() => onClick(clinic.id)}
               />
             </div>
           ))}

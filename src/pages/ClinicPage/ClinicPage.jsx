@@ -1,9 +1,9 @@
 import React from "react";
 import "./ClinicPage.style.scss";
-import ClinicContainer from "../../containers/ClinicContainer/ClinicContainer.container";
+import ClinicPreviewContainer from "../../containers/ClinicPreviewContainer/ClinicPreviewContainer.container";
 
 const ClinicPage = () => {
-  return <ClinicContainer />;
+  return <ClinicPreviewContainer />;
 };
 
 export default ClinicPage;

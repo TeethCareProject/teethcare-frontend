@@ -3,16 +3,16 @@ import cardHomePage1 from "../../../assets/cardImg1.png";
 import cardHomePage2 from "../../../assets/cardImg2.png";
 import cardHomePage3 from "../../../assets/cardImg3.png";
 
-import HomePageContentCard from "../HomePageContentCard/HomePageContentCard.component";
+import HomePageContentCardComponent from "../HomePageContentCard/HomePageContentCard.component";
 
 import "./HomePageContentCardPreview.style.css";
 
-const HomePageContentCardPreview = () => {
+const HomePageContentCardPreviewComponent = () => {
   return (
     <div>
       <div className="site-card-wrapper" justify="space-around">
         <div className="site-card">
-          <HomePageContentCard
+          <HomePageContentCardComponent
             context={{
               imgUrl: cardHomePage1,
               title: "24/24 Supporting",
@@ -22,7 +22,7 @@ const HomePageContentCardPreview = () => {
           />
         </div>
         <div className="site-card">
-          <HomePageContentCard
+          <HomePageContentCardComponent
             context={{
               imgUrl: cardHomePage2,
               title: "Medical Check Up",
@@ -32,7 +32,7 @@ const HomePageContentCardPreview = () => {
           />
         </div>
         <div className="site-card">
-          <HomePageContentCard
+          <HomePageContentCardComponent
             context={{
               imgUrl: cardHomePage3,
               title: "Best Offer",
@@ -46,4 +46,4 @@ const HomePageContentCardPreview = () => {
   );
 };
 
-export default HomePageContentCardPreview;
+export default HomePageContentCardPreviewComponent;

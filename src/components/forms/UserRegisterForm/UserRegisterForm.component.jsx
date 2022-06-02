@@ -6,14 +6,10 @@ import { GenderType } from "../../../constants/GenderConstants";
 
 import "./UserRegisterForm.style.css";
 
-const UserRegisterForm = (props) => {
+const UserRegisterFormComponent = ({ onFinish }) => {
   const { Option } = Select;
   return (
-    <Form
-      name="normal_register"
-      className="register-form"
-      onFinish={props.onFinish}
-    >
+    <Form name="normal_register" className="register-form" onFinish={onFinish}>
       <Form.Item name="username" rules={AttendantRegisterValidation.username}>
         <Input placeholder="Username" />
       </Form.Item>
@@ -71,4 +67,4 @@ const UserRegisterForm = (props) => {
   );
 };
 
-export default UserRegisterForm;
+export default UserRegisterFormComponent;

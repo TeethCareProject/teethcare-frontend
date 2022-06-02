@@ -1,7 +1,7 @@
 import React from "react";
 import "./HomePageContentCard.style.css";
 
-const HomePageContentCard = ({ context }) => {
+const HomePageContentCardComponent = ({ context }) => {
   return (
     <div className="homepage-card-container">
       <div>
@@ -19,4 +19,4 @@ const HomePageContentCard = ({ context }) => {
   );
 };
 
-export default HomePageContentCard;
+export default HomePageContentCardComponent;

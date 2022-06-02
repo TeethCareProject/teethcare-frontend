@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Tabs } from "antd";
 import registerImg from "../../assets/register_image.png";
-
+import RouthPath from "../../routers/Path";
 import UserRegisterFormContainer from "../../containers/RegisterForm/UserRegisterForm/UserRegisterForm.container";
 import ClinicRegisterFormContainer from "../../containers/RegisterForm/ClinicRegisterForm/ClinicRegisterForm.container";
 
@@ -19,7 +19,7 @@ const RegisterPage = () => {
             Visit our <a href="/">Homepage</a>
           </h2>
           <h2>
-            Already have an account? <a href="/login">Login</a>
+            Already have an account? <a href={RouthPath.LOGIN_PAGE}>Login</a>
           </h2>
           <Tabs defaultActiveKey="1">
             <TabPane tab="User" key="1">

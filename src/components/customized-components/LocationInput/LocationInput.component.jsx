@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Select } from "antd";
 import { ClinicRegisterValidation } from "../../../validate/RegisterValidation";
 
-const LocationSelectBlock = (props) => {
+const LocationInputComponent = (props) => {
   const { Option } = Select;
   return (
     <>
@@ -61,4 +61,4 @@ const LocationSelectBlock = (props) => {
   );
 };
 
-export default LocationSelectBlock;
+export default LocationInputComponent;
