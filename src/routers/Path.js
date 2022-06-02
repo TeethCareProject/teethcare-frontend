@@ -6,6 +6,8 @@ const RoutePath = {
   INTERNAL_ERROR_PAGE: "/internal-error",
   LOGIN_PAGE: "/login",
   FEEDBACK: "/feedbacks",
+  SERVICE_ENDPOINT: "/services",
+  SERVICE: "/clinic/:clinicId/:serviceId",
 };
 
 export default RoutePath;

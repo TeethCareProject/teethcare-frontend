@@ -4,11 +4,11 @@ import { useParams } from "react-router";
 import ClinicDetailContainer from "../../containers/ClinicDetailContainer/ClinicDetailContainer.container";
 
 const ClinicDetailPage = () => {
-  const { id } = useParams();
+  const { clinicId } = useParams();
   return (
     <div>
       <div>
-        <ClinicDetailContainer clinicId={id} />
+        <ClinicDetailContainer clinicId={clinicId} />
       </div>
     </div>
   );
