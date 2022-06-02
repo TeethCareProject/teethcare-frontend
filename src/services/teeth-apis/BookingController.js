@@ -15,4 +15,4 @@ export const getBookingById = (bookingId) =>
   CallAPI(`${BOOKING_END_POINT}/${bookingId}`, "GET");
 
 export const evaluateBooking = (bookingId, isAccepted) =>
-  CallAPI(`${BOOKING_END_POINT}`, "PUT", { bookingId, isAccepted });
+  CallAPI(`${BOOKING_END_POINT}/accept`, "PUT", {}, { bookingId, isAccepted });

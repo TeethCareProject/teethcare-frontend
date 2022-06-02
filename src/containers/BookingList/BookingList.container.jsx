@@ -1,19 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  Input,
-  Form,
-  Row,
-  Col,
-  notification,
-  Button,
-  Pagination,
-  Modal,
-} from "antd";
+import { Input, Form, Row, Col, notification, Button, Pagination } from "antd";
 import BookingListComponent from "../../components/BookingList/BookingList.component";
 import { useForm } from "antd/lib/form/Form";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
-import BookingDetailContainer from "../BookingDetail/BookingDetail.container";
-import { CalendarOutlined } from "@ant-design/icons";
+import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
 
 const BookingListContainer = () => {
   const [searchValue, setSearchValue] = useState({
@@ -24,6 +14,7 @@ const BookingListContainer = () => {
   const [form] = useForm();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
+  const [neededBooking, setNeededBooking] = useState(null);
   const pageSize = 6;
 
   const fetchData = async (options) => {
@@ -38,11 +29,7 @@ const BookingListContainer = () => {
       const mapperData = data?.content?.map((booking) => ({
         ...booking,
         onClick: () => {
-          Modal.info({
-            closable: true,
-            icon: <CalendarOutlined />,
-            content: <BookingDetailContainer bookingId={booking.id} />,
-          });
+          setNeededBooking(booking?.id);
         },
       }));
 
@@ -78,7 +65,7 @@ const BookingListContainer = () => {
   useEffect(() => {
     fetchData({ size: pageSize, ...searchValue });
     setCurrentPage(1);
-  }, [searchValue]);
+  }, [searchValue, neededBooking]);
 
   useEffect(() => {
     fetchData({ size: pageSize, page: currentPage - 1, ...searchValue });
@@ -87,6 +74,10 @@ const BookingListContainer = () => {
   return (
     <>
       <SearchForm form={form} onFinish={onFinish} resetAction={resetAction} />
+      <BookingDetailModalContainer
+        bookingId={neededBooking}
+        setNeededBooking={setNeededBooking}
+      />
       <BookingListComponent bookingListData={bookingListData} />
       <div style={{ marginTop: "1rem" }}>
         <Pagination

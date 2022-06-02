@@ -1,6 +1,7 @@
 import { Button, Modal, notification, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import BookingDetailModalComponent from "../../components/BookingDetailModal/BookingDetailModal.component";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import {
   evaluateBooking,
   getBookingById,
@@ -57,10 +58,14 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       footer={false}
     >
       <BookingDetailModalComponent bookingData={bookingData} />
-      <Space>
-        <Button onClick={() => handleAssign(true)}>Process this booking</Button>
-        <Button onClick={() => handleAssign(false)}>Reject</Button>
-      </Space>
+      {bookingData?.status === BookingStatusConstants.PENDING ? (
+        <Space>
+          <Button onClick={() => handleAssign(true)}>
+            Process this booking
+          </Button>
+          <Button onClick={() => handleAssign(false)}>Reject</Button>
+        </Space>
+      ) : null}
     </Modal>
   );
 };

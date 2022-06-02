@@ -12,7 +12,7 @@ const BookingDetailModalComponent = ({ bookingData }) => {
           <Avatar size={48} icon={<CalendarOutlined />} />
         </Col>
         <Col span={10}>
-          <Typography>{`Booking ID: ${bookingData?.id}`}</Typography>
+          <Typography>{`Booking ID: ${bookingData?.id} - Status: ${bookingData?.status}`}</Typography>
           <Typography>{`Booking ID: ${bookingData?.clinic?.name}`}</Typography>
         </Col>
       </Row>
