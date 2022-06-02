@@ -7,7 +7,6 @@ import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.compone
 
 const ClinicDetailComponent = ({ currentClinic, feedback, onClick }) => {
   const { Meta } = Card;
-  console.log(feedback);
 
   return (
     <>

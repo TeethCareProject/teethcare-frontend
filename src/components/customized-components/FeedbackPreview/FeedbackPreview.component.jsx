@@ -3,7 +3,6 @@ import { Comment, Tooltip, Avatar } from "antd";
 import moment from "moment";
 
 const FeedbackPreviewComponent = ({ feedbacks }) => {
-  console.log(feedbacks);
   return feedbacks?.map((feedback, index) => (
     <Comment
       key={index}
