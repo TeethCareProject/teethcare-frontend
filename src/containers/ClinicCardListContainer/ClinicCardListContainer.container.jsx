@@ -140,7 +140,7 @@ const ClinicCardListContainer = () => {
         style={{ position: "fixed", left: "60px", bottom: "60px" }}
         total={totalElements}
         current={currentPage}
-        pageSize={3}
+        pageSize={pageSize}
         onChange={(page) => {
           setCurrentPage(page);
         }}
