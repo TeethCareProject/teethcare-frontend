@@ -6,7 +6,7 @@ import RoutePath from "../../routers/Path";
 import clinicImg from "../../assets/clinicImg.png";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
-import { getClinicsAPI } from "../../services/teeth-apis/ClinicController";
+import { getClinics } from "../../services/teeth-apis/ClinicController";
 
 import ClinicCardComponent from "../../components/customized-components/ClinicCard/ClinicCard.component";
 import "./ClinicCardContainer.style.scss";
@@ -15,7 +15,7 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
   const history = useHistory();
 
   const onClick = (idClinic) => {
-    history.push(RoutePath.CLINIC_PAGE + "/" + idClinic);
+    history.push(`${RoutePath.CLINIC_PAGE}/${idClinic}`);
   };
 
   const { Meta } = Card;
@@ -23,9 +23,9 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
 
   var filterClinicArray = clinicData || clinics;
 
-  const getClinic = async () => {
+  const fetchingClinic = async () => {
     try {
-      const { data } = await getClinicsAPI();
+      const { data } = await getClinics();
       setClinics(data.content);
     } catch (e) {
       notification["error"]({
@@ -37,7 +37,7 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
   };
 
   useEffect(() => {
-    getClinic();
+    fetchingClinic();
   }, []);
 
   return (

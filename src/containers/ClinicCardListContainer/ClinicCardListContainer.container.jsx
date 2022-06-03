@@ -1,14 +1,14 @@
 import React, { useState, useLayoutEffect } from "react";
 import { notification, Form, Button, Select } from "antd";
 import ClinicCardContainer from "../ClinicCardContainer/ClinicCardContainer.container";
-import { filterClinicAPI } from "../../services/teeth-apis/ClinicController";
+import { filterClinic } from "../../services/teeth-apis/ClinicController";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
-import { getClinicsAPI } from "../../services/teeth-apis/ClinicController";
+import { getClinics } from "../../services/teeth-apis/ClinicController";
 import LocationInputContainer from "../LocationInputContainer/LocationInputContainer.container";
 
-import "./ClinicPreviewContainer.style.scss";
+import "./ClinicCardListContainer.style.scss";
 
-const ClinicPreviewContainer = () => {
+const ClinicCardListContainer = () => {
   const { Option } = Select;
 
   const [clinics, setClinics] = useState([]);
@@ -19,7 +19,7 @@ const ClinicPreviewContainer = () => {
 
   const onFinish = async (values) => {
     try {
-      const { data } = await filterClinicAPI(values);
+      const { data } = await filterClinic(values);
       setFilteredClinic(data.content);
     } catch (e) {
       notification["error"]({
@@ -30,7 +30,7 @@ const ClinicPreviewContainer = () => {
     }
   };
 
-  const getService = async () => {
+  const fetchingService = async () => {
     try {
       const { data } = await getAllServices();
       setServices(data.content);
@@ -42,9 +42,9 @@ const ClinicPreviewContainer = () => {
     }
   };
 
-  const getClinic = async () => {
+  const fetchingClinic = async () => {
     try {
-      const { data } = await getClinicsAPI();
+      const { data } = await getClinics();
       setClinics(data);
     } catch (e) {
       notification["error"]({
@@ -55,7 +55,7 @@ const ClinicPreviewContainer = () => {
   };
 
   useLayoutEffect(() => {
-    Promise.all([getService(), getClinic(), onFinish()]);
+    Promise.all([fetchingService(), fetchingClinic(), onFinish()]);
   }, []);
 
   const handleServiceChange = (e) => {
@@ -117,4 +117,4 @@ const ClinicPreviewContainer = () => {
   );
 };
 
-export default ClinicPreviewContainer;
+export default ClinicCardListContainer;

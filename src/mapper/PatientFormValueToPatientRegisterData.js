@@ -1,4 +1,4 @@
-const UserFormValueToUserRegisterData = (values) => {
+const PatientFormValueToPatientRegisterData = (values) => {
   return {
     username: values.username,
     password: values.password,
@@ -11,4 +11,4 @@ const UserFormValueToUserRegisterData = (values) => {
   };
 };
 
-export default UserFormValueToUserRegisterData;
+export default PatientFormValueToPatientRegisterData;

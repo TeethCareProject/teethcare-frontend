@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { notification } from "antd";
 import { useLayoutEffect } from "react";
-import { getLocationApi } from "../../services/teeth-apis/LocationController";
+import { getLocation } from "../../services/teeth-apis/LocationController";
 import LocationInputComponent from "../../components/customized-components/LocationInput/LocationInput.component";
 
 const LocationInputContainer = () => {
@@ -13,19 +13,19 @@ const LocationInputContainer = () => {
   const [selectedWard, setSelectedWard] = useState();
 
   useLayoutEffect(() => {
-    const getClinic = async () => {
+    const fetchingLocationData = async () => {
       try {
-        const { data } = await getLocationApi();
+        const { data } = await getLocation();
         setProvinces(data);
       } catch (e) {
         notification["error"]({
           message: `Something went wrong! Try again latter!`,
-          description: `There is problem while fetching clinic, try again later`,
+          description: `There is problem while fetching data, try again later`,
           duration: 2,
         });
       }
     };
-    getClinic();
+    fetchingLocationData();
   }, []);
   const availableDistrict = provinces?.find(
     (c) => c.id === selectedProvince

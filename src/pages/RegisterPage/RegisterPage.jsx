@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { Tabs } from "antd";
 import registerImg from "../../assets/register_image.png";
-import RouthPath from "../../routers/Path";
-import UserRegisterFormContainer from "../../containers/RegisterForm/UserRegisterForm/UserRegisterForm.container";
+import RoutePath from "../../routers/Path";
+import PatientRegisterFormContainer from "../../containers/RegisterForm/PatientRegisterForm/PatientRegisterForm.container";
 import ClinicRegisterFormContainer from "../../containers/RegisterForm/ClinicRegisterForm/ClinicRegisterForm.container";
 
 import "./RegisterPage.style.css";
@@ -16,14 +16,14 @@ const RegisterPage = () => {
         <div className="register-form-container">
           <div className="title">Teethcare</div>
           <h2>
-            Visit our <a href="/">Homepage</a>
+            Visit our <a href={RoutePath.HOME_PAGE}>Homepage</a>
           </h2>
           <h2>
-            Already have an account? <a href={RouthPath.LOGIN_PAGE}>Login</a>
+            Already have an account? <a href={RoutePath.LOGIN_PAGE}>Login</a>
           </h2>
           <Tabs defaultActiveKey="1">
             <TabPane tab="User" key="1">
-              <UserRegisterFormContainer />
+              <PatientRegisterFormContainer />
             </TabPane>
             <TabPane tab="Manager" key="2">
               <ClinicRegisterFormContainer />

@@ -4,9 +4,9 @@ import { Form, Input, Button, Select } from "antd";
 import { AttendantRegisterValidation } from "../../../validate/RegisterValidation";
 import { GenderType } from "../../../constants/GenderConstants";
 
-import "./UserRegisterForm.style.css";
+import "./PatientRegisterForm.style.css";
 
-const UserRegisterFormComponent = ({ onFinish }) => {
+const PatientRegisterFormComponent = ({ onFinish }) => {
   const { Option } = Select;
   return (
     <Form name="normal_register" className="register-form" onFinish={onFinish}>
@@ -67,4 +67,4 @@ const UserRegisterFormComponent = ({ onFinish }) => {
   );
 };
 
-export default UserRegisterFormComponent;
+export default PatientRegisterFormComponent;

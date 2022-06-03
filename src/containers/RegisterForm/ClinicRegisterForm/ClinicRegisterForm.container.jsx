@@ -1,5 +1,5 @@
 import React from "react";
-import { managerRegisterAPI } from "../../../services/teeth-apis/RegisterController";
+import { managerRegister } from "../../../services/teeth-apis/RegisterController";
 import { notification } from "antd";
 import { useHistory } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const ClinicRegisterFormContainer = () => {
   const history = useHistory();
   const onFinish = async (values) => {
     try {
-      await managerRegisterAPI(ClinicFormValueToClinicRegisterData(values));
+      await managerRegister(ClinicFormValueToClinicRegisterData(values));
       history.push(RoutePath.LOGIN_PAGE);
     } catch (e) {
       notification["error"]({

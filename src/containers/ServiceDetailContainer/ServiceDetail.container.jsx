@@ -9,11 +9,10 @@ import { useParams } from "react-router-dom";
 
 const ServiceDetailContainer = () => {
   const { serviceId } = useParams();
-  console.log(serviceId);
 
   const [service, setService] = useState({});
 
-  const getService = async () => {
+  const fetchingService = async () => {
     try {
       const { data } = await getServiceById(serviceId);
       setService(data);
@@ -27,7 +26,7 @@ const ServiceDetailContainer = () => {
   };
 
   useEffect(() => {
-    getService();
+    fetchingService();
   }, []);
 
   return <ServiceDetailComponent service={service} />;
