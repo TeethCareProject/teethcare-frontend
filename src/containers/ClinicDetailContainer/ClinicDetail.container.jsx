@@ -57,7 +57,7 @@ const ClinicDetailContainer = () => {
   return (
     <div className="clinic-detail-page-container">
       <ClinicDetailComponent
-        currentClinic={currentClinic}
+        clinicData={currentClinic}
         feedback={feedback}
         onClick={onClick}
       />

@@ -5,25 +5,26 @@ import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
 import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";
 
-const ClinicDetailComponent = ({ currentClinic, feedback, onClick }) => {
+const ClinicDetailComponent = ({ clinicData, feedback, onClick }) => {
   const { Meta } = Card;
 
   return (
     <>
       <div className="clinic-detail-page-information">
         <div className="clinic-detail-page-information-img">
+          {/* TODO: change image url */}
           <img src={avtImg} alt="clinic-img" />
         </div>
         <div>
           <div className="clinic-detail-page-information-name">
-            {currentClinic?.name}
+            {clinicData?.name}
           </div>
           <div className="clinic-detail-page-information-district">
-            {currentClinic?.location?.ward?.district.name}{" "}
+            {clinicData?.location?.ward?.district.name}{" "}
           </div>
           <div>
             <div className="clinic-detail-page-information-rating">
-              <StarOutlined /> {currentClinic?.avgRatingScore}
+              <StarOutlined /> {clinicData?.avgRatingScore}
             </div>
             <div></div>
           </div>
@@ -32,17 +33,18 @@ const ClinicDetailComponent = ({ currentClinic, feedback, onClick }) => {
           <div className="clinic-detail-page-information-address-title">
             <EnvironmentOutlined /> Clinic address
           </div>
-          <div>{currentClinic?.location?.address}</div>
+          <div>{clinicData?.location?.address}</div>
           <Button shape="round" type="primary" size="large">
             Send request to clinic
           </Button>
         </div>
       </div>
       <div className="clinic-detail-page-banner">
+        {/* TODO: change image url */}
         <img src={avtImg} alt="clinic-img" />
       </div>
       <div className="clinic-detail-page-description">
-        {currentClinic.description}
+        {clinicData.description}
       </div>
       <div className="clinic-detail-page-feedback-container">
         <div style={{ fontSize: "2em", fontWeight: "bold" }}>Feedbacks</div>
@@ -51,11 +53,12 @@ const ClinicDetailComponent = ({ currentClinic, feedback, onClick }) => {
       <div className="clinic-detail-page-service-container">
         <div className="clinic-detail-page-services-title">Our services:</div>
         <div className="clinic-detail-page-services">
-          {currentClinic.serviceOfClinicResponses?.map((service, index) => (
+          {clinicData.serviceOfClinicResponses?.map((service, index) => (
             <Card
               key={index}
               hoverable
               style={{ width: 400, height: 400 }}
+              //TODO: change img Url
               cover={
                 <img
                   alt="example"
