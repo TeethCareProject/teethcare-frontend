@@ -16,6 +16,7 @@ const LocationInputComponent = ({
       <Form.Item
         name={name}
         label={label}
+        //Remember to add rules in the future
         // rules={ClinicRegisterValidation.province}
       >
         <Select
