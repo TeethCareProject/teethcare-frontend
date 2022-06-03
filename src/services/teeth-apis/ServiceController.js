@@ -1,7 +1,7 @@
-import RoutePath from "../../routers/Path";
 import { CallAPI } from "./axiosBase";
+import { SERVICE_END_POINT } from "../end-points/ServiceEndPoint";
 
-export const getAllServices = () => CallAPI("/services", "GET");
+export const getAllServices = () => CallAPI(SERVICE_END_POINT, "GET");
 
 export const getServiceById = (serviceId) =>
-  CallAPI(RoutePath.SERVICE_ENDPOINT + "/" + serviceId, "GET");
+  CallAPI(SERVICE_END_POINT + "/" + serviceId, "GET");

@@ -5,8 +5,12 @@ import { notification } from "antd";
 import { getServiceById } from "../../services/teeth-apis/ServiceController";
 
 import ServiceDetailComponent from "../../components/customized-components/ServiceDetailComponent/ServiceDetail.component";
+import { useParams } from "react-router-dom";
 
-const ServiceDetailContainer = ({ serviceId }) => {
+const ServiceDetailContainer = () => {
+  const { serviceId } = useParams();
+  console.log(serviceId);
+
   const [service, setService] = useState({});
 
   const getService = async () => {
@@ -16,7 +20,7 @@ const ServiceDetailContainer = ({ serviceId }) => {
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while filter, try again later`,
+        description: `There is problem while fetching data, try again later`,
         duration: 2,
       });
     }
@@ -26,11 +30,7 @@ const ServiceDetailContainer = ({ serviceId }) => {
     getService();
   }, []);
 
-  return (
-    <div>
-      <ServiceDetailComponent service={service} />
-    </div>
-  );
+  return <ServiceDetailComponent service={service} />;
 };
 
 export default ServiceDetailContainer;

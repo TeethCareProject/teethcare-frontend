@@ -31,10 +31,10 @@ const AppRouter = () => {
         <Route path={RoutePath.CLINIC_PAGE} exact>
           <ClinicPage />
         </Route>
-        <Route path={RoutePath.CLINIC_PAGE + "/:clinicId"} exact>
+        <Route path={RoutePath.CLINIC_DETAIL_PAGE} exact>
           <ClinicDetailPage />
         </Route>
-        <Route path={RoutePath.SERVICE} exact>
+        <Route path={RoutePath.SERVICE_PAGE} exact>
           <ServiceDetailPage />
         </Route>
         <Route path={RoutePath.REGISTER_PARE} exact>
