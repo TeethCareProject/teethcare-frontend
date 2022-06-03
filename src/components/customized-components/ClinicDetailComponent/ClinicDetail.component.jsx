@@ -5,7 +5,7 @@ import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
 import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";
 
-const ClinicDetailComponent = ({ currentClinic, feedback }) => {
+const ClinicDetailComponent = ({ currentClinic, feedback, onClick }) => {
   const { Meta } = Card;
 
   return (
@@ -62,6 +62,7 @@ const ClinicDetailComponent = ({ currentClinic, feedback }) => {
                   src="http://australiandentalclinic.vn/wp-content/uploads/2017/02/teeth-whitening-sample1.jpg"
                 />
               }
+              onClick={() => onClick(service.id)}
             >
               <Meta title={service.name} description={service.description} />
             </Card>

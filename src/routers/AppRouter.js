@@ -6,6 +6,7 @@ import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import HomePage from "../pages/HomePage/HomePage";
 import ClinicPage from "../pages/ClinicPage/ClinicPage";
 import ClinicDetailPage from "../pages/ClinicDetailPage/ClinicDetailPage";
+import ServiceDetailPage from "../pages/ServiceDetailPage/ServiceDetailPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import CustomerServiceDashboardPage from "../pages/CustomerServiceDashboardPage/CustomerServiceDashboardPage";
 import DentistDashboardPage from "../pages/DentistDashboardPage/DentistDashboardPage";
@@ -30,8 +31,11 @@ const AppRouter = () => {
         <Route path={RoutePath.CLINIC_PAGE} exact>
           <ClinicPage />
         </Route>
-        <Route path={RoutePath.CLINIC_PAGE + "/:id"} exact>
+        <Route path={RoutePath.CLINIC_DETAIL_PAGE} exact>
           <ClinicDetailPage />
+        </Route>
+        <Route path={RoutePath.SERVICE_PAGE} exact>
+          <ServiceDetailPage />
         </Route>
         <Route path={RoutePath.REGISTER_PARE} exact>
           <RegisterPage />
