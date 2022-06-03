@@ -10,6 +10,7 @@ import LocationInputContainer from "../../../containers/LocationInputContainer/L
 import { GenderType } from "../../../constants/GenderConstants";
 
 const ClinicRegisterFormComponent = (props) => {
+  //use useForm next time
   const { Option } = Select;
 
   return (

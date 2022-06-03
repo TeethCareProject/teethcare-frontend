@@ -2,7 +2,7 @@ import React from "react";
 import { Row, Button } from "antd";
 
 import HomePageContentCardPreviewComponent from "../../components/customized-components/HomePageContentCardPreview/HomePageContentCardPreview.component";
-import ClinicCardContainer from "../../containers/ClinicCardContainer/ClinicCardContainer.container";
+import ClinicCardContainer from "../../containers/ClinicCard/ClinicCard.container";
 import RoutePath from "../../routers/Path";
 import homePageImg from "../../assets/homepage_image.png";
 import IntroductionPartComponent from "../../components/customized-components/IntroductionPart/IntroductionPart.component";

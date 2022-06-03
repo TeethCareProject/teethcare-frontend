@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router";
 
-import ClinicDetailContainer from "../../containers/ClinicDetailContainer/ClinicDetailContainer.container";
+import ClinicDetailContainer from "../../containers/ClinicDetail/ClinicDetail.container";
 
 const ClinicDetailPage = () => {
   const { id } = useParams();

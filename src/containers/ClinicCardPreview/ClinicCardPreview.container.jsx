@@ -1,14 +1,14 @@
 import React, { useState, useLayoutEffect } from "react";
 import { notification, Form, Button, Select } from "antd";
-import ClinicCardContainer from "../ClinicCardContainer/ClinicCardContainer.container";
+import ClinicCardContainer from "../ClinicCard/ClinicCard.container";
 import { filterClinicAPI } from "../../services/teeth-apis/ClinicController";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
 import { getClinicsAPI } from "../../services/teeth-apis/ClinicController";
 import LocationInputContainer from "../LocationInputContainer/LocationInputContainer.container";
 
-import "./ClinicPreviewContainer.style.scss";
+import "./ClinicCardPreviewContainer.style.scss";
 
-const ClinicPreviewContainer = () => {
+const ClinicCardPreviewContainer = () => {
   const { Option } = Select;
 
   const [clinics, setClinics] = useState([]);
@@ -119,4 +119,4 @@ const ClinicPreviewContainer = () => {
   );
 };
 
-export default ClinicPreviewContainer;
+export default ClinicCardPreviewContainer;
