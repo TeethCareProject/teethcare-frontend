@@ -56,9 +56,7 @@ const ClinicPreviewContainer = () => {
   };
 
   useLayoutEffect(() => {
-    getService();
-    getClinic();
-    onFinish();
+    Promise.all([getService(), getClinic(), onFinish()]);
   }, []);
 
   const handleServiceChange = (e) => {

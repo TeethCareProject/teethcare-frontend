@@ -43,8 +43,7 @@ const ClinicDetailContainer = () => {
   };
 
   useEffect(() => {
-    getClinic();
-    getClinicFeedback();
+    Promise.all([getClinic(), getClinicFeedback()]);
   }, []);
 
   const onClick = (serviceId) =>
