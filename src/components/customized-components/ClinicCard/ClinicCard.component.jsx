@@ -4,7 +4,7 @@ import { EnvironmentFilled, StarFilled } from "@ant-design/icons";
 import "./ClinicCard.style.scss";
 import clinicImg from "../../../assets/clinicImg.png";
 
-const ClinicCardComponent = ({ clinic, onClick }) => {
+const ClinicCardComponent = ({ clinic, handleClick }) => {
   return (
     <div className="card-clinic-clinic-page-container">
       <div className="card-clinic-clinic-page-image">
@@ -36,7 +36,7 @@ const ClinicCardComponent = ({ clinic, onClick }) => {
             type="primary"
             shape="round"
             size="large"
-            onClick={() => onClick(clinic.id)}
+            onClick={handleClick}
           >
             View details
           </Button>

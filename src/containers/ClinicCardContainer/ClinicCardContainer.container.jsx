@@ -86,7 +86,7 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
             <div key={index}>
               <ClinicCardComponent
                 clinic={clinic}
-                onClick={() => onClick(clinic.id)}
+                handleClick={() => onClick(clinic.id)}
               />
             </div>
           ))}
