@@ -24,7 +24,7 @@ const ClinicPreviewContainer = () => {
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while filter, try again later`,
+        description: `There is problem while fetching data, try again later`,
         duration: 2,
       });
     }
@@ -46,7 +46,6 @@ const ClinicPreviewContainer = () => {
     try {
       const { data } = await getClinicsAPI();
       setClinics(data);
-      console.log(data);
     } catch (e) {
       notification["error"]({
         message: e,

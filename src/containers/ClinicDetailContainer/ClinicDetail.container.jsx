@@ -36,7 +36,7 @@ const ClinicDetailContainer = () => {
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching feedbacks, try again later`,
+        description: `There is problem while fetching data, try again later`,
         duration: 2,
       });
     }
