@@ -28,13 +28,13 @@ const BookingManagementTableContainer = () => {
     try {
       let data;
       if (!options) {
-        data = (await getAllBooking({})).data.content;
+        data = (await getAllBooking({})).data;
       } else {
-        data = (await getAllBooking({ ...options })).data.content;
+        data = (await getAllBooking({ ...options })).data;
       }
 
       //map handle Action in here
-      const bookingData = data.map((booking) => ({
+      const bookingData = data?.content?.map((booking) => ({
         ...booking,
         getDetail: () => {
           setNeededBooking(booking.id);
@@ -42,6 +42,7 @@ const BookingManagementTableContainer = () => {
       }));
 
       setData(bookingData);
+      setTotalElements(data.totalElements);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,

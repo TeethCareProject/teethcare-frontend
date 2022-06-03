@@ -31,10 +31,18 @@ const BookingDetailModalComponent = ({ bookingData }) => {
       </Descriptions>
       <Descriptions title="Staff Incharge">
         <DescriptionsItem label="Customer service">
-          {bookingData?.customerService?.name}
+          {bookingData?.customerService
+            ? bookingData?.customerService?.firstName +
+              " " +
+              bookingData?.customerService?.lastName
+            : "Not available"}
         </DescriptionsItem>
         <DescriptionsItem label="Dentist">
-          {bookingData?.dentist?.name}
+          {bookingData?.dentist
+            ? bookingData?.dentist?.firstName +
+              " " +
+              bookingData?.dentist?.lastName
+            : "Not available"}
         </DescriptionsItem>
       </Descriptions>
       <Descriptions title="Booking Info">
