@@ -65,7 +65,13 @@ const BookingListContainer = () => {
   useEffect(() => {
     fetchData({ size: pageSize, ...searchValue });
     setCurrentPage(1);
-  }, [searchValue, neededBooking]);
+  }, [searchValue]);
+
+  useEffect(() => {
+    if (!neededBooking) {
+      fetchData({ size: pageSize, page: currentPage - 1, ...searchValue });
+    }
+  }, [neededBooking]);
 
   useEffect(() => {
     fetchData({ size: pageSize, page: currentPage - 1, ...searchValue });
