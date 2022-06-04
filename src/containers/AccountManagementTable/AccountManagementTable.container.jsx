@@ -15,6 +15,7 @@ import {
 } from "../../services/teeth-apis/AccountController";
 import { UserOutlined } from "@ant-design/icons";
 import AccountManagementTableColumn from "./AccountManagementTable.column";
+import SearchAccountForm from "../../components/customized-components/SearchAccountFormComponent/SearchAccountForm.component";
 
 const AccountManagementTableContainer = () => {
   const [data, setData] = useState([]);
@@ -27,7 +28,7 @@ const AccountManagementTableContainer = () => {
     id: null,
     role: null,
     status: null,
-    username: null,
+    fullName: null,
   });
 
   const onFinish = async (values) => {
@@ -35,7 +36,7 @@ const AccountManagementTableContainer = () => {
       id: values.id,
       role: values.role,
       status: values.status,
-      username: values.username,
+      fullName: values.fullName,
     });
   };
 
@@ -81,6 +82,7 @@ const AccountManagementTableContainer = () => {
 
   return (
     <>
+      <SearchAccountForm onFinish={onFinish} />
       <DetailForm
         accountId={neededAccount}
         setNeededAccount={setNeededAccount}
