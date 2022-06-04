@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Modal, Button } from "antd";
+import { Modal, Button, Tabs } from "antd";
 import CreateStaffModalComponent from "../../components/CreateStaffModalComponent/CreateStaffModal.component";
+import CustomerServiceCreateFormContainer from "../CustomerServiceCreateForm/CustomerServiceCreateForm.container";
+import DentistCreateFormContainer from "../DentistCreateForm/DentistCreateForm.container";
 
-const CreateStaffModal = () => {
+const CreateStaffModalContainer = () => {
+  const { TabPane } = Tabs;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -27,9 +30,18 @@ const CreateStaffModal = () => {
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
-      ></Modal>
+      >
+        <Tabs defaultActiveKey="1">
+          <TabPane tab="Customer Service" key="1">
+            <CustomerServiceCreateFormContainer />
+          </TabPane>
+          <TabPane tab="Dentist" key="2">
+            <DentistCreateFormContainer />
+          </TabPane>
+        </Tabs>
+      </Modal>
     </>
   );
 };
 
-export default CreateStaffModal;
+export default CreateStaffModalContainer;

@@ -1,8 +1,8 @@
 import React from "react";
 import { notification } from "antd";
-import { customerServiceCreateAccount } from "../../../services/teeth-apis/RegisterController";
+import { customerServiceCreateAccount } from "../../services/teeth-apis/RegisterController";
 //because format of cs register is the same as patient
-import PatientFormValueToPatientRegisterData from "../../../mapper/PatientFormValueToPatientRegisterData";
+import PatientFormValueToPatientRegisterData from "../../mapper/PatientFormValueToPatientRegisterData";
 
 import CustomerServiceRegisterFormComponent from "../../components/forms/CustomerServiceCreateFormComponent/CustomerServiceCreateForm.component";
 

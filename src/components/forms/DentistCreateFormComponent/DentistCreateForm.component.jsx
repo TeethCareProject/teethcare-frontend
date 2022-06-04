@@ -3,8 +3,6 @@ import { Form, Button, Input } from "antd";
 import UserInfoInputComponent from "../UserInfoInputComponent/UserInfoInput.component";
 import { UserRegisterValidation } from "../../../validate/RegisterValidation";
 
-import "./PatientRegisterForm.style.css";
-
 const DentistCreateFormComponent = ({ onFinishHandle }) => {
   return (
     <Form

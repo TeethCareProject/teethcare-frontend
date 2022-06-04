@@ -2,7 +2,7 @@ import React from "react";
 
 import { Form, Input, Button, Select, Row, Col } from "antd";
 import {
-  AttendantRegisterValidation,
+  UserRegisterValidation,
   ClinicRegisterValidation,
 } from "../../../validate/RegisterValidation";
 
@@ -21,43 +21,34 @@ const ClinicRegisterFormComponent = (props) => {
       <Row>
         <Col>
           <div className="user-register-form">
-            <Form.Item
-              name="username"
-              rules={AttendantRegisterValidation.username}
-            >
+            <Form.Item name="username" rules={UserRegisterValidation.username}>
               <Input placeholder="Username" />
             </Form.Item>
-            <Form.Item
-              name="password"
-              rules={AttendantRegisterValidation.password}
-            >
+            <Form.Item name="password" rules={UserRegisterValidation.password}>
               <Input type="password" placeholder="Password" />
             </Form.Item>
             <Form.Item
               name="confirmPassword"
               dependencies={["password"]}
-              rules={AttendantRegisterValidation.rePassword}
+              rules={UserRegisterValidation.rePassword}
             >
               <Input type="password" placeholder="Confirm Password" />
             </Form.Item>
             <Form.Item
               name="firstName"
-              rules={AttendantRegisterValidation.firstName}
+              rules={UserRegisterValidation.firstName}
             >
               <Input placeholder="First Name" />
             </Form.Item>
 
-            <Form.Item
-              name="lastName"
-              rules={AttendantRegisterValidation.lastName}
-            >
+            <Form.Item name="lastName" rules={UserRegisterValidation.lastName}>
               <Input placeholder="Last Name" />
             </Form.Item>
 
             <Form.Item
               name="gender"
               label="Gender"
-              rules={AttendantRegisterValidation.gender}
+              rules={UserRegisterValidation.gender}
               initialValue="MALE"
             >
               <Select defaultValue="MALE" placeholder="select your gender">
@@ -69,10 +60,7 @@ const ClinicRegisterFormComponent = (props) => {
               </Select>
             </Form.Item>
 
-            <Form.Item
-              name="phoneNumber"
-              rules={AttendantRegisterValidation.phone}
-            >
+            <Form.Item name="phoneNumber" rules={UserRegisterValidation.phone}>
               <Input placeholder="Phone number" />
             </Form.Item>
           </div>

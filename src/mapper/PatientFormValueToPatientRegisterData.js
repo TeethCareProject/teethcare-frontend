@@ -6,7 +6,7 @@ const PatientFormValueToPatientRegisterData = (values) => {
     firstName: values.firstName,
     lastName: values.lastName,
     gender: values.gender,
-    email: values.patientEmail,
+    email: values.email,
     phoneNumber: values.phoneNumber,
   };
 };

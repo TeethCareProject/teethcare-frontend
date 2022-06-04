@@ -15,9 +15,10 @@ const AccountManagementTableContainer = () => {
   const fetchData = async () => {
     try {
       const { data } = await getAllAccounts();
+      console.log(data);
 
       //map handle Action in here
-      const accountData = data.map((account) => ({
+      const accountData = data?.content.map((account) => ({
         ...account,
         getDetail: () => {
           setNeededAccount(account.id);
@@ -31,6 +32,7 @@ const AccountManagementTableContainer = () => {
         description: `There is problem while fetching account data, try again later`,
         duration: 2,
       });
+      console.log(e);
     }
   };
 

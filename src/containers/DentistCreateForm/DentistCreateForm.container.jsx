@@ -1,5 +1,5 @@
 import React from "react";
-import { dentistCreateAccount } from "../../../services/teeth-apis/RegisterController";
+import { dentistCreateAccount } from "../../services/teeth-apis/RegisterController";
 import { notification } from "antd";
 
 import DentistCreateFormComponent from "../../components/forms/DentistCreateFormComponent/DentistCreateForm.component";

@@ -2,7 +2,7 @@ import React from "react";
 import { notification } from "antd";
 import { patientRegister } from "../../../services/teeth-apis/RegisterController";
 import { useHistory } from "react-router-dom";
-import PatientRegisterFormComponent from "../../../components/forms/PatientRegisterForm/PatientRegisterForm.component";
+import PatientRegisterFormComponent from "../../../components/forms/PatientRegisterFormComponent/PatientRegisterForm.component";
 import PatientFormValueToPatientRegisterData from "../../../mapper/PatientFormValueToPatientRegisterData";
 import RoutePath from "../../../routers/Path";
 
