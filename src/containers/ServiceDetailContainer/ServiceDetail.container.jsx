@@ -4,7 +4,7 @@ import { notification } from "antd";
 
 import { getServiceById } from "../../services/teeth-apis/ServiceController";
 
-import ServiceDetailComponent from "../../components/customized-components/ServiceDetailComponent/ServiceDetail.component";
+import ServiceDetailComponent from "../../components/customized-components/ServiceDetail/ServiceDetail.component";
 import { useParams } from "react-router-dom";
 
 const ServiceDetailContainer = () => {
