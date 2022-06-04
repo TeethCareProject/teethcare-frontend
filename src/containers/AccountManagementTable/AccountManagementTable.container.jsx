@@ -1,4 +1,12 @@
-import { Avatar, Col, Descriptions, Modal, notification, Row } from "antd";
+import {
+  Avatar,
+  Col,
+  Pagination,
+  Descriptions,
+  Modal,
+  notification,
+  Row,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import {
@@ -11,12 +19,38 @@ import AccountManagementTableColumn from "./AccountManagementTable.column";
 const AccountManagementTableContainer = () => {
   const [data, setData] = useState([]);
   const [neededAccount, setNeededAccount] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalElements, setTotalElements] = useState(0);
+  const pageSize = 6;
 
-  const fetchData = async () => {
+  const [filterData, setFilterData] = useState({
+    id: null,
+    role: null,
+    status: null,
+    username: null,
+  });
+
+  const onFinish = async (values) => {
+    setFilterData({
+      id: values.id,
+      role: values.role,
+      status: values.status,
+      username: values.username,
+    });
+  };
+
+  const fetchData = async (options) => {
+    console.log(options);
     try {
-      const { data } = await getAllAccounts();
-      console.log(data);
-
+      let data;
+      if (!options) {
+        data = (await getAllAccounts({ pageSize: null })).data;
+        console.log(data);
+      } else {
+        data = (await getAllAccounts({ ...options })).data;
+        console.log(data);
+      }
+      setTotalElements(data.totalElements);
       //map handle Action in here
       const accountData = data?.content.map((account) => ({
         ...account,
@@ -37,8 +71,17 @@ const AccountManagementTableContainer = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData({ size: pageSize, ...filterData });
+    setCurrentPage(1);
+  }, [filterData]);
+
+  useEffect(() => {
+    fetchData({ size: pageSize, page: currentPage - 1, ...filterData });
+  }, [currentPage]);
+
+  const onPageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
@@ -50,6 +93,13 @@ const AccountManagementTableContainer = () => {
         tableTitle="User Management"
         columns={AccountManagementTableColumn}
         dataSource={data}
+        pagination={false}
+      />
+      <Pagination
+        total={totalElements}
+        current={currentPage}
+        pageSize={pageSize}
+        onChange={onPageChange}
       />
     </>
   );
