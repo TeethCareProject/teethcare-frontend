@@ -40,15 +40,12 @@ const AccountManagementTableContainer = () => {
   };
 
   const fetchData = async (options) => {
-    console.log(options);
     try {
       let data;
       if (!options) {
         data = (await getAllAccounts({ pageSize: null })).data;
-        console.log(data);
       } else {
         data = (await getAllAccounts({ ...options })).data;
-        console.log(data);
       }
       setTotalElements(data.totalElements);
       //map handle Action in here
@@ -66,7 +63,6 @@ const AccountManagementTableContainer = () => {
         description: `There is problem while fetching account data, try again later`,
         duration: 2,
       });
-      console.log(e);
     }
   };
 
