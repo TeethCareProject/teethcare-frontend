@@ -6,6 +6,7 @@ import {
   Modal,
   notification,
   Row,
+  Button,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
@@ -134,6 +135,10 @@ const DetailForm = ({ accountId, setNeededAccount }) => {
     setNeededAccount(null);
   };
 
+  const handleActive = () => {};
+
+  const handleDeactivate = () => {};
+
   return (
     <div>
       <Modal
@@ -178,6 +183,11 @@ const DetailForm = ({ accountId, setNeededAccount }) => {
             </Descriptions>
           </Col>
         </Row>
+        {accountDetail.status === "ACTIVE" ? (
+          <Button>Deactivate</Button>
+        ) : (
+          <Button>Activate</Button>
+        )}
       </Modal>
     </div>
   );

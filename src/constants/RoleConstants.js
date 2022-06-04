@@ -11,5 +11,5 @@ export const RoleConstantArray = [
   { title: "Customer Service", value: "CUSTOMER_SERVICE" },
   { title: "Dentist", value: "DENTIST" },
   { title: "Patient", value: "PATIENT" },
-  { title: "ADMIN", value: "ADMIN" },
+  { title: "Admin", value: "ADMIN" },
 ];
