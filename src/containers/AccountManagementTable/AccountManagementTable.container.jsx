@@ -13,6 +13,7 @@ import CommonTableComponent from "../../components/CommonTable/CommonTable.compo
 import {
   getAccountById,
   getAllAccounts,
+  setAccountStatus,
 } from "../../services/teeth-apis/AccountController";
 import { UserOutlined } from "@ant-design/icons";
 import AccountManagementTableColumn from "./AccountManagementTable.column";
@@ -42,6 +43,7 @@ const AccountManagementTableContainer = () => {
   };
 
   const fetchData = async (options) => {
+    console.log("a");
     try {
       let data;
       if (!options) {
@@ -87,6 +89,7 @@ const AccountManagementTableContainer = () => {
       <DetailForm
         accountId={neededAccount}
         setNeededAccount={setNeededAccount}
+        fetchData={fetchData}
       ></DetailForm>
       <CommonTableComponent
         tableTitle="User Management"
@@ -105,7 +108,7 @@ const AccountManagementTableContainer = () => {
 };
 
 //Please move this into a separate file if the logic becomes bigger
-const DetailForm = ({ accountId, setNeededAccount }) => {
+const DetailForm = ({ accountId, setNeededAccount, fetchData }) => {
   const [accountDetail, setAccountDetail] = useState({});
 
   const fetchAccountDetail = async () => {
@@ -135,9 +138,18 @@ const DetailForm = ({ accountId, setNeededAccount }) => {
     setNeededAccount(null);
   };
 
-  const handleActive = () => {};
-
-  const handleDeactivate = () => {};
+  const handleUpdateStatus = async (status) => {
+    try {
+      await setAccountStatus(status, accountId);
+      fetchData();
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while update account data, try again later`,
+        duration: 2,
+      });
+    }
+  };
 
   return (
     <div>
@@ -184,9 +196,25 @@ const DetailForm = ({ accountId, setNeededAccount }) => {
           </Col>
         </Row>
         {accountDetail.status === "ACTIVE" ? (
-          <Button>Deactivate</Button>
+          <Button
+            onClick={() =>
+              handleUpdateStatus({
+                status: "INACTIVE",
+              })
+            }
+          >
+            Deactivate
+          </Button>
         ) : (
-          <Button>Activate</Button>
+          <Button
+            onClick={() =>
+              handleUpdateStatus({
+                status: "ACTIVE",
+              })
+            }
+          >
+            Activate
+          </Button>
         )}
       </Modal>
     </div>

@@ -6,3 +6,7 @@ export const getAllAccounts = (options) =>
 
 export const getAccountById = (accountId) =>
   CallAPI(`${ACCOUNT_END_POINT}/${accountId}`, "GET");
+
+export const setAccountStatus = (status, accountId) => {
+  CallAPI(`${ACCOUNT_END_POINT}/${accountId}`, "PUT", status);
+};
