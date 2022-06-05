@@ -13,6 +13,10 @@ import {
   Space,
 } from "antd";
 import DescriptionsItem from "antd/lib/descriptions/Item";
+import {
+  convertMomentToDate,
+  convertMomentToMilliseconds,
+} from "../../utils/convert.utils";
 const { Option } = Select;
 
 const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
@@ -71,7 +75,18 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
           <Form.Item
             name="desiredCheckingTime"
             label="Desired timing"
-            rules={[{ required: true }]}
+            rules={[
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || convertMomentToDate(value) > Date.now()) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Booking date should be from tomorow")
+                  );
+                },
+              }),
+            ]}
           >
             <DatePicker />
           </Form.Item>

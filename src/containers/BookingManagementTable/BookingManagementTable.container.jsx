@@ -1,21 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { Input, Form, Row, Col, notification, Button, Pagination } from "antd";
-import BookingListComponent from "../../components/BookingList/BookingList.component";
+import { Form, notification, Row, Col, Button, Input, Pagination } from "antd";
 import { useForm } from "antd/lib/form/Form";
+import React, { useEffect, useState } from "react";
+import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
+import BookingManagementTableColumn from "./BookingManagementTable.column";
+import { useSelector } from "react-redux";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
 
-const BookingListContainer = () => {
+const BookingManagementTableContainer = () => {
+  const [form] = useForm();
   const [searchValue, setSearchValue] = useState({
     bookingId: "",
-    clinicName: "",
+    patientName: "",
+    patientPhone: "",
   });
-  const [bookingListData, setBookingListData] = useState([]);
-  const [form] = useForm();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
+  const pageSize = 10;
+
+  const [data, setData] = useState([]);
   const [neededBooking, setNeededBooking] = useState(null);
-  const pageSize = 6;
+  const clinicId = useSelector(
+    (state) => state?.authentication?.user?.clinic?.id
+  );
 
   const fetchData = async (options) => {
     try {
@@ -26,14 +33,15 @@ const BookingListContainer = () => {
         data = (await getAllBooking({ ...options })).data;
       }
 
-      const mapperData = data?.content?.map((booking) => ({
+      //map handle Action in here
+      const bookingData = data?.content?.map((booking) => ({
         ...booking,
-        onClick: () => {
-          setNeededBooking(booking?.id);
+        getDetail: () => {
+          setNeededBooking(booking.id);
         },
       }));
 
-      setBookingListData(mapperData);
+      setData(bookingData);
       setTotalElements(data.totalElements);
     } catch (e) {
       notification["error"]({
@@ -47,18 +55,21 @@ const BookingListContainer = () => {
   const onFinish = (values) => {
     setSearchValue({
       bookingId: values.bookingId,
-      clinicName: values.clinicName,
+      patientName: values.patientName,
+      patientPhone: values.patientPhone,
     });
   };
 
   const resetAction = () => {
     form.setFieldsValue({
       bookingId: "",
-      clinicName: "",
+      patientName: "",
+      patientPhone: "",
     });
     setSearchValue({
       bookingId: "",
-      clinicName: "",
+      patientName: "",
+      patientPhone: "",
     });
   };
 
@@ -79,22 +90,39 @@ const BookingListContainer = () => {
 
   return (
     <>
-      <SearchForm form={form} onFinish={onFinish} resetAction={resetAction} />
       <BookingDetailModalContainer
         bookingId={neededBooking}
         setNeededBooking={setNeededBooking}
-      />
-      <BookingListComponent bookingListData={bookingListData} />
-      <div style={{ marginTop: "1rem" }}>
-        <Pagination
-          total={totalElements}
-          current={currentPage}
-          pageSize={pageSize}
-          onChange={(page) => {
-            setCurrentPage(page);
-          }}
-        />
-      </div>
+      ></BookingDetailModalContainer>
+      <Col>
+        <Row>
+          <SearchForm
+            form={form}
+            onFinish={onFinish}
+            resetAction={resetAction}
+          />
+        </Row>
+        <Row>
+          <CommonTableComponent
+            tableTitle="Booking Management"
+            columns={BookingManagementTableColumn}
+            dataSource={data}
+            pagination={false}
+          />
+        </Row>
+        <Row>
+          <div style={{ marginTop: "1rem" }}>
+            <Pagination
+              total={totalElements}
+              current={currentPage}
+              pageSize={pageSize}
+              onChange={(page) => {
+                setCurrentPage(page);
+              }}
+            />
+          </div>
+        </Row>
+      </Col>
     </>
   );
 };
@@ -103,24 +131,29 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
   return (
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
-        <Col span={7}>
+        <Col span={6}>
           <Form.Item name="bookingId" label="Search booking Id">
             <Input placeholder="Search by booking Id" />
           </Form.Item>
         </Col>
-        <Col span={7}>
-          <Form.Item name="clinicName" label="Search clinic name">
-            <Input placeholder="Search by Clinic name" />
+        <Col span={6}>
+          <Form.Item name="patientName" label="Search patient name">
+            <Input placeholder="Search by patient name" />
           </Form.Item>
         </Col>
-        <Col span={2}>
+        <Col span={6}>
+          <Form.Item name="patientPhone" label="Search patient phone">
+            <Input placeholder="Search by patient phone" />
+          </Form.Item>
+        </Col>
+        <Col span={3}>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Search
             </Button>
           </Form.Item>
         </Col>
-        <Col span={2}>
+        <Col span={3}>
           <Form.Item>
             <Button onClick={resetAction}>Reset</Button>
           </Form.Item>
@@ -130,4 +163,4 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
   );
 };
 
-export default BookingListContainer;
+export default BookingManagementTableContainer;

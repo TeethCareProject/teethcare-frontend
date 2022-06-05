@@ -1,5 +1,5 @@
 export const convertMomentToDate = (momentData) => {
-  return new Date().setMilliseconds(momentData.utc().valueOf());
+  return new Date(momentData.utc());
 };
 
 export const convertMomentToMilliseconds = (momentData) => {
