@@ -1,15 +1,11 @@
 import React from "react";
 import { Form, Button, Input } from "antd";
-import UserInfoInputComponent from "../UserInfoInputComponent/UserInfoInput.component";
+import UserInfoInputComponent from "../UserInfoInput/UserInfoInput.component";
 import { UserRegisterValidation } from "../../../validate/RegisterValidation";
 
-const DentistCreateFormComponent = ({ onFinishHandle }) => {
+const DentistCreateFormComponent = ({ onFinish }) => {
   return (
-    <Form
-      name="normal_register"
-      className="register-form"
-      onFinish={onFinishHandle}
-    >
+    <Form name="normal_register" className="register-form" onFinish={onFinish}>
       <UserInfoInputComponent />
       <Form.Item
         name="specialization"

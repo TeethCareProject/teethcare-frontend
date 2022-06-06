@@ -6,7 +6,7 @@ import {
   ClinicRegisterValidation,
 } from "../../../validate/RegisterValidation";
 
-import LocationInputContainer from "../../../containers/LocationInputContainer/LocationInputContainer.container";
+import LocationInputContainer from "../../../containers/LocationInput/LocationInput.container";
 import { GenderType } from "../../../constants/GenderConstants";
 
 const ClinicRegisterFormComponent = (props) => {

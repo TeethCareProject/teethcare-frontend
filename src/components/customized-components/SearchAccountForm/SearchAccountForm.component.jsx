@@ -1,9 +1,9 @@
 import React from "react";
 import { Form, Col, Row, Input, Button, Select } from "antd";
-import { RoleConstantArray } from "../../../constants/RoleConstants";
-import { AccountStatusConstantsArray } from "../../../constants/AccountStatusConstants";
+import { RoleConstant } from "../../../constants/RoleConstants";
+import { AccountStatusConstants } from "../../../constants/AccountStatusConstants";
 
-const SearchAccountForm = ({ resetAction, ...antdProps }) => {
+const SearchAccountFormComponent = ({ resetAction, ...antdProps }) => {
   const { Option } = Select;
   return (
     <Form layout="vertical" {...antdProps}>
@@ -22,9 +22,9 @@ const SearchAccountForm = ({ resetAction, ...antdProps }) => {
           <Form.Item name="role" label="Search role">
             <Select placeholder="select role">
               <Option>None</Option>
-              {RoleConstantArray.map((role) => (
-                <Option key={role.value} value={role.value}>
-                  {role.title}
+              {Object.keys(RoleConstant).map((role) => (
+                <Option key={role} value={role}>
+                  {role}
                 </Option>
               ))}
             </Select>
@@ -34,9 +34,9 @@ const SearchAccountForm = ({ resetAction, ...antdProps }) => {
           <Form.Item name="status" label="Search status">
             <Select placeholder="select status">
               <Option>None</Option>
-              {AccountStatusConstantsArray.map((status) => (
-                <Option key={status.value} value={status.value}>
-                  {status.title}
+              {Object.keys(AccountStatusConstants).map((status) => (
+                <Option key={status} value={status}>
+                  {status}
                 </Option>
               ))}
             </Select>
@@ -60,4 +60,4 @@ const SearchAccountForm = ({ resetAction, ...antdProps }) => {
   );
 };
 
-export default SearchAccountForm;
+export default SearchAccountFormComponent;

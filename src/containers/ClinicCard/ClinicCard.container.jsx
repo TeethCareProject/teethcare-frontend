@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Col, Row, notification, Card } from "antd";
 import { StarFilled } from "@ant-design/icons";
 import RoutePath from "../../routers/Path";
 
 import clinicImg from "../../assets/clinicImg.png";
-import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
+import { useHistory, generatePath } from "react-router-dom";
+
 import { getClinics } from "../../services/teeth-apis/ClinicController";
 
 import ClinicCardComponent from "../../components/customized-components/ClinicCard/ClinicCard.component";
@@ -15,7 +15,11 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
   const history = useHistory();
 
   const onClick = (idClinic) => {
-    history.push(`${RoutePath.CLINIC_PAGE}/${idClinic}`);
+    history.push(
+      generatePath(RoutePath.CLINIC_DETAIL_PAGE, {
+        idClinic,
+      })
+    );
   };
 
   const { Meta } = Card;

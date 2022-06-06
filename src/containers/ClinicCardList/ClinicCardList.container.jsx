@@ -1,14 +1,13 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
 import { notification, Form, Button, Select, Pagination } from "antd";
-import ClinicCardContainer from "../ClinicCardContainer/ClinicCardContainer.container";
+import ClinicCardContainer from "../ClinicCard/ClinicCard.container";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
 import { getClinics } from "../../services/teeth-apis/ClinicController";
-import LocationInputContainer from "../LocationInputContainer/LocationInputContainer.container";
+import LocationInputContainer from "../LocationInput/LocationInput.container";
 
 import "./ClinicCardListContainer.style.scss";
 
 const ClinicCardListContainer = () => {
-  const { Option } = Select;
   const [filterData, setFilterData] = useState({
     serviceId: null,
     provinceId: "",
@@ -69,6 +68,7 @@ const ClinicCardListContainer = () => {
 
   useEffect(() => {
     fetchingClinic({ size: pageSize, page: currentPage - 1, ...filterData });
+    //eslint-disable-next-line
   }, [currentPage]);
 
   useLayoutEffect(() => {
@@ -87,51 +87,12 @@ const ClinicCardListContainer = () => {
 
   return (
     <div className="clinic-page">
-      <div className="clinic-filter-part">
-        <div>
-          <div className="clinic-filter-part-title">
-            Find a dental clinic for yourself
-          </div>
-          <div className="clinic-filter-part-subtitle">
-            Best offer guaranteed
-          </div>
-        </div>
-        <div>
-          <Form
-            name="clinic-filter"
-            className="clinic-filter"
-            onFinish={onFinish}
-          >
-            <Form.Item name="serviceId" label="Service">
-              <Select
-                value={selectedService}
-                onChange={handleServiceChange}
-                placeholder="Select services"
-              >
-                <Option>None</Option>
-                {services?.map((element, index) => (
-                  <Option key={index} value={element.id}>
-                    {element.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <LocationInputContainer />
-
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                shape="round"
-                size="large"
-                className="search-clinic-button"
-              >
-                Search for clinics
-              </Button>
-            </Form.Item>
-          </Form>
-        </div>
-      </div>
+      <ClinicFilterPart
+        onFinish={onFinish}
+        selectedService={selectedService}
+        handleServiceChange={handleServiceChange}
+        services={services}
+      />
       <ClinicCardContainer
         clinicData={filteredClinic}
         layoutDirection="column"
@@ -148,5 +109,58 @@ const ClinicCardListContainer = () => {
     </div>
   );
 };
-
 export default ClinicCardListContainer;
+
+const ClinicFilterPart = ({
+  onFinish,
+  selectedService,
+  handleServiceChange,
+  services,
+}) => {
+  const { Option } = Select;
+  return (
+    <div className="clinic-filter-part">
+      <div>
+        <div className="clinic-filter-part-title">
+          Find a dental clinic for yourself
+        </div>
+        <div className="clinic-filter-part-subtitle">Best offer guaranteed</div>
+      </div>
+      <div>
+        <Form
+          name="clinic-filter"
+          className="clinic-filter"
+          onFinish={onFinish}
+        >
+          <Form.Item name="serviceId" label="Service">
+            <Select
+              value={selectedService}
+              onChange={handleServiceChange}
+              placeholder="Select services"
+            >
+              <Option>None</Option>
+              {services?.map((element, index) => (
+                <Option key={index} value={element.id}>
+                  {element.name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <LocationInputContainer />
+
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              shape="round"
+              size="large"
+              className="search-clinic-button"
+            >
+              Search for clinics
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
+  );
+};

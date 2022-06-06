@@ -1,10 +1,8 @@
 import React from "react";
 import { Form, Button } from "antd";
-import UserInfoInputComponent from "../UserInfoInputComponent/UserInfoInput.component";
+import UserInfoInputComponent from "../UserInfoInput/UserInfoInput.component";
 
-import "./PatientRegisterForm.style.css";
-
-const PatientRegisterFormComponent = ({ onFinish }) => {
+const CustomerServiceRegisterFormComponent = ({ onFinish }) => {
   return (
     <Form name="normal_register" className="register-form" onFinish={onFinish}>
       <UserInfoInputComponent />
@@ -21,4 +19,4 @@ const PatientRegisterFormComponent = ({ onFinish }) => {
   );
 };
 
-export default PatientRegisterFormComponent;
+export default CustomerServiceRegisterFormComponent;

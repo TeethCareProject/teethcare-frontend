@@ -6,7 +6,7 @@ const DentistFormValueToDentistData = (values) => {
     firstName: values.firstName,
     lastName: values.lastName,
     gender: values.gender,
-    email: values.patientEmail,
+    email: values.email,
     phoneNumber: values.phoneNumber,
     specialization: values.specialization,
     description: values.description,

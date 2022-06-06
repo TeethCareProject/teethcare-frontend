@@ -53,14 +53,12 @@ const NavigationBar = () => {
   };
 
   return (
-    <>
-      <Menu
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        items={isAuthUser ? items : defaultItems}
-      />
-    </>
+    <Menu
+      onClick={onClick}
+      selectedKeys={[current]}
+      mode="horizontal"
+      items={isAuthUser ? items : defaultItems}
+    />
   );
 };
 

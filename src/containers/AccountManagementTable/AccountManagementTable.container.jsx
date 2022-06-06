@@ -17,7 +17,7 @@ import {
 } from "../../services/teeth-apis/AccountController";
 import { UserOutlined } from "@ant-design/icons";
 import AccountManagementTableColumn from "./AccountManagementTable.column";
-import SearchAccountForm from "../../components/customized-components/SearchAccountFormComponent/SearchAccountForm.component";
+import SearchAccountForm from "../../components/customized-components/SearchAccountForm/SearchAccountForm.component";
 
 const AccountManagementTableContainer = () => {
   const [data, setData] = useState([]);
@@ -43,7 +43,6 @@ const AccountManagementTableContainer = () => {
   };
 
   const fetchData = async (options) => {
-    console.log("a");
     try {
       let data;
       if (!options) {
