@@ -25,7 +25,6 @@ const BookingServiceFormContainer = () => {
       const mapperResult = ServiceEntityToServiceCard(data);
       setServiceData(mapperResult);
     } catch (e) {
-      console.log(e);
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
         description: `There is problem while fetching service data, try again later`,
