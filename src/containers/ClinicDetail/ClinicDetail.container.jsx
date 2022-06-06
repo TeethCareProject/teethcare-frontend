@@ -8,8 +8,6 @@ import { getClinicById } from "../../services/teeth-apis/ClinicController";
 import { getClinicFeedBack } from "../../services/teeth-apis/FeedbackController";
 import RoutePath from "../../routers/Path";
 
-import "./ClinicDetailContainer.style.scss";
-
 const ClinicDetailContainer = () => {
   const { clinicId } = useParams();
   const history = useHistory();
@@ -53,7 +51,7 @@ const ClinicDetailContainer = () => {
     );
 
   return (
-    <div className="clinic-detail-page-container">
+    <div className="clinic-detail-page-container" style={{ margin: 30 }}>
       <ClinicDetailComponent clinicData={currentClinic} feedback={feedback} />
     </div>
   );

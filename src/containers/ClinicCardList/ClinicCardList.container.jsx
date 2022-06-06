@@ -1,20 +1,27 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
+
+import { useHistory, generatePath } from "react-router-dom";
+import RoutePath from "../../routers/Path";
+
 import { notification, Form, Button, Select, Pagination } from "antd";
 import ClinicCardContainer from "../ClinicCard/ClinicCard.container";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
 import { getClinics } from "../../services/teeth-apis/ClinicController";
 import LocationInputContainer from "../LocationInput/LocationInput.container";
-
-import "./ClinicCardListContainer.style.scss";
+import "./ClinicCardListFilter.style.scss";
 
 const ClinicCardListContainer = () => {
   const { Option } = Select;
+
+  const history = useHistory();
+
   const [filterData, setFilterData] = useState({
     serviceId: null,
     provinceId: "",
     districtId: "",
     wardId: "",
   });
+
   const [services, setServices] = useState([]);
   const [filteredClinic, setFilteredClinic] = useState([]);
   const [selectedService, setSelectedService] = useState();
@@ -29,6 +36,14 @@ const ClinicCardListContainer = () => {
       districtId: values.districtId,
       wardId: values.wardId,
     });
+  };
+
+  const handleClick = (clinicId) => {
+    history.push(
+      generatePath(RoutePath.CLINIC_DETAIL_PAGE, {
+        clinicId,
+      })
+    );
   };
 
   const fetchingService = async () => {
@@ -52,7 +67,12 @@ const ClinicCardListContainer = () => {
         data = (await getClinics({ ...options })).data;
       }
 
-      setFilteredClinic(data.content);
+      const mapperClinicData = data?.content?.map((clinic) => ({
+        ...clinic,
+        onClick: () => handleClick(clinic?.id),
+      }));
+
+      setFilteredClinic(mapperClinicData);
       setTotalElements(data.totalElements);
     } catch (e) {
       notification["error"]({
