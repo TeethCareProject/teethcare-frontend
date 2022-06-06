@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 import RoutePath from "../../../routers/Path";
 
-import ClinicRegisterFormComponent from "../../../components/forms/ClinicRegisterFormComponent/ClinicRegisterForm.component";
+import ClinicRegisterFormComponent from "../../../components/forms/ClinicRegisterForm/ClinicRegisterForm.component";
 import ClinicFormValueToClinicRegisterData from "../../../mapper/ClinicFormValueToClinicRegisterData";
 
 const ClinicRegisterFormContainer = () => {

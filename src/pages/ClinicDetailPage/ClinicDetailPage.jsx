@@ -1,5 +1,5 @@
 import React from "react";
-import ClinicDetailContainer from "../../containers/ClinicDetailContainer/ClinicDetail.container";
+import ClinicDetailContainer from "../../containers/ClinicDetail/ClinicDetail.container";
 
 const ClinicDetailPage = () => {
   return <ClinicDetailContainer />;

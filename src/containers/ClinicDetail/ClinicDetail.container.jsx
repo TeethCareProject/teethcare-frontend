@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { useHistory } from "react-router-dom";
 import { generatePath } from "react-router";
 import { notification } from "antd";
-import ClinicDetailComponent from "../../components/customized-components/ClinicDetailComponent/ClinicDetail.component";
+import ClinicDetailComponent from "../../components/customized-components/ClinicDetail/ClinicDetail.component";
 import { getClinicById } from "../../services/teeth-apis/ClinicController";
 import { getClinicFeedBack } from "../../services/teeth-apis/FeedbackController";
 import RoutePath from "../../routers/Path";

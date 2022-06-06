@@ -1,9 +1,9 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
 import { notification, Form, Button, Select, Pagination } from "antd";
-import ClinicCardContainer from "../ClinicCardContainer/ClinicCardContainer.container";
+import ClinicCardContainer from "../ClinicCard/ClinicCard.container";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
 import { getClinics } from "../../services/teeth-apis/ClinicController";
-import LocationInputContainer from "../LocationInputContainer/LocationInputContainer.container";
+import LocationInputContainer from "../LocationInput/LocationInput.container";
 
 import "./ClinicCardListContainer.style.scss";
 
