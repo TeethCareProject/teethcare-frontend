@@ -32,10 +32,8 @@ const ReportManagementTableContainer = () => {
       let data;
       if (!options) {
         data = (await getAllReports({ pageSize: null })).data;
-        console.log(data);
       } else {
         data = (await getAllReports({ ...options })).data;
-        console.log(data);
       }
       setTotalElements(data.totalElements);
       //map handle Action in here
