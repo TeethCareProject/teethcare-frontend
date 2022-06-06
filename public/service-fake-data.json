@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "name": "Niềng răng chất lượng cao",
+  "description": "Niềng răng bằng sắt, bền vững như răng của hải ly gặm gỗ",
+  "price": 200000000,
+  "duration": 2,
+  "imageUrl": "/service-tmp.png",
+  "status": "ACTIVE",
+  "clinic": {
+    "name": "Nha khoa quận 1",
+    "id": 1
+  }
+}
