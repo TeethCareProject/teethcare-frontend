@@ -1,4 +1,4 @@
-import { Col, Descriptions, Modal, notification, Row } from "antd";
+import { Col, Descriptions, Modal, notification, Row, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import {
@@ -6,17 +6,40 @@ import {
   getAllReports,
 } from "../../services/teeth-apis/ReportController";
 import ReportManagementTableColumn from "./ReportManagementTable.column";
+import SearchReportFormComponent from "../../components/SearchReportForm/SearchReportForm.component";
 
 const ReportManagementTableContainer = () => {
   const [data, setData] = useState([]);
   const [neededReport, setNeededReport] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalElements, setTotalElements] = useState(0);
+  const pageSize = 6;
 
-  const fetchData = async () => {
+  const [filterData, setFilterData] = useState({
+    id: null,
+    clinicName: null,
+  });
+
+  const onFinish = async (values) => {
+    setFilterData({
+      id: values.id,
+      clinicName: values.clinicName,
+    });
+  };
+
+  const fetchData = async (options) => {
     try {
-      const { data } = await getAllReports();
-
+      let data;
+      if (!options) {
+        data = (await getAllReports({ pageSize: null })).data;
+        console.log(data);
+      } else {
+        data = (await getAllReports({ ...options })).data;
+        console.log(data);
+      }
+      setTotalElements(data.totalElements);
       //map handle Action in here
-      const reportData = data.map((report) => ({
+      const reportData = data?.content.map((report) => ({
         ...report,
         getDetail: () => {
           setNeededReport(report.id);
@@ -27,18 +50,28 @@ const ReportManagementTableContainer = () => {
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching report data, try again later`,
+        description: `There is problem while fetching account data, try again later`,
         duration: 2,
       });
     }
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData({ size: pageSize, ...filterData });
+    setCurrentPage(1);
+  }, [filterData]);
+
+  useEffect(() => {
+    fetchData({ size: pageSize, page: currentPage - 1, ...filterData });
+  }, [currentPage]);
+
+  const onPageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <>
+      <SearchReportFormComponent onFinish={onFinish} />
       <DetailForm
         reportId={neededReport}
         setNeededReport={setNeededReport}
@@ -47,6 +80,13 @@ const ReportManagementTableContainer = () => {
         tableTitle="Report Management"
         columns={ReportManagementTableColumn}
         dataSource={data}
+        pagination={false}
+      />
+      <Pagination
+        total={totalElements}
+        current={currentPage}
+        pageSize={pageSize}
+        onChange={onPageChange}
       />
     </>
   );
