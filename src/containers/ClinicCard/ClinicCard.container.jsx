@@ -4,7 +4,7 @@ import { StarFilled } from "@ant-design/icons";
 import RoutePath from "../../routers/Path";
 
 import clinicImg from "../../assets/clinicImg.png";
-import { useHistory } from "react-router-dom";
+import { useHistory, generatePath } from "react-router-dom";
 import { useEffect } from "react";
 import { getClinics } from "../../services/teeth-apis/ClinicController";
 
@@ -14,8 +14,12 @@ import "./ClinicCardContainer.style.scss";
 const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
   const history = useHistory();
 
-  const onClick = (idClinic) => {
-    history.push(`${RoutePath.CLINIC_PAGE}/${idClinic}`);
+  const onClick = (clinicId) => {
+    history.push(
+      generatePath(RoutePath.CLINIC_DETAIL_PAGE, {
+        clinicId,
+      })
+    );
   };
 
   const { Meta } = Card;
