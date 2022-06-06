@@ -33,9 +33,6 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             <EnvironmentOutlined /> Clinic address
           </div>
           <div>{clinicData?.location?.address}</div>
-          <Button shape="round" type="primary" size="large">
-            Send request to clinic
-          </Button>
         </div>
       </div>
       <div className="clinic-detail-page-banner">
