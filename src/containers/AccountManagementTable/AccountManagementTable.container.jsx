@@ -1,23 +1,20 @@
 import {
-  Avatar,
-  Col,
   Pagination,
-  Descriptions,
-  Modal,
   notification,
+  Form,
+  Col,
   Row,
+  Input,
   Button,
+  Select,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
-import {
-  getAccountById,
-  getAllAccounts,
-  setAccountStatus,
-} from "../../services/teeth-apis/AccountController";
-import { UserOutlined } from "@ant-design/icons";
+import { getAllAccounts } from "../../services/teeth-apis/AccountController";
 import AccountManagementTableColumn from "./AccountManagementTable.column";
-import SearchAccountForm from "../../components/customized-components/SearchAccountForm/SearchAccountForm.component";
+import DetailForm from "../DetailForm/DetailForm.container";
+import { RoleConstant } from "../../constants/RoleConstants";
+import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
 
 const AccountManagementTableContainer = () => {
   const [data, setData] = useState([]);
@@ -84,7 +81,7 @@ const AccountManagementTableContainer = () => {
 
   return (
     <>
-      <SearchAccountForm onFinish={onFinish} />
+      <SearchAccountFormComponent onFinish={onFinish} />
       <DetailForm
         accountId={neededAccount}
         setNeededAccount={setNeededAccount}
@@ -106,117 +103,60 @@ const AccountManagementTableContainer = () => {
   );
 };
 
-//Please move this into a separate file if the logic becomes bigger
-const DetailForm = ({ accountId, setNeededAccount, fetchData }) => {
-  const [accountDetail, setAccountDetail] = useState({});
-
-  const fetchAccountDetail = async () => {
-    try {
-      const { data } = await getAccountById(accountId);
-      setAccountDetail(data);
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching account data, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (accountId) {
-      fetchAccountDetail();
-    }
-  }, [accountId]);
-
-  const handleOk = () => {
-    setNeededAccount(null);
-  };
-
-  const handleCancel = () => {
-    setNeededAccount(null);
-  };
-
-  const handleUpdateStatus = async (status) => {
-    try {
-      await setAccountStatus(status, accountId);
-      fetchData();
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while update account data, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
+const SearchAccountFormComponent = ({ resetAction, ...antdProps }) => {
+  const { Option } = Select;
   return (
-    <div>
-      <Modal
-        destroyOnClose
-        visible={accountId !== null}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Row>
-          <Col span={8}>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100%",
-              }}
-            >
-              <Avatar size={100} icon={<UserOutlined />} />
-            </div>
-          </Col>
-          <Col span={16}>
-            <Descriptions>
-              <Descriptions.Item label="ID" span={12}>
-                {accountDetail.id}
-              </Descriptions.Item>
-              <Descriptions.Item label="Role" span={12}>
-                {accountDetail.roleName}
-              </Descriptions.Item>
-              <Descriptions.Item label="Name" span={12}>
-                {accountDetail.firstName + " " + accountDetail.lastName}
-              </Descriptions.Item>
-              <Descriptions.Item label="Gender" span={12}>
-                {accountDetail.gender}
-              </Descriptions.Item>
-              <Descriptions.Item label="Date of Birth" span={12}>
-                {accountDetail.dateOfBirth}
-              </Descriptions.Item>
-              <Descriptions.Item label="Status" span={12}>
-                {accountDetail.status}
-              </Descriptions.Item>
-            </Descriptions>
-          </Col>
-        </Row>
-        {accountDetail.status === "ACTIVE" ? (
-          <Button
-            onClick={() =>
-              handleUpdateStatus({
-                status: "INACTIVE",
-              })
-            }
-          >
-            Deactivate
-          </Button>
-        ) : (
-          <Button
-            onClick={() =>
-              handleUpdateStatus({
-                status: "ACTIVE",
-              })
-            }
-          >
-            Activate
-          </Button>
-        )}
-      </Modal>
-    </div>
+    <Form layout="vertical" {...antdProps}>
+      <Row gutter={[16, 16]} align="bottom">
+        <Col span={6}>
+          <Form.Item name="id" label="Search user Id">
+            <Input placeholder="Search by user Id" />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item name="fullName" label="Search full name">
+            <Input placeholder="Search by full name" />
+          </Form.Item>
+        </Col>
+        <Col span={4}>
+          <Form.Item name="role" label="Search role">
+            <Select placeholder="select role">
+              <Option>None</Option>
+              {Object.keys(RoleConstant).map((role) => (
+                <Option key={role} value={role}>
+                  {role}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col span={4}>
+          <Form.Item name="status" label="Search status">
+            <Select placeholder="select status">
+              <Option>None</Option>
+              {Object.keys(AccountStatusConstants).map((status) => (
+                <Option key={status} value={status}>
+                  {status}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+        </Col>
+
+        <Col span={2}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Search
+            </Button>
+          </Form.Item>
+        </Col>
+        <Col span={2}>
+          <Form.Item>
+            <Button onClick={resetAction}>Reset</Button>
+          </Form.Item>
+        </Col>
+      </Row>
+    </Form>
   );
 };
 
