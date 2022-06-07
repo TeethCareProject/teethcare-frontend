@@ -4,12 +4,10 @@ import { Form, Input, Button, Select } from "antd";
 import { UserRegisterValidation } from "../../../validate/RegisterValidation";
 import { GenderType } from "../../../constants/GenderConstants";
 
-import "./PatientRegisterForm.style.css";
-
-const PatientRegisterFormComponent = ({ onFinish }) => {
+const UserInfoInputComponent = () => {
   const { Option } = Select;
   return (
-    <Form name="normal_register" className="register-form" onFinish={onFinish}>
+    <>
       <Form.Item name="username" rules={UserRegisterValidation.username}>
         <Input placeholder="Username" />
       </Form.Item>
@@ -53,18 +51,8 @@ const PatientRegisterFormComponent = ({ onFinish }) => {
       <Form.Item name="phoneNumber" rules={UserRegisterValidation.phone}>
         <Input placeholder="Phone number" />
       </Form.Item>
-
-      <Form.Item>
-        <Button
-          type="primary"
-          htmlType="submit"
-          className="register-form-button"
-        >
-          Register
-        </Button>
-      </Form.Item>
-    </Form>
+    </>
   );
 };
 
-export default PatientRegisterFormComponent;
+export default UserInfoInputComponent;

@@ -1,9 +1,20 @@
-import { Avatar, Col, Descriptions, Modal, notification, Row } from "antd";
+import {
+  Avatar,
+  Col,
+  Descriptions,
+  Modal,
+  notification,
+  Row,
+  Button,
+} from "antd";
 import React, { useEffect, useState } from "react";
-import { getAccountById } from "../../services/teeth-apis/AccountController";
+import {
+  getAccountById,
+  setAccountStatus,
+} from "../../services/teeth-apis/AccountController";
 import { UserOutlined } from "@ant-design/icons";
 
-const DetailForm = ({ accountId, setNeededAccount }) => {
+const DetailForm = ({ accountId, setNeededAccount, fetchData }) => {
   const [accountDetail, setAccountDetail] = useState({});
 
   const fetchAccountDetail = async () => {
@@ -31,6 +42,19 @@ const DetailForm = ({ accountId, setNeededAccount }) => {
 
   const handleCancel = () => {
     setNeededAccount(null);
+  };
+
+  const handleUpdateStatus = async (status) => {
+    try {
+      await setAccountStatus(status, accountId);
+      fetchData();
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while update account data, try again later`,
+        duration: 2,
+      });
+    }
   };
 
   return (
@@ -77,6 +101,27 @@ const DetailForm = ({ accountId, setNeededAccount }) => {
             </Descriptions>
           </Col>
         </Row>
+        {accountDetail.status === "ACTIVE" ? (
+          <Button
+            onClick={() =>
+              handleUpdateStatus({
+                status: "INACTIVE",
+              })
+            }
+          >
+            Deactivate
+          </Button>
+        ) : (
+          <Button
+            onClick={() =>
+              handleUpdateStatus({
+                status: "ACTIVE",
+              })
+            }
+          >
+            Activate
+          </Button>
+        )}
       </Modal>
     </div>
   );

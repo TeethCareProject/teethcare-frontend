@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout.component";
 import { elementList, navigationList } from "./ManagerDashboardPage.tabs";
+import CreateStaffModalContainer from "../../containers/CreateStaffModal/CreateStaffModal.container";
 
 const ManagerDashboardPage = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -18,6 +19,7 @@ const ManagerDashboardPage = () => {
         elementList={elementList}
         currentTab={currentTab}
       />
+      <CreateStaffModalContainer />
     </>
   );
 };

@@ -1,9 +1,10 @@
-const PatientFormValueToPatientRegisterData = (values) => {
+const CSFormValueToCSCreateData = (values) => {
   return {
     username: values.username,
     password: values.password,
     confirmPassword: values.confirmPassword,
     firstName: values.firstName,
+    role: values.role,
     lastName: values.lastName,
     gender: values.gender,
     email: values.email,
@@ -11,4 +12,4 @@ const PatientFormValueToPatientRegisterData = (values) => {
   };
 };
 
-export default PatientFormValueToPatientRegisterData;
+export default CSFormValueToCSCreateData;

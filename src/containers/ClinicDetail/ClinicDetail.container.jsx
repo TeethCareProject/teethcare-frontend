@@ -51,7 +51,7 @@ const ClinicDetailContainer = () => {
     );
 
   return (
-    <div className="clinic-detail-page-container" style={{ margin: 30 }}>
+    <div className="clinic-detail-page-container" style={{ margin: 60 }}>
       <ClinicDetailComponent clinicData={currentClinic} feedback={feedback} />
     </div>
   );

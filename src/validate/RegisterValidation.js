@@ -4,13 +4,15 @@ import {
   MAX_LENGTH_VALIDATOR,
 } from "./GeneralValidation";
 
-export const AttendantRegisterValidation = {
+export const UserRegisterValidation = {
   email: [REQUIRED_VALIDATOR("Email"), ...EMAIL_VALIDATOR()],
   username: [REQUIRED_VALIDATOR("Username")],
   firstName: [REQUIRED_VALIDATOR("First name")],
   lastName: [REQUIRED_VALIDATOR("Last name")],
   phone: [REQUIRED_VALIDATOR("Phone number")],
   gender: [REQUIRED_VALIDATOR("Gender")],
+  specialization: [REQUIRED_VALIDATOR("Specialization")],
+  description: [REQUIRED_VALIDATOR("Description")],
   password: [REQUIRED_VALIDATOR("Password")],
   rePassword: [
     REQUIRED_VALIDATOR("Confirm password"),
