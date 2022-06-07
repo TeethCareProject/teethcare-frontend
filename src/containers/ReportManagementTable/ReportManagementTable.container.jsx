@@ -1,14 +1,13 @@
-import { Col, Descriptions, Modal, notification, Row, Pagination } from "antd";
 import React, { useEffect, useState } from "react";
+import { notification, Pagination, Col, Row, Input, Button, Form } from "antd";
+import { useForm } from "antd/lib/form/Form";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
-import {
-  getReportById,
-  getAllReports,
-} from "../../services/teeth-apis/ReportController";
+import { getAllReports } from "../../services/teeth-apis/ReportController";
 import ReportManagementTableColumn from "./ReportManagementTable.column";
-import SearchReportFormComponent from "../../components/SearchReportForm/SearchReportForm.component";
+import FeedbackDetailForm from "../ReportDetailForm/ReportDetailForm.container";
 
 const ReportManagementTableContainer = () => {
+  const [form] = useForm();
   const [data, setData] = useState([]);
   const [neededReport, setNeededReport] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,6 +23,17 @@ const ReportManagementTableContainer = () => {
     setFilterData({
       id: values.id,
       clinicName: values.clinicName,
+    });
+  };
+
+  const resetAction = () => {
+    form.setFieldsValue({
+      id: null,
+      clinicName: null,
+    });
+    setFilterData({
+      id: null,
+      clinicName: null,
     });
   };
 
@@ -69,11 +79,15 @@ const ReportManagementTableContainer = () => {
 
   return (
     <>
-      <SearchReportFormComponent onFinish={onFinish} />
-      <DetailForm
+      <SearchReportFormComponent
+        form={form}
+        onFinish={onFinish}
+        resetAction={resetAction}
+      />
+      <FeedbackDetailForm
         reportId={neededReport}
         setNeededReport={setNeededReport}
-      ></DetailForm>
+      ></FeedbackDetailForm>
       <CommonTableComponent
         tableTitle="Report Management"
         columns={ReportManagementTableColumn}
@@ -90,71 +104,34 @@ const ReportManagementTableContainer = () => {
   );
 };
 
-//Please move this into a separate file if the logic becomes bigger
-const DetailForm = ({ reportId, setNeededReport }) => {
-  const [reportDetail, setReportDetail] = useState({});
-
-  const fetchReportDetail = async () => {
-    try {
-      const { data } = await getReportById(reportId);
-      setReportDetail(data);
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching report data, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
-  useEffect(() => {
-    if (reportId) {
-      fetchReportDetail();
-    }
-  }, [reportId]);
-
-  const handleOk = () => {
-    setNeededReport(null);
-  };
-
-  const handleCancel = () => {
-    setNeededReport(null);
-  };
-
+const SearchReportFormComponent = ({ resetAction, ...antdProps }) => {
   return (
-    <div>
-      <Modal
-        destroyOnClose
-        visible={reportId !== null}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <Row>
-          <Col span={24}>
-            <Descriptions>
-              <Descriptions.Item label="ID" span={12}>
-                {reportDetail.id}
-              </Descriptions.Item>
-              <Descriptions.Item label="Report detail" span={12}>
-                {reportDetail.detail}
-              </Descriptions.Item>
-              <Descriptions.Item label="Feedback user" span={12}>
-                {reportDetail?.feedbackResponse?.firstName +
-                  " " +
-                  reportDetail?.feedbackResponse?.lastName}
-              </Descriptions.Item>
-              <Descriptions.Item label="Feedback detail" span={12}>
-                {reportDetail?.feedbackResponse?.detail}
-              </Descriptions.Item>
-              <Descriptions.Item label="Status" span={12}>
-                {reportDetail.status}
-              </Descriptions.Item>
-            </Descriptions>
-          </Col>
-        </Row>
-      </Modal>
-    </div>
+    <Form layout="vertical" {...antdProps}>
+      <Row gutter={[16, 16]} align="bottom">
+        <Col span={4}>
+          <Form.Item name="id" label="Search report Id">
+            <Input placeholder="Search by report Id" />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Form.Item name="clinicName" label="Search full name">
+            <Input placeholder="Search by clinic name" />
+          </Form.Item>
+        </Col>
+        <Col span={2}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Search
+            </Button>
+          </Form.Item>
+        </Col>
+        <Col span={2}>
+          <Form.Item>
+            <Button onClick={resetAction}>Reset</Button>
+          </Form.Item>
+        </Col>
+      </Row>
+    </Form>
   );
 };
-
 export default ReportManagementTableContainer;
