@@ -9,15 +9,14 @@ import { useHistory, generatePath } from "react-router-dom";
 import { getClinics } from "../../services/teeth-apis/ClinicController";
 
 import ClinicCardComponent from "../../components/customized-components/ClinicCard/ClinicCard.component";
-import "./ClinicCardContainer.style.scss";
 
 const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
   const history = useHistory();
 
-  const onClick = (idClinic) => {
+  const handleClick = (clinicId) => {
     history.push(
       generatePath(RoutePath.CLINIC_DETAIL_PAGE, {
-        idClinic,
+        clinicId,
       })
     );
   };
@@ -30,7 +29,11 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
   const fetchingClinic = async () => {
     try {
       const { data } = await getClinics();
-      setClinics(data.content);
+      const mapperClinicData = data?.content?.map((clinic) => ({
+        ...clinic,
+        onClick: () => handleClick(clinic?.id),
+      }));
+      setClinics(mapperClinicData);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -90,7 +93,7 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
             <div key={index}>
               <ClinicCardComponent
                 clinic={clinic}
-                handleClick={() => onClick(clinic.id)}
+                handleClick={clinic.onClick}
               />
             </div>
           ))}

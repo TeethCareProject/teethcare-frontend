@@ -9,11 +9,8 @@ import DentistFormValueToDentistData from "../../mapper/DentistFormValueToDentis
 import { RoleConstant } from "../../constants/RoleConstants";
 
 import { notification } from "antd";
-import {
-  customerServiceCreateAccount,
-  dentistCreateAccount,
-} from "../../services/teeth-apis/RegisterController";
-import PatientFormValueToPatientRegisterData from "../../mapper/PatientFormValueToPatientRegisterData";
+import { staffCreateAccount } from "../../services/teeth-apis/RegisterController";
+import CSFormValueToCSCreateData from "../../mapper/CSFormValueToCSCreateData";
 
 const CreateStaffModalContainer = () => {
   const { TabPane } = Tabs;
@@ -34,11 +31,19 @@ const CreateStaffModalContainer = () => {
   const onFinish = async (values, role) => {
     try {
       if (role === RoleConstant.CUSTOMER_SERVICE) {
-        await customerServiceCreateAccount(
-          PatientFormValueToPatientRegisterData(values)
+        await staffCreateAccount(
+          CSFormValueToCSCreateData({
+            ...values,
+            role,
+          })
         );
       } else {
-        await dentistCreateAccount(DentistFormValueToDentistData(values));
+        await staffCreateAccount(
+          DentistFormValueToDentistData({
+            ...values,
+            role,
+          })
+        );
       }
     } catch (e) {
       notification["error"]({

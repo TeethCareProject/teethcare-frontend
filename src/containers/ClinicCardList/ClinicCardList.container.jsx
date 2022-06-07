@@ -1,19 +1,27 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
+
+import { useHistory, generatePath } from "react-router-dom";
+import RoutePath from "../../routers/Path";
+
 import { notification, Form, Button, Select, Pagination } from "antd";
 import ClinicCardContainer from "../ClinicCard/ClinicCard.container";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
 import { getClinics } from "../../services/teeth-apis/ClinicController";
 import LocationInputContainer from "../LocationInput/LocationInput.container";
-
-import "./ClinicCardListContainer.style.scss";
+import "./ClinicCardListFilter.style.scss";
 
 const ClinicCardListContainer = () => {
+  const { Option } = Select;
+
+  const history = useHistory();
+
   const [filterData, setFilterData] = useState({
     serviceId: null,
     provinceId: "",
     districtId: "",
     wardId: "",
   });
+
   const [services, setServices] = useState([]);
   const [filteredClinic, setFilteredClinic] = useState([]);
   const [selectedService, setSelectedService] = useState();
@@ -28,6 +36,14 @@ const ClinicCardListContainer = () => {
       districtId: values.districtId,
       wardId: values.wardId,
     });
+  };
+
+  const handleClick = (clinicId) => {
+    history.push(
+      generatePath(RoutePath.CLINIC_DETAIL_PAGE, {
+        clinicId,
+      })
+    );
   };
 
   const fetchingService = async () => {
@@ -51,7 +67,12 @@ const ClinicCardListContainer = () => {
         data = (await getClinics({ ...options })).data;
       }
 
-      setFilteredClinic(data.content);
+      const mapperClinicData = data?.content?.map((clinic) => ({
+        ...clinic,
+        onClick: () => handleClick(clinic?.id),
+      }));
+
+      setFilteredClinic(mapperClinicData);
       setTotalElements(data.totalElements);
     } catch (e) {
       notification["error"]({
@@ -68,7 +89,6 @@ const ClinicCardListContainer = () => {
 
   useEffect(() => {
     fetchingClinic({ size: pageSize, page: currentPage - 1, ...filterData });
-    //eslint-disable-next-line
   }, [currentPage]);
 
   useLayoutEffect(() => {
@@ -87,12 +107,51 @@ const ClinicCardListContainer = () => {
 
   return (
     <div className="clinic-page">
-      <ClinicFilterPart
-        onFinish={onFinish}
-        selectedService={selectedService}
-        handleServiceChange={handleServiceChange}
-        services={services}
-      />
+      <div className="clinic-filter-part">
+        <div>
+          <div className="clinic-filter-part-title">
+            Find a dental clinic for yourself
+          </div>
+          <div className="clinic-filter-part-subtitle">
+            Best offer guaranteed
+          </div>
+        </div>
+        <div>
+          <Form
+            name="clinic-filter"
+            className="clinic-filter"
+            onFinish={onFinish}
+          >
+            <Form.Item name="serviceId" label="Service">
+              <Select
+                value={selectedService}
+                onChange={handleServiceChange}
+                placeholder="Select services"
+              >
+                <Option>None</Option>
+                {services?.map((element, index) => (
+                  <Option key={index} value={element.id}>
+                    {element.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <LocationInputContainer />
+
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                shape="round"
+                size="large"
+                className="search-clinic-button"
+              >
+                Search for clinics
+              </Button>
+            </Form.Item>
+          </Form>
+        </div>
+      </div>
       <ClinicCardContainer
         clinicData={filteredClinic}
         layoutDirection="column"
@@ -109,58 +168,5 @@ const ClinicCardListContainer = () => {
     </div>
   );
 };
+
 export default ClinicCardListContainer;
-
-const ClinicFilterPart = ({
-  onFinish,
-  selectedService,
-  handleServiceChange,
-  services,
-}) => {
-  const { Option } = Select;
-  return (
-    <div className="clinic-filter-part">
-      <div>
-        <div className="clinic-filter-part-title">
-          Find a dental clinic for yourself
-        </div>
-        <div className="clinic-filter-part-subtitle">Best offer guaranteed</div>
-      </div>
-      <div>
-        <Form
-          name="clinic-filter"
-          className="clinic-filter"
-          onFinish={onFinish}
-        >
-          <Form.Item name="serviceId" label="Service">
-            <Select
-              value={selectedService}
-              onChange={handleServiceChange}
-              placeholder="Select services"
-            >
-              <Option>None</Option>
-              {services?.map((element, index) => (
-                <Option key={index} value={element.id}>
-                  {element.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <LocationInputContainer />
-
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              shape="round"
-              size="large"
-              className="search-clinic-button"
-            >
-              Search for clinics
-            </Button>
-          </Form.Item>
-        </Form>
-      </div>
-    </div>
-  );
-};

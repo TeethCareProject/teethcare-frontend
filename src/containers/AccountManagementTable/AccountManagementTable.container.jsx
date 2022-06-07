@@ -11,12 +11,15 @@ import {
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import { getAllAccounts } from "../../services/teeth-apis/AccountController";
+import { useForm } from "antd/lib/form/Form";
 import AccountManagementTableColumn from "./AccountManagementTable.column";
 import DetailForm from "../DetailForm/DetailForm.container";
 import { RoleConstant } from "../../constants/RoleConstants";
 import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
 
 const AccountManagementTableContainer = () => {
+  const [form] = useForm();
+
   const [data, setData] = useState([]);
   const [neededAccount, setNeededAccount] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -36,6 +39,21 @@ const AccountManagementTableContainer = () => {
       role: values.role,
       status: values.status,
       fullName: values.fullName,
+    });
+  };
+
+  const resetAction = () => {
+    form.setFieldsValue({
+      id: null,
+      role: null,
+      status: null,
+      fullName: null,
+    });
+    setFilterData({
+      id: null,
+      role: null,
+      status: null,
+      fullName: null,
     });
   };
 
@@ -81,7 +99,11 @@ const AccountManagementTableContainer = () => {
 
   return (
     <>
-      <SearchAccountFormComponent onFinish={onFinish} />
+      <SearchAccountFormComponent
+        form={form}
+        onFinish={onFinish}
+        resetAction={resetAction}
+      />
       <DetailForm
         accountId={neededAccount}
         setNeededAccount={setNeededAccount}

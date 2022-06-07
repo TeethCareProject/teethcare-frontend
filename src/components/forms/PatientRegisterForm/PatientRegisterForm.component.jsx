@@ -46,7 +46,7 @@ const PatientRegisterFormComponent = ({ onFinish }) => {
         </Select>
       </Form.Item>
 
-      <Form.Item name="patientEmail" rules={UserRegisterValidation.email}>
+      <Form.Item name="email" rules={UserRegisterValidation.email}>
         <Input placeholder="Email" />
       </Form.Item>
 
