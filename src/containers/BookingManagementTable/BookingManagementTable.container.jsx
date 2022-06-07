@@ -10,9 +10,9 @@ import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModa
 const BookingManagementTableContainer = () => {
   const [form] = useForm();
   const [searchValue, setSearchValue] = useState({
-    bookingId: "",
-    patientName: "",
-    patientPhone: "",
+    bookingId: null,
+    patientName: null,
+    patientPhone: null,
   });
   const [currentPage, setCurrentPage] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
@@ -62,14 +62,14 @@ const BookingManagementTableContainer = () => {
 
   const resetAction = () => {
     form.setFieldsValue({
-      bookingId: "",
-      patientName: "",
-      patientPhone: "",
+      bookingId: null,
+      patientName: null,
+      patientPhone: null,
     });
     setSearchValue({
-      bookingId: "",
-      patientName: "",
-      patientPhone: "",
+      bookingId: null,
+      patientName: null,
+      patientPhone: null,
     });
   };
 
