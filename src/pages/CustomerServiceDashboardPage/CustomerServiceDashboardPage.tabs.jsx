@@ -3,6 +3,7 @@ import {
   SettingOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
+import BookingManagementTableContainer from "../../containers/BookingManagementTable/BookingManagementTable.container";
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -21,6 +22,6 @@ export const navigationList = [
 
 export const elementList = [
   <div>Dashboard element</div>,
-  <div>Booking managemnt</div>,
+  <BookingManagementTableContainer />,
   <div>My clinic</div>,
 ];

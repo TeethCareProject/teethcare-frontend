@@ -12,6 +12,10 @@ import PatientDashboardPage from "../pages/PatientDashboardPage/PatientDashboard
 import DynamicRouter from "./components/DynamicRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
+import ServiceDetailPage from "../pages/ServiceDetailPage/ServiceDetailPage";
+import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
+import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
+import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
 
 const AppRouter = () => {
   return (
@@ -27,13 +31,25 @@ const AppRouter = () => {
         <Route path={RoutePath.LOGIN_PAGE} exact>
           <LoginPage />
         </Route>
+        <Route path={RoutePath.SERVICE_DETAIL_PAGE} exact>
+          <ServiceDetailPage />
+        </Route>
+        <Route path={RoutePath.BOOKING_PAGE}>
+          <BookingServicePage />
+        </Route>
+        <Route path={RoutePath.BOOKING_SUCCESSFUL_PAGE}>
+          <BookingSuccessfulPage />
+        </Route>
+        <Route path={RoutePath.BOOKING_FAILED_PAGE}>
+          <BookingFailedPage />
+        </Route>
         <DynamicRouter
           key="dashboard"
           componentList={{
             MANAGER: () => <ManagerDashboardPage />,
             CUSTOMER_SERVICE: () => <CustomerServiceDashboardPage />,
             DENTIST: () => <DentistDashboardPage />,
-            CUSTOMER: () => <PatientDashboardPage />,
+            PATIENT: () => <PatientDashboardPage />,
             ADMIN: () => <AdminDashboardPage />,
           }}
           path={RoutePath.DASHBOARD_PAGE}
