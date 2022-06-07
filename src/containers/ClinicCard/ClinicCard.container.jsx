@@ -1,14 +1,11 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Col, Row, notification, Card } from "antd";
-import { StarFilled } from "@ant-design/icons";
+import React, { useState } from "react";
+import { notification } from "antd";
 import RoutePath from "../../routers/Path";
 
-import clinicImg from "../../assets/clinicImg.png";
+import ClinicCardListComponent from "../../components/ClinicCardList/ClinicCardList.component";
 import { useHistory, generatePath } from "react-router-dom";
-
+import { useEffect } from "react";
 import { getClinics } from "../../services/teeth-apis/ClinicController";
-
-import ClinicCardComponent from "../../components/customized-components/ClinicCard/ClinicCard.component";
 
 const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
   const history = useHistory();
@@ -21,7 +18,6 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
     );
   };
 
-  const { Meta } = Card;
   const [clinics, setClinics] = useState([]);
 
   var filterClinicArray = clinicData || clinics;
@@ -29,6 +25,7 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
   const fetchingClinic = async () => {
     try {
       const { data } = await getClinics();
+
       const mapperClinicData = data?.content?.map((clinic) => ({
         ...clinic,
         onClick: () => handleClick(clinic?.id),
@@ -48,58 +45,16 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
   }, []);
 
   return (
-    <Fragment>
+    <>
       {layoutDirection === "row" ? (
-        <Row justify="space-between">
-          {clinics
-            ?.filter((clinic) => clinic.id <= 4)
-            .map((clinic, index) => (
-              <Col key={index} span={6}>
-                <Card
-                  className="clinic-card-homepage"
-                  hoverable
-                  //   style={{ height: 300 }}
-                  cover={
-                    <img
-                      alt="example"
-                      src={clinicImg}
-                      style={{ height: 400 }}
-                    />
-                  }
-                >
-                  <Meta
-                    className="card-clinic-content"
-                    description={
-                      <div>
-                        <div className="card-clinic-description">
-                          {clinic?.name} - {clinic.location?.address}
-                        </div>
-                        <div className="card-home-page-rating">
-                          <div style={{ color: "#FFCB45" }}>
-                            {`${clinic.avgRatingScore} `}
-                          </div>
-                          <StarFilled style={{ color: "#FFCB45" }} />
-                        </div>
-                      </div>
-                    }
-                  />
-                </Card>
-              </Col>
-            ))}
-        </Row>
+        <ClinicCardListComponent layoutDirection="row" listData={clinics} />
       ) : (
-        <div className="card-clinic-preview">
-          {filterClinicArray?.map((clinic, index) => (
-            <div key={index}>
-              <ClinicCardComponent
-                clinic={clinic}
-                handleClick={clinic.onClick}
-              />
-            </div>
-          ))}
-        </div>
+        <ClinicCardListComponent
+          layoutDirection="column"
+          listData={filterClinicArray}
+        />
       )}
-    </Fragment>
+    </>
   );
 };
 

@@ -37,7 +37,7 @@ const ServiceDetailComponent = ({ service }) => {
           </div>
           <Divider />
           <Button type="primary" shape="round" size="large">
-            Send request to clinic
+            Booking this service
           </Button>
           <div style={{ display: "flex", marginTop: "28px" }}>
             <div>
