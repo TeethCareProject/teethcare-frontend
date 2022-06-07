@@ -2,7 +2,7 @@ import { Col, Descriptions, Modal, notification, Row } from "antd";
 import React, { useEffect, useState } from "react";
 import { getReportById } from "../../services/teeth-apis/ReportController";
 
-const FeedbackDetailForm = ({ reportId, setNeededReport }) => {
+const ReportDetailForm = ({ reportId, setNeededReport }) => {
   const [reportDetail, setReportDetail] = useState({});
 
   const fetchReportDetail = async () => {
@@ -68,4 +68,4 @@ const FeedbackDetailForm = ({ reportId, setNeededReport }) => {
   );
 };
 
-export default FeedbackDetailForm;
+export default ReportDetailForm;

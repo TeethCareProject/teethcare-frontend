@@ -4,7 +4,7 @@ import { useForm } from "antd/lib/form/Form";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import { getAllReports } from "../../services/teeth-apis/ReportController";
 import ReportManagementTableColumn from "./ReportManagementTable.column";
-import FeedbackDetailForm from "../ReportDetailForm/ReportDetailForm.container";
+import ReportDetailForm from "../ReportDetailForm/ReportDetailForm.container";
 
 const ReportManagementTableContainer = () => {
   const [form] = useForm();
@@ -84,10 +84,10 @@ const ReportManagementTableContainer = () => {
         onFinish={onFinish}
         resetAction={resetAction}
       />
-      <FeedbackDetailForm
+      <ReportDetailForm
         reportId={neededReport}
         setNeededReport={setNeededReport}
-      ></FeedbackDetailForm>
+      ></ReportDetailForm>
       <CommonTableComponent
         tableTitle="Report Management"
         columns={ReportManagementTableColumn}
