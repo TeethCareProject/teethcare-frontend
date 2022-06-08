@@ -15,9 +15,8 @@ function App() {
   const history = createBrowserHistory();
   const [messToken, setMessToken] = useState();
 
+  try {
   requestForToken(setMessToken);
-
-  console.log(messToken);
 
   onMessageListener()
     .then((payload) => {
@@ -26,6 +25,8 @@ function App() {
       debugger;
     })
     .catch((err) => console.log("failed: ", err));
+  } catch (e) {
+  }
 
   return (
     <BrowserRouter history={history}>
