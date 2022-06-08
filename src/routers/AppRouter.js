@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavigationBar from "../components/NavigationBar/NavigationBar.component";
 import { Redirect, Route, Switch } from "react-router-dom";
 import LoginPage from "../pages/LoginPage/LoginPage";
@@ -12,8 +12,25 @@ import PatientDashboardPage from "../pages/PatientDashboardPage/PatientDashboard
 import DynamicRouter from "./components/DynamicRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
+import { useDispatch } from "react-redux";
+import { initFcmToken } from "../redux/notification/notification.action";
+import { onMessageListener } from "../services/firebase/firebase-init";
 
 const AppRouter = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(initFcmToken());
+  }, []);
+
+  try {
+    onMessageListener()
+      .then((payload) => {
+        alert(payload.notification.body);
+      })
+      .catch((err) => console.log("failed: ", err));
+  } catch (e) {}
+
   return (
     <>
       <NavigationBar />

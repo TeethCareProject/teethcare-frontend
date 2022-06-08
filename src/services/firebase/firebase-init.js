@@ -23,7 +23,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp);
-const messaging = getMessaging(firebaseApp);
+export const messaging = getMessaging(firebaseApp);
 
 export const requestForToken = (setMessToken) => {
   return getToken(messaging, {
