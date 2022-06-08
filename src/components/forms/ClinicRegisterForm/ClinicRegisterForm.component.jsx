@@ -1,17 +1,11 @@
 import React from "react";
 
 import { Form, Input, Button, Select, Row, Col } from "antd";
-import {
-  UserRegisterValidation,
-  ClinicRegisterValidation,
-} from "../../../validate/RegisterValidation";
+import { ClinicRegisterValidation } from "../../../validate/RegisterValidation";
 
 import LocationInputContainer from "../../../containers/LocationInput/LocationInput.container";
-import { GenderType } from "../../../constants/GenderConstants";
-
+import UserInfoInputComponent from "../UserInfoInput/UserInfoInput.component";
 const ClinicRegisterFormComponent = (props) => {
-  const { Option } = Select;
-
   return (
     <Form
       name="normal_register"
@@ -19,51 +13,8 @@ const ClinicRegisterFormComponent = (props) => {
       onFinish={props.onFinishHandle}
     >
       <Row>
-        <Col>
-          <div className="user-register-form">
-            <Form.Item name="username" rules={UserRegisterValidation.username}>
-              <Input placeholder="Username" />
-            </Form.Item>
-            <Form.Item name="password" rules={UserRegisterValidation.password}>
-              <Input type="password" placeholder="Password" />
-            </Form.Item>
-            <Form.Item
-              name="confirmPassword"
-              dependencies={["password"]}
-              rules={UserRegisterValidation.rePassword}
-            >
-              <Input type="password" placeholder="Confirm Password" />
-            </Form.Item>
-            <Form.Item
-              name="firstName"
-              rules={UserRegisterValidation.firstName}
-            >
-              <Input placeholder="First Name" />
-            </Form.Item>
-
-            <Form.Item name="lastName" rules={UserRegisterValidation.lastName}>
-              <Input placeholder="Last Name" />
-            </Form.Item>
-
-            <Form.Item
-              name="gender"
-              label="Gender"
-              rules={UserRegisterValidation.gender}
-              initialValue="MALE"
-            >
-              <Select defaultValue="MALE" placeholder="select your gender">
-                {GenderType.map((gender) => (
-                  <Option key={gender.value} value={gender.value}>
-                    {gender.title}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-
-            <Form.Item name="phoneNumber" rules={UserRegisterValidation.phone}>
-              <Input placeholder="Phone number" />
-            </Form.Item>
-          </div>
+        <Col style={{ marginRight: 20 }}>
+          <UserInfoInputComponent />
         </Col>
         <Col>
           <div className="hospital-register-form">
@@ -96,7 +47,7 @@ const ClinicRegisterFormComponent = (props) => {
               name="clinicEmail"
               rules={ClinicRegisterValidation.email}
             >
-              <Input placeholder="Email" />
+              <Input placeholder="Clinic's Email" />
             </Form.Item>
             <LocationInputContainer />
           </div>

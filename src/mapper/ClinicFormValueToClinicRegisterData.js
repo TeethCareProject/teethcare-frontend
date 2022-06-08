@@ -6,6 +6,7 @@ const ClinicFormValueToClinicRegisterData = (values) => {
     firstName: values.firstName,
     lastName: values.lastName,
     gender: values.gender,
+    email: values.email,
     phoneNumber: values.phoneNumber,
     clinicName: values.clinicName,
     clinicTaxCode: values.clinicTaxCode,

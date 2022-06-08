@@ -8,19 +8,19 @@ const SearchAccountFormComponent = ({ resetAction, type, ...antdProps }) => {
   return (
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
-        <Col span={6}>
+        <Col span={4}>
           <Form.Item name="id" label="Search user Id">
             <Input placeholder="Search by user Id" />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={6}>
           <Form.Item name="fullName" label="Search full name">
             <Input placeholder="Search by full name" />
           </Form.Item>
         </Col>
 
         {type === AccountStatusConstants.PENDING ? null : (
-          <div>
+          <>
             <Col span={4}>
               <Form.Item name="status" label="Search status">
                 <Select placeholder="select status">
@@ -45,7 +45,7 @@ const SearchAccountFormComponent = ({ resetAction, type, ...antdProps }) => {
                 </Select>
               </Form.Item>
             </Col>
-          </div>
+          </>
         )}
         <Col span={3}>
           <Form.Item>

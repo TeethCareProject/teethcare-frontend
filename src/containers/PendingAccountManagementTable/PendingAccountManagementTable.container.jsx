@@ -4,7 +4,7 @@ import CommonTableComponent from "../../components/CommonTable/CommonTable.compo
 import { getAllAccounts } from "../../services/teeth-apis/AccountController";
 import { useForm } from "antd/lib/form/Form";
 import AccountManagementTableColumn from "../AccountManagementTable/AccountManagementTable.column";
-import DetailForm from "../DetailForm/DetailForm.container";
+import ClinicDetailForm from "../ClinicDetailForm/ClinicDetailForm.container";
 import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
 import SearchAccountFormComponent from "../../components/SearchAccountForm/SearchAccountForm.component";
@@ -107,11 +107,11 @@ const PendingAccountManagementTableContainer = () => {
         resetAction={resetAction}
         type={AccountStatusConstants.PENDING}
       />
-      <DetailForm
+      <ClinicDetailForm
         accountId={neededAccount}
         setNeededAccount={setNeededAccount}
         fetchData={fetchData}
-      ></DetailForm>
+      ></ClinicDetailForm>
       <CommonTableComponent
         tableTitle="Pending Account Management"
         columns={AccountManagementTableColumn}

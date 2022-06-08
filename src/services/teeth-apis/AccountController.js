@@ -1,5 +1,5 @@
 import { CallAPI } from "./axiosBase";
-import { ACCOUNT_END_POINT } from "../end-points/AccountEndPoint";
+import { ACCOUNT_END_POINT } from "../end-points/AccountEndPoints";
 
 export const getAllAccounts = (options) =>
   CallAPI(`${ACCOUNT_END_POINT}`, "GET", {}, options);
