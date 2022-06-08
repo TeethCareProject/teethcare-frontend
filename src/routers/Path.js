@@ -6,8 +6,10 @@ const RoutePath = {
   DASHBOARD_PAGE: "/dashboard",
   INTERNAL_ERROR_PAGE: "/internal-error",
   LOGIN_PAGE: "/login",
-  FEEDBACK_PAGE: "/feedbacks",
-  SERVICE_PAGE: "/clinic/:clinicId/:serviceId",
+  SERVICE_DETAIL_PAGE: "/service/:serviceId",
+  BOOKING_PAGE: "/booking/:serviceId",
+  BOOKING_SUCCESSFUL_PAGE: "/booking-result/successful",
+  BOOKING_FAILED_PAGE: "/booking-result/failed",
 };
 
 export default RoutePath;
