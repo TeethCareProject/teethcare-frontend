@@ -10,12 +10,16 @@ const DashboardLayout = ({ navigationList, elementList, currentTab }) => {
           <DashboardSideBarComponent items={navigationList} />
         </Col>
         <Col flex="auto">
-          <Space
-            align="center"
-            style={{ width: "100%", justifyContent: "center" }}
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             {elementList[currentTab]}
-          </Space>
+          </div>
         </Col>
       </Row>
     </>

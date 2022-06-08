@@ -4,6 +4,7 @@ import {
   elementList,
   navigationList,
 } from "./CustomerServiceDashboardPage.tabs";
+import CreateStaffModalContainer from "../../containers/CreateStaffModal/CreateStaffModal.container";
 
 const CustomerServiceDashboardPage = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -21,6 +22,7 @@ const CustomerServiceDashboardPage = () => {
         elementList={elementList}
         currentTab={currentTab}
       />
+      <CreateStaffModalContainer />
     </>
   );
 };

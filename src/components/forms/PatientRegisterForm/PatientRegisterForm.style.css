@@ -1,0 +1,8 @@
+.gender-input {
+  display: flex;
+  align-items: center;
+}
+
+.gender-label {
+  margin-right: 10px;
+}

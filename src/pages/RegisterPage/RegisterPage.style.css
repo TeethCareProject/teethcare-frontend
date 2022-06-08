@@ -1,0 +1,29 @@
+.register-page {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.register-form-button {
+  display: block;
+  margin: 0 auto;
+}
+
+.user-register-form {
+  margin-right: 40px;
+}
+
+.title {
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: bold;
+  background: linear-gradient(96.14deg, #3a8ef6 -10.84%, #6f3afa 196.74%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+img {
+  width: 40vw;
+  height: 40vw;
+}

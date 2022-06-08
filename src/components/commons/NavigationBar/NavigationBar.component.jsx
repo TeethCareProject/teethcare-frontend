@@ -3,8 +3,9 @@ import { Menu } from "antd";
 import { MailOutlined, AppstoreOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { logoutHandler } from "../../redux/authentication/authentication.action";
-import RoutePath from "../../routers/Path";
+import { logoutHandler } from "../../../redux/authentication/authentication.action";
+import RoutePath from "../../../routers/Path";
+
 const items = [
   {
     label: "Home",
@@ -52,14 +53,12 @@ const NavigationBar = () => {
   };
 
   return (
-    <>
-      <Menu
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        items={isAuthUser ? items : defaultItems}
-      />
-    </>
+    <Menu
+      onClick={onClick}
+      selectedKeys={[current]}
+      mode="horizontal"
+      items={isAuthUser ? items : defaultItems}
+    />
   );
 };
 

@@ -1,6 +1,6 @@
 import { Space, Tag, Button } from "antd";
 
-const AccountManagementTableColumn = [
+const ReportManagementTableColumn = [
   {
     title: "Report ID",
     dataIndex: "id",
@@ -11,6 +11,14 @@ const AccountManagementTableColumn = [
     dataIndex: "feedbackDetail",
     key: "feedbackDetail",
     render: (_, record) => <p>{record?.feedbackResponse?.detail}</p>,
+  },
+  {
+    title: "Clinic Name",
+    dataIndex: "clinicName",
+    key: "clinicName",
+    render: (_, record) => (
+      <p>{record?.feedbackResponse?.clinicInfoResponse?.name}</p>
+    ),
   },
   {
     title: "Report detail",
@@ -53,4 +61,4 @@ const AccountManagementTableColumn = [
   },
 ];
 
-export default AccountManagementTableColumn;
+export default ReportManagementTableColumn;
