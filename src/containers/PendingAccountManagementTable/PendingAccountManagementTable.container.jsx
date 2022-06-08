@@ -3,11 +3,13 @@ import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import { getAllAccounts } from "../../services/teeth-apis/AccountController";
 import { useForm } from "antd/lib/form/Form";
-import AccountManagementTableColumn from "./AccountManagementTable.column";
+import AccountManagementTableColumn from "../AccountManagementTable/AccountManagementTable.column";
 import DetailForm from "../DetailForm/DetailForm.container";
+import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
+import { RoleConstant } from "../../constants/RoleConstants";
 import SearchAccountFormComponent from "../../components/SearchAccountForm/SearchAccountForm.component";
 
-const AccountManagementTableContainer = () => {
+const PendingAccountManagementTableContainer = () => {
   const [form] = useForm();
 
   const [data, setData] = useState([]);
@@ -18,16 +20,16 @@ const AccountManagementTableContainer = () => {
 
   const [filterData, setFilterData] = useState({
     id: null,
-    role: null,
-    status: null,
+    role: RoleConstant.CUSTOMER_SERVICE,
+    status: AccountStatusConstants.PENDING,
     fullName: null,
   });
 
   const onFinish = async (values) => {
     setFilterData({
       id: values.id,
-      role: values.role,
-      status: values.status,
+      role: RoleConstant.MANAGER,
+      status: AccountStatusConstants.PENDING,
       fullName: values.fullName,
     });
   };
@@ -35,14 +37,12 @@ const AccountManagementTableContainer = () => {
   const resetAction = () => {
     form.setFieldsValue({
       id: null,
-      role: null,
-      status: null,
       fullName: null,
     });
     setFilterData({
       id: null,
-      role: null,
-      status: null,
+      role: RoleConstant.MANAGER,
+      status: AccountStatusConstants.PENDING,
       fullName: null,
     });
   };
@@ -51,9 +51,21 @@ const AccountManagementTableContainer = () => {
     try {
       let data;
       if (!options) {
-        data = (await getAllAccounts({ pageSize: null })).data;
+        data = (
+          await getAllAccounts({
+            pageSize: null,
+            status: AccountStatusConstants.PENDING,
+            role: RoleConstant.MANAGER,
+          })
+        ).data;
       } else {
-        data = (await getAllAccounts({ ...options })).data;
+        data = (
+          await getAllAccounts({
+            ...options,
+            status: AccountStatusConstants.PENDING,
+            role: RoleConstant.MANAGER,
+          })
+        ).data;
       }
       setTotalElements(data.totalElements);
       //map handle Action in here
@@ -93,6 +105,7 @@ const AccountManagementTableContainer = () => {
         form={form}
         onFinish={onFinish}
         resetAction={resetAction}
+        type={AccountStatusConstants.PENDING}
       />
       <DetailForm
         accountId={neededAccount}
@@ -100,7 +113,7 @@ const AccountManagementTableContainer = () => {
         fetchData={fetchData}
       ></DetailForm>
       <CommonTableComponent
-        tableTitle="User Management"
+        tableTitle="Pending Account Management"
         columns={AccountManagementTableColumn}
         dataSource={data}
         pagination={false}
@@ -115,4 +128,4 @@ const AccountManagementTableContainer = () => {
   );
 };
 
-export default AccountManagementTableContainer;
+export default PendingAccountManagementTableContainer;
