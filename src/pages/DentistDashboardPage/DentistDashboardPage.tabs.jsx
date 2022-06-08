@@ -4,6 +4,8 @@ import {
   AppstoreOutlined,
 } from "@ant-design/icons";
 
+import AssignedBookingListContainer from "../../containers/AssignedBookingList/AssignedBookingList.container";
+
 function getItem(label, key, icon, onClick) {
   return {
     key,
@@ -21,6 +23,8 @@ export const navigationList = [
 
 export const elementList = [
   <div>Dashboard element</div>,
-  <div>Assigned Booking</div>,
+  <div>
+    <AssignedBookingListContainer />
+  </div>,
   <div>My clinic</div>,
 ];
