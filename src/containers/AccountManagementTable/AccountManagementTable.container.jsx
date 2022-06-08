@@ -98,7 +98,7 @@ const AccountManagementTableContainer = () => {
   };
 
   return (
-    <>
+    <div>
       <SearchAccountFormComponent
         form={form}
         onFinish={onFinish}
@@ -121,7 +121,7 @@ const AccountManagementTableContainer = () => {
         pageSize={pageSize}
         onChange={onPageChange}
       />
-    </>
+    </div>
   );
 };
 

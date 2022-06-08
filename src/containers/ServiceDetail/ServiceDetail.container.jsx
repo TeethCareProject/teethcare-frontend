@@ -7,7 +7,7 @@ import { getServiceById } from "../../services/teeth-apis/ServiceController";
 import ServiceDetailComponent from "../../components/customized-components/ServiceDetail/ServiceDetail.component";
 import { useParams } from "react-router-dom";
 
-const ServiceDetailContainer = () => {
+const ServiceDetailContainer = ({ bookingHandler }) => {
   const { serviceId } = useParams();
 
   const [service, setService] = useState({});
@@ -29,7 +29,9 @@ const ServiceDetailContainer = () => {
     fetchingService();
   }, []);
 
-  return <ServiceDetailComponent service={service} />;
+  return (
+    <ServiceDetailComponent bookingHandler={bookingHandler} service={service} />
+  );
 };
 
 export default ServiceDetailContainer;

@@ -44,7 +44,7 @@ const ClinicDetailContainer = () => {
 
   const handleServiceClick = (clinicId, serviceId) =>
     history.push(
-      generatePath(RoutePath.SERVICE_PAGE, {
+      generatePath(RoutePath.SERVICE_DETAIL_PAGE, {
         clinicId,
         serviceId,
       })

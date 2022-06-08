@@ -1,6 +1,6 @@
 import React from "react";
 import { StarOutlined, EnvironmentOutlined } from "@ant-design/icons";
-import { Button, Card } from "antd";
+import { Card } from "antd";
 import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
 import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";

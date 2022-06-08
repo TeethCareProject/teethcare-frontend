@@ -3,7 +3,7 @@ import { Divider, Button, Typography } from "antd";
 import clinicImg from "../../../assets/clinicImg.png";
 import { StarOutlined, EnvironmentOutlined } from "@ant-design/icons";
 
-const ServiceDetailComponent = ({ service }) => {
+const ServiceDetailComponent = ({ service, bookingHandler }) => {
   return (
     <div style={{ margin: "20px 30px" }}>
       <Typography.Title level={2} style={{ marginBottom: 10 }}>
@@ -36,7 +36,12 @@ const ServiceDetailComponent = ({ service }) => {
             <div>{`${service.duration} month`}</div>
           </div>
           <Divider />
-          <Button type="primary" shape="round" size="large">
+          <Button
+            type="primary"
+            shape="round"
+            size="large"
+            onClick={bookingHandler}
+          >
             Booking this service
           </Button>
           <div style={{ display: "flex", marginTop: "28px" }}>

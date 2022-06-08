@@ -6,7 +6,7 @@ const RoutePath = {
   DASHBOARD_PAGE: "/dashboard",
   INTERNAL_ERROR_PAGE: "/internal-error",
   LOGIN_PAGE: "/login",
-  SERVICE_DETAIL_PAGE: "/service/:serviceId",
+  SERVICE_DETAIL_PAGE: "/clinic/:clinicId/:serviceId",
   BOOKING_PAGE: "/booking/:serviceId",
   BOOKING_SUCCESSFUL_PAGE: "/booking-result/successful",
   BOOKING_FAILED_PAGE: "/booking-result/failed",

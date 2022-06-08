@@ -16,7 +16,6 @@ import PatientDashboardPage from "../pages/PatientDashboardPage/PatientDashboard
 import DynamicRouter from "../routers/components/DynamicRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
-import ServiceDetailPage from "../pages/ServiceDetailPage/ServiceDetailPage";
 import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
 import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
 import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
@@ -37,9 +36,6 @@ const AppRouter = () => {
         </Route>
         <Route path={RoutePath.CLINIC_DETAIL_PAGE} exact>
           <ClinicDetailPage />
-        </Route>
-        <Route path={RoutePath.SERVICE_PAGE} exact>
-          <ServiceDetailPage />
         </Route>
         <Route path={RoutePath.REGISTER_PARE} exact>
           <RegisterPage />
