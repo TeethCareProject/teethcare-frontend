@@ -1,18 +1,21 @@
 import React from "react";
-import NavigationBar from "../components/NavigationBar/NavigationBar.component";
+import NavigationBar from "../components/commons/NavigationBar/NavigationBar.component";
 import { Redirect, Route, Switch } from "react-router-dom";
 import LoginPage from "../pages/LoginPage/LoginPage";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import HomePage from "../pages/HomePage/HomePage";
+import ClinicPage from "../pages/ClinicPage/ClinicPage";
+import ClinicDetailPage from "../pages/ClinicDetailPage/ClinicDetailPage";
+import ServiceDetailPage from "../pages/ServiceDetailPage/ServiceDetailPage";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import CustomerServiceDashboardPage from "../pages/CustomerServiceDashboardPage/CustomerServiceDashboardPage";
 import DentistDashboardPage from "../pages/DentistDashboardPage/DentistDashboardPage";
 import ManagerDashboardPage from "../pages/ManagerDashboardPage/ManagerDashboardPage";
 import AdminDashboardPage from "../pages/AdminDashboardPage/AdminDashboardPage";
 import PatientDashboardPage from "../pages/PatientDashboardPage/PatientDashboardPage";
-import DynamicRouter from "./components/DynamicRouter";
+import DynamicRouter from "../routers/components/DynamicRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
-import ServiceDetailPage from "../pages/ServiceDetailPage/ServiceDetailPage";
 import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
 import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
 import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
@@ -27,6 +30,15 @@ const AppRouter = () => {
         </Route>
         <Route path={RoutePath.HOME_PAGE} exact>
           <HomePage />
+        </Route>
+        <Route path={RoutePath.CLINIC_PAGE} exact>
+          <ClinicPage />
+        </Route>
+        <Route path={RoutePath.CLINIC_DETAIL_PAGE} exact>
+          <ClinicDetailPage />
+        </Route>
+        <Route path={RoutePath.REGISTER_PARE} exact>
+          <RegisterPage />
         </Route>
         <Route path={RoutePath.LOGIN_PAGE} exact>
           <LoginPage />

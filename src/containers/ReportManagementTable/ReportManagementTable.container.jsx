@@ -78,7 +78,7 @@ const ReportManagementTableContainer = () => {
   };
 
   return (
-    <>
+    <div>
       <SearchReportFormComponent
         form={form}
         onFinish={onFinish}
@@ -100,7 +100,7 @@ const ReportManagementTableContainer = () => {
         pageSize={pageSize}
         onChange={onPageChange}
       />
-    </>
+    </div>
   );
 };
 

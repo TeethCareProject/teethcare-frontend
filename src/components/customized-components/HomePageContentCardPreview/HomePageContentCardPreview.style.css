@@ -1,0 +1,14 @@
+.site-card-wrapper {
+  background-color: #8cc1ff;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: space-between;
+  padding: 50px 90px;
+}
+
+.site-card {
+  background-color: white;
+  padding: 30px 20px;
+  width: 20%;
+  border-radius: 5%;
+}

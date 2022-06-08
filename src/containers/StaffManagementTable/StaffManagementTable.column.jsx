@@ -1,5 +1,5 @@
 import { Space, Tag, Button } from "antd";
-import AccountStatusConstants from "../../constants/AccountStatusConstants";
+import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
 
 const StaffManagementTableColumn = [
   {

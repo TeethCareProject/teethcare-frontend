@@ -1,5 +1,7 @@
-import { CallAPI, CallAPIOutsite } from "./axiosBase";
+import { CallAPI } from "./axiosBase";
+import { SERVICE_END_POINT } from "../end-points/ServiceEndPoint";
+
+export const getAllServices = () => CallAPI(`${SERVICE_END_POINT}`, "GET");
 
 export const getServiceById = (serviceId) =>
-  //TODO: replace later!
-  CallAPIOutsite(window.location.origin + "/service-fake-data.json", "GET");
+  CallAPI(`${SERVICE_END_POINT}/${serviceId}`, "GET");
