@@ -1,6 +1,7 @@
 import { messaging } from "../../services/firebase/firebase-init";
 import { getToken } from "firebase/messaging";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { getNotifications } from "../../services/teeth-apis/NotificationController";
 
 export const initFcmToken = createAsyncThunk(
   "notification/initFcmToken",
@@ -10,5 +11,14 @@ export const initFcmToken = createAsyncThunk(
     });
 
     return currentToken;
+  }
+);
+
+export const getNotificationList = createAsyncThunk(
+  "notification/getNotificationList",
+  async (thunkAPI) => {
+    const data = (await getNotifications()).data;
+
+    return data.content;
   }
 );

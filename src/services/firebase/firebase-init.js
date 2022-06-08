@@ -45,10 +45,3 @@ export const requestForToken = (setMessToken) => {
       console.log("An error occurred while retrieving token. ", err);
     });
 };
-
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    onMessage(messaging, (payload) => {
-      resolve(payload);
-    });
-  });

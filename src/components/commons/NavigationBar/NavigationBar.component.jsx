@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Menu } from "antd";
+import { Menu, Space } from "antd";
 import { MailOutlined, AppstoreOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { logoutHandler } from "../../../redux/authentication/authentication.action";
 import RoutePath from "../../../routers/Path";
+import NotificationContainer from "../../../containers/Notification/Notification.container";
 
 const items = [
   {
@@ -53,12 +54,15 @@ const NavigationBar = () => {
   };
 
   return (
-    <Menu
-      onClick={onClick}
-      selectedKeys={[current]}
-      mode="horizontal"
-      items={isAuthUser ? items : defaultItems}
-    />
+    <Space>
+      <Menu
+        onClick={onClick}
+        selectedKeys={[current]}
+        mode="horizontal"
+        items={isAuthUser ? items : defaultItems}
+      />
+      <NotificationContainer />
+    </Space>
   );
 };
 

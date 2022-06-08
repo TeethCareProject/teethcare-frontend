@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { initFcmToken } from "./notification.action";
+import { getNotificationList, initFcmToken } from "./notification.action";
 
 const notificationSlice = createSlice({
   name: "notification",
@@ -39,6 +39,12 @@ const notificationSlice = createSlice({
         fcmToken: null,
         isCheckedPermission: true,
         checkResult: false,
+      };
+    });
+    builder.addCase(getNotificationList.fulfilled, (state, action) => {
+      return {
+        ...state,
+        notificationList: action.payload,
       };
     });
   },

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import NavigationBar from "../components/NavigationBar/NavigationBar.component";
+import NavigationBar from "../components/commons/NavigationBar/NavigationBar.component";
 import { Redirect, Route, Switch } from "react-router-dom";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
@@ -17,11 +17,19 @@ import DynamicRouter from "../routers/components/DynamicRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
 import { useDispatch } from "react-redux";
-import { initFcmToken } from "../redux/notification/notification.action";
-import { onMessageListener } from "../services/firebase/firebase-init";
+import {
+  getNotificationList,
+  initFcmToken,
+} from "../redux/notification/notification.action";
+import {
+  messaging,
+  onMessageListener,
+} from "../services/firebase/firebase-init";
 import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
 import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
 import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
+import { notification } from "antd";
+import { onMessage } from "firebase/messaging";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
@@ -30,13 +38,20 @@ const AppRouter = () => {
     dispatch(initFcmToken());
   }, []);
 
-  try {
-    onMessageListener()
-      .then((payload) => {
-        alert(payload.notification.body);
-      })
-      .catch((err) => console.log("failed: ", err));
-  } catch (e) {}
+  useEffect(async () => {
+    const unsubscribe = await onMessage(messaging, (payload) => {
+      const { notification: notificationData } = payload;
+
+      notification["info"]({
+        message: notificationData.title,
+        description: notificationData.body,
+      });
+
+      dispatch(getNotificationList());
+    });
+
+    return unsubscribe;
+  }, []);
 
   return (
     <>
