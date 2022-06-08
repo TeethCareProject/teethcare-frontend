@@ -5,6 +5,7 @@ import {
 } from "@ant-design/icons";
 import AccountManagementTableContainer from "../../containers/AccountManagementTable/AccountManagementTable.container";
 import ReportManagementTableContainer from "../../containers/ReportManagementTable/ReportManagementTable.container";
+import PendingAccountManagementTableContainer from "../../containers/PendingAccountManagementTable/PendingAccountManagementTable.table";
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -26,5 +27,5 @@ export const elementList = [
   <div>Dashboard element</div>,
   <AccountManagementTableContainer />,
   <ReportManagementTableContainer />,
-  <div>account request</div>,
+  <PendingAccountManagementTableContainer />,
 ];

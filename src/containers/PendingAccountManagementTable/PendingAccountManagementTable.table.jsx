@@ -6,25 +6,28 @@ import {
   getAllAccounts,
 } from "../../services/teeth-apis/AccountController";
 import { UserOutlined } from "@ant-design/icons";
-import AccountManagementTableColumn from "./AccountManagementTable.column";
+import PendingAccountManagementTableColumn from "./PendingAccountManagementTable.column";
+import AccountStatusConstants from "../../constants/AccountStatusConstants";
 
-const AccountManagementTableContainer = () => {
+const PendingAccountManagementTableContainer = () => {
   const [data, setData] = useState([]);
   const [neededAccount, setNeededAccount] = useState(null);
 
   const fetchData = async () => {
     try {
       const { data } = await getAllAccounts();
-
+      console.log(data);
       //map handle Action in here
-      const accountData = data?.content?.map((account) => ({
-        ...account,
-        getDetail: () => {
-          setNeededAccount(account.id);
-        },
-      }));
+      const pendingAccountData = data?.content
+        ?.filter((account) => account.status === AccountStatusConstants.PENDING)
+        .map((account) => ({
+          ...account,
+          getDetail: () => {
+            setNeededAccount(account.id);
+          },
+        }));
 
-      setData(accountData);
+      setData(pendingAccountData);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -46,7 +49,7 @@ const AccountManagementTableContainer = () => {
       ></DetailForm>
       <CommonTableComponent
         tableTitle="User Management"
-        columns={AccountManagementTableColumn}
+        columns={PendingAccountManagementTableColumn}
         dataSource={data}
       />
     </>
@@ -133,4 +136,4 @@ const DetailForm = ({ accountId, setNeededAccount }) => {
   );
 };
 
-export default AccountManagementTableContainer;
+export default PendingAccountManagementTableContainer;
