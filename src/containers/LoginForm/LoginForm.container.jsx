@@ -16,6 +16,7 @@ const LoginFormContainer = () => {
     try {
       const { data } = await loginAPI(values.username, values.password);
       dispatch(loginStorageHandler(data));
+
       //go to page
       history.push(RoutePath.DASHBOARD_PAGE);
     } catch (e) {
