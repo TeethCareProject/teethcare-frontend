@@ -5,6 +5,7 @@ import {
 } from "@ant-design/icons";
 
 import AssignedBookingListContainer from "../../containers/AssignedBookingList/AssignedBookingList.container";
+import DentistDashBoardContainer from "../../containers/DentistDashboard/DentistDashBoard.container";
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -22,7 +23,9 @@ export const navigationList = [
 ];
 
 export const elementList = [
-  <div>Dashboard element</div>,
+  <div>
+    <DentistDashBoardContainer />
+  </div>,
   <div>
     <AssignedBookingListContainer />
   </div>,

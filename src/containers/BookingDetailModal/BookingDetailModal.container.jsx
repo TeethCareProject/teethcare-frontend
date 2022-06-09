@@ -2,7 +2,6 @@ import { Button, Modal, notification, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import BookingDetailModalComponent from "../../components/BookingDetailModal/BookingDetailModal.component";
-import AccountStatusConstants from "../../constants/AccountStatusConstants";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
 import {
