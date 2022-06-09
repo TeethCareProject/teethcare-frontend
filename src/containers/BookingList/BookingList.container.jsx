@@ -1,9 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Input, Form, Row, Col, notification, Button, Pagination } from "antd";
+import {
+  Input,
+  Form,
+  Row,
+  Col,
+  notification,
+  Button,
+  Pagination,
+  Select,
+} from "antd";
 import BookingListComponent from "../../components/BookingList/BookingList.component";
 import { useForm } from "antd/lib/form/Form";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
 const BookingListContainer = () => {
   const [searchValue, setSearchValue] = useState({
@@ -100,6 +110,7 @@ const BookingListContainer = () => {
 };
 
 const SearchForm = ({ resetAction, ...antdProps }) => {
+  const { Option } = Select;
   return (
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
@@ -111,6 +122,18 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
         <Col span={7}>
           <Form.Item name="clinicName" label="Search clinic name">
             <Input placeholder="Search by Clinic name" />
+          </Form.Item>
+        </Col>
+        <Col span={4}>
+          <Form.Item name="status" label="Search status">
+            <Select placeholder="select status">
+              <Option>None</Option>
+              {Object.keys(BookingStatusConstants).map((status) => (
+                <Option key={status} value={status}>
+                  {status}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
         </Col>
         <Col span={2}>

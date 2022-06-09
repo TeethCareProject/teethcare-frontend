@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { Input, Form, Row, Col, notification, Button, Pagination } from "antd";
+import {
+  Input,
+  Form,
+  Row,
+  Col,
+  notification,
+  Button,
+  Pagination,
+  Select,
+} from "antd";
 import BookingListComponent from "../../components/BookingList/BookingList.component";
 import { useForm } from "antd/lib/form/Form";
 import { useSelector } from "react-redux";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
 const AssignedBookingListContainer = () => {
   const id = useSelector((state) => state.authentication?.user?.id);
   const [searchValue, setSearchValue] = useState({
     dentistId: id,
-    bookingId: "",
-    clinicName: "",
+    bookingId: null,
+    status: null,
+    clinicName: null,
   });
   const [bookingListData, setBookingListData] = useState([]);
   const [form] = useForm();
@@ -55,19 +66,22 @@ const AssignedBookingListContainer = () => {
     setSearchValue({
       bookingId: values.bookingId,
       clinicName: values.clinicName,
+      status: values.status,
       dentistId: id,
     });
   };
 
   const resetAction = () => {
     form.setFieldsValue({
-      bookingId: "",
-      clinicName: "",
+      bookingId: null,
+      status: null,
+      clinicName: null,
       dentistId: id,
     });
     setSearchValue({
-      bookingId: "",
-      clinicName: "",
+      bookingId: null,
+      status: null,
+      clinicName: null,
       dentistId: id,
     });
   };
@@ -110,17 +124,30 @@ const AssignedBookingListContainer = () => {
 };
 
 const SearchForm = ({ resetAction, ...antdProps }) => {
+  const { Option } = Select;
   return (
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
-        <Col span={7}>
+        <Col span={6}>
           <Form.Item name="bookingId" label="Search booking Id">
             <Input placeholder="Search by booking Id" />
           </Form.Item>
         </Col>
-        <Col span={7}>
+        <Col span={6}>
           <Form.Item name="clinicName" label="Search clinic name">
             <Input placeholder="Search by Clinic name" />
+          </Form.Item>
+        </Col>
+        <Col span={4}>
+          <Form.Item name="status" label="Search status">
+            <Select placeholder="select status">
+              <Option>None</Option>
+              {Object.keys(BookingStatusConstants).map((status) => (
+                <Option key={status} value={status}>
+                  {status}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
         </Col>
         <Col span={4}>

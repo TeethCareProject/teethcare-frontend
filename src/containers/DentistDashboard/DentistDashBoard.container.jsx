@@ -4,9 +4,10 @@ import { useSelector } from "react-redux";
 import { notification, Typography } from "antd";
 import BookingCardComponent from "../../components/BookingCard/BookingCard.component";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
 const DentistDashBoardContainer = () => {
-  const [bookingData, setBookingData] = useState({});
+  const [bookingData, setBookingData] = useState();
   const id = useSelector((state) => state?.authentication?.user?.id);
   const firstName = useSelector(
     (state) => state?.authentication?.user?.firstName
@@ -22,10 +23,17 @@ const DentistDashBoardContainer = () => {
         data = (
           await getAllBooking({
             dentistId: id,
+            status: BookingStatusConstants.TREATMENT,
           })
         ).data;
       } else {
-        data = (await getAllBooking({ ...options, dentistId: id })).data;
+        data = (
+          await getAllBooking({
+            ...options,
+            dentistId: id,
+            status: BookingStatusConstants.TREATMENT,
+          })
+        ).data;
       }
       setBookingData(data.content);
     } catch (e) {

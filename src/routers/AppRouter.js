@@ -19,6 +19,7 @@ import RoutePath from "./Path";
 import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
 import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
 import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
+import ExaminationPage from "../pages/ExaminationPage/ExaminationPage";
 
 const AppRouter = () => {
   return (
@@ -54,6 +55,9 @@ const AppRouter = () => {
         </Route>
         <Route path={RoutePath.BOOKING_FAILED_PAGE}>
           <BookingFailedPage />
+        </Route>
+        <Route path={RoutePath.EXAMINATION_PAGE}>
+          <ExaminationPage />
         </Route>
         <DynamicRouter
           key="dashboard"
