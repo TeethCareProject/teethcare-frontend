@@ -20,9 +20,10 @@ import { useSelector } from "react-redux";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
 import QrScannerComponent from "../../components/QrScanner/QrScanner.component";
 import { useLocation } from "react-router-dom";
+import useQuery from "../../hooks/useQuery";
 
 const BookingManagementTableContainer = () => {
-  const location = useLocation();
+  const query = useQuery();
   const [form] = useForm();
   const [searchValue, setSearchValue] = useState({
     bookingId: "",
@@ -125,8 +126,8 @@ const BookingManagementTableContainer = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    if (location?.state?.bookingId) {
-      setNeededBooking(location?.state?.bookingId);
+    if (query.get("bookingId")) {
+      setNeededBooking(query.get("bookingId"));
     }
   }, []);
 

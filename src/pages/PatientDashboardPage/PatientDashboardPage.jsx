@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout.component";
 import { elementList, navigationList } from "./PatientDashboardPage.tabs";
 
 const ManagerDashboardPage = () => {
-  const [currentTab, setCurrentTab] = useState(0);
+  const { tab } = useParams();
+  const [currentTab, setCurrentTab] = useState(tab ? tab : 0);
 
   return (
     <>

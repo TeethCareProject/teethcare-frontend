@@ -14,6 +14,7 @@ import ManagerDashboardPage from "../pages/ManagerDashboardPage/ManagerDashboard
 import AdminDashboardPage from "../pages/AdminDashboardPage/AdminDashboardPage";
 import PatientDashboardPage from "../pages/PatientDashboardPage/PatientDashboardPage";
 import DynamicRouter from "../routers/components/DynamicRouter";
+import PrivateRouter from "./components/PrivateRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
 import { useDispatch } from "react-redux";
@@ -28,41 +29,51 @@ import {
 import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
 import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
 import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
-import { notification } from "antd";
+import { Modal, notification } from "antd";
 import { onMessage } from "firebase/messaging";
-import { useHistory } from "react-router-dom";
+import { generatePath } from "react-router-dom";
+import TriggerQrCodeNotificationPage from "../pages/TriggerQrCodeNotificationPage/TriggerQrCodeNotificationPage";
+import { checkMobile } from "../utils/checkUserAgent";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   dispatch(initFcmToken());
 
-  onMessageListener()
-    .then((payload) => {
+  useEffect(() => {
+    const unsubscribe = onMessage(messaging, (payload) => {
       const { notification: notificationData } = payload;
-      debugger;
-      if (notificationData.type === "OPEN_BOOKING_NOTIFICATION") {
-        if (!window.location.pathname.includes(RoutePath.DASHBOARD_PAGE)) {
-          history.push(RoutePath.DASHBOARD_PAGE, {
-            tab: "BOOKING",
-            bookingId: notificationData.body,
+
+      if (notificationData.title === "OPEN_BOOKING_NOTIFICATION") {
+        if (!checkMobile()) {
+          Modal.confirm({
+            title: "Open booking detail",
+            content: `do you want to open the detail of booking ${notificationData.body}? (this will be opened in new tab)`,
+            onOk: () =>
+              window.open(
+                generatePath(RoutePath.DASHBOARD_WITH_TAB_PAGE, { tab: 1 }) +
+                  `?bookingId=${notificationData.body}`
+              ),
+            onCancel: () => {},
+          });
+        } else {
+          notification["success"]({
+            message: "Send notification successfully",
           });
         }
+        return;
       }
+
       notification["info"]({
         message: notificationData.title,
         description: notificationData.body,
       });
 
       dispatch(getNotificationList());
-    })
-    .catch((err) =>
-      notification["error"]({
-        message: "Error while setup message listener!",
-        description: err,
-      })
-    );
+    });
+
+    return unsubscribe;
+  });
 
   return (
     <>
@@ -89,15 +100,22 @@ const AppRouter = () => {
         <Route path={RoutePath.SERVICE_DETAIL_PAGE} exact>
           <ServiceDetailPage />
         </Route>
-        <Route path={RoutePath.BOOKING_PAGE}>
+        <Route path={RoutePath.BOOKING_PAGE} exact>
           <BookingServicePage />
         </Route>
-        <Route path={RoutePath.BOOKING_SUCCESSFUL_PAGE}>
+        <Route path={RoutePath.BOOKING_SUCCESSFUL_PAGE} exact>
           <BookingSuccessfulPage />
         </Route>
-        <Route path={RoutePath.BOOKING_FAILED_PAGE}>
+        <Route path={RoutePath.BOOKING_FAILED_PAGE} exact>
           <BookingFailedPage />
         </Route>
+        <PrivateRouter
+          key="trigger"
+          component={() => <TriggerQrCodeNotificationPage />}
+          path={"/popupDetail/:bookingId"} //there is a bug that can't use RoutePath, will fix later
+          exact
+          accessibleRoles={Object.keys(RoleConstant)}
+        />
         <DynamicRouter
           key="dashboard"
           componentList={{
@@ -108,6 +126,19 @@ const AppRouter = () => {
             ADMIN: () => <AdminDashboardPage />,
           }}
           path={RoutePath.DASHBOARD_PAGE}
+          exact
+          accessibleRoles={Object.keys(RoleConstant)}
+        />
+        <DynamicRouter
+          key="dashboard"
+          componentList={{
+            MANAGER: () => <ManagerDashboardPage />,
+            CUSTOMER_SERVICE: () => <CustomerServiceDashboardPage />,
+            DENTIST: () => <DentistDashboardPage />,
+            PATIENT: () => <PatientDashboardPage />,
+            ADMIN: () => <AdminDashboardPage />,
+          }}
+          path={RoutePath.DASHBOARD_WITH_TAB_PAGE}
           exact
           accessibleRoles={Object.keys(RoleConstant)}
         />
