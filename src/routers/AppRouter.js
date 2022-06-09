@@ -36,12 +36,10 @@ const AppRouter = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  useEffect(() => {
-    dispatch(initFcmToken());
-  }, []);
+  dispatch(initFcmToken());
 
-  useEffect(async () => {
-    const unsubscribe = await onMessage(messaging, (payload) => {
+  onMessageListener()
+    .then((payload) => {
       const { notification: notificationData } = payload;
 
       // if (notificationData.type === "OPEN_BOOKING_NOTIFICATION") {
@@ -58,10 +56,13 @@ const AppRouter = () => {
       });
 
       dispatch(getNotificationList());
-    });
-
-    return unsubscribe;
-  }, []);
+    })
+    .catch((err) =>
+      notification["error"]({
+        message: "Error while setup message listener!",
+        description: err,
+      })
+    );
 
   return (
     <>
