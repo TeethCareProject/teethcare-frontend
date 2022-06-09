@@ -54,15 +54,24 @@ const NavigationBar = () => {
   };
 
   return (
-    <Space>
-      <Menu
-        onClick={onClick}
-        selectedKeys={[current]}
-        mode="horizontal"
-        items={isAuthUser ? items : defaultItems}
-      />
-      <NotificationContainer />
-    </Space>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "0.5rem 3rem",
+      }}
+    >
+      <Space>
+        <Menu
+          onClick={onClick}
+          selectedKeys={[current]}
+          mode="horizontal"
+          items={isAuthUser ? items : defaultItems}
+        />
+      </Space>
+      {isAuthUser ? <NotificationContainer /> : null}
+    </div>
   );
 };
 

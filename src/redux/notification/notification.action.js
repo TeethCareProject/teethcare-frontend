@@ -16,9 +16,12 @@ export const initFcmToken = createAsyncThunk(
 
 export const getNotificationList = createAsyncThunk(
   "notification/getNotificationList",
-  async (thunkAPI) => {
-    const data = (await getNotifications()).data;
-
-    return data.content;
+  async (options, thunkAPI) => {
+    const data = (await getNotifications({ ...options })).data;
+    debugger;
+    return {
+      notificationList: data.notificationStores,
+      totalMarkAsUnread: data.numsOfUnread,
+    };
   }
 );

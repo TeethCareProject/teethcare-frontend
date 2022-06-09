@@ -8,6 +8,10 @@ const notificationSlice = createSlice({
     isCheckedPermission: false,
     checkResult: false,
     notificationList: [],
+    page: 0,
+    totalElements: 0,
+    totalPages: 0,
+    totalMarkAsUnread: 0,
   },
   reducers: {
     setFcmToken: (state, action) => {
@@ -20,6 +24,12 @@ const notificationSlice = createSlice({
       return {
         ...state,
         notificationList: action.payload,
+      };
+    },
+    setPage: (state, action) => {
+      return {
+        ...state,
+        page: state.page + action.payload,
       };
     },
   },
@@ -42,13 +52,17 @@ const notificationSlice = createSlice({
       };
     });
     builder.addCase(getNotificationList.fulfilled, (state, action) => {
+      const { payload } = action;
       return {
         ...state,
-        notificationList: action.payload,
+        notificationList: {
+          ...payload.notificationList,
+        },
+        totalMarkAsUnread: payload.totalMarkAsUnread,
       };
     });
   },
 });
 
-export const authenticationActions = notificationSlice.actions;
+export const notificationActions = notificationSlice.actions;
 export default notificationSlice.reducer;
