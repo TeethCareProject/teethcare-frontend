@@ -35,16 +35,17 @@ const NotificationContainer = () => {
     }
   };
 
+  const fetchNotification = async () => {
+    await dispatch(
+      getNotificationList({
+        size: pageSize * (currentPage + 1),
+        page: 0,
+      })
+    );
+  };
+
   useEffect(() => {
-    const fetch = async () => {
-      await dispatch(
-        getNotificationList({
-          size: pageSize * (currentPage + 1),
-          page: 0,
-        })
-      );
-    };
-    fetch();
+    fetchNotification();
   }, [currentPage, render]);
 
   return (

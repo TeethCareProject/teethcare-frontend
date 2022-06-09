@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { notification } from "antd";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -31,17 +32,22 @@ export const requestForToken = (setMessToken) => {
   })
     .then((currentToken) => {
       if (currentToken) {
-        console.log("current token for client: ", currentToken);
         setMessToken(currentToken);
-        //TODO: call API to store FCM
       } else {
         // Show permission request UI
-        console.log(
-          "No registration token available. Request permission to generate one."
-        );
+        notification["error"]({
+          message: `No registration token available!`,
+          description:
+            "No registration token available. Request permission to generate one.",
+          duration: 2,
+        });
       }
     })
     .catch((err) => {
-      console.log("An error occurred while retrieving token. ", err);
+      notification["error"]({
+        message: `Error!`,
+        description: "An error occurred while retrieving token. " + err,
+        duration: 2,
+      });
     });
 };
