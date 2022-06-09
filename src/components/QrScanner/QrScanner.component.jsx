@@ -7,31 +7,22 @@ const QrScannerComponent = ({ handleResult }) => {
 
   return (
     <>
-      <div style={{ marginTop: 30, height: 300 }}>
+      <div>
         <QrReader
           delay={300}
+          constraints={{
+            facingMode: "enviroment",
+          }}
           onResult={(result, error) => {
             if (!!result) {
               setQrscan(result?.text);
               handleResult(result?.text);
             }
           }}
-          style={{ height: 240, width: 320 }}
         />
-
         <Space>
           <Typography>{qrscan}</Typography>
         </Space>
-        <div
-          style={{
-            height: "200px",
-            width: "200px",
-            border: "2px solid red",
-            position: "relative",
-            top: "-93%",
-            right: "-18%",
-          }}
-        ></div>
       </div>
     </>
   );

@@ -11,7 +11,10 @@ import {
 import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
-import { getAllBooking } from "../../services/teeth-apis/BookingController";
+import {
+  getAllBooking,
+  getBookingById,
+} from "../../services/teeth-apis/BookingController";
 import BookingManagementTableColumn from "./BookingManagementTable.column";
 import { useSelector } from "react-redux";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
@@ -83,9 +86,17 @@ const BookingManagementTableContainer = () => {
     });
   };
 
-  const handleResult = (value) => {
-    Modal.destroyAll();
-    setNeededBooking(value);
+  const handleResult = async (value) => {
+    try {
+      Modal.destroyAll();
+      await getBookingById(value);
+      setNeededBooking(value);
+    } catch (e) {
+      Modal.error({
+        title: "Invalid booking Id",
+        content: "Invalid booking Id, try again later!",
+      });
+    }
   };
 
   const handleOpenScanQr = () => {
