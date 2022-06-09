@@ -3,6 +3,10 @@ import { CalendarOutlined, ContainerOutlined } from "@ant-design/icons";
 
 import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
+import {
+  convertMomentToDate,
+  convertMomentToMilliseconds,
+} from "../../utils/convert.utils";
 
 const BookingDetailModalComponent = ({ bookingData }) => {
   return (
@@ -48,6 +52,9 @@ const BookingDetailModalComponent = ({ bookingData }) => {
       <Descriptions title="Booking Info">
         <DescriptionsItem label="Description">
           {bookingData?.description}
+        </DescriptionsItem>
+        <DescriptionsItem label="Examination Time">
+          {bookingData?.examinationTime}
         </DescriptionsItem>
       </Descriptions>
       <List
