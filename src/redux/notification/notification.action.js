@@ -18,7 +18,6 @@ export const getNotificationList = createAsyncThunk(
   "notification/getNotificationList",
   async (options, thunkAPI) => {
     const data = (await getNotifications({ ...options })).data;
-    debugger;
     return {
       notificationList: data.notificationStores,
       totalMarkAsUnread: data.numsOfUnread,
