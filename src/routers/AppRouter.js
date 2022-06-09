@@ -41,15 +41,15 @@ const AppRouter = () => {
   onMessageListener()
     .then((payload) => {
       const { notification: notificationData } = payload;
-
-      // if (notificationData.type === "OPEN_BOOKING_NOTIFICATION") {
-      //   if (!window.location.pathname.includes(RoutePath.DASHBOARD_PAGE)) {
-      //     history.push(RoutePath.DASHBOARD_PAGE, {
-      //       tab: "BOOKING",
-      //       bookingId: notificationData.body,
-      //     });
-      //   }
-      // }
+      debugger;
+      if (notificationData.type === "OPEN_BOOKING_NOTIFICATION") {
+        if (!window.location.pathname.includes(RoutePath.DASHBOARD_PAGE)) {
+          history.push(RoutePath.DASHBOARD_PAGE, {
+            tab: "BOOKING",
+            bookingId: notificationData.body,
+          });
+        }
+      }
       notification["info"]({
         message: notificationData.title,
         description: notificationData.body,
