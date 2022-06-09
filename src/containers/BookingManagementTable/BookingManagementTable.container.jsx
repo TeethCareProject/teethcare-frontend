@@ -1,4 +1,13 @@
-import { Form, notification, Row, Col, Button, Input, Pagination } from "antd";
+import {
+  Form,
+  notification,
+  Row,
+  Col,
+  Button,
+  Input,
+  Pagination,
+  Modal,
+} from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
@@ -6,6 +15,7 @@ import { getAllBooking } from "../../services/teeth-apis/BookingController";
 import BookingManagementTableColumn from "./BookingManagementTable.column";
 import { useSelector } from "react-redux";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
+import QrScannerComponent from "../../components/QrScanner/QrScanner.component";
 
 const BookingManagementTableContainer = () => {
   const [form] = useForm();
@@ -73,6 +83,19 @@ const BookingManagementTableContainer = () => {
     });
   };
 
+  const handleResult = (value) => {
+    Modal.destroyAll();
+    setNeededBooking(value);
+  };
+
+  const handleOpenScanQr = () => {
+    Modal.info({
+      closable: true,
+      title: "Scan QR for booking ID",
+      content: <QrScannerComponent handleResult={handleResult} />,
+    });
+  };
+
   useEffect(() => {
     fetchData({ size: pageSize, ...searchValue });
     setCurrentPage(1);
@@ -96,11 +119,18 @@ const BookingManagementTableContainer = () => {
       ></BookingDetailModalContainer>
       <Col>
         <Row>
-          <SearchForm
-            form={form}
-            onFinish={onFinish}
-            resetAction={resetAction}
-          />
+          <Col>
+            <SearchForm
+              form={form}
+              onFinish={onFinish}
+              resetAction={resetAction}
+            />
+          </Col>
+          <Col>
+            <Button type="primary" onClick={handleOpenScanQr}>
+              Scan QR
+            </Button>
+          </Col>
         </Row>
         <Row>
           <CommonTableComponent
