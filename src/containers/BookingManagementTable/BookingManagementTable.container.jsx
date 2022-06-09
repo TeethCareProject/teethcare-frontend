@@ -19,8 +19,10 @@ import BookingManagementTableColumn from "./BookingManagementTable.column";
 import { useSelector } from "react-redux";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
 import QrScannerComponent from "../../components/QrScanner/QrScanner.component";
+import { useLocation } from "react-router-dom";
 
 const BookingManagementTableContainer = () => {
+  const location = useLocation();
   const [form] = useForm();
   const [searchValue, setSearchValue] = useState({
     bookingId: "",
@@ -121,6 +123,12 @@ const BookingManagementTableContainer = () => {
   useEffect(() => {
     fetchData({ size: pageSize, page: currentPage - 1, ...searchValue });
   }, [currentPage]);
+
+  useEffect(() => {
+    if (location?.state?.bookingId) {
+      setNeededBooking(location?.state?.bookingId);
+    }
+  }, []);
 
   return (
     <>

@@ -5,6 +5,7 @@ import BookingDetailModalComponent from "../../components/BookingDetailModal/Boo
 import AccountStatusConstants from "../../constants/AccountStatusConstants";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
+import QRCode from "react-qr-code";
 import {
   evaluateBooking,
   getBookingById,
@@ -62,6 +63,13 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       footer={false}
     >
       <BookingDetailModalComponent bookingData={bookingData} />
+      {role === RoleConstant.PATIENT ? (
+        <>
+          <div style={{ background: "white", padding: "16px" }}>
+            <QRCode value={`${bookingId}`} />
+          </div>
+        </>
+      ) : null}
       {bookingData?.status === BookingStatusConstants.PENDING &&
       role === RoleConstant.CUSTOMER_SERVICE ? (
         <Space>

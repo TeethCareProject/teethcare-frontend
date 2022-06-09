@@ -30,9 +30,11 @@ import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage
 import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
 import { notification } from "antd";
 import { onMessage } from "firebase/messaging";
+import { useHistory } from "react-router-dom";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(initFcmToken());
@@ -42,6 +44,14 @@ const AppRouter = () => {
     const unsubscribe = await onMessage(messaging, (payload) => {
       const { notification: notificationData } = payload;
 
+      // if (notificationData.type === "OPEN_BOOKING_NOTIFICATION") {
+      //   if (!window.location.pathname.includes(RoutePath.DASHBOARD_PAGE)) {
+      //     history.push(RoutePath.DASHBOARD_PAGE, {
+      //       tab: "BOOKING",
+      //       bookingId: notificationData.body,
+      //     });
+      //   }
+      // }
       notification["info"]({
         message: notificationData.title,
         description: notificationData.body,
