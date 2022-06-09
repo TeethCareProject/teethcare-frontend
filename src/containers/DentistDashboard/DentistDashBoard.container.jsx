@@ -5,9 +5,12 @@ import { notification, Typography } from "antd";
 import BookingCardComponent from "../../components/BookingCard/BookingCard.component";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
 
 const DentistDashBoardContainer = () => {
   const [bookingData, setBookingData] = useState();
+  const [neededBooking, setNeededBooking] = useState(null);
+
   const id = useSelector((state) => state?.authentication?.user?.id);
   const firstName = useSelector(
     (state) => state?.authentication?.user?.firstName
@@ -35,7 +38,14 @@ const DentistDashBoardContainer = () => {
           })
         ).data;
       }
-      setBookingData(data.content);
+
+      const mapperData = data?.content?.map((booking) => ({
+        ...booking,
+        onClick: () => {
+          setNeededBooking(booking?.id);
+        },
+      }));
+      setBookingData(mapperData);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -60,6 +70,10 @@ const DentistDashBoardContainer = () => {
       <div style={{ marginTop: "30px" }}>
         <Typography.Title level={4}>In-coming examination:</Typography.Title>
         <div>
+          <BookingDetailModalContainer
+            bookingId={neededBooking}
+            setNeededBooking={setNeededBooking}
+          />
           <BookingCardComponent booking={bookingData} />
         </div>
       </div>

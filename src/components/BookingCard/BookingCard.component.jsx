@@ -45,6 +45,9 @@ const BookingCardComponent = ({ booking }) => {
               <div style={{ fontSize: "1.5em" }}>
                 <span style={{ fontWeight: "bold" }}>Patient: </span>
                 {convertMillisecondsToDate(booking[0]?.examinationTime)}
+                <Button type="link" onClick={() => booking[0]?.onClick()}>
+                  Xem chi tiết
+                </Button>
               </div>
               <div
                 style={{
@@ -52,7 +55,6 @@ const BookingCardComponent = ({ booking }) => {
                   justifyContent: "flex-end",
                   marginTop: "30px",
                 }}
-                className="card-clinic-clinic-page-button"
               >
                 <Button
                   shape="round"
@@ -96,6 +98,12 @@ const BookingCardComponent = ({ booking }) => {
                           bookingElement?.examinationTime
                         )}
                       />
+                      <Button
+                        type="link"
+                        onClick={() => bookingElement?.onClick()}
+                      >
+                        Xem chi tiết
+                      </Button>
                     </Card>
                   </Col>
                 ))}
