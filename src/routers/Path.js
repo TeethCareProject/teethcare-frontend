@@ -1,6 +1,6 @@
 const RoutePath = {
   HOME_PAGE: "/",
-  TRIGGER_QR_CODE_NOTIFICATION_PAGE: "/popupDetail",
+  TRIGGER_QR_CODE_NOTIFICATION_PAGE: "/popupDetail/:bookingId",
   REGISTER_PARE: "/register",
   CLINIC_PAGE: "/clinic",
   CLINIC_DETAIL_PAGE: "/clinic/:clinicId",
@@ -12,6 +12,7 @@ const RoutePath = {
   BOOKING_PAGE: "/booking/:serviceId",
   BOOKING_SUCCESSFUL_PAGE: "/booking-result/successful",
   BOOKING_FAILED_PAGE: "/booking-result/failed",
+  REDIRECT_BOOKING_DETAIL_PAGE: "/redirectToBookingDetail/:bookingId",
 };
 
 export default RoutePath;

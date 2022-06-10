@@ -22,18 +22,16 @@ import {
   getNotificationList,
   initFcmToken,
 } from "../redux/notification/notification.action";
-import {
-  messaging,
-  onMessageListener,
-} from "../services/firebase/firebase-init";
+import { messaging } from "../services/firebase/firebase-init";
 import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
 import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
 import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
-import { Modal, notification } from "antd";
+import { notification } from "antd";
 import { onMessage } from "firebase/messaging";
-import { generatePath } from "react-router-dom";
 import TriggerQrCodeNotificationPage from "../pages/TriggerQrCodeNotificationPage/TriggerQrCodeNotificationPage";
-import { checkMobile } from "../utils/checkUserAgent";
+import RedirectBookingDetail from "../pages/CustomerServiceDashboardPage/RedirectBookingDetailPage";
+import notificationTypes from "../notificationHandler/notification.types";
+import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
@@ -44,30 +42,17 @@ const AppRouter = () => {
     const unsubscribe = onMessage(messaging, (payload) => {
       const { notification: notificationData } = payload;
 
-      if (notificationData.title === "OPEN_BOOKING_NOTIFICATION") {
-        if (!checkMobile()) {
-          Modal.confirm({
-            title: "Open booking detail",
-            content: `do you want to open the detail of booking ${notificationData.body}? (this will be opened in new tab)`,
-            onOk: () =>
-              window.open(
-                generatePath(RoutePath.DASHBOARD_WITH_TAB_PAGE, { tab: 1 }) +
-                  `?bookingId=${notificationData.body}`
-              ),
-            onCancel: () => {},
+      switch (notificationData.title) {
+        case notificationTypes.OPEN_BOOKING_NOTIFICATION:
+          openBookingDetailNotificationHandler(notificationData);
+          break;
+        default:
+          notification["info"]({
+            message: notificationData.title,
+            description: notificationData.body,
           });
-        } else {
-          notification["success"]({
-            message: "Send notification successfully",
-          });
-        }
-        return;
+          break;
       }
-
-      notification["info"]({
-        message: notificationData.title,
-        description: notificationData.body,
-      });
 
       dispatch(getNotificationList());
     });
@@ -109,12 +94,15 @@ const AppRouter = () => {
         <Route path={RoutePath.BOOKING_FAILED_PAGE} exact>
           <BookingFailedPage />
         </Route>
+        <Route path={RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE} exact>
+          <TriggerQrCodeNotificationPage />
+        </Route>
         <PrivateRouter
-          key="trigger"
-          component={() => <TriggerQrCodeNotificationPage />}
-          path={"/popupDetail/:bookingId"} //there is a bug that can't use RoutePath, will fix later
+          key="redirectBookingDetail"
+          component={() => <RedirectBookingDetail />}
+          path={RoutePath.REDIRECT_BOOKING_DETAIL_PAGE} //there is a bug that can't use RoutePath, will fix later
           exact
-          accessibleRoles={Object.keys(RoleConstant)}
+          accessibleRoles={[RoleConstant.CUSTOMER_SERVICE]}
         />
         <DynamicRouter
           key="dashboard"

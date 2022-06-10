@@ -20,10 +20,15 @@ import { useSelector } from "react-redux";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
 import QrScannerComponent from "../../components/QrScanner/QrScanner.component";
 import { useLocation } from "react-router-dom";
-import useQuery from "../../hooks/useQuery";
+import { useHistory } from "react-router-dom";
+import { generatePath } from "react-router-dom";
+import RoutePath from "../../routers/Path";
+import { useParams } from "react-router-dom";
 
 const BookingManagementTableContainer = () => {
-  const query = useQuery();
+  const location = useLocation();
+  const history = useHistory();
+  const { tab } = useParams();
   const [form] = useForm();
   const [searchValue, setSearchValue] = useState({
     bookingId: "",
@@ -92,8 +97,11 @@ const BookingManagementTableContainer = () => {
   const handleResult = async (value) => {
     try {
       Modal.destroyAll();
-      await getBookingById(value);
-      setNeededBooking(value);
+      const bookingId = value.substring(value.lastIndexOf("/") + 1);
+      //check before get bookingId
+      await getBookingById(bookingId);
+
+      setNeededBooking(bookingId);
     } catch (e) {
       Modal.error({
         title: "Invalid booking Id",
@@ -126,8 +134,14 @@ const BookingManagementTableContainer = () => {
   }, [currentPage]);
 
   useEffect(() => {
-    if (query.get("bookingId")) {
-      setNeededBooking(query.get("bookingId"));
+    if (location?.state?.bookingId) {
+      setNeededBooking(location?.state?.bookingId);
+      history.replace(
+        tab
+          ? generatePath(RoutePath.DASHBOARD_WITH_TAB_PAGE, { tab: tab })
+          : generatePath(RoutePath.DASHBOARD_PAGE),
+        { bookingId: null }
+      );
     }
   }, []);
 
