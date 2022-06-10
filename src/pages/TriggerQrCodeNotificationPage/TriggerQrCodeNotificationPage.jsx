@@ -6,10 +6,11 @@ import { triggerOpenBookingDetail } from "../../services/teeth-apis/Notification
 const TriggerQrCodeNotificationPage = () => {
   const { bookingId } = useParams();
 
+  const trigger = async () => {
+    await triggerOpenBookingDetail(bookingId);
+  };
+
   useEffect(() => {
-    const trigger = async () => {
-      await triggerOpenBookingDetail(bookingId);
-    };
     trigger();
   }, []);
 
