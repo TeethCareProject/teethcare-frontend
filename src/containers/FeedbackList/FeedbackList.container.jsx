@@ -1,44 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { Input, Form, Row, Col, notification, Button, Pagination } from "antd";
-import BookingListComponent from "../../components/BookingList/BookingList.component";
+import FeedbackListComponent from "../../components/FeedBackList/FeedbackList.component";
 import { useForm } from "antd/lib/form/Form";
-import { getAllBooking } from "../../services/teeth-apis/BookingController";
-import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
+import { getClinicFeedBack } from "../../services/teeth-apis/FeedbackController";
+import { useSelector } from "react-redux";
+import FeedbackDetailModalContainer from "../FeedbackDetailModal/FeedbackDetailModal.container";
+// import FeedbackDetailModalContainer from "../FeedbackDetailModal/FeedbackDetailModal.container";
 
-const BookingListContainer = () => {
+const FeedbackListContainer = () => {
   const [searchValue, setSearchValue] = useState({
-    bookingId: "",
-    clinicName: "",
+    feedbackId: "",
   });
-  const [bookingListData, setBookingListData] = useState([]);
+  const [feedbackListData, setFeedbackListData] = useState([]);
   const [form] = useForm();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
-  const [neededBooking, setNeededBooking] = useState(null);
+  const [neededFeedback, setNeededFeedback] = useState(null);
   const pageSize = 6;
+
+  const clinicId = useSelector(
+    (state) => state?.authentication?.user?.clinic?.id
+  );
 
   const fetchData = async (options) => {
     try {
       let data;
       if (!options) {
-        data = (await getAllBooking({})).data;
+        data = (await getClinicFeedBack(clinicId, {})).data;
       } else {
-        data = (await getAllBooking({ ...options })).data;
+        data = (await getClinicFeedBack(clinicId, { ...options })).data;
       }
 
-      const mapperData = data?.content?.map((booking) => ({
-        ...booking,
+      const mapperData = data?.content?.map((feedback) => ({
+        ...feedback,
         onClick: () => {
-          setNeededBooking(booking?.id);
+          setNeededFeedback(feedback?.id);
         },
       }));
 
-      setBookingListData(mapperData);
+      setFeedbackListData(mapperData);
       setTotalElements(data.totalElements);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching booking data, try again later`,
+        description: `There is problem while fetching feedback data, try again later`,
         duration: 2,
       });
     }
@@ -46,19 +51,16 @@ const BookingListContainer = () => {
 
   const onFinish = (values) => {
     setSearchValue({
-      bookingId: values.bookingId,
-      clinicName: values.clinicName,
+      feedbackId: values.feedbackId,
     });
   };
 
   const resetAction = () => {
     form.setFieldsValue({
-      bookingId: "",
-      clinicName: "",
+      feedbackId: "",
     });
     setSearchValue({
-      bookingId: "",
-      clinicName: "",
+      feedbackId: "",
     });
   };
 
@@ -68,10 +70,10 @@ const BookingListContainer = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    if (!neededBooking) {
+    if (!neededFeedback) {
       fetchData({ size: pageSize, page: currentPage - 1, ...searchValue });
     }
-  }, [neededBooking]);
+  }, [neededFeedback]);
 
   useEffect(() => {
     fetchData({ size: pageSize, page: currentPage - 1, ...searchValue });
@@ -80,11 +82,11 @@ const BookingListContainer = () => {
   return (
     <>
       <SearchForm form={form} onFinish={onFinish} resetAction={resetAction} />
-      <BookingDetailModalContainer
-        bookingId={neededBooking}
-        setNeededBooking={setNeededBooking}
+      <FeedbackDetailModalContainer
+        feedbackId={neededFeedback}
+        setNeededFeedback={setNeededFeedback}
       />
-      <BookingListComponent bookingListData={bookingListData} />
+      <FeedbackListComponent feedbackListData={feedbackListData} />
       <div style={{ marginTop: "1rem" }}>
         <Pagination
           total={totalElements}
@@ -104,13 +106,8 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
         <Col span={7}>
-          <Form.Item name="bookingId" label="Search booking Id">
-            <Input placeholder="Search by booking Id" />
-          </Form.Item>
-        </Col>
-        <Col span={7}>
-          <Form.Item name="clinicName" label="Search clinic name">
-            <Input placeholder="Search by Clinic name" />
+          <Form.Item name="feedbackId" label="Search feedback Id">
+            <Input placeholder="Search by feedback Id" />
           </Form.Item>
         </Col>
         <Col span={2}>
@@ -130,4 +127,4 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
   );
 };
 
-export default BookingListContainer;
+export default FeedbackListContainer;

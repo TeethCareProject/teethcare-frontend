@@ -6,3 +6,6 @@ export const getAllReports = (options) =>
 
 export const getReportById = (reportId) =>
   CallAPI(`${REPORT_END_POINT}/${reportId}`, "GET");
+
+export const reportFeedback = (feedbackID, detail) =>
+  CallAPI(`${REPORT_END_POINT}`, "POST", { feedbackID, detail });
