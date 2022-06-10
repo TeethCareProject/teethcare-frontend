@@ -15,3 +15,6 @@ export const markNotificationAsRead = (notificationId) =>
 
 export const markAllAsRead = () =>
   CallAPI(`${NOTIFICATION_END_POINT}/read`, "PUT");
+
+export const triggerOpenBookingDetail = (bookingId) =>
+  CallAPI(`${NOTIFICATION_END_POINT}/bookingDetail/${bookingId}`, "GET");

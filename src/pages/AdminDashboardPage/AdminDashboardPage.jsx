@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout.component";
 import { elementList, navigationList } from "./AdminDashboardPage.tabs";
 import { Space, Typography } from "antd";
+import { useParams } from "react-router-dom";
 
 const AdminDashboardPage = () => {
-  const [currentTab, setCurrentTab] = useState(0);
+  const { tab } = useParams();
+  const [currentTab, setCurrentTab] = useState(tab ? tab : 0);
 
   return (
     <>

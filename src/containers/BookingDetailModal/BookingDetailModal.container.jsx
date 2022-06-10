@@ -5,10 +5,13 @@ import BookingDetailModalComponent from "../../components/BookingDetailModal/Boo
 import AccountStatusConstants from "../../constants/AccountStatusConstants";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
+import QRCode from "react-qr-code";
 import {
   evaluateBooking,
   getBookingById,
 } from "../../services/teeth-apis/BookingController";
+import { generatePath } from "react-router-dom";
+import RoutePath from "../../routers/Path";
 
 const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const [bookingData, setBookingData] = useState({});
@@ -62,6 +65,18 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       footer={false}
     >
       <BookingDetailModalComponent bookingData={bookingData} />
+      {bookingId && role === RoleConstant.PATIENT ? (
+        <>
+          <div style={{ background: "white", padding: "16px" }}>
+            <QRCode
+              value={`${window.location.origin}${generatePath(
+                RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE,
+                { bookingId: bookingId }
+              )}`}
+            />
+          </div>
+        </>
+      ) : null}
       {bookingData?.status === BookingStatusConstants.PENDING &&
       role === RoleConstant.CUSTOMER_SERVICE ? (
         <Space>
