@@ -10,7 +10,7 @@ const RoutePath = {
   BOOKING_PAGE: "/booking/:serviceId",
   BOOKING_SUCCESSFUL_PAGE: "/booking-result/successful",
   BOOKING_FAILED_PAGE: "/booking-result/failed",
-  EXAMINATION_PAGE: "/examination",
+  EXAMINATION_PAGE: "/examination/:bookingId",
 };
 
 export default RoutePath;

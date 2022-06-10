@@ -3,6 +3,7 @@ import { Button, Typography, Row, Col, Card } from "antd";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 const BookingCardComponent = ({ booking }) => {
+  console.log(booking);
   const { Meta } = Card;
   return (
     <div>
@@ -64,7 +65,7 @@ const BookingCardComponent = ({ booking }) => {
                     color: "white",
                     fontWeight: "bold",
                   }}
-                  // onClick={booking[1].onClick}
+                  onClick={booking[1]?.startTreatment}
                 >
                   Start
                 </Button>
@@ -75,7 +76,7 @@ const BookingCardComponent = ({ booking }) => {
             <Typography.Title level={4}>Next examination</Typography.Title>
             <Row style={{ display: "flex", justifyContent: "space-between" }}>
               {booking
-                ?.filter((bookingElement, index) => index > 1 && index < 5)
+                ?.filter((bookingElement, index) => index > 0 && index < 4)
                 .map((bookingElement) => (
                   <Col span={2}>
                     <Card
