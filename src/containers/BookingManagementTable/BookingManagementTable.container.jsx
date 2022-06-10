@@ -7,6 +7,7 @@ import {
   Input,
   Pagination,
   Modal,
+  Select,
 } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
@@ -24,6 +25,7 @@ import { useHistory } from "react-router-dom";
 import { generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 import { useParams } from "react-router-dom";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
 const BookingManagementTableContainer = () => {
   const location = useLocation();
@@ -78,6 +80,7 @@ const BookingManagementTableContainer = () => {
       bookingId: values.bookingId,
       patientName: values.patientName,
       patientPhone: values.patientPhone,
+      status: values.status,
     });
   };
 
@@ -86,11 +89,13 @@ const BookingManagementTableContainer = () => {
       bookingId: "",
       patientName: "",
       patientPhone: "",
+      status: null,
     });
     setSearchValue({
       bookingId: "",
       patientName: "",
       patientPhone: "",
+      status: null,
     });
   };
 
@@ -192,22 +197,35 @@ const BookingManagementTableContainer = () => {
 };
 
 const SearchForm = ({ resetAction, ...antdProps }) => {
+  const { Option } = Select;
   return (
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
-        <Col span={6}>
+        <Col span={5}>
           <Form.Item name="bookingId" label="Search booking Id">
             <Input placeholder="Search by booking Id" />
           </Form.Item>
         </Col>
-        <Col span={6}>
+        <Col span={5}>
           <Form.Item name="patientName" label="Search patient name">
             <Input placeholder="Search by patient name" />
           </Form.Item>
         </Col>
-        <Col span={6}>
+        <Col span={5}>
           <Form.Item name="patientPhone" label="Search patient phone">
             <Input placeholder="Search by patient phone" />
+          </Form.Item>
+        </Col>
+        <Col span={3}>
+          <Form.Item name="status">
+            <Select placeholder="status">
+              <Option>None</Option>
+              {Object.keys(BookingStatusConstants).map((status) => (
+                <Option key={status} value={status}>
+                  {status}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
         </Col>
         <Col span={3}>
