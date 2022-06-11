@@ -57,7 +57,7 @@ const CreateStaffModalContainer = () => {
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Open Modal
+        Create staff
       </Button>
       <Modal
         title="Create Staff"
