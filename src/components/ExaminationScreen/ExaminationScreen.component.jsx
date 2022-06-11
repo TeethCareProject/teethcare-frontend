@@ -104,18 +104,6 @@ const ExaminationScreenComponent = ({ booking, services, onFinish }) => {
               maxLength={1000}
             />
           </Form.Item>
-          <Form.Item name="serviceIds">
-            <Select
-              mode="multiple"
-              allowClear
-              style={{ width: "100%" }}
-              placeholder="Select services"
-            >
-              {services.map((service) => (
-                <Option value={service.id}>{service.name}</Option>
-              ))}
-            </Select>
-          </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Request Update

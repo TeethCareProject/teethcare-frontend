@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
 
 import { requestUpdate } from "../../services/teeth-apis/BookingController";
-import UpdateBookingFormValueToUpdateBookingData from "../../mapper/UpdateBookingFormValueToUpdateBookingData";
+import RequestUpdateFormToRequestUpdateData from "../../mapper/RequestUpdateFormToRequestUpdateData.js";
 import ExaminationScreenComponent from "../../components/ExaminationScreen/ExaminationScreen.component";
 
 const ExaminationScreenContainer = () => {
@@ -22,7 +22,7 @@ const ExaminationScreenContainer = () => {
   const onFinish = async (values) => {
     try {
       await requestUpdate(
-        UpdateBookingFormValueToUpdateBookingData({ bookingId, ...values })
+        RequestUpdateFormToRequestUpdateData({ bookingId, ...values })
       );
     } catch (e) {
       notification["error"]({
