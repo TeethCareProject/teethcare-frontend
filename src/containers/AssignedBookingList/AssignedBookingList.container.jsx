@@ -11,14 +11,18 @@ import {
 } from "antd";
 import BookingListComponent from "../../components/BookingList/BookingList.component";
 import { useForm } from "antd/lib/form/Form";
+import { useSelector } from "react-redux";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
-const BookingListContainer = () => {
+const AssignedBookingListContainer = () => {
+  const id = useSelector((state) => state.authentication?.user?.id);
   const [searchValue, setSearchValue] = useState({
-    bookingId: "",
-    clinicName: "",
+    dentistId: id,
+    bookingId: null,
+    status: null,
+    clinicName: null,
   });
   const [bookingListData, setBookingListData] = useState([]);
   const [form] = useForm();
@@ -31,9 +35,13 @@ const BookingListContainer = () => {
     try {
       let data;
       if (!options) {
-        data = (await getAllBooking({})).data;
+        data = (
+          await getAllBooking({
+            dentistId: id,
+          })
+        ).data;
       } else {
-        data = (await getAllBooking({ ...options })).data;
+        data = (await getAllBooking({ ...options, dentistId: id })).data;
       }
 
       const mapperData = data?.content?.map((booking) => ({
@@ -58,17 +66,23 @@ const BookingListContainer = () => {
     setSearchValue({
       bookingId: values.bookingId,
       clinicName: values.clinicName,
+      status: values.status,
+      dentistId: id,
     });
   };
 
   const resetAction = () => {
     form.setFieldsValue({
-      bookingId: "",
-      clinicName: "",
+      bookingId: null,
+      status: null,
+      clinicName: null,
+      dentistId: id,
     });
     setSearchValue({
-      bookingId: "",
-      clinicName: "",
+      bookingId: null,
+      status: null,
+      clinicName: null,
+      dentistId: id,
     });
   };
 
@@ -114,12 +128,12 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
   return (
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
-        <Col span={7}>
+        <Col span={6}>
           <Form.Item name="bookingId" label="Search booking Id">
             <Input placeholder="Search by booking Id" />
           </Form.Item>
         </Col>
-        <Col span={7}>
+        <Col span={6}>
           <Form.Item name="clinicName" label="Search clinic name">
             <Input placeholder="Search by Clinic name" />
           </Form.Item>
@@ -136,14 +150,14 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
             </Select>
           </Form.Item>
         </Col>
-        <Col span={2}>
+        <Col span={4}>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Search
             </Button>
           </Form.Item>
         </Col>
-        <Col span={2}>
+        <Col span={4}>
           <Form.Item>
             <Button onClick={resetAction}>Reset</Button>
           </Form.Item>
@@ -153,4 +167,4 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
   );
 };
 
-export default BookingListContainer;
+export default AssignedBookingListContainer;

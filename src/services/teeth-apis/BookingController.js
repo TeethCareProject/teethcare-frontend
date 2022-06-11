@@ -29,3 +29,5 @@ export const checkIn = (bookingId) =>
       bookingId: bookingId,
     }
   );
+export const requestUpdate = (options) =>
+  CallAPI(`${BOOKING_END_POINT}/update-request`, "PUT", options);

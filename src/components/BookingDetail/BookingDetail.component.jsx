@@ -12,6 +12,7 @@ import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
 
 const BookingDetailComponent = ({ bookingData }) => {
+  alert("hello");
   return (
     <div>
       <Row>
