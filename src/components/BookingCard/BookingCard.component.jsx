@@ -65,7 +65,7 @@ const BookingCardComponent = ({ booking }) => {
                     color: "white",
                     fontWeight: "bold",
                   }}
-                  onClick={booking[1]?.startTreatment}
+                  onClick={booking[0]?.startTreatment}
                 >
                   Start
                 </Button>

@@ -32,6 +32,7 @@ import TriggerQrCodeNotificationPage from "../pages/TriggerQrCodeNotificationPag
 import RedirectBookingDetail from "../pages/CustomerServiceDashboardPage/RedirectBookingDetailPage";
 import notificationTypes from "../notificationHandler/notification.types";
 import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
+import ExaminationPage from "../pages/ExaminationPage/ExaminationPage";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
@@ -93,6 +94,9 @@ const AppRouter = () => {
         </Route>
         <Route path={RoutePath.BOOKING_FAILED_PAGE} exact>
           <BookingFailedPage />
+        </Route>
+        <Route path={RoutePath.EXAMINATION_PAGE} exact>
+          <ExaminationPage />
         </Route>
         <Route path={RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE} exact>
           <TriggerQrCodeNotificationPage />
