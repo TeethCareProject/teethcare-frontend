@@ -1,4 +1,4 @@
-import { Avatar, Col, Descriptions, Modal, notification, Row } from "antd";
+import { Modal, notification } from "antd";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import { getAllDentists } from "../../services/teeth-apis/DentistController";
@@ -7,9 +7,9 @@ import { useSelector } from "react-redux";
 
 const DentistPickingModalContainer = ({
   isOpened,
-  setIsOpened,
   modalClickHandler,
   setSelectedDentistId,
+  onChange,
 }) => {
   const [data, setData] = useState([]);
   const clinicId = useSelector(
@@ -29,6 +29,7 @@ const DentistPickingModalContainer = ({
         chooseDentistHandler: (e) => {
           modalClickHandler(e);
           setSelectedDentistId(dentist.id);
+          onChange(dentist.id);
         },
       }));
 

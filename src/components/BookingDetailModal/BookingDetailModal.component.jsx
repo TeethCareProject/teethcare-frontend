@@ -8,6 +8,8 @@ import {
   Form,
   DatePicker,
   Button,
+  Select,
+  Input,
 } from "antd";
 import { CalendarOutlined, ContainerOutlined } from "@ant-design/icons";
 
@@ -18,9 +20,13 @@ import { convertMillisecondsToDate } from "../../utils/convert.utils";
 import DentistPickingModalContainer from "../../containers/DentistPickingModal/DentistPickingModal.container";
 
 const BookingDetailModalComponent = ({
+  form,
+  onChange,
+  resetField,
   bookingData,
   updateBookingData,
   dentists,
+  services,
   selectedDentistId,
   setSelectedDentistId,
   modalClickHandler,
@@ -31,6 +37,10 @@ const BookingDetailModalComponent = ({
     ? convertMillisecondsToDate(bookingData?.examinationTime)
     : convertMillisecondsToDate(bookingData?.createBookingDate);
 
+  const { Option } = Select;
+
+  console.log(services);
+
   return (
     <>
       <DentistPickingModalContainer
@@ -38,6 +48,7 @@ const BookingDetailModalComponent = ({
         setIsOpened={setIsOpened}
         setSelectedDentistId={setSelectedDentistId}
         modalClickHandler={modalClickHandler}
+        onChange={onChange}
       />
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
         <Col>
@@ -61,7 +72,11 @@ const BookingDetailModalComponent = ({
           {bookingData?.patient?.dateOfBirth}
         </DescriptionsItem>
       </Descriptions>
-      <Form name="update_dentist_time_form" onFinish={updateBookingData}>
+      <Form
+        name="update_dentist_time_form"
+        form={form}
+        onFinish={updateBookingData}
+      >
         <Descriptions title="Staff Incharge">
           <DescriptionsItem label="Customer service">
             {bookingData?.customerService
@@ -71,7 +86,7 @@ const BookingDetailModalComponent = ({
               : "Not available"}
           </DescriptionsItem>
         </Descriptions>
-        <Form.Item name="dentistId"></Form.Item>
+
         <div>
           Current Dentist: {`${" "}`}
           <span>
@@ -83,25 +98,31 @@ const BookingDetailModalComponent = ({
           </span>
           <span
             onClick={modalClickHandler}
-            style={{ color: "blue", marginLeft: 30, fontSize: "0.8em" }}
+            style={{
+              color: "blue",
+              marginLeft: 30,
+              fontSize: "0.8em",
+              cursor: "pointer",
+            }}
           >
             Update Dentist
           </span>
         </div>
-        <div>
-          New Dentist: {`${" "}`}
-          {dentists
-            ?.filter((dentist) => dentist.id === selectedDentistId)
-            .map((dentist) => (
-              <span>
-                {dentist.firstName +
-                  " " +
-                  dentist.lastName +
-                  " - " +
-                  bookingData?.dentist?.specialization}
-              </span>
-            ))}
-        </div>
+        <div>New Dentist: {`${" "}`}</div>
+        <Form.Item name="dentistId" hidden>
+          <Input value={selectedDentistId || bookingData?.dentist?.id} />
+        </Form.Item>
+        {dentists
+          ?.filter((dentist) => dentist.id === selectedDentistId)
+          .map((dentist) => (
+            <span>
+              {dentist.firstName +
+                " " +
+                dentist.lastName +
+                " - " +
+                dentist?.specialization}
+            </span>
+          ))}
 
         <Descriptions title="Booking Info">
           <DescriptionsItem label="Description">
@@ -123,30 +144,43 @@ const BookingDetailModalComponent = ({
             />
           </Form.Item>
         </div>
+
+        <List
+          itemLayout="horizontal"
+          dataSource={bookingData?.services ? bookingData?.services : []}
+          renderItem={(service) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
+                title={
+                  <Typography.Title
+                    level={5}
+                  >{`Service name: ${service.name}`}</Typography.Title>
+                }
+                description={`Description: ${service.description}`}
+              />
+            </List.Item>
+          )}
+        />
+        <Form.Item name="serviceIds">
+          <Select
+            mode="multiple"
+            allowClear
+            style={{ width: "100%" }}
+            placeholder="Please select services"
+            defaultValue={bookingData?.services ? bookingData?.services : []}
+          >
+            {services.map((service) => (
+              <Option value={service.id}>{service.name}</Option>
+            ))}
+          </Select>
+        </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Update
           </Button>
         </Form.Item>
       </Form>
-
-      <List
-        itemLayout="horizontal"
-        dataSource={bookingData?.services ? bookingData?.services : []}
-        renderItem={(service) => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
-              title={
-                <Typography.Title
-                  level={5}
-                >{`Service name: ${service.name}`}</Typography.Title>
-              }
-              description={`Description: ${service.description}`}
-            />
-          </List.Item>
-        )}
-      />
     </>
   );
 };

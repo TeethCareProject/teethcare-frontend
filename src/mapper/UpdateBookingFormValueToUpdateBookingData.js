@@ -6,7 +6,7 @@ const UpdateBookingFormValueToUpdateBookingData = (values) => {
     dentistId: values.dentistId,
     examinationTime: convertDateToMilliseconds(values.examinationTime),
     note: values.note,
-    serviceId: values.serviceId,
+    serviceIds: values.serviceIds,
   };
 };
 
