@@ -19,3 +19,13 @@ export const evaluateBooking = (bookingId, isAccepted) =>
 
 export const updateBooking = (options) =>
   CallAPI(`${BOOKING_END_POINT}`, "PUT", options);
+
+export const checkIn = (bookingId) =>
+  CallAPI(
+    `${BOOKING_END_POINT}/checkin`,
+    "PUT",
+    {},
+    {
+      bookingId: bookingId,
+    }
+  );

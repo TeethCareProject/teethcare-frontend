@@ -1,9 +1,10 @@
 import React from "react";
-import { Avatar, Descriptions, List, Typography } from "antd";
+import { Avatar, Descriptions, List, Typography, Button } from "antd";
 import { ContainerOutlined } from "@ant-design/icons";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
 const BookingDetailModalContentComponent = ({ bookingData }) => {
   let examinationTime = bookingData?.examinationTime

@@ -10,10 +10,9 @@ import {
   evaluateBooking,
   getBookingById,
   updateBooking,
+  checkIn,
 } from "../../services/teeth-apis/BookingController";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
-
-import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 import { getAllDentists } from "../../services/teeth-apis/DentistController";
 import { generatePath } from "react-router-dom";
@@ -33,6 +32,18 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
 
   const modalClickHandler = (e) => {
     setIsOpened((isOpened) => !isOpened);
+  };
+
+  const checkInHandler = async () => {
+    try {
+      await checkIn(bookingId);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while check in, try again later`,
+        duration: 2,
+      });
+    }
   };
 
   const onChange = (value) => {
@@ -125,11 +136,11 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   }, [bookingId]);
 
   useEffect(() => {
-    fetchDentist();
+    clinicId && fetchDentist();
   }, []);
 
   useEffect(() => {
-    fetchServices();
+    clinicId && fetchServices();
   }, []);
 
   const handleAssign = async (isAccepted) => {
@@ -167,6 +178,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         modalClickHandler={modalClickHandler}
         isOpened={isOpened}
         setIsOpened={setIsOpened}
+        checkInHandler={checkInHandler}
       />
       {bookingId && role === RoleConstant.PATIENT ? (
         <>

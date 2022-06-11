@@ -1,5 +1,5 @@
-import { Avatar, Col, Descriptions, Row, Typography } from "antd";
-import { CalendarOutlined, ContainerOutlined } from "@ant-design/icons";
+import { Avatar, Col, Descriptions, Row, Typography, Button } from "antd";
+import { CalendarOutlined } from "@ant-design/icons";
 
 import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
@@ -21,6 +21,7 @@ const BookingDetailModalComponent = ({
   modalClickHandler,
   isOpened,
   setIsOpened,
+  checkInHandler,
 }) => {
   return (
     <>
@@ -53,7 +54,7 @@ const BookingDetailModalComponent = ({
           {bookingData?.patient?.dateOfBirth}
         </DescriptionsItem>
       </Descriptions>
-      {bookingData?.status === BookingStatusConstants.REQUEST ? (
+      {services && bookingData?.status === BookingStatusConstants.REQUEST ? (
         <UpdateBookingDetailModalContentComponent
           form={form}
           bookingData={bookingData}
@@ -66,6 +67,9 @@ const BookingDetailModalComponent = ({
       ) : (
         <BookingDetailModalContentComponent bookingData={bookingData} />
       )}
+      {services && bookingData?.status === BookingStatusConstants.REQUEST ? (
+        <Button onClick={checkInHandler}>Check in</Button>
+      ) : null}
     </>
   );
 };

@@ -44,7 +44,7 @@ const DentistPickingModalContainer = ({
   };
 
   useEffect(() => {
-    fetchData();
+    clinicId && fetchData();
   }, []);
 
   return (
