@@ -16,3 +16,6 @@ export const getBookingById = (bookingId) =>
 
 export const evaluateBooking = (bookingId, isAccepted) =>
   CallAPI(`${BOOKING_END_POINT}/accept`, "PUT", {}, { bookingId, isAccepted });
+
+export const requestUpdate = (options) =>
+  CallAPI(`${BOOKING_END_POINT}/update-request`, "PUT", options);
