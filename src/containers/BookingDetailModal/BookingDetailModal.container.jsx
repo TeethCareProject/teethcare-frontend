@@ -1,5 +1,5 @@
 import { Button, Modal, notification, Space } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
 import BookingDetailModalComponent from "../../components/BookingDetailModal/BookingDetailModal.component";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
@@ -11,22 +11,32 @@ import {
   getBookingById,
 } from "../../services/teeth-apis/BookingController";
 import { updateBooking } from "../../services/teeth-apis/BookingController";
-
+import { getAllDentists } from "../../services/teeth-apis/DentistController";
 import { generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 
 const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
-  const [bookingData, setBookingData] = useState({});
+  const [bookingData, setBookingData] = useState();
+  const [dentists, setDentists] = useState();
+  const [selectedDentistId, setSelectedDentistId] = useState();
+  const [isOpened, setIsOpened] = useState(false);
+
   const role = useSelector((state) => state?.authentication?.user?.roleName);
+
+  const modalClickHandler = (e) => {
+    setIsOpened(!isOpened);
+    console.log(isOpened);
+  };
 
   const updateBookingData = async (values) => {
     try {
-      // await updateBooking(UpdateBookingFormValueToUpdateBookingData(values));
-      console.log(values);
+      await updateBooking(
+        UpdateBookingFormValueToUpdateBookingData({ bookingId, ...values })
+      );
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching booking data, try again later`,
+        description: `There is problem while updating booking data, try again later`,
         duration: 2,
       });
     }
@@ -36,6 +46,23 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
     try {
       const { data } = await getBookingById(bookingId);
       setBookingData(data);
+      setSelectedDentistId(data?.dentist?.id);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching booking data, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
+  const fetchDentist = async () => {
+    try {
+      const { data } = await getAllDentists({
+        clinicId: bookingData?.clinic?.id,
+        isPageable: false,
+      });
+      setDentists(data.content);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -56,6 +83,10 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   useEffect(() => {
     bookingId && fetchBookingData();
   }, [bookingId]);
+
+  useEffect(() => {
+    bookingData && fetchDentist();
+  }, [bookingData]);
 
   const handleAssign = async (isAccepted) => {
     try {
@@ -82,6 +113,12 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       <BookingDetailModalComponent
         bookingData={bookingData}
         updateBookingData={updateBookingData}
+        dentists={dentists}
+        selectedDentistId={selectedDentistId}
+        setSelectedDentistId={setSelectedDentistId}
+        modalClickHandler={modalClickHandler}
+        isOpened={isOpened}
+        setIsOpened={setIsOpened}
       />
       {bookingId && role === RoleConstant.PATIENT ? (
         <>

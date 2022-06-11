@@ -7,25 +7,38 @@ import {
   Typography,
   Form,
   DatePicker,
-  Input,
   Button,
 } from "antd";
 import { CalendarOutlined, ContainerOutlined } from "@ant-design/icons";
-import moment from "moment";
 
 import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
-const BookingDetailModalComponent = ({ bookingData, updateBookingData }) => {
-  const dateFormat = "HH:MM:SS, DD/MM/YYYY";
+import DentistPickingModalContainer from "../../containers/DentistPickingModal/DentistPickingModal.container";
 
+const BookingDetailModalComponent = ({
+  bookingData,
+  updateBookingData,
+  dentists,
+  selectedDentistId,
+  setSelectedDentistId,
+  modalClickHandler,
+  isOpened,
+  setIsOpened,
+}) => {
   let examinationTime = bookingData?.examinationTime
     ? convertMillisecondsToDate(bookingData?.examinationTime)
     : convertMillisecondsToDate(bookingData?.createBookingDate);
 
   return (
     <>
+      <DentistPickingModalContainer
+        isOpened={isOpened}
+        setIsOpened={setIsOpened}
+        setSelectedDentistId={setSelectedDentistId}
+        modalClickHandler={modalClickHandler}
+      />
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
         <Col>
           <Avatar size={48} icon={<CalendarOutlined />} />
@@ -58,34 +71,58 @@ const BookingDetailModalComponent = ({ bookingData, updateBookingData }) => {
               : "Not available"}
           </DescriptionsItem>
         </Descriptions>
-        <Form.Item name="dentistId">
-          Dentist:
-          <Input
-            defaultValue={
-              bookingData?.dentist
-                ? bookingData?.dentist?.firstName +
+        <Form.Item name="dentistId"></Form.Item>
+        <div>
+          Current Dentist: {`${" "}`}
+          <span>
+            {bookingData?.dentist?.firstName +
+              " " +
+              bookingData?.dentist?.lastName +
+              " - " +
+              bookingData?.dentist?.specialization}
+          </span>
+          <span
+            onClick={modalClickHandler}
+            style={{ color: "blue", marginLeft: 30, fontSize: "0.8em" }}
+          >
+            Update Dentist
+          </span>
+        </div>
+        <div>
+          New Dentist: {`${" "}`}
+          {dentists
+            ?.filter((dentist) => dentist.id === selectedDentistId)
+            .map((dentist) => (
+              <span>
+                {dentist.firstName +
                   " " +
-                  bookingData?.dentist?.lastName
-                : "Not available"
-            }
-            style={{ width: 200, marginLeft: 10 }}
-          />
-        </Form.Item>
+                  dentist.lastName +
+                  " - " +
+                  bookingData?.dentist?.specialization}
+              </span>
+            ))}
+        </div>
 
         <Descriptions title="Booking Info">
           <DescriptionsItem label="Description">
             {bookingData?.description}
           </DescriptionsItem>
         </Descriptions>
-        {/* <Form.Item name="examinationTime">
-            Examination Time:
+
+        <div>
+          <div>
+            Current Examination Time: {`${" "}`}
+            <span>{examinationTime}</span>
+          </div>
+          <div>New Examination Time: {`${" "}`}</div>
+          <Form.Item name="examinationTime">
             <DatePicker
-              defaultValue={moment(examinationTime, dateFormat)}
               showTime
               placeholder="Select Time"
               style={{ marginLeft: 10 }}
             />
-          </Form.Item> */}
+          </Form.Item>
+        </div>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Update

@@ -9,3 +9,7 @@ export const convertMomentToMilliseconds = (momentData) => {
 export const convertMillisecondsToDate = (milliseconds) => {
   return new Date(milliseconds).toLocaleString();
 };
+
+export const convertDateToMilliseconds = (date) => {
+  return new Date(date).getTime();
+};
