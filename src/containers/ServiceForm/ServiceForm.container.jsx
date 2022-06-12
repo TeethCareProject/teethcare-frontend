@@ -114,7 +114,7 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
         >
           <TextArea row={4} />
         </Form.Item>
-        {/*TODO: upload image implement! */}
+        {/*TODO: upload image implement when there is firebase service! */}
         {/* <Upload
           name="avatar"
           listType="picture-card"
