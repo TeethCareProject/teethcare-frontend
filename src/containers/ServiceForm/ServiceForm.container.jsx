@@ -19,7 +19,6 @@ const beforeUpload = (file) => {
   if (!isLt2M) {
     message.error("Image must smaller than 2MB!");
   }
-  debugger;
 
   return isJpgOrPng && isLt2M;
 };
@@ -54,7 +53,6 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
   }, []);
 
   const handleUploadImage = (info) => {
-    debugger;
     if (info.file.status === "uploading") {
       setLoading(true);
       return;
@@ -63,7 +61,6 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
     if (info.file.status === "done") {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, (url) => {
-        debugger;
         setLoading(false);
         setImageUrl(url);
         //TODO: update with firebase
