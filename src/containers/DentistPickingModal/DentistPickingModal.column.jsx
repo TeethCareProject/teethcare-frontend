@@ -49,7 +49,9 @@ const DentistPickingModalColumn = [
     render: (_, record) => {
       return (
         <Space size="middle">
-          <div onClick={(e) => record.chooseDentistHandler(e)}>Choose</div>
+          <Button type="link" onClick={(e) => record.chooseDentistHandler(e)}>
+            Select
+          </Button>
         </Space>
       );
     },

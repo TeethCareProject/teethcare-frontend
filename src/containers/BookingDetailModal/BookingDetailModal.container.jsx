@@ -26,8 +26,11 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const [selectedDentistId, setSelectedDentistId] = useState();
   const [selectedServiceIds, setSelectedServiceIds] = useState([]);
   const [isDentistModalOpened, setDentistModalOpened] = useState(false);
+  const [isServiceModalOpened, setServiceModalOpened] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
+
   const role = useSelector((state) => state?.authentication?.user?.roleName);
+
   const clinicId = useSelector(
     (state) => state.authentication?.user?.clinic?.id
   );
@@ -36,8 +39,29 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
     setDentistModalOpened((isDentistModalOpened) => !isDentistModalOpened);
   };
 
+  const serviceModalClickHandler = (e) => {
+    setServiceModalOpened((isServiceModalOpened) => !isServiceModalOpened);
+  };
+
   const updateClickHandler = (e) => {
     setIsUpdated((isUpdated) => !isUpdated);
+  };
+
+  const chooseServiceHandler = (serviceId) => {
+    if (selectedServiceIds && !selectedServiceIds.includes(serviceId)) {
+      setSelectedServiceIds((prev) => {
+        return [...prev, serviceId];
+      });
+    }
+  };
+
+  const deleteServiceHandler = (serviceId) => {
+    if (selectedServiceIds && selectedServiceIds.includes(serviceId)) {
+      setSelectedServiceIds((prevState) => {
+        const array = prevState.filter((id) => id !== serviceId);
+        return array;
+      });
+    }
   };
 
   const checkInHandler = async () => {
@@ -55,6 +79,12 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const onDentistChange = (value) => {
     form.setFieldsValue({
       dentistId: value,
+    });
+  };
+
+  const onServiceChange = (value) => {
+    form.setFieldsValue({
+      serviceIds: value,
     });
   };
 
@@ -129,12 +159,19 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
     }
   };
 
+  useEffect(() => {
+    onServiceChange(selectedServiceIds);
+  }, [selectedServiceIds]);
+
   const handleOk = () => {
     setNeededBooking(null);
   };
 
   const handleCancel = () => {
     setNeededBooking(null);
+    setSelectedDentistId(null);
+    setSelectedServiceIds([]);
+    setIsUpdated(false);
   };
 
   useEffect(() => {
@@ -181,14 +218,19 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         dentists={dentists}
         services={services}
         selectedDentistId={selectedDentistId}
+        isDentistModalOpened={isDentistModalOpened}
+        setDentistModalOpened={setDentistModalOpened}
+        dentistModalClickHandler={dentistModalClickHandler}
         setSelectedDentistId={setSelectedDentistId}
         selectedServiceIds={selectedServiceIds}
         setSelectedServiceIds={setSelectedServiceIds}
-        dentistModalClickHandler={dentistModalClickHandler}
-        isOpened={isDentistModalOpened}
+        serviceModalClickHandler={serviceModalClickHandler}
+        isServiceModalOpened={isServiceModalOpened}
+        setServiceModalOpened={setServiceModalOpened}
+        chooseServiceHandler={chooseServiceHandler}
+        deleteServiceHandler={deleteServiceHandler}
         isUpdated={isUpdated}
         updateClickHandler={updateClickHandler}
-        setIsOpened={setDentistModalOpened}
         checkInHandler={checkInHandler}
       />
       {bookingId && role === RoleConstant.PATIENT ? (

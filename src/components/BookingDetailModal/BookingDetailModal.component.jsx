@@ -7,6 +7,7 @@ import UpdateBookingDetailModalContentComponent from "../UpdateBookingDetailModa
 import BookingDetailModalContentComponent from "../BookingDetailModalContent/BookingDetailModalContent.component";
 
 import DentistPickingModalContainer from "../../containers/DentistPickingModal/DentistPickingModal.container";
+import ServicePickingModalContainer from "../../containers/ServicePickingModal/ServicePickingModal.container";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
 
@@ -19,23 +20,39 @@ const BookingDetailModalComponent = ({
   dentists,
   services,
   selectedDentistId,
+  selectedServiceIds,
   setSelectedDentistId,
+  setSelectedServiceIds,
   dentistModalClickHandler,
+  serviceModalClickHandler,
   updateClickHandler,
-  isOpened,
+  isDentistModalOpened,
+  isServiceModalOpened,
+  chooseServiceHandler,
+  deleteServiceHandler,
   isUpdated,
-  setIsOpened,
+  setDentistModalOpened,
+  setServiceModalOpened,
   checkInHandler,
 }) => {
   return (
     <>
       <DentistPickingModalContainer
-        isOpened={isOpened}
-        setIsOpened={setIsOpened}
+        isDentistModalOpened={isDentistModalOpened}
+        setDentistModalOpened={setDentistModalOpened}
         setSelectedDentistId={setSelectedDentistId}
         dentistModalClickHandler={dentistModalClickHandler}
         onDentistChange={onDentistChange}
         dentists={dentists}
+      />
+      <ServicePickingModalContainer
+        isServiceModalOpened={isServiceModalOpened}
+        setServiceModalOpened={setServiceModalOpened}
+        selectedServiceIds={selectedServiceIds}
+        setSelectedServiceIds={setSelectedServiceIds}
+        serviceModalClickHandler={serviceModalClickHandler}
+        services={services}
+        chooseService={chooseServiceHandler}
       />
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
         <Col>
@@ -46,9 +63,12 @@ const BookingDetailModalComponent = ({
           <Typography>{`Booking ID: ${bookingData?.clinic?.name}`}</Typography>
         </Col>
         <Col>
-          <Button onClick={updateClickHandler}>
-            {isUpdated ? "Return" : "Update"}
-          </Button>
+          {role === RoleConstant.CUSTOMER_SERVICE &&
+          bookingData?.status === BookingStatusConstants.REQUEST ? (
+            <Button onClick={updateClickHandler}>
+              {isUpdated ? "Return" : "Update"}
+            </Button>
+          ) : null}
         </Col>
       </Row>
       <Descriptions title="Patient info">
@@ -74,15 +94,18 @@ const BookingDetailModalComponent = ({
           dentists={dentists}
           services={services}
           selectedDentistId={selectedDentistId}
+          selectedServiceIds={selectedServiceIds}
           dentistModalClickHandler={dentistModalClickHandler}
+          serviceModalClickHandler={serviceModalClickHandler}
+          deleteServiceHandler={deleteServiceHandler}
         />
       ) : (
-        <BookingDetailModalContentComponent bookingData={bookingData} />
+        <BookingDetailModalContentComponent
+          bookingData={bookingData}
+          role={role}
+          checkInHandler={checkInHandler}
+        />
       )}
-      {role === RoleConstant.CUSTOMER_SERVICE &&
-      bookingData?.status === BookingStatusConstants.REQUEST ? (
-        <Button onClick={checkInHandler}>Check in</Button>
-      ) : null}
     </>
   );
 };

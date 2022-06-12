@@ -4,7 +4,7 @@ import CommonTableComponent from "../../components/CommonTable/CommonTable.compo
 import DentistPickingModalColumn from "./DentistPickingModal.column";
 
 const DentistPickingModalContainer = ({
-  isOpened,
+  isDentistModalOpened,
   dentistModalClickHandler,
   setSelectedDentistId,
   onDentistChange,
@@ -28,7 +28,7 @@ const DentistPickingModalContainer = ({
     <>
       <Modal
         destroyOnClose
-        visible={isOpened}
+        visible={isDentistModalOpened}
         onOk={handleCancel}
         onCancel={handleCancel}
         width="80vw"

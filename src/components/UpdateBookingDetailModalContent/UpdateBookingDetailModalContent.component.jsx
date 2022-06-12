@@ -10,9 +10,14 @@ import {
   Select,
   Input,
 } from "antd";
-import { ContainerOutlined } from "@ant-design/icons";
+import {
+  ContainerOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
 const UpdateBookingDetailModalContentComponent = ({
   form,
@@ -21,7 +26,11 @@ const UpdateBookingDetailModalContentComponent = ({
   dentists,
   services,
   selectedDentistId,
+  selectedServiceIds,
   dentistModalClickHandler,
+  serviceModalClickHandler,
+  deleteServiceHandler,
+  checkInHandler,
 }) => {
   const { Option } = Select;
   return (
@@ -41,7 +50,7 @@ const UpdateBookingDetailModalContentComponent = ({
       </Descriptions>
       <div>
         <div>
-          New Dentist: {`${" "}`}
+          New Dentist:{" "}
           {dentists
             ?.filter((dentist) => dentist.id === selectedDentistId)
             .map((dentist) => (
@@ -53,7 +62,7 @@ const UpdateBookingDetailModalContentComponent = ({
                   dentist?.specialization}
               </span>
             ))}
-          <span
+          <EditOutlined
             onClick={dentistModalClickHandler}
             style={{
               color: "blue",
@@ -61,9 +70,7 @@ const UpdateBookingDetailModalContentComponent = ({
               fontSize: "0.8em",
               cursor: "pointer",
             }}
-          >
-            Update Dentist
-          </span>
+          />
         </div>
         <Form.Item name="dentistId" hidden>
           <Input value={selectedDentistId || bookingData?.dentist?.id} />
@@ -75,7 +82,7 @@ const UpdateBookingDetailModalContentComponent = ({
         </DescriptionsItem>
       </Descriptions>
       <div>
-        <div>New Examination Time: {`${" "}`}</div>
+        <span>New Examination Time: </span>
         <Form.Item name="examinationTime">
           <DatePicker
             showTime
@@ -85,10 +92,27 @@ const UpdateBookingDetailModalContentComponent = ({
         </Form.Item>
       </div>
       <div>
-        <div className="ant-descriptions-title">Service</div>
+        <div className="ant-descriptions-title">
+          Service{" "}
+          <EditOutlined
+            onClick={serviceModalClickHandler}
+            style={{
+              color: "blue",
+              marginLeft: 30,
+              fontSize: "0.8em",
+              cursor: "pointer",
+            }}
+          />
+        </div>
         <List
           itemLayout="horizontal"
-          dataSource={bookingData?.services ? bookingData?.services : []}
+          dataSource={
+            services
+              ? services.filter((service) =>
+                  selectedServiceIds.includes(service.id)
+                )
+              : []
+          }
           renderItem={(service) => (
             <List.Item>
               <List.Item.Meta
@@ -96,7 +120,16 @@ const UpdateBookingDetailModalContentComponent = ({
                 title={
                   <Typography.Title
                     level={5}
-                  >{`Service name: ${service.name}`}</Typography.Title>
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div>{`Service name: ${service.name}`}</div>
+                    <div>
+                      <DeleteOutlined
+                        style={{ color: "red", cursor: "pointer" }}
+                        onClick={() => deleteServiceHandler(service.id)}
+                      />
+                    </div>
+                  </Typography.Title>
                 }
                 description={`Description: ${service.description}`}
               />
@@ -109,6 +142,7 @@ const UpdateBookingDetailModalContentComponent = ({
         <Select
           mode="multiple"
           allowClear
+          hidden={true}
           style={{ width: "100%" }}
           placeholder="Select services"
         >
@@ -117,11 +151,16 @@ const UpdateBookingDetailModalContentComponent = ({
           ))}
         </Select>
       </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Update
-        </Button>
-      </Form.Item>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Update
+          </Button>
+        </Form.Item>
+        {services && bookingData?.status === BookingStatusConstants.REQUEST ? (
+          <Button onClick={checkInHandler}>Check in</Button>
+        ) : null}
+      </div>
     </Form>
   );
 };
