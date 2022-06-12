@@ -179,11 +179,11 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   }, [bookingId]);
 
   useEffect(() => {
-    clinicId && fetchDentist();
+    role === RoleConstant.CUSTOMER_SERVICE && fetchDentist();
   }, []);
 
   useEffect(() => {
-    clinicId && fetchServices();
+    role === RoleConstant.CUSTOMER_SERVICE && fetchServices();
   }, []);
 
   const handleAssign = async (isAccepted) => {
