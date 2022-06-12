@@ -5,6 +5,7 @@ import {
 } from "@ant-design/icons";
 import BookingManagementTableContainer from "../../containers/BookingManagementTable/BookingManagementTable.container";
 import FeedbackListContainer from "../../containers/FeedbackList/FeedbackList.container";
+import ReportManagementTableContainer from "../../containers/ReportManagementTable/ReportManagementTable.container";
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -20,6 +21,7 @@ export const navigationList = [
   getItem("Booking management", "sub2", <AppstoreOutlined />),
   getItem("My clinic", "sub3", <SettingOutlined />),
   getItem("My clinic Feedback", "sub4", <SettingOutlined />),
+  getItem("My clinic Feedback report", "sub6", <SettingOutlined />),
 ];
 
 export const elementList = [
@@ -29,4 +31,5 @@ export const elementList = [
   <div style={{ width: "80%" }}>
     <FeedbackListContainer />
   </div>,
+  <ReportManagementTableContainer />,
 ];

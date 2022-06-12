@@ -71,7 +71,7 @@ const ReportManagementTableContainer = () => {
 
   useEffect(() => {
     fetchData({ size: pageSize, page: currentPage - 1, ...filterData });
-  }, [currentPage]);
+  }, [currentPage, neededReport]);
 
   const onPageChange = (page) => {
     setCurrentPage(page);
