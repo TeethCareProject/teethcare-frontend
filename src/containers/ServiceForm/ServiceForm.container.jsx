@@ -33,6 +33,7 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
   const fetchService = async () => {
     try {
       const { data } = await getServiceById(serviceId);
+      form.setFieldsValue(data);
       setServiceData(data);
     } catch (e) {
       notification["error"]({
@@ -86,6 +87,11 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
   return (
     <>
       <Form onFinish={handleSubmit} form={form}>
+        {serviceId ? (
+          <Form.Item label="Service ID" name="id">
+            <Input readOnly />
+          </Form.Item>
+        ) : null}
         <Form.Item label="Service name" name="name">
           <Input />
         </Form.Item>
@@ -95,7 +101,7 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
         <Form.Item label="Service description" name="description">
           <TextArea row={4} />
         </Form.Item>
-        <Upload
+        {/* <Upload
           name="avatar"
           listType="picture-card"
           className="avatar-uploader"
@@ -115,7 +121,7 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
           ) : (
             uploadButton
           )}
-        </Upload>
+        </Upload> */}
         <Form.Item name="imageUrl" hidden></Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">

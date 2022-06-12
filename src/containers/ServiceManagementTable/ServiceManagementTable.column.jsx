@@ -53,7 +53,10 @@ const ServiceManagementTableColumn = [
       return (
         <Space size="middle">
           <Button type="link" onClick={record.getDetail}>
-            Detail
+            Update
+          </Button>
+          <Button type="link" onClick={record.onDelete}>
+            Delete
           </Button>
         </Space>
       );

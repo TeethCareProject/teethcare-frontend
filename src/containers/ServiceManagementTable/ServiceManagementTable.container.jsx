@@ -8,10 +8,16 @@ import {
   Button,
   Select,
   Modal,
+  Space,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
-import { getAllServices } from "../../services/teeth-apis/ServiceController";
+import {
+  createService,
+  deleteService,
+  getAllServices,
+  updateService,
+} from "../../services/teeth-apis/ServiceController";
 import { useForm } from "antd/lib/form/Form";
 import ServiceManagementTableColumn from "./ServiceManagementTable.column";
 import DetailForm from "../DetailForm/DetailForm.container";
@@ -70,6 +76,9 @@ const ServiceManagementTableContainer = () => {
         getDetail: () => {
           setNeededService(service.id);
         },
+        onDelete: () => {
+          handleDeleteService(service?.id);
+        },
       }));
 
       setData(serviceData);
@@ -95,6 +104,64 @@ const ServiceManagementTableContainer = () => {
     setCurrentPage(page);
   };
 
+  const handleUpdateService = async (values) => {
+    try {
+      await updateService({ ...values });
+      setNeededService(null);
+      setFilterData((preFilter) => ({ ...preFilter }));
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while updating service, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
+  const handleCreateService = async (values) => {
+    try {
+      await createService({ ...values });
+      notification["success"]({
+        message: `Create Successfully`,
+        description: `Create new service succesfully`,
+        duration: 2,
+      });
+      Modal.destroyAll();
+      setFilterData((preFilter) => ({ ...preFilter }));
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while updating service, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
+  const handleDeleteService = (serviceId) => {
+    try {
+      Modal.confirm({
+        title: "Delete service",
+        content: "Are you sure you want to delete this service?",
+        onOk: async () => {
+          await deleteService(serviceId);
+          notification["success"]({
+            message: `Delete Successfully`,
+            description: `Delete new service succesfully`,
+            duration: 2,
+          });
+          setFilterData((preFilter) => ({ ...preFilter }));
+        },
+        onCancel: () => {},
+      });
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while updating service, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
   return (
     <div>
       <SearchServiceFormComponent
@@ -111,10 +178,31 @@ const ServiceManagementTableContainer = () => {
         {neededService ? (
           <ServiceFormContainer
             serviceId={neededService}
-            handleSubmit={() => {}}
+            handleSubmit={handleUpdateService}
           />
         ) : null}
       </Modal>
+      <Space>
+        <Button
+          type="primary"
+          onClick={() => {
+            const modal = Modal.info();
+            modal.update({
+              closable: true,
+              okButtonProps: { style: { display: "none" } },
+              title: "Create service form",
+              content: (
+                <ServiceFormContainer
+                  serviceId={null}
+                  handleSubmit={handleCreateService}
+                />
+              ),
+            });
+          }}
+        >
+          Create service
+        </Button>
+      </Space>
       <CommonTableComponent
         tableTitle="Service Management"
         columns={ServiceManagementTableColumn}
