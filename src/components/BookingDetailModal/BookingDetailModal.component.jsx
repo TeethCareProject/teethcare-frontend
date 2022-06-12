@@ -63,9 +63,12 @@ const BookingDetailModalComponent = ({
           <Typography>{`Booking ID: ${bookingData?.clinic?.name}`}</Typography>
         </Col>
         <Col>
-          <Button onClick={updateClickHandler}>
-            {isUpdated ? "Return" : "Update"}
-          </Button>
+          {role === RoleConstant.CUSTOMER_SERVICE &&
+          bookingData?.status === BookingStatusConstants.REQUEST ? (
+            <Button onClick={updateClickHandler}>
+              {isUpdated ? "Return" : "Update"}
+            </Button>
+          ) : null}
         </Col>
       </Row>
       <Descriptions title="Patient info">
