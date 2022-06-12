@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { getServiceById } from "../../services/teeth-apis/ServiceController";
 import { getBase64 } from "../../utils/convert.utils";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import ServiceValidation from "../../validate/ServiceValidation";
 
 const beforeUpload = (file) => {
   const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
@@ -92,15 +93,28 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
             <Input readOnly />
           </Form.Item>
         ) : null}
-        <Form.Item label="Service name" name="name">
+        <Form.Item
+          label="Service name"
+          name="name"
+          rules={ServiceValidation.name}
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="Service price" name="price">
+        <Form.Item
+          label="Service price"
+          name="price"
+          rules={ServiceValidation.price}
+        >
           <Input />
         </Form.Item>
-        <Form.Item label="Service description" name="description">
+        <Form.Item
+          label="Service description"
+          name="description"
+          rules={ServiceValidation.description}
+        >
           <TextArea row={4} />
         </Form.Item>
+        {/*TODO: upload image implement! */}
         {/* <Upload
           name="avatar"
           listType="picture-card"
