@@ -28,6 +28,8 @@ const BookingDetailModalComponent = ({
   updateClickHandler,
   isDentistModalOpened,
   isServiceModalOpened,
+  chooseServiceHandler,
+  deleteServiceHandler,
   isUpdated,
   setDentistModalOpened,
   setServiceModalOpened,
@@ -46,9 +48,11 @@ const BookingDetailModalComponent = ({
       <ServicePickingModalContainer
         isServiceModalOpened={isServiceModalOpened}
         setServiceModalOpened={setServiceModalOpened}
+        selectedServiceIds={selectedServiceIds}
         setSelectedServiceIds={setSelectedServiceIds}
         serviceModalClickHandler={serviceModalClickHandler}
         services={services}
+        chooseService={chooseServiceHandler}
       />
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
         <Col>
@@ -87,9 +91,10 @@ const BookingDetailModalComponent = ({
           dentists={dentists}
           services={services}
           selectedDentistId={selectedDentistId}
-          setSelectedServiceIds={setSelectedServiceIds}
+          selectedServiceIds={selectedServiceIds}
           dentistModalClickHandler={dentistModalClickHandler}
           serviceModalClickHandler={serviceModalClickHandler}
+          deleteServiceHandler={deleteServiceHandler}
         />
       ) : (
         <BookingDetailModalContentComponent bookingData={bookingData} />

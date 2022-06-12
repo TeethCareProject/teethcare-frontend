@@ -45,6 +45,22 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
     setIsUpdated((isUpdated) => !isUpdated);
   };
 
+  const chooseServiceHandler = (serviceId) => {
+    if (selectedServiceIds && !selectedServiceIds.includes(serviceId)) {
+      setSelectedServiceIds((prev) => {
+        return [...prev, serviceId];
+      });
+    }
+  };
+
+  const deleteServiceHandler = (serviceId) => {
+    if (selectedServiceIds && selectedServiceIds.includes(serviceId)) {
+      setSelectedServiceIds((prev) => {
+        return prev.filter((service) => service.id !== serviceId);
+      });
+    }
+  };
+
   const checkInHandler = async () => {
     try {
       await checkIn(bookingId);
@@ -195,6 +211,8 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         serviceModalClickHandler={serviceModalClickHandler}
         isServiceModalOpened={isServiceModalOpened}
         setServiceModalOpened={setServiceModalOpened}
+        chooseServiceHandler={chooseServiceHandler}
+        deleteServiceHandler={deleteServiceHandler}
         isUpdated={isUpdated}
         updateClickHandler={updateClickHandler}
         checkInHandler={checkInHandler}

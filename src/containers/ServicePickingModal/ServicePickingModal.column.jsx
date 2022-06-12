@@ -1,4 +1,4 @@
-import { Space } from "antd";
+import { Space, Button } from "antd";
 
 const ServicePickingModalColumn = [
   {
@@ -27,7 +27,13 @@ const ServicePickingModalColumn = [
     render: (_, record) => {
       return (
         <Space size="middle">
-          <div onClick={(e) => record.chooseDentistHandler(e)}>Choose</div>
+          <Button
+            disabled={record.isDisabled}
+            type="link"
+            onClick={(e) => record.chooseServiceHandler(e)}
+          >
+            {record.isDisabled ? "Selected" : "Select"}
+          </Button>
         </Space>
       );
     },

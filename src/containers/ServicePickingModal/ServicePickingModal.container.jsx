@@ -5,9 +5,10 @@ import ServicePickingModalColumn from "./ServicePickingModal.column";
 
 const ServicePickingModalContainer = ({
   isServiceModalOpened,
-  setSelectedServiceIds,
+  selectedServiceIds,
   serviceModalClickHandler,
   services,
+  chooseService,
 }) => {
   const handleCancel = () => {
     serviceModalClickHandler();
@@ -17,9 +18,9 @@ const ServicePickingModalContainer = ({
   const serviceData = services?.map((service, index) => ({
     ...service,
     chooseServiceHandler: (e) => {
-      serviceModalClickHandler(e);
-      setSelectedServiceIds(service.id);
+      chooseService(service.id);
     },
+    isDisabled: selectedServiceIds.includes(service.id),
   }));
 
   return (

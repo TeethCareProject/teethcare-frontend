@@ -10,7 +10,7 @@ import {
   Select,
   Input,
 } from "antd";
-import { ContainerOutlined } from "@ant-design/icons";
+import { ContainerOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
 
@@ -21,11 +21,14 @@ const UpdateBookingDetailModalContentComponent = ({
   dentists,
   services,
   selectedDentistId,
-  setSelectedServiceIds,
+  selectedServiceIds,
   dentistModalClickHandler,
   serviceModalClickHandler,
+  deleteServiceHandler,
 }) => {
   const { Option } = Select;
+  console.log(services);
+  console.log(selectedServiceIds);
   return (
     <Form
       name="update_dentist_time_form"
@@ -43,7 +46,7 @@ const UpdateBookingDetailModalContentComponent = ({
       </Descriptions>
       <div>
         <div>
-          New Dentist: {`${" "}`}
+          New Dentist:{" "}
           {dentists
             ?.filter((dentist) => dentist.id === selectedDentistId)
             .map((dentist) => (
@@ -77,7 +80,7 @@ const UpdateBookingDetailModalContentComponent = ({
         </DescriptionsItem>
       </Descriptions>
       <div>
-        <div>New Examination Time: {`${" "}`}</div>
+        <span>New Examination Time: </span>
         <Form.Item name="examinationTime">
           <DatePicker
             showTime
@@ -103,7 +106,13 @@ const UpdateBookingDetailModalContentComponent = ({
         </div>
         <List
           itemLayout="horizontal"
-          dataSource={bookingData?.services ? bookingData?.services : []}
+          dataSource={
+            services
+              ? services.filter((service) =>
+                  selectedServiceIds.includes(service.id)
+                )
+              : []
+          }
           renderItem={(service) => (
             <List.Item>
               <List.Item.Meta
@@ -111,7 +120,16 @@ const UpdateBookingDetailModalContentComponent = ({
                 title={
                   <Typography.Title
                     level={5}
-                  >{`Service name: ${service.name}`}</Typography.Title>
+                    style={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <div>{`Service name: ${service.name}`}</div>
+                    <div>
+                      <DeleteOutlined
+                        style={{ color: "red", cursor: "pointer" }}
+                        // onClick={deleteServiceHandler(service.id)}
+                      />
+                    </div>
+                  </Typography.Title>
                 }
                 description={`Description: ${service.description}`}
               />
