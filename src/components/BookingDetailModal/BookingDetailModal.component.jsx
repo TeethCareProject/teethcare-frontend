@@ -8,18 +8,22 @@ import BookingDetailModalContentComponent from "../BookingDetailModalContent/Boo
 
 import DentistPickingModalContainer from "../../containers/DentistPickingModal/DentistPickingModal.container";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import { RoleConstant } from "../../constants/RoleConstants";
 
 const BookingDetailModalComponent = ({
   form,
-  onChange,
+  role,
+  onDentistChange,
   bookingData,
   updateBookingData,
   dentists,
   services,
   selectedDentistId,
   setSelectedDentistId,
-  modalClickHandler,
+  dentistModalClickHandler,
+  updateClickHandler,
   isOpened,
+  isUpdated,
   setIsOpened,
   checkInHandler,
 }) => {
@@ -29,8 +33,9 @@ const BookingDetailModalComponent = ({
         isOpened={isOpened}
         setIsOpened={setIsOpened}
         setSelectedDentistId={setSelectedDentistId}
-        modalClickHandler={modalClickHandler}
-        onChange={onChange}
+        dentistModalClickHandler={dentistModalClickHandler}
+        onDentistChange={onDentistChange}
+        dentists={dentists}
       />
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
         <Col>
@@ -39,6 +44,11 @@ const BookingDetailModalComponent = ({
         <Col span={10}>
           <Typography>{`Booking ID: ${bookingData?.id} - Status: ${bookingData?.status}`}</Typography>
           <Typography>{`Booking ID: ${bookingData?.clinic?.name}`}</Typography>
+        </Col>
+        <Col>
+          <Button onClick={updateClickHandler}>
+            {isUpdated ? "Return" : "Update"}
+          </Button>
         </Col>
       </Row>
       <Descriptions title="Patient info">
@@ -54,7 +64,9 @@ const BookingDetailModalComponent = ({
           {bookingData?.patient?.dateOfBirth}
         </DescriptionsItem>
       </Descriptions>
-      {services && bookingData?.status === BookingStatusConstants.REQUEST ? (
+      {role === RoleConstant.CUSTOMER_SERVICE &&
+      bookingData?.status === BookingStatusConstants.REQUEST &&
+      isUpdated ? (
         <UpdateBookingDetailModalContentComponent
           form={form}
           bookingData={bookingData}
@@ -62,12 +74,13 @@ const BookingDetailModalComponent = ({
           dentists={dentists}
           services={services}
           selectedDentistId={selectedDentistId}
-          modalClickHandler={modalClickHandler}
+          dentistModalClickHandler={dentistModalClickHandler}
         />
       ) : (
         <BookingDetailModalContentComponent bookingData={bookingData} />
       )}
-      {services && bookingData?.status === BookingStatusConstants.REQUEST ? (
+      {role === RoleConstant.CUSTOMER_SERVICE &&
+      bookingData?.status === BookingStatusConstants.REQUEST ? (
         <Button onClick={checkInHandler}>Check in</Button>
       ) : null}
     </>

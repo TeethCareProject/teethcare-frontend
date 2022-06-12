@@ -1,26 +1,26 @@
 import { Modal } from "antd";
 import React from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
-import DentistPickingModalColumn from "./DentistPickingModal.column";
+import ServicePickingModalColumn from "./ServicePickingModal.column";
 
-const DentistPickingModalContainer = ({
+const ServicePickingModalContainer = ({
   isOpened,
   dentistModalClickHandler,
-  setSelectedDentistId,
-  onDentistChange,
-  dentists,
+  setSelectedServiceIds,
+  onChange,
+  services,
 }) => {
   const handleCancel = () => {
     dentistModalClickHandler();
   };
 
   //map handle Action in here
-  const dentistData = dentists?.map((dentist, index) => ({
-    ...dentist,
-    chooseDentistHandler: (e) => {
+  const serviceData = services?.map((service, index) => ({
+    ...service,
+    chooseServiceHandler: (e) => {
       dentistModalClickHandler(e);
-      setSelectedDentistId(dentist.id);
-      onDentistChange(dentist.id);
+      setSelectedServiceIds(service.id);
+      onChange(service.id);
     },
   }));
 
@@ -36,13 +36,13 @@ const DentistPickingModalContainer = ({
         tabIndex={0}
       >
         <CommonTableComponent
-          tableTitle="Dentist Management"
-          columns={DentistPickingModalColumn}
-          dataSource={dentistData}
+          tableTitle="Services"
+          columns={ServicePickingModalColumn}
+          dataSource={serviceData}
         />
       </Modal>
     </>
   );
 };
 
-export default DentistPickingModalContainer;
+export default ServicePickingModalContainer;

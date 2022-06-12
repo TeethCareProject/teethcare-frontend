@@ -24,14 +24,20 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const [dentists, setDentists] = useState();
   const [services, setServices] = useState();
   const [selectedDentistId, setSelectedDentistId] = useState();
-  const [isOpened, setIsOpened] = useState(false);
+  const [selectedServiceIds, setSelectedServiceIds] = useState([]);
+  const [isDentistModalOpened, setDentistModalOpened] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
   const role = useSelector((state) => state?.authentication?.user?.roleName);
   const clinicId = useSelector(
     (state) => state.authentication?.user?.clinic?.id
   );
 
-  const modalClickHandler = (e) => {
-    setIsOpened((isOpened) => !isOpened);
+  const dentistModalClickHandler = (e) => {
+    setDentistModalOpened((isDentistModalOpened) => !isDentistModalOpened);
+  };
+
+  const updateClickHandler = (e) => {
+    setIsUpdated((isUpdated) => !isUpdated);
   };
 
   const checkInHandler = async () => {
@@ -46,7 +52,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
     }
   };
 
-  const onChange = (value) => {
+  const onDentistChange = (value) => {
     form.setFieldsValue({
       dentistId: value,
     });
@@ -167,17 +173,22 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
     >
       <BookingDetailModalComponent
         form={form}
-        onChange={onChange}
+        onDentistChange={onDentistChange}
         resetField={resetField}
         bookingData={bookingData}
         updateBookingData={updateBookingData}
+        role={role}
         dentists={dentists}
         services={services}
         selectedDentistId={selectedDentistId}
         setSelectedDentistId={setSelectedDentistId}
-        modalClickHandler={modalClickHandler}
-        isOpened={isOpened}
-        setIsOpened={setIsOpened}
+        selectedServiceIds={selectedServiceIds}
+        setSelectedServiceIds={setSelectedServiceIds}
+        dentistModalClickHandler={dentistModalClickHandler}
+        isOpened={isDentistModalOpened}
+        isUpdated={isUpdated}
+        updateClickHandler={updateClickHandler}
+        setIsOpened={setDentistModalOpened}
         checkInHandler={checkInHandler}
       />
       {bookingId && role === RoleConstant.PATIENT ? (
