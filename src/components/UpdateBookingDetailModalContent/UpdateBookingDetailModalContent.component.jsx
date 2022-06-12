@@ -13,7 +13,6 @@ import {
 import { ContainerOutlined } from "@ant-design/icons";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 const UpdateBookingDetailModalContentComponent = ({
   form,
@@ -22,12 +21,8 @@ const UpdateBookingDetailModalContentComponent = ({
   dentists,
   services,
   selectedDentistId,
-  modalClickHandler,
+  dentistModalClickHandler,
 }) => {
-  let examinationTime = bookingData?.examinationTime
-    ? convertMillisecondsToDate(bookingData?.examinationTime)
-    : convertMillisecondsToDate(bookingData?.createBookingDate);
-
   const { Option } = Select;
   return (
     <Form
@@ -45,48 +40,34 @@ const UpdateBookingDetailModalContentComponent = ({
         </DescriptionsItem>
       </Descriptions>
       <div>
-        Current Dentist: {`${" "}`}
-        <span>
-          {bookingData?.dentist ? (
-            <span>
-              {bookingData?.dentist?.firstName +
-                " " +
-                bookingData?.dentist?.lastName +
-                " - " +
-                bookingData?.dentist?.specialization}
-            </span>
-          ) : (
-            <span>Not assigned</span>
-          )}
-        </span>
-        <span
-          onClick={modalClickHandler}
-          style={{
-            color: "blue",
-            marginLeft: 30,
-            fontSize: "0.8em",
-            cursor: "pointer",
-          }}
-        >
-          Update Dentist
-        </span>
-      </div>
-      <div>
-        <div>New Dentist: {`${" "}`}</div>
+        <div>
+          New Dentist: {`${" "}`}
+          {dentists
+            ?.filter((dentist) => dentist.id === selectedDentistId)
+            .map((dentist) => (
+              <span>
+                {dentist.firstName +
+                  " " +
+                  dentist.lastName +
+                  " - " +
+                  dentist?.specialization}
+              </span>
+            ))}
+          <span
+            onClick={dentistModalClickHandler}
+            style={{
+              color: "blue",
+              marginLeft: 30,
+              fontSize: "0.8em",
+              cursor: "pointer",
+            }}
+          >
+            Update Dentist
+          </span>
+        </div>
         <Form.Item name="dentistId" hidden>
           <Input value={selectedDentistId || bookingData?.dentist?.id} />
         </Form.Item>
-        {dentists
-          ?.filter((dentist) => dentist.id === selectedDentistId)
-          .map((dentist) => (
-            <span>
-              {dentist.firstName +
-                " " +
-                dentist.lastName +
-                " - " +
-                dentist?.specialization}
-            </span>
-          ))}
       </div>
       <Descriptions title="Booking Info">
         <DescriptionsItem label="Description">
@@ -94,10 +75,6 @@ const UpdateBookingDetailModalContentComponent = ({
         </DescriptionsItem>
       </Descriptions>
       <div>
-        <div>
-          Current Examination Time: {`${" "}`}
-          <span>{examinationTime}</span>
-        </div>
         <div>New Examination Time: {`${" "}`}</div>
         <Form.Item name="examinationTime">
           <DatePicker
@@ -107,23 +84,27 @@ const UpdateBookingDetailModalContentComponent = ({
           />
         </Form.Item>
       </div>
-      <List
-        itemLayout="horizontal"
-        dataSource={bookingData?.services ? bookingData?.services : []}
-        renderItem={(service) => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
-              title={
-                <Typography.Title
-                  level={5}
-                >{`Service name: ${service.name}`}</Typography.Title>
-              }
-              description={`Description: ${service.description}`}
-            />
-          </List.Item>
-        )}
-      />
+      <div>
+        <div className="ant-descriptions-title">Service</div>
+        <List
+          itemLayout="horizontal"
+          dataSource={bookingData?.services ? bookingData?.services : []}
+          renderItem={(service) => (
+            <List.Item>
+              <List.Item.Meta
+                avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
+                title={
+                  <Typography.Title
+                    level={5}
+                  >{`Service name: ${service.name}`}</Typography.Title>
+                }
+                description={`Description: ${service.description}`}
+              />
+            </List.Item>
+          )}
+        />
+      </div>
+
       <Form.Item name="serviceIds">
         <Select
           mode="multiple"

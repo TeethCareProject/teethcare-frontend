@@ -1,4 +1,4 @@
-import { Space, Tag, Button } from "antd";
+import { Space, Tag } from "antd";
 import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
 
 const DentistPickingModalColumn = [
