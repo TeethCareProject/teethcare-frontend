@@ -21,7 +21,9 @@ const UpdateBookingDetailModalContentComponent = ({
   dentists,
   services,
   selectedDentistId,
+  setSelectedServiceIds,
   dentistModalClickHandler,
+  serviceModalClickHandler,
 }) => {
   const { Option } = Select;
   return (
@@ -85,7 +87,20 @@ const UpdateBookingDetailModalContentComponent = ({
         </Form.Item>
       </div>
       <div>
-        <div className="ant-descriptions-title">Service</div>
+        <div className="ant-descriptions-title">
+          Service{" "}
+          <span
+            onClick={serviceModalClickHandler}
+            style={{
+              color: "blue",
+              marginLeft: 30,
+              fontSize: "0.8em",
+              cursor: "pointer",
+            }}
+          >
+            Update Service
+          </span>
+        </div>
         <List
           itemLayout="horizontal"
           dataSource={bookingData?.services ? bookingData?.services : []}

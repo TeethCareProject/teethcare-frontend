@@ -4,23 +4,21 @@ import CommonTableComponent from "../../components/CommonTable/CommonTable.compo
 import ServicePickingModalColumn from "./ServicePickingModal.column";
 
 const ServicePickingModalContainer = ({
-  isOpened,
-  dentistModalClickHandler,
+  isServiceModalOpened,
   setSelectedServiceIds,
-  onChange,
+  serviceModalClickHandler,
   services,
 }) => {
   const handleCancel = () => {
-    dentistModalClickHandler();
+    serviceModalClickHandler();
   };
 
   //map handle Action in here
   const serviceData = services?.map((service, index) => ({
     ...service,
     chooseServiceHandler: (e) => {
-      dentistModalClickHandler(e);
+      serviceModalClickHandler(e);
       setSelectedServiceIds(service.id);
-      onChange(service.id);
     },
   }));
 
@@ -28,7 +26,7 @@ const ServicePickingModalContainer = ({
     <>
       <Modal
         destroyOnClose
-        visible={isOpened}
+        visible={isServiceModalOpened}
         onOk={handleCancel}
         onCancel={handleCancel}
         width="80vw"

@@ -7,6 +7,7 @@ import UpdateBookingDetailModalContentComponent from "../UpdateBookingDetailModa
 import BookingDetailModalContentComponent from "../BookingDetailModalContent/BookingDetailModalContent.component";
 
 import DentistPickingModalContainer from "../../containers/DentistPickingModal/DentistPickingModal.container";
+import ServicePickingModalContainer from "../../containers/ServicePickingModal/ServicePickingModal.container";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
 
@@ -19,23 +20,35 @@ const BookingDetailModalComponent = ({
   dentists,
   services,
   selectedDentistId,
+  selectedServiceIds,
   setSelectedDentistId,
+  setSelectedServiceIds,
   dentistModalClickHandler,
+  serviceModalClickHandler,
   updateClickHandler,
-  isOpened,
+  isDentistModalOpened,
+  isServiceModalOpened,
   isUpdated,
-  setIsOpened,
+  setDentistModalOpened,
+  setServiceModalOpened,
   checkInHandler,
 }) => {
   return (
     <>
       <DentistPickingModalContainer
-        isOpened={isOpened}
-        setIsOpened={setIsOpened}
+        isDentistModalOpened={isDentistModalOpened}
+        setDentistModalOpened={setDentistModalOpened}
         setSelectedDentistId={setSelectedDentistId}
         dentistModalClickHandler={dentistModalClickHandler}
         onDentistChange={onDentistChange}
         dentists={dentists}
+      />
+      <ServicePickingModalContainer
+        isServiceModalOpened={isServiceModalOpened}
+        setServiceModalOpened={setServiceModalOpened}
+        setSelectedServiceIds={setSelectedServiceIds}
+        serviceModalClickHandler={serviceModalClickHandler}
+        services={services}
       />
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
         <Col>
@@ -74,7 +87,9 @@ const BookingDetailModalComponent = ({
           dentists={dentists}
           services={services}
           selectedDentistId={selectedDentistId}
+          setSelectedServiceIds={setSelectedServiceIds}
           dentistModalClickHandler={dentistModalClickHandler}
+          serviceModalClickHandler={serviceModalClickHandler}
         />
       ) : (
         <BookingDetailModalContentComponent bookingData={bookingData} />

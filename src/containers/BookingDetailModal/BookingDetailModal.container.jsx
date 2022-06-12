@@ -26,6 +26,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const [selectedDentistId, setSelectedDentistId] = useState();
   const [selectedServiceIds, setSelectedServiceIds] = useState([]);
   const [isDentistModalOpened, setDentistModalOpened] = useState(false);
+  const [isServiceModalOpened, setServiceModalOpened] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
   const role = useSelector((state) => state?.authentication?.user?.roleName);
   const clinicId = useSelector(
@@ -34,6 +35,10 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
 
   const dentistModalClickHandler = (e) => {
     setDentistModalOpened((isDentistModalOpened) => !isDentistModalOpened);
+  };
+
+  const serviceModalClickHandler = (e) => {
+    setServiceModalOpened((isServiceModalOpened) => !isServiceModalOpened);
   };
 
   const updateClickHandler = (e) => {
@@ -181,14 +186,17 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         dentists={dentists}
         services={services}
         selectedDentistId={selectedDentistId}
+        isDentistModalOpened={isDentistModalOpened}
+        setDentistModalOpened={setDentistModalOpened}
+        dentistModalClickHandler={dentistModalClickHandler}
         setSelectedDentistId={setSelectedDentistId}
         selectedServiceIds={selectedServiceIds}
         setSelectedServiceIds={setSelectedServiceIds}
-        dentistModalClickHandler={dentistModalClickHandler}
-        isOpened={isDentistModalOpened}
+        serviceModalClickHandler={serviceModalClickHandler}
+        isServiceModalOpened={isServiceModalOpened}
+        setServiceModalOpened={setServiceModalOpened}
         isUpdated={isUpdated}
         updateClickHandler={updateClickHandler}
-        setIsOpened={setDentistModalOpened}
         checkInHandler={checkInHandler}
       />
       {bookingId && role === RoleConstant.PATIENT ? (
