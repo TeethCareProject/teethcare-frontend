@@ -5,8 +5,13 @@ import { ContainerOutlined } from "@ant-design/icons";
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import { RoleConstant } from "../../constants/RoleConstants";
 
-const BookingDetailModalContentComponent = ({ bookingData }) => {
+const BookingDetailModalContentComponent = ({
+  bookingData,
+  role,
+  checkInHandler,
+}) => {
   let examinationTime = bookingData?.examinationTime
     ? convertMillisecondsToDate(bookingData?.examinationTime)
     : convertMillisecondsToDate(bookingData?.createBookingDate);
@@ -63,6 +68,10 @@ const BookingDetailModalContentComponent = ({ bookingData }) => {
           </List.Item>
         )}
       />
+      {role === RoleConstant.CUSTOMER_SERVICE &&
+      bookingData?.status === BookingStatusConstants.REQUEST ? (
+        <Button onClick={checkInHandler}>Check in</Button>
+      ) : null}
     </>
   );
 };

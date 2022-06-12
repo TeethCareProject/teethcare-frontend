@@ -10,9 +10,14 @@ import {
   Select,
   Input,
 } from "antd";
-import { ContainerOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  ContainerOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
 const UpdateBookingDetailModalContentComponent = ({
   form,
@@ -25,10 +30,9 @@ const UpdateBookingDetailModalContentComponent = ({
   dentistModalClickHandler,
   serviceModalClickHandler,
   deleteServiceHandler,
+  checkInHandler,
 }) => {
   const { Option } = Select;
-  console.log(services);
-  console.log(selectedServiceIds);
   return (
     <Form
       name="update_dentist_time_form"
@@ -58,7 +62,7 @@ const UpdateBookingDetailModalContentComponent = ({
                   dentist?.specialization}
               </span>
             ))}
-          <span
+          <EditOutlined
             onClick={dentistModalClickHandler}
             style={{
               color: "blue",
@@ -66,9 +70,7 @@ const UpdateBookingDetailModalContentComponent = ({
               fontSize: "0.8em",
               cursor: "pointer",
             }}
-          >
-            Update Dentist
-          </span>
+          />
         </div>
         <Form.Item name="dentistId" hidden>
           <Input value={selectedDentistId || bookingData?.dentist?.id} />
@@ -92,7 +94,7 @@ const UpdateBookingDetailModalContentComponent = ({
       <div>
         <div className="ant-descriptions-title">
           Service{" "}
-          <span
+          <EditOutlined
             onClick={serviceModalClickHandler}
             style={{
               color: "blue",
@@ -100,9 +102,7 @@ const UpdateBookingDetailModalContentComponent = ({
               fontSize: "0.8em",
               cursor: "pointer",
             }}
-          >
-            Update Service
-          </span>
+          />
         </div>
         <List
           itemLayout="horizontal"
@@ -126,7 +126,7 @@ const UpdateBookingDetailModalContentComponent = ({
                     <div>
                       <DeleteOutlined
                         style={{ color: "red", cursor: "pointer" }}
-                        // onClick={deleteServiceHandler(service.id)}
+                        onClick={() => deleteServiceHandler(service.id)}
                       />
                     </div>
                   </Typography.Title>
@@ -142,6 +142,7 @@ const UpdateBookingDetailModalContentComponent = ({
         <Select
           mode="multiple"
           allowClear
+          hidden={true}
           style={{ width: "100%" }}
           placeholder="Select services"
         >
@@ -150,11 +151,16 @@ const UpdateBookingDetailModalContentComponent = ({
           ))}
         </Select>
       </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Update
-        </Button>
-      </Form.Item>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Update
+          </Button>
+        </Form.Item>
+        {services && bookingData?.status === BookingStatusConstants.REQUEST ? (
+          <Button onClick={checkInHandler}>Check in</Button>
+        ) : null}
+      </div>
     </Form>
   );
 };

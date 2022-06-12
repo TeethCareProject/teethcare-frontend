@@ -97,12 +97,12 @@ const BookingDetailModalComponent = ({
           deleteServiceHandler={deleteServiceHandler}
         />
       ) : (
-        <BookingDetailModalContentComponent bookingData={bookingData} />
+        <BookingDetailModalContentComponent
+          bookingData={bookingData}
+          role={role}
+          checkInHandler={checkInHandler}
+        />
       )}
-      {role === RoleConstant.CUSTOMER_SERVICE &&
-      bookingData?.status === BookingStatusConstants.REQUEST ? (
-        <Button onClick={checkInHandler}>Check in</Button>
-      ) : null}
     </>
   );
 };

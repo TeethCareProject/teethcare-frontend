@@ -28,7 +28,9 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const [isDentistModalOpened, setDentistModalOpened] = useState(false);
   const [isServiceModalOpened, setServiceModalOpened] = useState(false);
   const [isUpdated, setIsUpdated] = useState(false);
+
   const role = useSelector((state) => state?.authentication?.user?.roleName);
+
   const clinicId = useSelector(
     (state) => state.authentication?.user?.clinic?.id
   );
@@ -55,8 +57,9 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
 
   const deleteServiceHandler = (serviceId) => {
     if (selectedServiceIds && selectedServiceIds.includes(serviceId)) {
-      setSelectedServiceIds((prev) => {
-        return prev.filter((service) => service.id !== serviceId);
+      setSelectedServiceIds((prevState) => {
+        const array = prevState.filter((id) => id !== serviceId);
+        return array;
       });
     }
   };
@@ -76,6 +79,12 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const onDentistChange = (value) => {
     form.setFieldsValue({
       dentistId: value,
+    });
+  };
+
+  const onServiceChange = (value) => {
+    form.setFieldsValue({
+      serviceIds: value,
     });
   };
 
@@ -150,12 +159,19 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
     }
   };
 
+  useEffect(() => {
+    onServiceChange(selectedServiceIds);
+  }, [selectedServiceIds]);
+
   const handleOk = () => {
     setNeededBooking(null);
   };
 
   const handleCancel = () => {
     setNeededBooking(null);
+    setSelectedDentistId(null);
+    setSelectedServiceIds([]);
+    setIsUpdated(false);
   };
 
   useEffect(() => {
