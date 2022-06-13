@@ -64,7 +64,8 @@ const BookingDetailModalComponent = ({
         </Col>
         <Col>
           {role === RoleConstant.CUSTOMER_SERVICE &&
-          bookingData?.status === BookingStatusConstants.REQUEST ? (
+          (bookingData?.status === BookingStatusConstants.REQUEST ||
+            bookingData?.status === BookingStatusConstants.TREATMENT) ? (
             <Button onClick={updateClickHandler}>
               {isUpdated ? "Return" : "Update"}
             </Button>
@@ -85,7 +86,8 @@ const BookingDetailModalComponent = ({
         </DescriptionsItem>
       </Descriptions>
       {role === RoleConstant.CUSTOMER_SERVICE &&
-      bookingData?.status === BookingStatusConstants.REQUEST &&
+      (bookingData?.status === BookingStatusConstants.REQUEST ||
+        bookingData?.status === BookingStatusConstants.TREATMENT) &&
       isUpdated ? (
         <UpdateBookingDetailModalContentComponent
           form={form}
@@ -106,6 +108,14 @@ const BookingDetailModalComponent = ({
           checkInHandler={checkInHandler}
         />
       )}
+      {bookingData?.note ? (
+        <div>
+          <div>
+            <div className="ant-descriptions-title">Note:</div>
+            <div>{bookingData?.note}</div>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 };

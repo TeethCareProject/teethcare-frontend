@@ -14,7 +14,7 @@ const BookingDetailModalContentComponent = ({
 }) => {
   let examinationTime = bookingData?.examinationTime
     ? convertMillisecondsToDate(bookingData?.examinationTime)
-    : convertMillisecondsToDate(bookingData?.createBookingDate);
+    : convertMillisecondsToDate(bookingData?.desiredCheckingTime);
   return (
     <>
       <Descriptions title="Staff Incharge">
@@ -63,7 +63,6 @@ const BookingDetailModalContentComponent = ({
                   level={5}
                 >{`Service name: ${service.name}`}</Typography.Title>
               }
-              description={`Description: ${service.description}`}
             />
           </List.Item>
         )}

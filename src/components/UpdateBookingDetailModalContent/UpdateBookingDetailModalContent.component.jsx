@@ -93,7 +93,7 @@ const UpdateBookingDetailModalContentComponent = ({
       </div>
       <div>
         <div className="ant-descriptions-title">
-          Service{" "}
+          Service:{" "}
           <EditOutlined
             onClick={serviceModalClickHandler}
             style={{

@@ -14,6 +14,7 @@ const RoutePath = {
   BOOKING_FAILED_PAGE: "/booking-result/failed",
   REDIRECT_BOOKING_DETAIL_PAGE: "/redirectToBookingDetail/:bookingId",
   EXAMINATION_PAGE: "/examination/:bookingId",
+  BOOKING_CONFIRM_PAGE: "/confirmBooking/:bookingId",
 };
 
 export default RoutePath;

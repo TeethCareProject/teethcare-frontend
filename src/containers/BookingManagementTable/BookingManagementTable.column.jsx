@@ -1,5 +1,6 @@
 import { Space, Tag, Button } from "antd";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import { CheckOutlined } from "@ant-design/icons";
 
 const BookingManagementTableColumn = [
   {
@@ -49,6 +50,15 @@ const BookingManagementTableColumn = [
         </Tag>
       );
     },
+  },
+  {
+    title: "Request Change",
+    key: "requestChanged",
+    render: (_, record) => (
+      <p style={{ display: "flex", justifyContent: "center" }}>
+        {record?.requestChanged ? <CheckOutlined /> : null}
+      </p>
+    ),
   },
   {
     title: "Action",
