@@ -4,10 +4,10 @@ import { CalendarOutlined, ContainerOutlined } from "@ant-design/icons";
 import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
 
-const FeedbackDetailModalComponent = ({ feedbackData }) => {
+const FeedbackDetailComponent = ({ feedbackData }) => {
   return (
     <>
-      {/* <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
+      <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
         <Col>
           <Avatar size={48} icon={<CalendarOutlined />} />
         </Col>
@@ -66,9 +66,9 @@ const FeedbackDetailModalComponent = ({ feedbackData }) => {
             />
           </List.Item>
         )}
-      /> */}
+      />
     </>
   );
 };
 
-export default FeedbackDetailModalComponent;
+export default FeedbackDetailComponent;

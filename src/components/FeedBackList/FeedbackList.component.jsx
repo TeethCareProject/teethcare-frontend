@@ -16,7 +16,7 @@ const FeedbackListComponent = ({ feedbackListData }) => {
                 level={5}
               >{`Feedback Id: ${feedback?.id} - Status: ${feedback?.status}`}</Typography.Title>
             }
-            description={`By: ${feedback?.patientResponse?.firstName} ${feedback?.patientResponse?.lastName} - Rating: ${feedback?.ratingScore}`}
+            description={`By: ${feedback?.bookingResponse?.patient?.firstName} ${feedback?.bookingResponse?.patient?.lastName} - Rating: ${feedback?.ratingScore}`}
           />
           <Typography>{`${feedback?.detail}`}</Typography>
           <Button type="link" onClick={() => feedback?.onClick()}>

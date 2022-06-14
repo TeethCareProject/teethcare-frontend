@@ -1,15 +1,10 @@
 import { Button, Collapse, Form, Modal, notification, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import FeedbackDetailModalComponent from "../../components/FeedbackDetailModal/FeedbackDetailModal.component";
-import FeedbackStatusConstants from "../../constants/FeedbackStatusConstants";
-import { RoleConstant } from "../../constants/RoleConstants";
-import QRCode from "react-qr-code";
 import { getFeedbackById } from "../../services/teeth-apis/FeedbackController";
-import { generatePath } from "react-router-dom";
-import RoutePath from "../../routers/Path";
 import { reportFeedback } from "../../services/teeth-apis/ReportController";
 import TextArea from "antd/lib/input/TextArea";
+import FeedbackDetailComponent from "../../components/FeedbackDetail/FeedbackDetail.component";
 
 const { Panel } = Collapse;
 
@@ -70,7 +65,7 @@ const FeedbackDetailModalContainer = ({ feedbackId, setNeededFeedback }) => {
       footer={false}
     >
       {/*TODO: show feedback detail*/}
-      {/* <FeedbackDetailModalComponent feedbackData={feedbackData} /> */}
+      <FeedbackDetailComponent feedbackData={feedbackData} />
       <div>Feedback detail will be here!</div>
       <Collapse>
         <Panel header="Feedback report" key="1">

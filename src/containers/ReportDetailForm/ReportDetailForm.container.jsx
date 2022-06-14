@@ -75,9 +75,9 @@ const ReportDetailForm = ({ reportId, setNeededReport }) => {
                 {reportDetail.detail}
               </Descriptions.Item>
               <Descriptions.Item label="Feedback user" span={12}>
-                {reportDetail?.feedbackResponse?.firstName +
+                {reportDetail?.feedbackResponse?.patient?.firstName +
                   " " +
-                  reportDetail?.feedbackResponse?.lastName}
+                  reportDetail?.feedbackResponse?.patient?.lastName}
               </Descriptions.Item>
               <Descriptions.Item label="Feedback detail" span={12}>
                 {reportDetail?.feedbackResponse?.detail}
