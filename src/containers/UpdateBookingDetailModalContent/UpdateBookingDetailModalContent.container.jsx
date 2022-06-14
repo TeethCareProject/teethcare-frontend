@@ -10,7 +10,6 @@ import { updateBooking } from "../../services/teeth-apis/BookingController";
 
 const UpdateBookingDetailModalContentContainer = ({
   bookingData,
-  checkInHandler,
 }) => {
   const [form] = Form.useForm();
 
