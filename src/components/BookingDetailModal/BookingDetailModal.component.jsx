@@ -53,7 +53,6 @@ const BookingDetailModalComponent = ({
       isUpdated ? (
         <UpdateBookingDetailModalContentContainer
           bookingData={bookingData}
-          checkInHandler={checkInHandler}
         />
       ) : (
         <BookingDetailModalContentComponent
