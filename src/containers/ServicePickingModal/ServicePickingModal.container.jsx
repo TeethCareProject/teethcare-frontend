@@ -13,13 +13,26 @@ const ServicePickingModalContainer = ({
   const [services, setServices] = useState();
 
   const clinicId = useSelector(
-    (state) => state.authentication.user?.clinic?.clinicId
+    (state) => state.authentication.user?.clinic?.id
   );
 
+  const checkSelectedService = (services) =>
+    !form
+      ?.getFieldValue("serviceIds")
+      ?.map((service) => service.id)
+      ?.includes(services.id);
+
   const selectServices = (services) => {
-    form.setFieldsValue({
-      serviceIds: services,
-    });
+    const prev = form.getFieldValue("serviceIds");
+    if (prev && checkSelectedService(services)) {
+      form.setFieldsValue({
+        serviceIds: [...prev, services],
+      });
+    } else {
+      form.setFieldsValue({
+        serviceIds: [services],
+      });
+    }
   };
 
   const fetchServices = async () => {
@@ -31,16 +44,14 @@ const ServicePickingModalContainer = ({
       const serviceData = data?.content?.map((service, index) => ({
         ...service,
         chooseServiceHandler: () => {
-          serviceModalClickHandler();
           selectServices(service);
         },
-        isDisabled: form.getFieldValue("serviceIds").includes(service),
       }));
       setServices(serviceData);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching booking data, try again later`,
+        description: `There is problem while fetching service data, try again later`,
         duration: 2,
       });
     }
@@ -68,7 +79,9 @@ const ServicePickingModalContainer = ({
         <CommonTableComponent
           tableTitle="Services"
           columns={ServicePickingModalColumn}
-          dataSource={services}
+          dataSource={services?.filter((service) =>
+            checkSelectedService(service)
+          )}
         />
       </Modal>
     </>

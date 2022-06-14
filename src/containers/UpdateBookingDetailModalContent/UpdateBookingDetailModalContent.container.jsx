@@ -1,27 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
 import { Form, notification } from "antd";
 import UpdateBookingDetailModalContentComponent from "../../components/UpdateBookingDetailModalContent/UpdateBookingDetailModalContent.component";
-import DentistPickingModalContainer from "../DentistPickingModal/DentistPickingModal.container;";
+import DentistPickingModalContainer from "../DentistPickingModal/DentistPickingModal.container";
 import ServicePickingModalContainer from "../ServicePickingModal/ServicePickingModal.container";
 
 import UpdateBookingFormValueToUpdateBookingData from "../../mapper/UpdateBookingFormValueToUpdateBookingData";
 
 import { updateBooking } from "../../services/teeth-apis/BookingController";
 
-const UpdateBookingDetailModalContentContainer = ({ bookingData }) => {
+const UpdateBookingDetailModalContentContainer = ({
+  bookingData,
+  checkInHandler,
+}) => {
   const [form] = Form.useForm();
+
+  const [isRendered, setIsRendered] = useState(false);
+
   const bookingId = bookingData?.id;
 
   const [isDentistModalOpened, setDentistModalOpened] = useState(false);
   const [isServiceModalOpened, setServiceModalOpened] = useState(false);
-  const [isUpdated, setIsUpdated] = useState(false);
-
-  const role = useSelector((state) => state?.authentication?.user?.roleName);
-
-  const clinicId = useSelector(
-    (state) => state.authentication?.user?.clinic?.id
-  );
 
   const dentistModalClickHandler = (e) => {
     setDentistModalOpened((isDentistModalOpened) => !isDentistModalOpened);
@@ -29,10 +27,6 @@ const UpdateBookingDetailModalContentContainer = ({ bookingData }) => {
 
   const serviceModalClickHandler = (e) => {
     setServiceModalOpened((isServiceModalOpened) => !isServiceModalOpened);
-  };
-
-  const updateClickHandler = (e) => {
-    setIsUpdated((isUpdated) => !isUpdated);
   };
 
   const resetField = () => {
@@ -58,11 +52,41 @@ const UpdateBookingDetailModalContentContainer = ({ bookingData }) => {
     }
   };
 
+  const deleteServiceHandler = (deletedService) => {
+    let selectedServices = form.getFieldValue("serviceIds");
+    if (selectedServices && selectedServices.includes(deletedService)) {
+      const array = selectedServices.filter(
+        (service) => service.id !== deletedService.id
+      );
+      form.setFieldsValue({
+        serviceIds: array,
+      });
+    }
+    setIsRendered((prev) => setIsRendered(!prev));
+  };
+
   return (
     <>
-      <DentistPickingModalContainer />
-      <ServicePickingModalContainer />
-      <UpdateBookingDetailModalContentComponent form={form} />
+      <DentistPickingModalContainer
+        dentistModalClickHandler={dentistModalClickHandler}
+        isDentistModalOpened={isDentistModalOpened}
+        form={form}
+      />
+      <ServicePickingModalContainer
+        serviceModalClickHandler={serviceModalClickHandler}
+        isServiceModalOpened={isServiceModalOpened}
+        form={form}
+      />
+      <UpdateBookingDetailModalContentComponent
+        form={form}
+        updateBookingData={updateBookingData}
+        bookingData={bookingData}
+        checkInHandler={checkInHandler}
+        dentistModalClickHandler={dentistModalClickHandler}
+        serviceModalClickHandler={serviceModalClickHandler}
+        deleteServiceHandler={deleteServiceHandler}
+        isRendered={isRendered}
+      />
     </>
   );
 };

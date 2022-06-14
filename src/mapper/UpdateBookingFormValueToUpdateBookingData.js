@@ -3,10 +3,10 @@ import { convertDateToMilliseconds } from "../utils/convert.utils";
 const UpdateBookingFormValueToUpdateBookingData = (values) => {
   return {
     bookingId: values.bookingId,
-    dentistId: values.dentistId,
+    dentistId: values.dentistId.id,
     examinationTime: convertDateToMilliseconds(values.examinationTime),
     note: values.note,
-    serviceIds: values.serviceIds,
+    serviceIds: values.serviceIds.map((service) => service.id),
   };
 };
 

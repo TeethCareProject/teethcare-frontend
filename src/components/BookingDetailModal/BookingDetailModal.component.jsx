@@ -3,57 +3,21 @@ import { CalendarOutlined } from "@ant-design/icons";
 
 import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import UpdateBookingDetailModalContentComponent from "../UpdateBookingDetailModalContent/UpdateBookingDetailModalContent.component";
-import BookingDetailModalContentComponent from "../BookingDetailModalContent/BookingDetailModalContent.component";
+import UpdateBookingDetailModalContentContainer from "../../containers/UpdateBookingDetailModalContent/UpdateBookingDetailModalContent.container";
+import BookingDetailModalContentComponent from "../../components/BookingDetailModalContent/BookingDetailModalContent.component";
 
-import DentistPickingModalContainer from "../../containers/DentistPickingModal/DentistPickingModal.container";
-import ServicePickingModalContainer from "../../containers/ServicePickingModal/ServicePickingModal.container";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
 
 const BookingDetailModalComponent = ({
-  form,
-  role,
-  onDentistChange,
   bookingData,
-  updateBookingData,
-  dentists,
-  services,
-  selectedDentistId,
-  selectedServiceIds,
-  setSelectedDentistId,
-  setSelectedServiceIds,
-  dentistModalClickHandler,
-  serviceModalClickHandler,
-  updateClickHandler,
-  isDentistModalOpened,
-  isServiceModalOpened,
-  chooseServiceHandler,
-  deleteServiceHandler,
-  isUpdated,
-  setDentistModalOpened,
-  setServiceModalOpened,
   checkInHandler,
+  role,
+  isUpdated,
+  updateClickHandler,
 }) => {
   return (
     <>
-      <DentistPickingModalContainer
-        isDentistModalOpened={isDentistModalOpened}
-        setDentistModalOpened={setDentistModalOpened}
-        setSelectedDentistId={setSelectedDentistId}
-        dentistModalClickHandler={dentistModalClickHandler}
-        onDentistChange={onDentistChange}
-        dentists={dentists}
-      />
-      <ServicePickingModalContainer
-        isServiceModalOpened={isServiceModalOpened}
-        setServiceModalOpened={setServiceModalOpened}
-        selectedServiceIds={selectedServiceIds}
-        setSelectedServiceIds={setSelectedServiceIds}
-        serviceModalClickHandler={serviceModalClickHandler}
-        services={services}
-        chooseService={chooseServiceHandler}
-      />
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
         <Col>
           <Avatar size={48} icon={<CalendarOutlined />} />
@@ -87,22 +51,13 @@ const BookingDetailModalComponent = ({
       {role === RoleConstant.CUSTOMER_SERVICE &&
       bookingData?.status === BookingStatusConstants.REQUEST &&
       isUpdated ? (
-        <UpdateBookingDetailModalContentComponent
-          form={form}
+        <UpdateBookingDetailModalContentContainer
           bookingData={bookingData}
-          updateBookingData={updateBookingData}
-          dentists={dentists}
-          services={services}
-          selectedDentistId={selectedDentistId}
-          selectedServiceIds={selectedServiceIds}
-          dentistModalClickHandler={dentistModalClickHandler}
-          serviceModalClickHandler={serviceModalClickHandler}
-          deleteServiceHandler={deleteServiceHandler}
+          checkInHandler={checkInHandler}
         />
       ) : (
         <BookingDetailModalContentComponent
           bookingData={bookingData}
-          role={role}
           checkInHandler={checkInHandler}
         />
       )}
