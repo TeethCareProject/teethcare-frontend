@@ -38,7 +38,7 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
   const onChange = async ({ fileList: newFileList }) => {
     form.setFieldsValue({
       ...form.getFieldsValue(),
-      imageUrl: newFileList[0].originFileObj,
+      imageUrl: newFileList[0]?.originFileObj,
     });
     setFileList(newFileList);
   };
@@ -72,7 +72,13 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
     <>
       <Form
         onFinish={async (values) => {
-          values.imageUrl = await getBase64(values.imageUrl);
+          try {
+            values.imageUrl = values.imageUrl
+              ? await getBase64(values.imageUrl)
+              : values.imageUrl;
+          } catch (e) {
+            //handle error
+          }
           handleSubmit(values);
         }}
         form={form}
@@ -103,20 +109,32 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
         >
           <TextArea row={4} />
         </Form.Item>
-        <Upload
-          customRequest={({ file, onSuccess }) => {
-            setTimeout(() => {
-              onSuccess("ok");
-            }, 0);
-          }}
-          listType="picture-card"
-          fileList={fileList}
-          onChange={onChange}
-          onPreview={onPreview}
+        <Form.Item
+          label="Image"
+          name="imageUrl"
+          rules={ServiceValidation.imageUrl}
         >
-          {fileList.length < 1 && "+ Upload"}
-        </Upload>
-
+          <Upload
+            customRequest={({ file, onSuccess }) => {
+              setTimeout(() => {
+                onSuccess("ok");
+              }, 0);
+            }}
+            listType="picture-card"
+            fileList={fileList}
+            onRemove={() => {
+              form.setFieldsValue({
+                ...form.getFieldsValue(),
+                imageUrl: null,
+              });
+              setFileList([]);
+            }}
+            onChange={onChange}
+            onPreview={onPreview}
+          >
+            {fileList.length < 1 && "+ Upload"}
+          </Upload>
+        </Form.Item>
         <Form.Item name="imageUrl" hidden></Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
