@@ -7,34 +7,24 @@ import { getBase64 } from "../../utils/convert.utils";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import ServiceValidation from "../../validate/ServiceValidation";
 
-const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-
-  if (!isJpgOrPng) {
-    message.error("You can only upload JPG/PNG file!");
-  }
-
-  const isLt2M = file.size / 1024 / 1024 < 2;
-
-  if (!isLt2M) {
-    message.error("Image must smaller than 2MB!");
-  }
-
-  return isJpgOrPng && isLt2M;
-};
-
 const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
   const [serviceData, setServiceData] = useState({});
-  //for upload image
-  const [loading, setLoading] = useState(false);
-  const [imageUrl, setImageUrl] = useState();
+  const [fileList, setFileList] = useState([]);
   const [form] = useForm();
 
   const fetchService = async () => {
     try {
       const { data } = await getServiceById(serviceId);
       form.setFieldsValue(data);
-      setImageUrl(data.imageUrl);
+      data.imageUrl &&
+        setFileList([
+          {
+            uid: "-1",
+            name: "service.png",
+            status: "done",
+            url: data.imageUrl,
+          },
+        ]);
       setServiceData(data);
     } catch (e) {
       notification["error"]({
@@ -45,6 +35,32 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
     }
   };
 
+  const onChange = async ({ fileList: newFileList }) => {
+    form.setFieldsValue({
+      ...form.getFieldsValue(),
+      imageUrl: newFileList[0].originFileObj,
+    });
+    setFileList(newFileList);
+  };
+
+  const onPreview = async (file) => {
+    let src = file.url;
+
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow?.document.write(image.outerHTML);
+  };
+
   useEffect(() => {
     if (serviceId) {
       fetchService();
@@ -52,38 +68,15 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
     }
   }, []);
 
-  const handleUploadImage = (info) => {
-    if (info.file.status === "uploading") {
-      setLoading(true);
-      return;
-    }
-
-    if (info.file.status === "done") {
-      getBase64(info.file.originFileObj, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-        //TODO: update later for firebase
-        form.setFieldsValue({ ...form.getFieldsValue(), imageUrl: url });
-      });
-    }
-  };
-
-  const uploadButton = (
-    <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
-
   return (
     <>
-      <Form onFinish={handleSubmit} form={form}>
+      <Form
+        onFinish={async (values) => {
+          values.imageUrl = await getBase64(values.imageUrl);
+          handleSubmit(values);
+        }}
+        form={form}
+      >
         {serviceId ? (
           <Form.Item label="Service ID" name="id">
             <Input readOnly />
@@ -111,30 +104,19 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
           <TextArea row={4} />
         </Form.Item>
         <Upload
-          name="avatar"
-          listType={!imageUrl ? "picture-card" : null}
-          className="avatar-uploader"
-          showUploadList={false}
           customRequest={({ file, onSuccess }) => {
             setTimeout(() => {
               onSuccess("ok");
             }, 0);
           }}
-          beforeUpload={beforeUpload}
-          onChange={handleUploadImage}
+          listType="picture-card"
+          fileList={fileList}
+          onChange={onChange}
+          onPreview={onPreview}
         >
-          {imageUrl ? (
-            <img
-              src={imageUrl}
-              alt="avatar"
-              style={{
-                width: "100%",
-              }}
-            />
-          ) : (
-            uploadButton
-          )}
+          {fileList.length < 1 && "+ Upload"}
         </Upload>
+
         <Form.Item name="imageUrl" hidden></Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
