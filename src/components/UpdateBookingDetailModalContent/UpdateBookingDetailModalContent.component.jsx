@@ -17,22 +17,14 @@ import {
 } from "@ant-design/icons";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
 const UpdateBookingDetailModalContentComponent = ({
   form,
-  bookingData,
   updateBookingData,
-  dentists,
-  services,
-  selectedDentistId,
-  selectedServiceIds,
   dentistModalClickHandler,
   serviceModalClickHandler,
   deleteServiceHandler,
-  checkInHandler,
 }) => {
-  const { Option } = Select;
   return (
     <Form
       name="update_dentist_time_form"
@@ -41,27 +33,21 @@ const UpdateBookingDetailModalContentComponent = ({
     >
       <Descriptions title="Staff Incharge">
         <DescriptionsItem label="Customer service">
-          {bookingData?.customerService
-            ? bookingData?.customerService?.firstName +
+          {form.getFieldValue("customerService")
+            ? form.getFieldValue("customerService").firstName +
               " " +
-              bookingData?.customerService?.lastName
+              form.getFieldValue("customerService").lastName
             : "Not available"}
         </DescriptionsItem>
       </Descriptions>
       <div>
         <div>
           New Dentist:{" "}
-          {dentists
-            ?.filter((dentist) => dentist.id === selectedDentistId)
-            .map((dentist) => (
-              <span>
-                {dentist.firstName +
-                  " " +
-                  dentist.lastName +
-                  " - " +
-                  dentist?.specialization}
-              </span>
-            ))}
+          {form.getFieldValue("dentistId")
+            ? form.getFieldValue("dentistId")?.firstName +
+              " " +
+              form.getFieldValue("dentistId")?.lastName
+            : "Not assigned"}
           <EditOutlined
             onClick={dentistModalClickHandler}
             style={{
@@ -73,12 +59,12 @@ const UpdateBookingDetailModalContentComponent = ({
           />
         </div>
         <Form.Item name="dentistId" hidden>
-          <Input value={selectedDentistId || bookingData?.dentist?.id} />
+          <Input />
         </Form.Item>
       </div>
       <Descriptions title="Booking Info">
         <DescriptionsItem label="Description">
-          {bookingData?.description}
+          {form.getFieldValue("description")?.description}
         </DescriptionsItem>
       </Descriptions>
       <div>
@@ -107,10 +93,8 @@ const UpdateBookingDetailModalContentComponent = ({
         <List
           itemLayout="horizontal"
           dataSource={
-            services
-              ? services.filter((service) =>
-                  selectedServiceIds.includes(service.id)
-                )
+            form.getFieldValue("serviceIds")
+              ? form.getFieldValue("serviceIds")
               : []
           }
           renderItem={(service) => (
@@ -126,7 +110,7 @@ const UpdateBookingDetailModalContentComponent = ({
                     <div>
                       <DeleteOutlined
                         style={{ color: "red", cursor: "pointer" }}
-                        onClick={() => deleteServiceHandler(service.id)}
+                        onClick={() => deleteServiceHandler(service)}
                       />
                     </div>
                   </Typography.Title>
@@ -145,11 +129,7 @@ const UpdateBookingDetailModalContentComponent = ({
           hidden={true}
           style={{ width: "100%" }}
           placeholder="Select services"
-        >
-          {services.map((service) => (
-            <Option value={service.id}>{service.name}</Option>
-          ))}
-        </Select>
+        ></Select>
       </Form.Item>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Form.Item>
@@ -157,9 +137,6 @@ const UpdateBookingDetailModalContentComponent = ({
             Update
           </Button>
         </Form.Item>
-        {services && bookingData?.status === BookingStatusConstants.REQUEST ? (
-          <Button onClick={checkInHandler}>Check in</Button>
-        ) : null}
       </div>
     </Form>
   );

@@ -15,6 +15,7 @@ const BookingDetailModalContentComponent = ({
   let examinationTime = bookingData?.examinationTime
     ? convertMillisecondsToDate(bookingData?.examinationTime)
     : convertMillisecondsToDate(bookingData?.createBookingDate);
+
   return (
     <>
       <Descriptions title="Staff Incharge">

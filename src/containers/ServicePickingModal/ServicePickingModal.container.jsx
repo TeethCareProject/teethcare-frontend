@@ -1,27 +1,73 @@
-import { Modal } from "antd";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Modal, notification } from "antd";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import ServicePickingModalColumn from "./ServicePickingModal.column";
+import { getAllServices } from "../../services/teeth-apis/ServiceController";
+import { useSelector } from "react-redux";
 
 const ServicePickingModalContainer = ({
   isServiceModalOpened,
-  selectedServiceIds,
   serviceModalClickHandler,
-  services,
-  chooseService,
+  form,
 }) => {
+  const [services, setServices] = useState();
+
+  const clinicId = useSelector(
+    (state) => state.authentication.user?.clinic?.id
+  );
+
+  const checkSelectedService = (services) =>
+    !form
+      ?.getFieldValue("serviceIds")
+      ?.map((service) => service.id)
+      ?.includes(services.id);
+
+  const selectServices = (services) => {
+    const prev = form.getFieldValue("serviceIds");
+    if (prev && checkSelectedService(services)) {
+      form.setFieldsValue({
+        serviceIds: [...prev, services],
+      });
+    } else {
+      form.setFieldsValue({
+        serviceIds: [services],
+      });
+    }
+  };
+
+  const fetchServices = async () => {
+    try {
+      const { data } = await getAllServices({
+        clinicId,
+        isPageable: false,
+      });
+      const serviceData = data?.content?.map((service, index) => ({
+        ...service,
+        chooseServiceHandler: () => {
+          selectServices(service);
+        },
+        isDisabled: form
+          ?.getFieldValue("serviceIds")
+          ?.map((s) => s.id)
+          ?.includes(service.id),
+      }));
+      setServices(serviceData);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching service data, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (isServiceModalOpened) fetchServices();
+  }, [isServiceModalOpened]);
+
   const handleCancel = () => {
     serviceModalClickHandler();
   };
-
-  //map handle Action in here
-  const serviceData = services?.map((service, index) => ({
-    ...service,
-    chooseServiceHandler: (e) => {
-      chooseService(service.id);
-    },
-    isDisabled: selectedServiceIds.includes(service.id),
-  }));
 
   return (
     <>
@@ -37,7 +83,7 @@ const ServicePickingModalContainer = ({
         <CommonTableComponent
           tableTitle="Services"
           columns={ServicePickingModalColumn}
-          dataSource={serviceData}
+          dataSource={services}
         />
       </Modal>
     </>

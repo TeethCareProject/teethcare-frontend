@@ -30,9 +30,9 @@ const ServicePickingModalColumn = [
           <Button
             disabled={record.isDisabled}
             type="link"
-            onClick={(e) => record.chooseServiceHandler(e)}
+            onClick={() => record.chooseServiceHandler()}
           >
-            {record.isDisabled ? "Selected" : "Select"}
+            Select
           </Button>
         </Space>
       );
