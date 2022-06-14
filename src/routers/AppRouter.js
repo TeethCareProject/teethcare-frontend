@@ -32,6 +32,7 @@ import TriggerQrCodeNotificationPage from "../pages/TriggerQrCodeNotificationPag
 import RedirectBookingDetail from "../pages/CustomerServiceDashboardPage/RedirectBookingDetailPage";
 import notificationTypes from "../notificationHandler/notification.types";
 import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
@@ -103,6 +104,13 @@ const AppRouter = () => {
           path={RoutePath.REDIRECT_BOOKING_DETAIL_PAGE} //there is a bug that can't use RoutePath, will fix later
           exact
           accessibleRoles={[RoleConstant.CUSTOMER_SERVICE]}
+        />
+        <PrivateRouter
+          key="profilePage"
+          component={() => <ProfilePage />}
+          path={RoutePath.PROFILE_PAGE}
+          exact
+          accessibleRoles={Object.keys(RoleConstant)}
         />
         <DynamicRouter
           key="dashboard"
