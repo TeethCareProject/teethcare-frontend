@@ -51,10 +51,7 @@ const BookingDetailModalComponent = ({
       {role === RoleConstant.CUSTOMER_SERVICE &&
       bookingData?.status === BookingStatusConstants.REQUEST &&
       isUpdated ? (
-        <UpdateBookingDetailModalContentContainer
-          bookingData={bookingData}
-          checkInHandler={checkInHandler}
-        />
+        <UpdateBookingDetailModalContentContainer bookingData={bookingData} />
       ) : (
         <BookingDetailModalContentComponent
           bookingData={bookingData}
