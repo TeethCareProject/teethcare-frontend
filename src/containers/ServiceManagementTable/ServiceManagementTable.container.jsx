@@ -170,6 +170,7 @@ const ServiceManagementTableContainer = () => {
         resetAction={resetAction}
       />
       <Modal
+        destroyOnClose={true}
         title="Service detail"
         visible={neededService}
         footer={false}

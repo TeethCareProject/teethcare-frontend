@@ -34,6 +34,7 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
     try {
       const { data } = await getServiceById(serviceId);
       form.setFieldsValue(data);
+      setImageUrl(data.imageUrl);
       setServiceData(data);
     } catch (e) {
       notification["error"]({
@@ -46,7 +47,6 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
 
   useEffect(() => {
     if (serviceId) {
-      //if update
       fetchService();
       form.setFieldsValue(serviceData);
     }
@@ -59,11 +59,10 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
     }
 
     if (info.file.status === "done") {
-      // Get this url from response in real world.
       getBase64(info.file.originFileObj, (url) => {
         setLoading(false);
         setImageUrl(url);
-        //TODO: update with firebase
+        //TODO: update later for firebase
         form.setFieldsValue({ ...form.getFieldsValue(), imageUrl: url });
       });
     }
@@ -111,13 +110,16 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
         >
           <TextArea row={4} />
         </Form.Item>
-        {/*TODO: upload image implement when there is firebase service! */}
-        {/* <Upload
+        <Upload
           name="avatar"
-          listType="picture-card"
+          listType={!imageUrl ? "picture-card" : null}
           className="avatar-uploader"
           showUploadList={false}
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          customRequest={({ file, onSuccess }) => {
+            setTimeout(() => {
+              onSuccess("ok");
+            }, 0);
+          }}
           beforeUpload={beforeUpload}
           onChange={handleUploadImage}
         >
@@ -132,7 +134,7 @@ const ServiceFormContainer = ({ serviceId, handleSubmit }) => {
           ) : (
             uploadButton
           )}
-        </Upload> */}
+        </Upload>
         <Form.Item name="imageUrl" hidden></Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
