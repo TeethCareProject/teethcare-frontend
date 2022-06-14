@@ -14,6 +14,8 @@ const UpdateBookingDetailModalContentContainer = ({
 }) => {
   const [form] = Form.useForm();
 
+  form.setFieldsValue(bookingData);
+
   const [isRendered, setIsRendered] = useState(false);
 
   const bookingId = bookingData?.id;
@@ -80,7 +82,6 @@ const UpdateBookingDetailModalContentContainer = ({
       <UpdateBookingDetailModalContentComponent
         form={form}
         updateBookingData={updateBookingData}
-        bookingData={bookingData}
         checkInHandler={checkInHandler}
         dentistModalClickHandler={dentistModalClickHandler}
         serviceModalClickHandler={serviceModalClickHandler}

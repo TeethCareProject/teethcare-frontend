@@ -58,7 +58,6 @@ const ServicePickingModalContainer = ({
         description: `There is problem while fetching service data, try again later`,
         duration: 2,
       });
-      console.log(e);
     }
   };
 

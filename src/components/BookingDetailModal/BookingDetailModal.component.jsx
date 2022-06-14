@@ -59,6 +59,7 @@ const BookingDetailModalComponent = ({
         <BookingDetailModalContentComponent
           bookingData={bookingData}
           checkInHandler={checkInHandler}
+          role={role}
         />
       )}
     </>

@@ -17,13 +17,10 @@ import {
 } from "@ant-design/icons";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
 const UpdateBookingDetailModalContentComponent = ({
   form,
   updateBookingData,
-  bookingData,
-  checkInHandler,
   dentistModalClickHandler,
   serviceModalClickHandler,
   deleteServiceHandler,
@@ -36,10 +33,10 @@ const UpdateBookingDetailModalContentComponent = ({
     >
       <Descriptions title="Staff Incharge">
         <DescriptionsItem label="Customer service">
-          {bookingData?.customerService
-            ? bookingData?.customerService?.firstName +
+          {form.getFieldValue("customerService")
+            ? form.getFieldValue("customerService").firstName +
               " " +
-              bookingData?.customerService?.lastName
+              form.getFieldValue("customerService").lastName
             : "Not available"}
         </DescriptionsItem>
       </Descriptions>
@@ -67,7 +64,7 @@ const UpdateBookingDetailModalContentComponent = ({
       </div>
       <Descriptions title="Booking Info">
         <DescriptionsItem label="Description">
-          {bookingData?.description}
+          {form.getFieldValue("description")?.description}
         </DescriptionsItem>
       </Descriptions>
       <div>
@@ -140,10 +137,6 @@ const UpdateBookingDetailModalContentComponent = ({
             Update
           </Button>
         </Form.Item>
-        {form.getFieldValue("serviceIds") &&
-        bookingData?.status === BookingStatusConstants.REQUEST ? (
-          <Button onClick={checkInHandler}>Check in</Button>
-        ) : null}
       </div>
     </Form>
   );
