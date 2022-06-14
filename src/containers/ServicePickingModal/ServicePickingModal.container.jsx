@@ -46,6 +46,10 @@ const ServicePickingModalContainer = ({
         chooseServiceHandler: () => {
           selectServices(service);
         },
+        isDisabled: form
+          ?.getFieldValue("serviceIds")
+          ?.map((s) => s.id)
+          ?.includes(service.id),
       }));
       setServices(serviceData);
     } catch (e) {
@@ -54,12 +58,13 @@ const ServicePickingModalContainer = ({
         description: `There is problem while fetching service data, try again later`,
         duration: 2,
       });
+      console.log(e);
     }
   };
 
   useEffect(() => {
-    fetchServices();
-  }, []);
+    if (isServiceModalOpened) fetchServices();
+  }, [isServiceModalOpened]);
 
   const handleCancel = () => {
     serviceModalClickHandler();
@@ -79,9 +84,7 @@ const ServicePickingModalContainer = ({
         <CommonTableComponent
           tableTitle="Services"
           columns={ServicePickingModalColumn}
-          dataSource={services?.filter((service) =>
-            checkSelectedService(service)
-          )}
+          dataSource={services}
         />
       </Modal>
     </>

@@ -28,7 +28,7 @@ const ServicePickingModalColumn = [
       return (
         <Space size="middle">
           <Button
-            disabled={record.service?.selected ? true : false}
+            disabled={record.isDisabled}
             type="link"
             onClick={() => record.chooseServiceHandler()}
           >
