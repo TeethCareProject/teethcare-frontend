@@ -15,7 +15,6 @@ const DentistPickingModalContainer = ({
   const clinicId = useSelector(
     (state) => state.authentication.user?.clinic?.id
   );
-  console.log(clinicId);
 
   const selectDentist = (dentist) => {
     form.setFieldsValue({
