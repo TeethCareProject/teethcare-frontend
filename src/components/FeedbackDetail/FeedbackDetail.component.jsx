@@ -13,60 +13,24 @@ const FeedbackDetailComponent = ({ feedbackData }) => {
         </Col>
         <Col span={10}>
           <Typography>{`Feedback ID: ${feedbackData?.id} - Status: ${feedbackData?.status}`}</Typography>
-          <Typography>{`Feedback ID: ${feedbackData?.clinic?.name}`}</Typography>
+          <Typography>{`Booking ID: ${feedbackData?.bookingResponse?.id}`}</Typography>
         </Col>
       </Row>
       <Descriptions title="Patient info">
         <DescriptionsItem label="Patient name">
-          {feedbackData?.patient?.firstName +
+          {feedbackData?.bookingResponse?.patient?.firstName +
             " " +
-            feedbackData?.patient?.lastName}
-        </DescriptionsItem>
-        <DescriptionsItem label="Phone number">
-          {feedbackData?.patient?.phone}
-        </DescriptionsItem>
-        <DescriptionsItem label="Date of birth">
-          {feedbackData?.patient?.dateOfBirth}
+            feedbackData?.bookingResponse?.patient?.lastName}
         </DescriptionsItem>
       </Descriptions>
-      <Descriptions title="Staff Incharge">
-        <DescriptionsItem label="Customer service">
-          {feedbackData?.customerService
-            ? feedbackData?.customerService?.firstName +
-              " " +
-              feedbackData?.customerService?.lastName
-            : "Not available"}
+      <Descriptions title="Feedback detail">
+        <DescriptionsItem label="Rating score" span={24}>
+          {feedbackData?.ratingScore}
         </DescriptionsItem>
-        <DescriptionsItem label="Dentist">
-          {feedbackData?.dentist
-            ? feedbackData?.dentist?.firstName +
-              " " +
-              feedbackData?.dentist?.lastName
-            : "Not available"}
+        <DescriptionsItem label="Description" span={24}>
+          {feedbackData?.detail}
         </DescriptionsItem>
       </Descriptions>
-      <Descriptions title="Feedback Info">
-        <DescriptionsItem label="Description">
-          {feedbackData?.description}
-        </DescriptionsItem>
-      </Descriptions>
-      <List
-        itemLayout="horizontal"
-        dataSource={feedbackData?.services ? feedbackData?.services : []}
-        renderItem={(service) => (
-          <List.Item>
-            <List.Item.Meta
-              avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
-              title={
-                <Typography.Title
-                  level={5}
-                >{`Service name: ${service.name}`}</Typography.Title>
-              }
-              description={`Description: ${service.description}`}
-            />
-          </List.Item>
-        )}
-      />
     </>
   );
 };

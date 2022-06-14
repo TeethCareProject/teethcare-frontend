@@ -5,11 +5,13 @@ import { getFeedbackById } from "../../services/teeth-apis/FeedbackController";
 import { reportFeedback } from "../../services/teeth-apis/ReportController";
 import TextArea from "antd/lib/input/TextArea";
 import FeedbackDetailComponent from "../../components/FeedbackDetail/FeedbackDetail.component";
+import { useForm } from "antd/lib/form/Form";
 
 const { Panel } = Collapse;
 
 const FeedbackDetailModalContainer = ({ feedbackId, setNeededFeedback }) => {
   const [feedbackData, setFeedbackData] = useState({});
+  const [form] = useForm();
   const role = useSelector((state) => state?.authentication?.user?.roleName);
 
   const fetchFeedbackData = async () => {
@@ -46,10 +48,13 @@ const FeedbackDetailModalContainer = ({ feedbackId, setNeededFeedback }) => {
         duration: 2,
       });
       await fetchFeedbackData();
+      form.resetFields();
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching assigning, try again later`,
+        description: e.response.data.message[0]
+          ? e.response.data.message[0]
+          : "There is something wrong, try again later",
         duration: 2,
       });
     }
@@ -64,15 +69,12 @@ const FeedbackDetailModalContainer = ({ feedbackId, setNeededFeedback }) => {
       width="80vw"
       footer={false}
     >
-      {/*TODO: show feedback detail*/}
       <FeedbackDetailComponent feedbackData={feedbackData} />
-      <div>Feedback detail will be here!</div>
       <Collapse>
         <Panel header="Feedback report" key="1">
-          {/*TODO: show current feedback report*/}
           {true ? (
             <>
-              <Form onFinish={handleReport}>
+              <Form form={form} onFinish={handleReport}>
                 <Form.Item label="Detail" name="detail">
                   <TextArea
                     rows={4}

@@ -26,9 +26,9 @@ const FeedbackListContainer = () => {
     try {
       let data;
       if (!options) {
-        data = (await getClinicFeedBack(clinicId, {})).data;
+        data = (await getClinicFeedBack({ clinicId })).data;
       } else {
-        data = (await getClinicFeedBack(clinicId, { ...options })).data;
+        data = (await getClinicFeedBack({ ...options, clinicId })).data;
       }
 
       const mapperData = data?.content?.map((feedback) => ({

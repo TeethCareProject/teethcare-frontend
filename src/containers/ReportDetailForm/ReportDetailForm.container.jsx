@@ -79,6 +79,9 @@ const ReportDetailForm = ({ reportId, setNeededReport }) => {
                   " " +
                   reportDetail?.feedbackResponse?.patient?.lastName}
               </Descriptions.Item>
+              <Descriptions.Item label="Feedback rating score" span={12}>
+                {reportDetail?.feedbackResponse?.ratingScore}
+              </Descriptions.Item>
               <Descriptions.Item label="Feedback detail" span={12}>
                 {reportDetail?.feedbackResponse?.detail}
               </Descriptions.Item>
@@ -88,7 +91,7 @@ const ReportDetailForm = ({ reportId, setNeededReport }) => {
             </Descriptions>
           </Col>
         </Row>
-        {role === RoleConstant.CUSTOMER_SERVICE &&
+        {role === RoleConstant.ADMIN &&
         reportDetail.status === ReportStatusConstants.PENDING ? (
           <Space>
             <Button
