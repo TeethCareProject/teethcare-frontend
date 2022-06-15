@@ -3,6 +3,7 @@ import { Button, Typography, Row, Col, Card } from "antd";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 const BookingCardComponent = ({ booking }) => {
+  console.log(booking);
   const { Meta } = Card;
   return (
     <div>
@@ -43,7 +44,7 @@ const BookingCardComponent = ({ booking }) => {
                 </span>
               </div>
               <div style={{ fontSize: "1.5em" }}>
-                <span style={{ fontWeight: "bold" }}>Patient: </span>
+                <span style={{ fontWeight: "bold" }}>Examination Time: </span>
                 {convertMillisecondsToDate(booking[0]?.examinationTime)}
                 <Button type="link" onClick={() => booking[0]?.onClick()}>
                   Xem chi tiết

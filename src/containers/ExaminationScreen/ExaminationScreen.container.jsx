@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { notification, Form } from "antd";
 import { useParams } from "react-router-dom";
 import { getBookingById } from "../../services/teeth-apis/BookingController";
-import { useSelector } from "react-redux";
 
 import { updateBookingDuringTreatment } from "../../services/teeth-apis/BookingController";
 import RequestUpdateFormToRequestUpdateData from "../../mapper/RequestUpdateFormToRequestUpdateData.js";

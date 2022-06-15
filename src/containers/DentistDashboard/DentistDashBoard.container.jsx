@@ -38,6 +38,7 @@ const DentistDashBoardContainer = () => {
           await getAllBooking({
             dentistId: id,
             status: BookingStatusConstants.TREATMENT,
+            isConfirmed: false,
           })
         ).data;
       } else {
@@ -46,6 +47,7 @@ const DentistDashBoardContainer = () => {
             ...options,
             dentistId: id,
             status: BookingStatusConstants.TREATMENT,
+            isConfirmed: false,
           })
         ).data;
       }

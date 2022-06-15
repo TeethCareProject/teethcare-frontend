@@ -24,8 +24,6 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
 
   const role = useSelector((state) => state?.authentication?.user?.roleName);
 
-  console.log(bookingData?.confirmed);
-
   const fetchBookingData = async () => {
     try {
       const { data } = await getBookingById(bookingId);
