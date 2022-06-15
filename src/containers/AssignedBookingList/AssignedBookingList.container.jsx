@@ -57,7 +57,6 @@ const AssignedBookingListContainer = () => {
       const mapperData = data?.content?.map((booking) => ({
         ...booking,
         onClick: () => {
-          console.log(booking?.id);
           onViewDetailClick(booking?.id);
         },
       }));

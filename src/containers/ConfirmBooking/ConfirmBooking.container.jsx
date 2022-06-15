@@ -55,7 +55,6 @@ const ConfirmBookingContainer = () => {
         description: `There is problem while confirm, try again later`,
         duration: 2,
       });
-      console.log(e);
     }
   };
 
