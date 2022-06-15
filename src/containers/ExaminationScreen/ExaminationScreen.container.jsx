@@ -1,33 +1,47 @@
 import React, { useState, useEffect } from "react";
-import { notification } from "antd";
+import { notification, Form } from "antd";
 import { useParams } from "react-router-dom";
 import { getBookingById } from "../../services/teeth-apis/BookingController";
 import { useSelector } from "react-redux";
-import { getAllServices } from "../../services/teeth-apis/ServiceController";
 
-import { requestUpdate } from "../../services/teeth-apis/BookingController";
+import { updateBookingDuringTreatment } from "../../services/teeth-apis/BookingController";
 import RequestUpdateFormToRequestUpdateData from "../../mapper/RequestUpdateFormToRequestUpdateData.js";
 import ExaminationScreenComponent from "../../components/ExaminationScreen/ExaminationScreen.component";
+import ServicePickingModalContainer from "../ServicePickingModal/ServicePickingModal.container";
 
 const ExaminationScreenContainer = () => {
-  const clinicId = useSelector(
-    (state) => state?.authentication?.user?.clinic?.clinicId
-  );
-
+  const [form] = Form.useForm();
   const { bookingId } = useParams();
-
+  const [isRendered, setIsRendered] = useState(false);
   const [bookingData, setBookingData] = useState({});
-  const [services, setServices] = useState([]);
+  const [isServiceModalOpened, setServiceModalOpened] = useState(false);
+
+  const serviceModalClickHandler = () => {
+    setServiceModalOpened((isServiceModalOpened) => !isServiceModalOpened);
+  };
+
+  const deleteServiceHandler = (deletedService) => {
+    let selectedServices = form.getFieldValue("serviceIds");
+    if (selectedServices && selectedServices.includes(deletedService)) {
+      const array = selectedServices.filter(
+        (service) => service.id !== deletedService.id
+      );
+      form.setFieldsValue({
+        serviceIds: array,
+      });
+    }
+    setIsRendered((prev) => !prev);
+  };
 
   const onFinish = async (values) => {
     try {
-      await requestUpdate(
+      await updateBookingDuringTreatment(
         RequestUpdateFormToRequestUpdateData({ bookingId, ...values })
       );
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching booking data, try again later`,
+        description: `There is problem while updating booking data, try again later`,
         duration: 2,
       });
     }
@@ -46,33 +60,26 @@ const ExaminationScreenContainer = () => {
     }
   };
 
-  const fetchServices = async () => {
-    try {
-      const { data } = await getAllServices(clinicId);
-      setServices(data.content);
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching booking data, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
   useEffect(() => {
     bookingId && fetchBookingData();
   }, [bookingId]);
 
-  useEffect(() => {
-    fetchServices();
-  }, []);
-
   return (
-    <ExaminationScreenComponent
-      booking={bookingData}
-      services={services}
-      onFinish={onFinish}
-    />
+    <>
+      <ServicePickingModalContainer
+        serviceModalClickHandler={serviceModalClickHandler}
+        isServiceModalOpened={isServiceModalOpened}
+        form={form}
+      />
+      <ExaminationScreenComponent
+        form={form}
+        booking={bookingData}
+        onFinish={onFinish}
+        deleteServiceHandler={deleteServiceHandler}
+        serviceModalClickHandler={serviceModalClickHandler}
+        isRendered={isRendered}
+      />
+    </>
   );
 };
 

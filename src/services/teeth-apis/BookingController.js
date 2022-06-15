@@ -17,8 +17,8 @@ export const getBookingById = (bookingId) =>
 export const evaluateBooking = (bookingId, isAccepted) =>
   CallAPI(`${BOOKING_END_POINT}/accept`, "PUT", {}, { bookingId, isAccepted });
 
-export const requestUpdate = (options) =>
-  CallAPI(`${BOOKING_END_POINT}/update-request`, "PUT", options);
+export const updateBookingDuringTreatment = (options) =>
+  CallAPI(`${BOOKING_END_POINT}/second-update`, "PUT", options);
 export const updateBooking = (options) =>
   CallAPI(`${BOOKING_END_POINT}/first-update`, "PUT", options);
 

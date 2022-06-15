@@ -6,13 +6,24 @@ import {
   Typography,
   Input,
   Form,
-  Select,
   Button,
+  Select,
+  List,
+  Avatar,
 } from "antd";
+import {
+  ContainerOutlined,
+  DeleteOutlined,
+  EditOutlined,
+} from "@ant-design/icons";
 
-const ExaminationScreenComponent = ({ booking, services, onFinish }) => {
-  console.log(booking);
-  const { Option } = Select;
+const ExaminationScreenComponent = ({
+  booking,
+  onFinish,
+  deleteServiceHandler,
+  form,
+  serviceModalClickHandler,
+}) => {
   const { TextArea } = Input;
 
   return (
@@ -96,7 +107,7 @@ const ExaminationScreenComponent = ({ booking, services, onFinish }) => {
       </Col>
       <Divider type="vertical" style={{ height: "90vh" }} />
       <Col span={12} style={{ margin: "30px 40px" }}>
-        <Form name="info_treatment-update" onFinish={onFinish}>
+        <Form name="info_treatment-update" onFinish={onFinish} form={form}>
           <Form.Item name="note">
             <TextArea
               rows={12}
@@ -104,9 +115,62 @@ const ExaminationScreenComponent = ({ booking, services, onFinish }) => {
               maxLength={1000}
             />
           </Form.Item>
+          <div>
+            Services:{" "}
+            <EditOutlined
+              onClick={serviceModalClickHandler}
+              style={{
+                color: "blue",
+                marginLeft: 30,
+                fontSize: "0.8em",
+                cursor: "pointer",
+              }}
+            />{" "}
+          </div>
+          {form.getFieldValue("serviceIds") ? (
+            <List
+              itemLayout="horizontal"
+              dataSource={form.getFieldValue("serviceIds")}
+              renderItem={(service) => (
+                <List.Item>
+                  <List.Item.Meta
+                    avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
+                    title={
+                      <Typography.Title
+                        level={5}
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <div>{`Service name: ${service.name}`}</div>
+                        <div>
+                          <DeleteOutlined
+                            style={{ color: "red", cursor: "pointer" }}
+                            onClick={() => deleteServiceHandler(service)}
+                          />
+                        </div>
+                      </Typography.Title>
+                    }
+                    description={`Description: ${service.description}`}
+                  />
+                </List.Item>
+              )}
+            />
+          ) : null}
+
+          <Form.Item name="serviceIds">
+            <Select
+              mode="multiple"
+              allowClear
+              hidden={true}
+              style={{ width: "100%" }}
+              placeholder="Select services"
+            ></Select>
+          </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Request Update
+              Update
             </Button>
           </Form.Item>
         </Form>
