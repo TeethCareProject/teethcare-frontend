@@ -1,4 +1,12 @@
-import { Button, Modal, notification, Space } from "antd";
+import {
+  Button,
+  Form,
+  Modal,
+  notification,
+  Rate,
+  Space,
+  Typography,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import BookingDetailModalComponent from "../../components/BookingDetailModal/BookingDetailModal.component";
@@ -15,6 +23,8 @@ import {
 } from "../../services/teeth-apis/BookingController";
 import { generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
+import { giveFeedBack } from "../../services/teeth-apis/FeedbackController";
+import TextArea from "antd/lib/input/TextArea";
 
 const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const [bookingData, setBookingData] = useState();
@@ -86,6 +96,55 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
         description: `There is problem while check out, try again later`,
+      });
+    }
+  };
+  const handleGiveFeedback = (bookingId) => {
+    try {
+      Modal.info({
+        closable: true,
+        okButtonProps: { style: { display: "none" } },
+        title: "Give your feedback",
+        content: (
+          <>
+            <Form
+              onFinish={async (values) => {
+                try {
+                  await giveFeedBack(
+                    bookingId,
+                    values.detail,
+                    values.ratingScore
+                  );
+                  Modal.destroyAll();
+                  await fetchBookingData();
+                } catch (e) {
+                  notification["error"]({
+                    message: `Something went wrong! Try again latter!`,
+                    description: `There is problem while giving feedback, try again later`,
+                    duration: 2,
+                  });
+                }
+              }}
+            >
+              <Form.Item name="ratingScore" label="Rate">
+                <Rate />
+              </Form.Item>
+              <Form.Item name="detail" label="Description">
+                <TextArea />
+              </Form.Item>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Send!
+                </Button>
+              </Form.Item>
+            </Form>
+          </>
+        ),
+      });
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while giving feedback, try again later`,
         duration: 2,
       });
     }
@@ -136,6 +195,17 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
               )}`}
             />
           </div>
+          <Space>
+            <Typography>Give your feedback for this clinic!!</Typography>
+            <Button
+              type="primary"
+              onClick={() => {
+                handleGiveFeedback(bookingId);
+              }}
+            >
+              Give feedback
+            </Button>
+          </Space>
         </>
       ) : null}
       {bookingData?.status === BookingStatusConstants.PENDING &&

@@ -19,8 +19,6 @@ export const evaluateBooking = (bookingId, isAccepted) =>
 
 export const updateBookingDuringTreatment = (options) =>
   CallAPI(`${BOOKING_END_POINT}/second-update`, "PUT", options);
-export const updateBooking = (options) =>
-  CallAPI(`${BOOKING_END_POINT}/first-update`, "PUT", options);
 
 export const confirmBooking = (options) =>
   CallAPI(`${BOOKING_END_POINT}/confirm`, "PUT", options);
@@ -35,6 +33,9 @@ export const checkOut = (bookingId) => {
     }
   );
 };
+
+export const updateBooking = (options) =>
+  CallAPI(`${BOOKING_END_POINT}/first-update`, "PUT", options);
 
 export const checkIn = (bookingId) =>
   CallAPI(

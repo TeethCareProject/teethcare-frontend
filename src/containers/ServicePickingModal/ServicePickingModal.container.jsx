@@ -64,8 +64,8 @@ const ServicePickingModalContainer = ({
   };
 
   useEffect(() => {
-    if (isServiceModalOpened) fetchServices();
-  }, [isServiceModalOpened, serviceRender]);
+    fetchServices();
+  }, [serviceRender]);
 
   const handleCancel = () => {
     serviceModalClickHandler();
