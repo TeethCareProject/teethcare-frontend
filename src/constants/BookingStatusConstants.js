@@ -3,6 +3,7 @@ const BookingStatusConstants = {
   REQUEST: "REQUEST",
   TREATMENT: "TREATMENT",
   DONE: "DONE",
+  REJECTED: "REJECTED",
 };
 
 export default BookingStatusConstants;

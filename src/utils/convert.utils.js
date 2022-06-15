@@ -6,8 +6,8 @@ export const convertMomentToMilliseconds = (momentData) => {
   return momentData.utc().valueOf();
 };
 
-export const convertMillisecondsToDate = (time) => {
-  return new Date(time).toLocaleString();
+export const convertMillisecondsToDate = (milliseconds) => {
+  return new Date(milliseconds).toLocaleString();
 };
 
 export const convertDateToMilliseconds = (date) => {

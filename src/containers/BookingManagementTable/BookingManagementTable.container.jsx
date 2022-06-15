@@ -1,13 +1,36 @@
-import { Form, notification, Row, Col, Button, Input, Pagination } from "antd";
+import {
+  Form,
+  notification,
+  Row,
+  Col,
+  Button,
+  Input,
+  Pagination,
+  Modal,
+  Select,
+} from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
-import { getAllBooking } from "../../services/teeth-apis/BookingController";
+import {
+  getAllBooking,
+  getBookingById,
+} from "../../services/teeth-apis/BookingController";
 import BookingManagementTableColumn from "./BookingManagementTable.column";
 import { useSelector } from "react-redux";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
+import QrScannerComponent from "../../components/QrScanner/QrScanner.component";
+import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { generatePath } from "react-router-dom";
+import RoutePath from "../../routers/Path";
+import { useParams } from "react-router-dom";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
 const BookingManagementTableContainer = () => {
+  const location = useLocation();
+  const history = useHistory();
+  const { tab } = useParams();
   const [form] = useForm();
   const [searchValue, setSearchValue] = useState({
     bookingId: "",
@@ -57,6 +80,7 @@ const BookingManagementTableContainer = () => {
       bookingId: values.bookingId,
       patientName: values.patientName,
       patientPhone: values.patientPhone,
+      status: values.status,
     });
   };
 
@@ -65,11 +89,37 @@ const BookingManagementTableContainer = () => {
       bookingId: "",
       patientName: "",
       patientPhone: "",
+      status: null,
     });
     setSearchValue({
       bookingId: "",
       patientName: "",
       patientPhone: "",
+      status: null,
+    });
+  };
+
+  const handleResult = async (value) => {
+    try {
+      Modal.destroyAll();
+      const bookingId = value.substring(value.lastIndexOf("/") + 1);
+      //check before get bookingId
+      await getBookingById(bookingId);
+
+      setNeededBooking(bookingId);
+    } catch (e) {
+      Modal.error({
+        title: "Invalid booking Id",
+        content: "Invalid booking Id, try again later!",
+      });
+    }
+  };
+
+  const handleOpenScanQr = () => {
+    Modal.info({
+      closable: true,
+      title: "Scan QR for booking ID",
+      content: <QrScannerComponent handleResult={handleResult} />,
     });
   };
 
@@ -88,6 +138,18 @@ const BookingManagementTableContainer = () => {
     fetchData({ size: pageSize, page: currentPage - 1, ...searchValue });
   }, [currentPage]);
 
+  useEffect(() => {
+    if (location?.state?.bookingId) {
+      setNeededBooking(location?.state?.bookingId);
+      history.replace(
+        tab
+          ? generatePath(RoutePath.DASHBOARD_WITH_TAB_PAGE, { tab: tab })
+          : generatePath(RoutePath.DASHBOARD_PAGE),
+        { bookingId: null }
+      );
+    }
+  }, []);
+
   return (
     <>
       <BookingDetailModalContainer
@@ -96,11 +158,18 @@ const BookingManagementTableContainer = () => {
       ></BookingDetailModalContainer>
       <Col>
         <Row>
-          <SearchForm
-            form={form}
-            onFinish={onFinish}
-            resetAction={resetAction}
-          />
+          <Col>
+            <SearchForm
+              form={form}
+              onFinish={onFinish}
+              resetAction={resetAction}
+            />
+          </Col>
+          <Col>
+            <Button type="primary" onClick={handleOpenScanQr}>
+              Scan QR
+            </Button>
+          </Col>
         </Row>
         <Row>
           <CommonTableComponent
@@ -128,22 +197,35 @@ const BookingManagementTableContainer = () => {
 };
 
 const SearchForm = ({ resetAction, ...antdProps }) => {
+  const { Option } = Select;
   return (
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
-        <Col span={6}>
+        <Col span={5}>
           <Form.Item name="bookingId" label="Search booking Id">
             <Input placeholder="Search by booking Id" />
           </Form.Item>
         </Col>
-        <Col span={6}>
+        <Col span={5}>
           <Form.Item name="patientName" label="Search patient name">
             <Input placeholder="Search by patient name" />
           </Form.Item>
         </Col>
-        <Col span={6}>
+        <Col span={5}>
           <Form.Item name="patientPhone" label="Search patient phone">
             <Input placeholder="Search by patient phone" />
+          </Form.Item>
+        </Col>
+        <Col span={3}>
+          <Form.Item name="status">
+            <Select placeholder="status">
+              <Option>None</Option>
+              {Object.keys(BookingStatusConstants).map((status) => (
+                <Option key={status} value={status}>
+                  {status}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
         </Col>
         <Col span={3}>

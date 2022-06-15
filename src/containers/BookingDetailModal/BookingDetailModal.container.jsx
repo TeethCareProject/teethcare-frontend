@@ -2,15 +2,25 @@ import { Button, Modal, notification, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import BookingDetailModalComponent from "../../components/BookingDetailModal/BookingDetailModal.component";
+import UpdateBookingDetailModalContentContainer from "../UpdateBookingDetailModalContent/UpdateBookingDetailModalContent.container";
+import BookingDetailModalContentComponent from "../../components/BookingDetailModalContent/BookingDetailModalContent.component";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
+import QRCode from "react-qr-code";
 import {
   evaluateBooking,
   getBookingById,
+  checkIn,
 } from "../../services/teeth-apis/BookingController";
+import { generatePath } from "react-router-dom";
+import RoutePath from "../../routers/Path";
 
 const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
-  const [bookingData, setBookingData] = useState({});
+  const [bookingData, setBookingData] = useState();
+  const [isUpdated, setIsUpdated] = useState(false);
+
+  const [isRendered, setIsRendered] = useState(false);
+
   const role = useSelector((state) => state?.authentication?.user?.roleName);
 
   const fetchBookingData = async () => {
@@ -32,11 +42,16 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
 
   const handleCancel = () => {
     setNeededBooking(null);
+    setIsUpdated(false);
+  };
+
+  const updateClickHandler = (e) => {
+    setIsUpdated((isUpdated) => !isUpdated);
   };
 
   useEffect(() => {
     bookingId && fetchBookingData();
-  }, [bookingId]);
+  }, [bookingId, isRendered]);
 
   const handleAssign = async (isAccepted) => {
     try {
@@ -51,6 +66,18 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
     }
   };
 
+  const checkInHandler = async () => {
+    try {
+      await checkIn(bookingId);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while check in, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
   return (
     <Modal
       destroyOnClose
@@ -60,7 +87,44 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       width="80vw"
       footer={false}
     >
-      <BookingDetailModalComponent bookingData={bookingData} />
+      <BookingDetailModalComponent
+        bookingData={bookingData}
+        role={role}
+        checkInHandler={checkInHandler}
+        isUpdated={isUpdated}
+        updateClickHandler={updateClickHandler}
+        setIsUpdated={setIsUpdated}
+      />
+      {role === RoleConstant.CUSTOMER_SERVICE &&
+      bookingData?.status === BookingStatusConstants.REQUEST &&
+      isUpdated ? (
+        <UpdateBookingDetailModalContentContainer
+          bookingData={bookingData}
+          setIsUpdated={setIsUpdated}
+          setIsRendered={setIsRendered}
+          isRendered={isRendered}
+        />
+      ) : (
+        <BookingDetailModalContentComponent
+          bookingData={bookingData}
+          checkInHandler={checkInHandler}
+          role={role}
+          setIsRendered={setIsRendered}
+          isRendered={isRendered}
+        />
+      )}
+      {bookingId && role === RoleConstant.PATIENT ? (
+        <>
+          <div style={{ background: "white", padding: "16px" }}>
+            <QRCode
+              value={`${window.location.origin}${generatePath(
+                RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE,
+                { bookingId: bookingId }
+              )}`}
+            />
+          </div>
+        </>
+      ) : null}
       {bookingData?.status === BookingStatusConstants.PENDING &&
       role === RoleConstant.CUSTOMER_SERVICE ? (
         <Space>
