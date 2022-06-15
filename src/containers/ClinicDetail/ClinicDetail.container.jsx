@@ -26,7 +26,7 @@ const ClinicDetailContainer = () => {
   };
 
   const fetchingClinicFeedback = async () => {
-    const { data } = await getClinicFeedBack(clinicId);
+    const { data } = await getClinicFeedBack({ clinicId });
     setFeedback(data);
   };
 
