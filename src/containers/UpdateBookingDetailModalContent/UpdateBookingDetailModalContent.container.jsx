@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, notification } from "antd";
 import UpdateBookingDetailModalContentComponent from "../../components/UpdateBookingDetailModalContent/UpdateBookingDetailModalContent.component";
 import DentistPickingModalContainer from "../DentistPickingModal/DentistPickingModal.container";
@@ -7,15 +7,22 @@ import ServicePickingModalContainer from "../ServicePickingModal/ServicePickingM
 import UpdateBookingFormValueToUpdateBookingData from "../../mapper/UpdateBookingFormValueToUpdateBookingData";
 
 import { updateBooking } from "../../services/teeth-apis/BookingController";
+import moment from "moment";
 
 const UpdateBookingDetailModalContentContainer = ({
   bookingData,
+  setIsUpdated,
+  setIsRendered,
+  isRendered,
 }) => {
   const [form] = Form.useForm();
 
-  form.setFieldsValue(bookingData);
-
-  const [isRendered, setIsRendered] = useState(false);
+  useEffect(() => {
+    form.setFieldsValue({
+      ...bookingData,
+      examinationTime: moment(bookingData?.examinationTime),
+    });
+  }, [bookingData]);
 
   const bookingId = bookingData?.id;
 
@@ -43,6 +50,8 @@ const UpdateBookingDetailModalContentContainer = ({
       await updateBooking(
         UpdateBookingFormValueToUpdateBookingData({ bookingId, ...values })
       );
+      setIsUpdated((prev) => !prev);
+      setIsRendered((prev) => !prev);
       resetField();
     } catch (e) {
       notification["error"]({
@@ -81,7 +90,6 @@ const UpdateBookingDetailModalContentContainer = ({
       <UpdateBookingDetailModalContentComponent
         form={form}
         updateBookingData={updateBookingData}
-        checkInHandler={checkInHandler}
         dentistModalClickHandler={dentistModalClickHandler}
         serviceModalClickHandler={serviceModalClickHandler}
         deleteServiceHandler={deleteServiceHandler}

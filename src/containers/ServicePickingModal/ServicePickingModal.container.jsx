@@ -11,6 +11,7 @@ const ServicePickingModalContainer = ({
   form,
 }) => {
   const [services, setServices] = useState();
+  const [serviceRender, setServiceRender] = useState(false);
 
   const clinicId = useSelector(
     (state) => state.authentication.user?.clinic?.id
@@ -33,6 +34,7 @@ const ServicePickingModalContainer = ({
         serviceIds: [services],
       });
     }
+    setServiceRender((prev) => !prev);
   };
 
   const fetchServices = async () => {
@@ -63,7 +65,7 @@ const ServicePickingModalContainer = ({
 
   useEffect(() => {
     if (isServiceModalOpened) fetchServices();
-  }, [isServiceModalOpened]);
+  }, [isServiceModalOpened, serviceRender]);
 
   const handleCancel = () => {
     serviceModalClickHandler();

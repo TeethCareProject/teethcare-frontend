@@ -2,6 +2,8 @@ import { Button, Modal, notification, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import BookingDetailModalComponent from "../../components/BookingDetailModal/BookingDetailModal.component";
+import UpdateBookingDetailModalContentContainer from "../UpdateBookingDetailModalContent/UpdateBookingDetailModalContent.container";
+import BookingDetailModalContentComponent from "../../components/BookingDetailModalContent/BookingDetailModalContent.component";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
 import QRCode from "react-qr-code";
@@ -16,6 +18,8 @@ import RoutePath from "../../routers/Path";
 const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const [bookingData, setBookingData] = useState();
   const [isUpdated, setIsUpdated] = useState(false);
+
+  const [isRendered, setIsRendered] = useState(false);
 
   const role = useSelector((state) => state?.authentication?.user?.roleName);
 
@@ -47,7 +51,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
 
   useEffect(() => {
     bookingId && fetchBookingData();
-  }, [bookingId]);
+  }, [bookingId, isRendered]);
 
   const handleAssign = async (isAccepted) => {
     try {
@@ -89,7 +93,26 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         checkInHandler={checkInHandler}
         isUpdated={isUpdated}
         updateClickHandler={updateClickHandler}
+        setIsUpdated={setIsUpdated}
       />
+      {role === RoleConstant.CUSTOMER_SERVICE &&
+      bookingData?.status === BookingStatusConstants.REQUEST &&
+      isUpdated ? (
+        <UpdateBookingDetailModalContentContainer
+          bookingData={bookingData}
+          setIsUpdated={setIsUpdated}
+          setIsRendered={setIsRendered}
+          isRendered={isRendered}
+        />
+      ) : (
+        <BookingDetailModalContentComponent
+          bookingData={bookingData}
+          checkInHandler={checkInHandler}
+          role={role}
+          setIsRendered={setIsRendered}
+          isRendered={isRendered}
+        />
+      )}
       {bookingId && role === RoleConstant.PATIENT ? (
         <>
           <div style={{ background: "white", padding: "16px" }}>
