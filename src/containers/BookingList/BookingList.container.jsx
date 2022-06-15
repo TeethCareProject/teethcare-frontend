@@ -58,6 +58,7 @@ const BookingListContainer = () => {
     setSearchValue({
       bookingId: values.bookingId,
       clinicName: values.clinicName,
+      status: values.status,
     });
   };
 

@@ -4,10 +4,12 @@ import {
   getBookingById,
   confirmBooking,
 } from "../../services/teeth-apis/BookingController";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { notification } from "antd";
+import RoutePath from "../../routers/Path";
 
 const ConfirmBookingContainer = () => {
+  const history = useHistory();
   const { bookingId } = useParams();
   const [bookingData, setBookingData] = useState();
 
@@ -30,6 +32,7 @@ const ConfirmBookingContainer = () => {
         bookingId,
         version: 0,
       });
+      history.push(RoutePath.REJECT_CONFIRM_PAGE);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -45,12 +48,14 @@ const ConfirmBookingContainer = () => {
         bookingId,
         version: bookingData.version,
       });
+      history.push(RoutePath.ACCEPT_CONFIRM_PAGE);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
         description: `There is problem while confirm, try again later`,
         duration: 2,
       });
+      console.log(e);
     }
   };
 
