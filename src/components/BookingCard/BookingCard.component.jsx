@@ -3,7 +3,6 @@ import { Button, Typography, Row, Col, Card } from "antd";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 const BookingCardComponent = ({ booking }) => {
-  console.log(booking);
   const { Meta } = Card;
   return (
     <div>
