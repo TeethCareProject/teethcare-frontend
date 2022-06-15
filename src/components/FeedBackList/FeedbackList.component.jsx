@@ -20,7 +20,7 @@ const FeedbackListComponent = ({ feedbackListData }) => {
           />
           <Typography>{`${feedback?.detail}`}</Typography>
           <Button type="link" onClick={() => feedback?.onClick()}>
-            Report this feedback
+            Detail
           </Button>
         </List.Item>
       )}
