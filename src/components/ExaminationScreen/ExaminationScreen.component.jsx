@@ -1,18 +1,7 @@
 import React from "react";
-import {
-  Divider,
-  Col,
-  Row,
-  Typography,
-  Input,
-  Form,
-  Select,
-  Button,
-} from "antd";
+import { Divider, Col, Row, Typography, Input, Form, Button } from "antd";
 
 const ExaminationScreenComponent = ({ booking, services, onFinish }) => {
-  console.log(booking);
-  const { Option } = Select;
   const { TextArea } = Input;
 
   return (
