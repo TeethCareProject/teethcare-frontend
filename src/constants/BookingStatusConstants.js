@@ -1,8 +1,9 @@
 const BookingStatusConstants = {
   PENDING: "PENDING",
-  REQUEST_PROGRESS: "REQUEST",
+  REQUEST: "REQUEST",
   TREATMENT: "TREATMENT",
   DONE: "DONE",
+  REJECTED: "REJECTED",
 };
 
 export default BookingStatusConstants;
