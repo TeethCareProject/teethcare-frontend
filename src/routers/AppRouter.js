@@ -27,6 +27,7 @@ import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
 import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
 import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
 import ExaminationPage from "../pages/ExaminationPage/ExaminationPage";
+import ConfirmBookingPage from "../pages/BookingServicePage/ConfirmBookingPage";
 import { notification } from "antd";
 import { onMessage } from "firebase/messaging";
 import TriggerQrCodeNotificationPage from "../pages/TriggerQrCodeNotificationPage/TriggerQrCodeNotificationPage";
@@ -95,8 +96,11 @@ const AppRouter = () => {
         <Route path={RoutePath.BOOKING_FAILED_PAGE} exact>
           <BookingFailedPage />
         </Route>
-        <Route path={RoutePath.EXAMINATION_PAGE}>
+        <Route path={RoutePath.EXAMINATION_PAGE} exact>
           <ExaminationPage />
+        </Route>
+        <Route path={RoutePath.CONFIRM_BOOKING_PAGE} exact>
+          <ConfirmBookingPage />
         </Route>
         <Route path={RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE} exact>
           <TriggerQrCodeNotificationPage />

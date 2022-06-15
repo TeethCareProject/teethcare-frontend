@@ -22,6 +22,20 @@ export const updateBookingDuringTreatment = (options) =>
 export const updateBooking = (options) =>
   CallAPI(`${BOOKING_END_POINT}/first-update`, "PUT", options);
 
+export const confirmBooking = (options) =>
+  CallAPI(`${BOOKING_END_POINT}/confirm`, "PUT", options);
+
+export const checkOut = (bookingId) => {
+  CallAPI(
+    `${BOOKING_END_POINT}/checkout`,
+    "PUT",
+    {},
+    {
+      bookingId: bookingId,
+    }
+  );
+};
+
 export const checkIn = (bookingId) =>
   CallAPI(
     `${BOOKING_END_POINT}/checkin`,
