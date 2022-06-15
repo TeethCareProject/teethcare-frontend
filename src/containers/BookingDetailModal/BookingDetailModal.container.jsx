@@ -68,6 +68,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const handleGiveFeedback = (bookingId) => {
     try {
       Modal.info({
+        closable: true,
         okButtonProps: { style: { display: "none" } },
         title: "Give your feedback",
         content: (
