@@ -13,11 +13,14 @@ import BookingListComponent from "../../components/BookingList/BookingList.compo
 import { useForm } from "antd/lib/form/Form";
 import { useSelector } from "react-redux";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
-import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
+import { useHistory, generatePath } from "react-router-dom";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import RoutePath from "../../routers/Path";
 
 const AssignedBookingListContainer = () => {
   const id = useSelector((state) => state.authentication?.user?.id);
+
+  const history = useHistory();
   const [searchValue, setSearchValue] = useState({
     dentistId: id,
     bookingId: null,
@@ -28,8 +31,15 @@ const AssignedBookingListContainer = () => {
   const [form] = useForm();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
-  const [neededBooking, setNeededBooking] = useState(null);
   const pageSize = 6;
+
+  const onViewDetailClick = (bookingId) => {
+    history.push(
+      generatePath(RoutePath.EXAMINATION_PAGE, {
+        bookingId,
+      })
+    );
+  };
 
   const fetchData = async (options) => {
     try {
@@ -47,10 +57,10 @@ const AssignedBookingListContainer = () => {
       const mapperData = data?.content?.map((booking) => ({
         ...booking,
         onClick: () => {
-          setNeededBooking(booking?.id);
+          console.log(booking?.id);
+          onViewDetailClick(booking?.id);
         },
       }));
-
       setBookingListData(mapperData);
       setTotalElements(data.totalElements);
     } catch (e) {
@@ -92,23 +102,21 @@ const AssignedBookingListContainer = () => {
   }, [searchValue]);
 
   useEffect(() => {
-    if (!neededBooking) {
-      fetchData({ size: pageSize, page: currentPage - 1, ...searchValue });
-    }
-  }, [neededBooking]);
+    fetchData({ size: pageSize, page: currentPage - 1, ...searchValue });
+  }, []);
 
   useEffect(() => {
     fetchData({ size: pageSize, page: currentPage - 1, ...searchValue });
-  }, [currentPage]);
+  }, []);
 
   return (
     <>
       <SearchForm form={form} onFinish={onFinish} resetAction={resetAction} />
-      <BookingDetailModalContainer
-        bookingId={neededBooking}
-        setNeededBooking={setNeededBooking}
+      <BookingListComponent
+        bookingListData={bookingListData?.filter(
+          (booking) => booking.status !== BookingStatusConstants.REQUEST
+        )}
       />
-      <BookingListComponent bookingListData={bookingListData} />
       <div style={{ marginTop: "1rem" }}>
         <Pagination
           total={totalElements}

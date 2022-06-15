@@ -16,6 +16,7 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 const ExaminationScreenComponent = ({
   booking,
@@ -23,9 +24,14 @@ const ExaminationScreenComponent = ({
   deleteServiceHandler,
   form,
   serviceModalClickHandler,
+  isUpdated,
+  switchUpdateState,
 }) => {
   const { TextArea } = Input;
 
+  let examinationTime = booking?.examinationTime
+    ? convertMillisecondsToDate(booking?.examinationTime)
+    : convertMillisecondsToDate(booking?.createBookingDate);
   return (
     <Row style={{ display: "flex" }}>
       <Col span={10}>
@@ -40,13 +46,6 @@ const ExaminationScreenComponent = ({
         >
           <Typography.Title level={4}>Patient details:</Typography.Title>
           <Row style={{ display: "flex", alignItems: "center" }}>
-            <Col>
-              <img
-                src="https://media.istockphoto.com/vectors/user-avatar-profile-icon-black-vector-illustration-vector-id1209654046?k=20&m=1209654046&s=612x612&w=0&h=Atw7VdjWG8KgyST8AXXJdmBkzn0lvgqyWod9vTb2XoE="
-                alt="img"
-                style={{ width: 300, height: 200 }}
-              />
-            </Col>
             <Col style={{ marginLeft: 30 }}>
               <div>
                 Name:{" "}
@@ -74,26 +73,30 @@ const ExaminationScreenComponent = ({
             padding: 20,
           }}
         >
-          <Typography.Title level={4}>Service details:</Typography.Title>
+          <Typography.Title level={4}>Booking details:</Typography.Title>
+          <div>Examination Time: {examinationTime}</div>
+          <div>Services: </div>
+          <List
+            itemLayout="horizontal"
+            dataSource={booking?.services ? booking?.services : []}
+            renderItem={(service) => (
+              <List.Item>
+                <List.Item.Meta
+                  avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
+                  title={
+                    <Typography.Title
+                      level={5}
+                    >{`Service name: ${service.name} Price: ${service.price}`}</Typography.Title>
+                  }
+                  description={`Description: ${service.description}`}
+                />
+              </List.Item>
+            )}
+          />
           <Row style={{ display: "flex", alignItems: "center" }}>
-            <Col>
-              <img
-                src="https://omarsalameh.wpengine.com/wp-content/uploads/2020/02/veneers-04-edit-1024x682.jpg"
-                alt="img"
-                style={{ width: 300, height: 200 }}
-              />
-            </Col>
             <Col style={{ marginLeft: 30 }}>
               <div>
-                Name:{" "}
-                <span>
-                  {booking?.services?.map((service) => (
-                    <span>service {`${" "}`}</span>
-                  ))}
-                </span>
-              </div>
-              <div>
-                Price:{" "}
+                Total Price:{" "}
                 <span>
                   {booking?.services?.reduce(
                     (acc, service) => acc + service?.price,
@@ -104,12 +107,14 @@ const ExaminationScreenComponent = ({
             </Col>
           </Row>
         </div>
+        <Button onClick={() => switchUpdateState()}>Update</Button>
       </Col>
       <Divider type="vertical" style={{ height: "90vh" }} />
       <Col span={12} style={{ margin: "30px 40px" }}>
         <Form name="info_treatment-update" onFinish={onFinish} form={form}>
           <Form.Item name="note">
             <TextArea
+              disabled={isUpdated}
               rows={12}
               placeholder="Note during treatment"
               maxLength={1000}
@@ -117,15 +122,17 @@ const ExaminationScreenComponent = ({
           </Form.Item>
           <div>
             Services:{" "}
-            <EditOutlined
-              onClick={serviceModalClickHandler}
-              style={{
-                color: "blue",
-                marginLeft: 30,
-                fontSize: "0.8em",
-                cursor: "pointer",
-              }}
-            />{" "}
+            {!isUpdated ? (
+              <EditOutlined
+                onClick={serviceModalClickHandler}
+                style={{
+                  color: "blue",
+                  marginLeft: 30,
+                  fontSize: "0.8em",
+                  cursor: "pointer",
+                }}
+              />
+            ) : null}{" "}
           </div>
           {form.getFieldValue("serviceIds") ? (
             <List
@@ -161,6 +168,7 @@ const ExaminationScreenComponent = ({
 
           <Form.Item name="serviceIds">
             <Select
+              disabled={isUpdated}
               mode="multiple"
               allowClear
               hidden={true}
@@ -169,8 +177,8 @@ const ExaminationScreenComponent = ({
             ></Select>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Update
+            <Button type="primary" htmlType="submit" disabled={isUpdated}>
+              Save
             </Button>
           </Form.Item>
         </Form>

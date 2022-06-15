@@ -12,11 +12,16 @@ const ExaminationScreenContainer = () => {
   const [form] = Form.useForm();
   const { bookingId } = useParams();
   const [isRendered, setIsRendered] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(true);
   const [bookingData, setBookingData] = useState({});
   const [isServiceModalOpened, setServiceModalOpened] = useState(false);
 
   const serviceModalClickHandler = () => {
     setServiceModalOpened((isServiceModalOpened) => !isServiceModalOpened);
+  };
+
+  const switchUpdateState = () => {
+    setIsUpdated((prev) => !prev);
   };
 
   const deleteServiceHandler = (deletedService) => {
@@ -77,6 +82,8 @@ const ExaminationScreenContainer = () => {
         deleteServiceHandler={deleteServiceHandler}
         serviceModalClickHandler={serviceModalClickHandler}
         isRendered={isRendered}
+        isUpdated={isUpdated}
+        switchUpdateState={switchUpdateState}
       />
     </>
   );
