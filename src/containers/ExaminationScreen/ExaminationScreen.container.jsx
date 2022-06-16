@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { notification, Form } from "antd";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getBookingById } from "../../services/teeth-apis/BookingController";
-import RoutePath from "../../routers/Path";
-
 import { updateBookingDuringTreatment } from "../../services/teeth-apis/BookingController";
 import RequestUpdateFormToRequestUpdateData from "../../mapper/RequestUpdateFormToRequestUpdateData.js";
 import ExaminationScreenComponent from "../../components/ExaminationScreen/ExaminationScreen.component";
@@ -11,8 +9,8 @@ import ServicePickingModalContainer from "../ServicePickingModal/ServicePickingM
 
 const ExaminationScreenContainer = () => {
   const [form] = Form.useForm();
+  const [showInfo, setShowInfo] = useState(false);
   const { bookingId } = useParams();
-  const history = useHistory();
   const [isRendered, setIsRendered] = useState(false);
   const [isUpdated, setIsUpdated] = useState(true);
   const [bookingData, setBookingData] = useState({});
@@ -44,7 +42,7 @@ const ExaminationScreenContainer = () => {
       await updateBookingDuringTreatment(
         RequestUpdateFormToRequestUpdateData({ bookingId, ...values })
       );
-      history.push(RoutePath.LOADING_PAGE);
+      setShowInfo((prev) => !prev);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -58,6 +56,9 @@ const ExaminationScreenContainer = () => {
     try {
       const { data } = await getBookingById(bookingId);
       setBookingData(data);
+      form.setFieldsValue({
+        serviceIds: data.services,
+      });
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -77,6 +78,7 @@ const ExaminationScreenContainer = () => {
         serviceModalClickHandler={serviceModalClickHandler}
         isServiceModalOpened={isServiceModalOpened}
         form={form}
+        setIsRendered={setIsRendered}
       />
       <ExaminationScreenComponent
         form={form}
@@ -87,6 +89,7 @@ const ExaminationScreenContainer = () => {
         isRendered={isRendered}
         isUpdated={isUpdated}
         switchUpdateState={switchUpdateState}
+        showInfo={showInfo}
       />
     </>
   );

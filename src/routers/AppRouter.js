@@ -18,6 +18,7 @@ import PrivateRouter from "./components/PrivateRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   getNotificationList,
   initFcmToken,
@@ -30,7 +31,6 @@ import ExaminationPage from "../pages/ExaminationPage/ExaminationPage";
 import ConfirmBookingPage from "../pages/BookingServicePage/ConfirmBookingPage";
 import AcceptConfirmPage from "../pages/BookingServicePage/BookingResultPage/AcceptConfirmPage";
 import RejectConfirmPage from "../pages/BookingServicePage/BookingResultPage/RejectConfirmPage";
-import LoadingPage from "../pages/LoadingPage/LoadingPage";
 import { notification } from "antd";
 import { onMessage } from "firebase/messaging";
 import TriggerQrCodeNotificationPage from "../pages/TriggerQrCodeNotificationPage/TriggerQrCodeNotificationPage";
@@ -40,6 +40,7 @@ import openBookingDetailNotificationHandler from "../notificationHandler/OpenBoo
 import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
 
 const AppRouter = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   dispatch(initFcmToken());
 
@@ -52,7 +53,11 @@ const AppRouter = () => {
           openBookingDetailNotificationHandler(notificationData);
           break;
         case notificationTypes.CONFIRM_BOOKING:
-          confirmBookingNotificationHandler();
+          notification["info"]({
+            message: notificationData.title,
+            description: notificationData.body,
+          });
+          confirmBookingNotificationHandler(history);
           break;
         default:
           notification["info"]({
@@ -114,10 +119,6 @@ const AppRouter = () => {
         <Route path={RoutePath.REJECT_CONFIRM_PAGE} exact>
           <RejectConfirmPage />
         </Route>
-        <Route path={RoutePath.LOADING_PAGE} exact>
-          <LoadingPage />
-        </Route>
-
         <Route path={RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE} exact>
           <TriggerQrCodeNotificationPage />
         </Route>
