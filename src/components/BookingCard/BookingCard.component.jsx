@@ -6,7 +6,7 @@ const BookingCardComponent = ({ booking }) => {
   const { Meta } = Card;
   return (
     <div>
-      {booking ? (
+      {booking && booking[0] ? (
         <div>
           <div
             style={{
@@ -110,7 +110,9 @@ const BookingCardComponent = ({ booking }) => {
             </Row>
           </div>
         </div>
-      ) : null}
+      ) : (
+        <div>Current there is no patient that is assigned for you</div>
+      )}
     </div>
   );
 };

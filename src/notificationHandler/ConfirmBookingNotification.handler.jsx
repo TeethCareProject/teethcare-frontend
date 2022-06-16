@@ -3,12 +3,16 @@ import RoutePath from "../routers/Path";
 import { checkMobile } from "../utils/checkUserAgent";
 import notificationTypes from "./notification.types";
 
-const confirmBookingNotificationHandler = (history, title) => {
+const confirmBookingNotificationHandler = (history, notificationData) => {
   if (!checkMobile()) {
-    if (title === notificationTypes.CONFIRM_BOOKING) {
+    notification["info"]({
+      message: notificationData.title,
+      description: notificationData.body,
+    });
+    if (notificationData.title === notificationTypes.CONFIRM_BOOKING) {
       setTimeout(history.push(RoutePath.DASHBOARD_PAGE), 2000);
     } else {
-      history.go(0);
+      window.location.reload();
     }
   } else {
     notification["success"]({

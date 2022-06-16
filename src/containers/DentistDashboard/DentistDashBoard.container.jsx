@@ -14,12 +14,13 @@ const DentistDashBoardContainer = () => {
   const [bookingData, setBookingData] = useState();
   const [neededBooking, setNeededBooking] = useState(null);
 
-  const id = useSelector((state) => state?.authentication?.user?.id);
-  const firstName = useSelector(
-    (state) => state?.authentication?.user?.firstName
-  );
-  const lastName = useSelector(
-    (state) => state?.authentication?.user?.lastName
+  const dentistId = useSelector((state) => state?.authentication?.user?.id);
+
+  const fullName = useSelector(
+    (state) =>
+      state?.authentication?.user?.firstName +
+      " " +
+      state?.authentication?.user?.lastName
   );
 
   const startTreatmentHandler = (bookingId) => {
@@ -36,7 +37,7 @@ const DentistDashBoardContainer = () => {
       if (!options) {
         data = (
           await getAllBooking({
-            dentistId: id,
+            dentistId: dentistId,
             status: BookingStatusConstants.TREATMENT,
             isConfirmed: false,
           })
@@ -45,7 +46,7 @@ const DentistDashBoardContainer = () => {
         data = (
           await getAllBooking({
             ...options,
-            dentistId: id,
+            dentistId: dentistId,
             status: BookingStatusConstants.TREATMENT,
             isConfirmed: false,
           })
@@ -75,9 +76,7 @@ const DentistDashBoardContainer = () => {
 
   return (
     <div>
-      <Typography.Title level={1}>
-        Welcome back, {firstName + " " + lastName}
-      </Typography.Title>
+      <Typography.Title level={1}>Welcome back, {fullName}</Typography.Title>
       <Typography level={5}>
         Here is some important information for you
       </Typography>

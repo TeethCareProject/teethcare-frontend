@@ -26,8 +26,12 @@ import { generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 import { useParams } from "react-router-dom";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import { RoleConstant } from "../../constants/RoleConstants";
 
 const BookingManagementTableContainer = () => {
+  const role = useSelector((state) => state?.authentication?.user?.roleName);
+  const userId = useSelector((state) => state?.authentication?.user?.id);
+
   const location = useLocation();
   const history = useHistory();
   const { tab } = useParams();
@@ -43,28 +47,48 @@ const BookingManagementTableContainer = () => {
 
   const [data, setData] = useState([]);
   const [neededBooking, setNeededBooking] = useState(null);
-  const clinicId = useSelector(
-    (state) => state?.authentication?.user?.clinic?.id
-  );
+
+  const onViewDetailClick = (bookingId) => {
+    history.push(
+      generatePath(RoutePath.EXAMINATION_PAGE, {
+        bookingId,
+      })
+    );
+  };
 
   const fetchData = async (options) => {
     try {
       let data;
-      if (!options) {
-        data = (await getAllBooking({})).data;
+      if (role !== RoleConstant.DENTIST) {
+        if (!options) {
+          data = (await getAllBooking({})).data;
+        } else {
+          data = (await getAllBooking({ ...options })).data;
+        }
+        const bookingData = data?.content?.map((booking) => ({
+          ...booking,
+          getDetail: () => {
+            setNeededBooking(booking.id);
+          },
+        }));
+        setData(bookingData);
       } else {
-        data = (await getAllBooking({ ...options })).data;
+        if (!options) {
+          data = (await getAllBooking({ userId })).data;
+        } else {
+          data = (await getAllBooking({ ...options, userId })).data;
+        }
+        const bookingData = data?.content?.map((booking) => ({
+          ...booking,
+          getDetail: () => {
+            onViewDetailClick(booking.id);
+          },
+        }));
+        setData(bookingData);
       }
 
       //map handle Action in here
-      const bookingData = data?.content?.map((booking) => ({
-        ...booking,
-        getDetail: () => {
-          setNeededBooking(booking.id);
-        },
-      }));
 
-      setData(bookingData);
       setTotalElements(data.totalElements);
     } catch (e) {
       notification["error"]({

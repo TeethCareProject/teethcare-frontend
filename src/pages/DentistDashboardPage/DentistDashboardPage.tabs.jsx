@@ -3,9 +3,8 @@ import {
   SettingOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
-
-import AssignedBookingListContainer from "../../containers/AssignedBookingList/AssignedBookingList.container";
 import DentistDashBoardContainer from "../../containers/DentistDashboard/DentistDashBoard.container";
+import BookingManagementTableContainer from "../../containers/BookingManagementTable/BookingManagementTable.container";
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -27,7 +26,7 @@ export const elementList = [
     <DentistDashBoardContainer />
   </div>,
   <div>
-    <AssignedBookingListContainer />
+    <BookingManagementTableContainer />
   </div>,
   <div>My clinic</div>,
 ];

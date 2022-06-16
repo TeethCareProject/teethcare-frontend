@@ -54,11 +54,7 @@ const AppRouter = () => {
           break;
         case (notificationTypes.CONFIRM_BOOKING,
         notificationTypes.CONFIRM_BOOKING_FAIL):
-          notification["info"]({
-            message: notificationData.title,
-            description: notificationData.body,
-          });
-          confirmBookingNotificationHandler(history, notificationData.title);
+          confirmBookingNotificationHandler(history, notificationData);
           break;
         default:
           notification["info"]({
