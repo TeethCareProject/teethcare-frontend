@@ -1,55 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { notification, Form } from "antd";
+import { notification, Form, Row, Alert, Divider } from "antd";
 import { useParams } from "react-router-dom";
 import { getBookingById } from "../../services/teeth-apis/BookingController";
-import { updateBookingDuringTreatment } from "../../services/teeth-apis/BookingController";
-import RequestUpdateFormToRequestUpdateData from "../../mapper/RequestUpdateFormToRequestUpdateData.js";
-import ExaminationScreenComponent from "../../components/ExaminationScreen/ExaminationScreen.component";
 import ServicePickingModalContainer from "../ServicePickingModal/ServicePickingModal.container";
+import ExaminationScreenRightSideContainer from "../ExaminationScreenRightSide/ExaminationScreenRightSide.container";
+import ExaminationScreenLeftSideComponent from "../../components/ExaminationScreenLeftSide/ExaminationScreenLeftSide.component";
 
 const ExaminationScreenContainer = () => {
   const [form] = Form.useForm();
+  const [isServiceModalOpened, setServiceModalOpened] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const { bookingId } = useParams();
   const [isRendered, setIsRendered] = useState(false);
   const [isUpdated, setIsUpdated] = useState(true);
   const [bookingData, setBookingData] = useState({});
-  const [isServiceModalOpened, setServiceModalOpened] = useState(false);
-
-  const serviceModalClickHandler = () => {
-    setServiceModalOpened((isServiceModalOpened) => !isServiceModalOpened);
-  };
 
   const switchUpdateState = () => {
     setIsUpdated((prev) => !prev);
   };
 
-  const deleteServiceHandler = (deletedService) => {
-    let selectedServices = form.getFieldValue("serviceIds");
-    if (selectedServices && selectedServices.includes(deletedService)) {
-      const array = selectedServices.filter(
-        (service) => service.id !== deletedService.id
-      );
-      form.setFieldsValue({
-        serviceIds: array,
-      });
-    }
-    setIsRendered((prev) => !prev);
-  };
-
-  const onFinish = async (values) => {
-    try {
-      await updateBookingDuringTreatment(
-        RequestUpdateFormToRequestUpdateData({ bookingId, ...values })
-      );
-      setShowInfo((prev) => !prev);
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while updating booking data, try again later`,
-        duration: 2,
-      });
-    }
+  const serviceModalClickHandler = () => {
+    setServiceModalOpened((isServiceModalOpened) => !isServiceModalOpened);
   };
 
   const fetchBookingData = async () => {
@@ -75,22 +46,35 @@ const ExaminationScreenContainer = () => {
   return (
     <>
       <ServicePickingModalContainer
-        serviceModalClickHandler={serviceModalClickHandler}
         isServiceModalOpened={isServiceModalOpened}
-        form={form}
-        setIsRendered={setIsRendered}
-      />
-      <ExaminationScreenComponent
-        form={form}
-        booking={bookingData}
-        onFinish={onFinish}
-        deleteServiceHandler={deleteServiceHandler}
         serviceModalClickHandler={serviceModalClickHandler}
-        isRendered={isRendered}
-        isUpdated={isUpdated}
-        switchUpdateState={switchUpdateState}
-        showInfo={showInfo}
+        form={form}
       />
+      <Row style={{ marginLeft: 20 }}>
+        {showInfo ? (
+          <Alert
+            message="Waiting for confirm updated..."
+            type="info"
+            showIcon
+          />
+        ) : null}
+      </Row>
+      <Row style={{ display: "flex", justifyContent: "space-between" }}>
+        <ExaminationScreenLeftSideComponent
+          booking={bookingData}
+          switchUpdateState={switchUpdateState}
+        />
+        <Divider type="vertical" style={{ height: "90vh" }} />
+        <ExaminationScreenRightSideContainer
+          form={form}
+          isRendered={isRendered}
+          isUpdated={isUpdated}
+          bookingId={bookingId}
+          setIsRendered={setIsRendered}
+          setShowInfo={setShowInfo}
+          serviceModalClickHandler={serviceModalClickHandler}
+        />
+      </Row>
     </>
   );
 };

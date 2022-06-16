@@ -9,7 +9,6 @@ const ServicePickingModalContainer = ({
   isServiceModalOpened,
   serviceModalClickHandler,
   form,
-  setIsRendered,
 }) => {
   const [services, setServices] = useState();
   const [serviceRender, setServiceRender] = useState(false);
@@ -36,7 +35,6 @@ const ServicePickingModalContainer = ({
       });
     }
     setServiceRender((prev) => !prev);
-    // setIsRendered((prev) => !prev);
   };
 
   const fetchServices = async () => {
