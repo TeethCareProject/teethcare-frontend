@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { notification, Form } from "antd";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { getBookingById } from "../../services/teeth-apis/BookingController";
+import RoutePath from "../../routers/Path";
 
 import { updateBookingDuringTreatment } from "../../services/teeth-apis/BookingController";
 import RequestUpdateFormToRequestUpdateData from "../../mapper/RequestUpdateFormToRequestUpdateData.js";
@@ -11,6 +12,7 @@ import ServicePickingModalContainer from "../ServicePickingModal/ServicePickingM
 const ExaminationScreenContainer = () => {
   const [form] = Form.useForm();
   const { bookingId } = useParams();
+  const history = useHistory();
   const [isRendered, setIsRendered] = useState(false);
   const [isUpdated, setIsUpdated] = useState(true);
   const [bookingData, setBookingData] = useState({});
@@ -42,6 +44,7 @@ const ExaminationScreenContainer = () => {
       await updateBookingDuringTreatment(
         RequestUpdateFormToRequestUpdateData({ bookingId, ...values })
       );
+      history.push(RoutePath.LOADING_PAGE);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,

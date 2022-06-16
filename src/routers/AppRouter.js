@@ -30,16 +30,17 @@ import ExaminationPage from "../pages/ExaminationPage/ExaminationPage";
 import ConfirmBookingPage from "../pages/BookingServicePage/ConfirmBookingPage";
 import AcceptConfirmPage from "../pages/BookingServicePage/BookingResultPage/AcceptConfirmPage";
 import RejectConfirmPage from "../pages/BookingServicePage/BookingResultPage/RejectConfirmPage";
+import LoadingPage from "../pages/LoadingPage/LoadingPage";
 import { notification } from "antd";
 import { onMessage } from "firebase/messaging";
 import TriggerQrCodeNotificationPage from "../pages/TriggerQrCodeNotificationPage/TriggerQrCodeNotificationPage";
 import RedirectBookingDetail from "../pages/CustomerServiceDashboardPage/RedirectBookingDetailPage";
 import notificationTypes from "../notificationHandler/notification.types";
 import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
+import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
 
 const AppRouter = () => {
   const dispatch = useDispatch();
-
   dispatch(initFcmToken());
 
   useEffect(() => {
@@ -49,6 +50,9 @@ const AppRouter = () => {
       switch (notificationData.title) {
         case notificationTypes.OPEN_BOOKING_NOTIFICATION:
           openBookingDetailNotificationHandler(notificationData);
+          break;
+        case notificationTypes.CONFIRM_BOOKING:
+          confirmBookingNotificationHandler();
           break;
         default:
           notification["info"]({
@@ -110,6 +114,10 @@ const AppRouter = () => {
         <Route path={RoutePath.REJECT_CONFIRM_PAGE} exact>
           <RejectConfirmPage />
         </Route>
+        <Route path={RoutePath.LOADING_PAGE} exact>
+          <LoadingPage />
+        </Route>
+
         <Route path={RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE} exact>
           <TriggerQrCodeNotificationPage />
         </Route>
