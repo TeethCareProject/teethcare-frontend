@@ -1,6 +1,7 @@
 const notificationTypes = {
   OPEN_BOOKING_NOTIFICATION: "OPEN_BOOKING_NOTIFICATION",
   CONFIRM_BOOKING: "CONFIRM_BOOKING",
+  CONFIRM_BOOKING_FAIL: "CONFIRM_BOOKING_FAIL",
 };
 
 export default notificationTypes;
