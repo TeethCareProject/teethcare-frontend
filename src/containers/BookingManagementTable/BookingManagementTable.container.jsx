@@ -26,8 +26,11 @@ import { generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 import { useParams } from "react-router-dom";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import { RoleConstant } from "../../constants/RoleConstants";
 
 const BookingManagementTableContainer = () => {
+  const role = useSelector((state) => state?.authentication?.user?.roleName);
+
   const location = useLocation();
   const history = useHistory();
   const { tab } = useParams();
@@ -43,9 +46,14 @@ const BookingManagementTableContainer = () => {
 
   const [data, setData] = useState([]);
   const [neededBooking, setNeededBooking] = useState(null);
-  const clinicId = useSelector(
-    (state) => state?.authentication?.user?.clinic?.id
-  );
+
+  const onViewDetailClick = (bookingId) => {
+    history.push(
+      generatePath(RoutePath.EXAMINATION_PAGE, {
+        bookingId,
+      })
+    );
+  };
 
   const fetchData = async (options) => {
     try {
@@ -55,18 +63,27 @@ const BookingManagementTableContainer = () => {
       } else {
         data = (await getAllBooking({ ...options })).data;
       }
-
-      //map handle Action in here
-      const bookingData = data?.content?.map((booking) => ({
-        ...booking,
-        getDetail: () => {
-          setNeededBooking(booking.id);
-        },
-      }));
-
-      setData(bookingData);
+      if (role === RoleConstant.DENTIST) {
+        const bookingData = data?.content?.map((booking) => ({
+          ...booking,
+          getDetail: () => {
+            onViewDetailClick(booking.id);
+          },
+        }));
+        setData(bookingData);
+      } else {
+        const bookingData = data?.content?.map((booking) => ({
+          ...booking,
+          getDetail: () => {
+            setNeededBooking(booking.id);
+          },
+        }));
+        setData(bookingData);
+      }
       setTotalElements(data.totalElements);
     } catch (e) {
+      //map handle Action in here
+
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
         description: `There is problem while fetching booking data, try again later`,

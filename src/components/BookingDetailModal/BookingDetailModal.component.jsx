@@ -3,6 +3,7 @@ import { CalendarOutlined } from "@ant-design/icons";
 
 import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
+import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
@@ -21,7 +22,7 @@ const BookingDetailModalComponent = ({
         </Col>
         <Col span={10}>
           <Typography>{`Booking ID: ${bookingData?.id} - Status: ${bookingData?.status}`}</Typography>
-          <Typography>{`Booking ID: ${bookingData?.clinic?.name}`}</Typography>
+          <Typography>{`Clinic: ${bookingData?.clinic?.name}`}</Typography>
         </Col>
         <Col>
           {role === RoleConstant.CUSTOMER_SERVICE &&

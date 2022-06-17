@@ -19,6 +19,7 @@ import {
   evaluateBooking,
   getBookingById,
   checkIn,
+  checkOut,
 } from "../../services/teeth-apis/BookingController";
 import { generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
@@ -83,10 +84,21 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
         description: `There is problem while check in, try again later`,
+        duration: 2,
       });
     }
   };
 
+  const checkOutHandler = async () => {
+    try {
+      await checkOut(bookingId);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while check out, try again later`,
+      });
+    }
+  };
   const handleGiveFeedback = (bookingId) => {
     try {
       Modal.info({
@@ -204,6 +216,9 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
           </Button>
           <Button onClick={() => handleAssign(false)}>Reject</Button>
         </Space>
+      ) : null}
+      {bookingData?.confirmed ? (
+        <Button onClick={() => checkOutHandler()}>Checkout</Button>
       ) : null}
     </Modal>
   );

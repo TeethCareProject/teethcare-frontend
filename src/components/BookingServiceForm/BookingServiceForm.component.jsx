@@ -1,4 +1,5 @@
 import React from "react";
+import moment from "moment";
 import {
   DatePicker,
   Form,
@@ -13,11 +14,10 @@ import {
   Space,
 } from "antd";
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import {
-  convertMomentToDate,
-  convertMomentToMilliseconds,
-} from "../../utils/convert.utils";
+import { convertMomentToDate } from "../../utils/convert.utils";
 const { Option } = Select;
+
+const dateFormat = "DD-MM-YYYY HH";
 
 const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
   const { form, ...restAntdFormProps } = antdFormProps;
@@ -88,7 +88,14 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
               }),
             ]}
           >
-            <DatePicker />
+            <DatePicker
+              showTime={{ format: "HH" }}
+              format={`${dateFormat}:00`}
+              disabledDate={(current) => {
+                let customDate = moment().format("DD-MM-YYYY HH");
+                return current && current < moment(customDate, "DD-MM-YYYY HH");
+              }}
+            />
           </Form.Item>
         </Col>
         <Col span={16}>

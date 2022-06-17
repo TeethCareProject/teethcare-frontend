@@ -25,5 +25,5 @@ export const elementList = [
   <div style={{ width: "80%" }}>
     <BookingListContainer />
   </div>,
-  <div>My appointment</div>,
+  <div>Appointment</div>,
 ];
