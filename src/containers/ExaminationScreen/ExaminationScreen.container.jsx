@@ -2,26 +2,17 @@ import React, { useState, useEffect } from "react";
 import { notification, Form, Row, Alert, Divider } from "antd";
 import { useParams } from "react-router-dom";
 import { getBookingById } from "../../services/teeth-apis/BookingController";
-import ServicePickingModalContainer from "../ServicePickingModal/ServicePickingModal.container";
-import ExaminationScreenRightSideContainer from "../ExaminationScreenRightSide/ExaminationScreenRightSide.container";
-import ExaminationScreenLeftSideComponent from "../../components/ExaminationScreenLeftSide/ExaminationScreenLeftSide.component";
+import DentistUpdatingBookingFormContainer from "../DentistUpdateBookingForm/DentistUpdateBookingForm.container";
+import DentistBookingDetailComponent from "../../components/DentistBookingDetail/DentistBookingDetail.component";
 
 const ExaminationScreenContainer = () => {
-  const [form] = Form.useForm();
-  const [isServiceModalOpened, setServiceModalOpened] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
   const { bookingId } = useParams();
   const [isRendered, setIsRendered] = useState(false);
-  const [isUpdated, setIsUpdated] = useState(true);
+
   const [bookingData, setBookingData] = useState({});
 
-  const switchUpdateState = () => {
-    setIsUpdated((prev) => !prev);
-  };
-
-  const serviceModalClickHandler = () => {
-    setServiceModalOpened((isServiceModalOpened) => !isServiceModalOpened);
-  };
+  const [form] = Form.useForm();
 
   const fetchBookingData = async () => {
     try {
@@ -45,11 +36,6 @@ const ExaminationScreenContainer = () => {
 
   return (
     <>
-      <ServicePickingModalContainer
-        isServiceModalOpened={isServiceModalOpened}
-        serviceModalClickHandler={serviceModalClickHandler}
-        form={form}
-      />
       <Row style={{ marginLeft: 20 }}>
         {showInfo ? (
           <Alert
@@ -60,19 +46,14 @@ const ExaminationScreenContainer = () => {
         ) : null}
       </Row>
       <Row style={{ display: "flex", justifyContent: "space-between" }}>
-        <ExaminationScreenLeftSideComponent
-          booking={bookingData}
-          switchUpdateState={switchUpdateState}
-        />
+        <DentistBookingDetailComponent booking={bookingData} />
         <Divider type="vertical" style={{ height: "90vh" }} />
-        <ExaminationScreenRightSideContainer
-          form={form}
+        <DentistUpdatingBookingFormContainer
           isRendered={isRendered}
-          isUpdated={isUpdated}
-          bookingId={bookingId}
           setIsRendered={setIsRendered}
           setShowInfo={setShowInfo}
-          serviceModalClickHandler={serviceModalClickHandler}
+          form={form}
+          bookingData={bookingData}
         />
       </Row>
     </>

@@ -30,7 +30,6 @@ import { RoleConstant } from "../../constants/RoleConstants";
 
 const BookingManagementTableContainer = () => {
   const role = useSelector((state) => state?.authentication?.user?.roleName);
-  const userId = useSelector((state) => state?.authentication?.user?.id);
 
   const location = useLocation();
   const history = useHistory();
@@ -59,25 +58,12 @@ const BookingManagementTableContainer = () => {
   const fetchData = async (options) => {
     try {
       let data;
-      if (role !== RoleConstant.DENTIST) {
-        if (!options) {
-          data = (await getAllBooking({})).data;
-        } else {
-          data = (await getAllBooking({ ...options })).data;
-        }
-        const bookingData = data?.content?.map((booking) => ({
-          ...booking,
-          getDetail: () => {
-            setNeededBooking(booking.id);
-          },
-        }));
-        setData(bookingData);
+      if (!options) {
+        data = (await getAllBooking({})).data;
       } else {
-        if (!options) {
-          data = (await getAllBooking({ userId })).data;
-        } else {
-          data = (await getAllBooking({ ...options, userId })).data;
-        }
+        data = (await getAllBooking({ ...options })).data;
+      }
+      if (role === RoleConstant.DENTIST) {
         const bookingData = data?.content?.map((booking) => ({
           ...booking,
           getDetail: () => {
@@ -85,12 +71,19 @@ const BookingManagementTableContainer = () => {
           },
         }));
         setData(bookingData);
+      } else {
+        const bookingData = data?.content?.map((booking) => ({
+          ...booking,
+          getDetail: () => {
+            setNeededBooking(booking.id);
+          },
+        }));
+        setData(bookingData);
       }
-
-      //map handle Action in here
-
       setTotalElements(data.totalElements);
     } catch (e) {
+      //map handle Action in here
+
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
         description: `There is problem while fetching booking data, try again later`,

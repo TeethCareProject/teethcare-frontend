@@ -3,7 +3,7 @@ import { Col, Row, Typography, Button, List, Avatar } from "antd";
 import { ContainerOutlined } from "@ant-design/icons";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
-const ExaminationScreenLeftSideComponent = ({ booking, switchUpdateState }) => {
+const DentistBookingDetailComponent = ({ booking }) => {
   let examinationTime = booking?.examinationTime
     ? convertMillisecondsToDate(booking?.examinationTime)
     : convertMillisecondsToDate(booking?.createBookingDate);
@@ -79,11 +79,8 @@ const ExaminationScreenLeftSideComponent = ({ booking, switchUpdateState }) => {
           </Col>
         </Row>
       </div>
-      <Button style={{ marginLeft: 20 }} onClick={() => switchUpdateState()}>
-        Update
-      </Button>
     </Col>
   );
 };
 
-export default ExaminationScreenLeftSideComponent;
+export default DentistBookingDetailComponent;

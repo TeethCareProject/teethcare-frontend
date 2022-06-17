@@ -14,22 +14,33 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
 
-const ExaminationScreenRightSideComponent = ({
+const DentistUpdateBookingFormComponent = ({
   onFinish,
   deleteServiceHandler,
   form,
   serviceModalClickHandler,
   isUpdated,
+  switchUpdateState,
+  bookingData,
 }) => {
   const { TextArea } = Input;
   return (
     <Col span={12} style={{ margin: "30px 40px" }}>
+      {bookingData?.status === BookingStatusConstants.TREATMENT ? (
+        <Button
+          style={{ marginBottom: 20 }}
+          onClick={() => switchUpdateState()}
+        >
+          Update
+        </Button>
+      ) : null}
       <Form name="info_treatment-update" onFinish={onFinish} form={form}>
         <Form.Item name="note">
           <TextArea
             disabled={isUpdated}
-            rows={10}
+            rows={8}
             placeholder="Note during treatment"
             maxLength={1000}
           />
@@ -100,4 +111,4 @@ const ExaminationScreenRightSideComponent = ({
   );
 };
 
-export default ExaminationScreenRightSideComponent;
+export default DentistUpdateBookingFormComponent;

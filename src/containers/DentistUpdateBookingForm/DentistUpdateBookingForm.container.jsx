@@ -1,17 +1,28 @@
 import React, { useState } from "react";
-import ExaminationScreenRightSideComponent from "../../components/ExaminationScreenRightSide/ExaminationScreenRightSide.component";
+import DentistUpdatingBookingFormComponent from "../../components/DentistUpdateBookingForm/DentistUpdateBookingForm.component";
 import { updateBookingDuringTreatment } from "../../services/teeth-apis/BookingController";
 import RequestUpdateFormToRequestUpdateData from "../../mapper/RequestUpdateFormToRequestUpdateData.js";
+import ServicePickingModalContainer from "../ServicePickingModal/ServicePickingModal.container";
 import { notification } from "antd";
 
-const ExaminationScreenRightSideContainer = ({
-  form,
-  isUpdated,
+const DentistUpdateBookingFormContainer = ({
   bookingId,
   setIsRendered,
   setShowInfo,
-  serviceModalClickHandler,
+  form,
+  bookingData,
 }) => {
+  const [isUpdated, setIsUpdated] = useState(true);
+  const [isServiceModalOpened, setServiceModalOpened] = useState(false);
+
+  const serviceModalClickHandler = () => {
+    setServiceModalOpened((isServiceModalOpened) => !isServiceModalOpened);
+  };
+
+  const switchUpdateState = () => {
+    setIsUpdated((prev) => !prev);
+  };
+
   const deleteServiceHandler = (deletedService) => {
     let selectedServices = form.getFieldValue("serviceIds");
     if (selectedServices && selectedServices.includes(deletedService)) {
@@ -42,15 +53,22 @@ const ExaminationScreenRightSideContainer = ({
 
   return (
     <>
-      <ExaminationScreenRightSideComponent
+      <ServicePickingModalContainer
+        isServiceModalOpened={isServiceModalOpened}
+        serviceModalClickHandler={serviceModalClickHandler}
+        form={form}
+      />
+      <DentistUpdatingBookingFormComponent
         serviceModalClickHandler={serviceModalClickHandler}
         form={form}
         isUpdated={isUpdated}
         onFinish={onFinish}
         deleteServiceHandler={deleteServiceHandler}
+        switchUpdateState={switchUpdateState}
+        bookingData={bookingData}
       />
     </>
   );
 };
 
-export default ExaminationScreenRightSideContainer;
+export default DentistUpdateBookingFormContainer;

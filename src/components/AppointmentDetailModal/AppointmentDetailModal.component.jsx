@@ -8,7 +8,7 @@ import { convertMillisecondsToDate } from "../../utils/convert.utils";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
 
-const BookingDetailModalComponent = ({
+const AppointmentDetailModalComponent = ({
   bookingData,
   role,
   isUpdated,
@@ -21,7 +21,7 @@ const BookingDetailModalComponent = ({
           <Avatar size={48} icon={<CalendarOutlined />} />
         </Col>
         <Col span={10}>
-          <Typography>{`Booking ID: ${bookingData?.id} - Status: ${bookingData?.status}`}</Typography>
+          <Typography>{`Booking ID: ${bookingData?.id}`}</Typography>
           <Typography>{`Clinic: ${bookingData?.clinic?.name}`}</Typography>
         </Col>
         <Col>
@@ -50,4 +50,4 @@ const BookingDetailModalComponent = ({
   );
 };
 
-export default BookingDetailModalComponent;
+export default AppointmentDetailModalComponent;
