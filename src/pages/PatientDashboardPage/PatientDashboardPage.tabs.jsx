@@ -4,7 +4,6 @@ import {
   AppstoreOutlined,
 } from "@ant-design/icons";
 import BookingListContainer from "../../containers/BookingList/BookingList.container";
-import AppointmentListContainer from "../../containers/AppointmentList/AppointmentListContainer";
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -26,7 +25,5 @@ export const elementList = [
   <div style={{ width: "80%" }}>
     <BookingListContainer />
   </div>,
-  <div>
-    <AppointmentListContainer />
-  </div>,
+  <div>Appointment</div>,
 ];
