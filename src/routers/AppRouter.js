@@ -18,6 +18,7 @@ import PrivateRouter from "./components/PrivateRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   getNotificationList,
   initFcmToken,
@@ -26,6 +27,10 @@ import { messaging } from "../services/firebase/firebase-init";
 import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
 import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
 import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
+import ExaminationPage from "../pages/ExaminationPage/ExaminationPage";
+import ConfirmBookingPage from "../pages/BookingServicePage/ConfirmBookingPage";
+import AcceptConfirmPage from "../pages/BookingServicePage/BookingResultPage/AcceptConfirmPage";
+import RejectConfirmPage from "../pages/BookingServicePage/BookingResultPage/RejectConfirmPage";
 import { notification } from "antd";
 import { onMessage } from "firebase/messaging";
 import TriggerQrCodeNotificationPage from "../pages/TriggerQrCodeNotificationPage/TriggerQrCodeNotificationPage";
@@ -33,10 +38,11 @@ import RedirectBookingDetail from "../pages/CustomerServiceDashboardPage/Redirec
 import notificationTypes from "../notificationHandler/notification.types";
 import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
 
 const AppRouter = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
-
   dispatch(initFcmToken());
 
   useEffect(() => {
@@ -46,6 +52,10 @@ const AppRouter = () => {
       switch (notificationData.title) {
         case notificationTypes.OPEN_BOOKING_NOTIFICATION:
           openBookingDetailNotificationHandler(notificationData);
+          break;
+        case (notificationTypes.CONFIRM_BOOKING,
+        notificationTypes.CONFIRM_BOOKING_FAIL):
+          confirmBookingNotificationHandler(history, notificationData);
           break;
         default:
           notification["info"]({
@@ -94,6 +104,18 @@ const AppRouter = () => {
         </Route>
         <Route path={RoutePath.BOOKING_FAILED_PAGE} exact>
           <BookingFailedPage />
+        </Route>
+        <Route path={RoutePath.EXAMINATION_PAGE} exact>
+          <ExaminationPage />
+        </Route>
+        <Route path={RoutePath.CONFIRM_BOOKING_PAGE} exact>
+          <ConfirmBookingPage />
+        </Route>
+        <Route path={RoutePath.ACCEPT_CONFIRM_PAGE} exact>
+          <AcceptConfirmPage />
+        </Route>
+        <Route path={RoutePath.REJECT_CONFIRM_PAGE} exact>
+          <RejectConfirmPage />
         </Route>
         <Route path={RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE} exact>
           <TriggerQrCodeNotificationPage />

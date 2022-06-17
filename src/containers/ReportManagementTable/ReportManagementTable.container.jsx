@@ -4,10 +4,13 @@ import { useForm } from "antd/lib/form/Form";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import { getAllReports } from "../../services/teeth-apis/ReportController";
 import ReportManagementTableColumn from "./ReportManagementTable.column";
+import { RoleConstant } from "../../constants/RoleConstants";
 import ReportDetailForm from "../ReportDetailForm/ReportDetailForm.container";
+import { useSelector } from "react-redux/es/exports";
 
 const ReportManagementTableContainer = () => {
   const [form] = useForm();
+  const role = useSelector((state) => state?.authentication?.user?.roleName);
   const [data, setData] = useState([]);
   const [neededReport, setNeededReport] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -71,7 +74,7 @@ const ReportManagementTableContainer = () => {
 
   useEffect(() => {
     fetchData({ size: pageSize, page: currentPage - 1, ...filterData });
-  }, [currentPage]);
+  }, [currentPage, neededReport]);
 
   const onPageChange = (page) => {
     setCurrentPage(page);
@@ -90,7 +93,13 @@ const ReportManagementTableContainer = () => {
       ></ReportDetailForm>
       <CommonTableComponent
         tableTitle="Report Management"
-        columns={ReportManagementTableColumn}
+        columns={
+          role === RoleConstant.ADMIN
+            ? ReportManagementTableColumn
+            : ReportManagementTableColumn.filter(
+                (col) => col.key !== "clinicName"
+              )
+        }
         dataSource={data}
         pagination={false}
       />

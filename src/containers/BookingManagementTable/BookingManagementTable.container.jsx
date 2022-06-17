@@ -7,6 +7,7 @@ import {
   Input,
   Pagination,
   Modal,
+  Select,
 } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
@@ -24,8 +25,12 @@ import { useHistory } from "react-router-dom";
 import { generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 import { useParams } from "react-router-dom";
+import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import { RoleConstant } from "../../constants/RoleConstants";
 
 const BookingManagementTableContainer = () => {
+  const role = useSelector((state) => state?.authentication?.user?.roleName);
+
   const location = useLocation();
   const history = useHistory();
   const { tab } = useParams();
@@ -41,9 +46,14 @@ const BookingManagementTableContainer = () => {
 
   const [data, setData] = useState([]);
   const [neededBooking, setNeededBooking] = useState(null);
-  const clinicId = useSelector(
-    (state) => state?.authentication?.user?.clinic?.id
-  );
+
+  const onViewDetailClick = (bookingId) => {
+    history.push(
+      generatePath(RoutePath.EXAMINATION_PAGE, {
+        bookingId,
+      })
+    );
+  };
 
   const fetchData = async (options) => {
     try {
@@ -53,18 +63,27 @@ const BookingManagementTableContainer = () => {
       } else {
         data = (await getAllBooking({ ...options })).data;
       }
-
-      //map handle Action in here
-      const bookingData = data?.content?.map((booking) => ({
-        ...booking,
-        getDetail: () => {
-          setNeededBooking(booking.id);
-        },
-      }));
-
-      setData(bookingData);
+      if (role === RoleConstant.DENTIST) {
+        const bookingData = data?.content?.map((booking) => ({
+          ...booking,
+          getDetail: () => {
+            onViewDetailClick(booking.id);
+          },
+        }));
+        setData(bookingData);
+      } else {
+        const bookingData = data?.content?.map((booking) => ({
+          ...booking,
+          getDetail: () => {
+            setNeededBooking(booking.id);
+          },
+        }));
+        setData(bookingData);
+      }
       setTotalElements(data.totalElements);
     } catch (e) {
+      //map handle Action in here
+
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
         description: `There is problem while fetching booking data, try again later`,
@@ -78,6 +97,7 @@ const BookingManagementTableContainer = () => {
       bookingId: values.bookingId,
       patientName: values.patientName,
       patientPhone: values.patientPhone,
+      status: values.status,
     });
   };
 
@@ -86,11 +106,13 @@ const BookingManagementTableContainer = () => {
       bookingId: "",
       patientName: "",
       patientPhone: "",
+      status: null,
     });
     setSearchValue({
       bookingId: "",
       patientName: "",
       patientPhone: "",
+      status: null,
     });
   };
 
@@ -192,22 +214,35 @@ const BookingManagementTableContainer = () => {
 };
 
 const SearchForm = ({ resetAction, ...antdProps }) => {
+  const { Option } = Select;
   return (
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
-        <Col span={6}>
+        <Col span={5}>
           <Form.Item name="bookingId" label="Search booking Id">
             <Input placeholder="Search by booking Id" />
           </Form.Item>
         </Col>
-        <Col span={6}>
+        <Col span={5}>
           <Form.Item name="patientName" label="Search patient name">
             <Input placeholder="Search by patient name" />
           </Form.Item>
         </Col>
-        <Col span={6}>
+        <Col span={5}>
           <Form.Item name="patientPhone" label="Search patient phone">
             <Input placeholder="Search by patient phone" />
+          </Form.Item>
+        </Col>
+        <Col span={3}>
+          <Form.Item name="status">
+            <Select placeholder="status">
+              <Option>None</Option>
+              {Object.keys(BookingStatusConstants).map((status) => (
+                <Option key={status} value={status}>
+                  {status}
+                </Option>
+              ))}
+            </Select>
           </Form.Item>
         </Col>
         <Col span={3}>

@@ -4,7 +4,6 @@ import {
   elementList,
   navigationList,
 } from "./CustomerServiceDashboardPage.tabs";
-import CreateStaffModalContainer from "../../containers/CreateStaffModal/CreateStaffModal.container";
 import { useParams } from "react-router-dom";
 
 const CustomerServiceDashboardPage = () => {
@@ -28,7 +27,6 @@ const CustomerServiceDashboardPage = () => {
         elementList={elementList}
         currentTab={currentTab}
       />
-      <CreateStaffModalContainer />
     </>
   );
 };

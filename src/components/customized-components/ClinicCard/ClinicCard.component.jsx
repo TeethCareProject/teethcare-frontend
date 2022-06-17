@@ -1,18 +1,27 @@
 import React from "react";
 import { Button, Image } from "antd";
 import { EnvironmentFilled, StarFilled } from "@ant-design/icons";
-import "./ClinicCard.style.scss";
 import clinicImg from "../../../assets/clinicImg.png";
-import "./ClinicCard.style.scss";
 
 const ClinicCardComponent = ({ clinic }) => {
   return (
-    <div className="card-clinic-clinic-page-container">
-      <div className="card-clinic-clinic-page-image">
-        <Image src={clinic?.imageUrl} alt="clinic" fallback={clinicImg} />
+    <div
+      style={{
+        display: "flex",
+        width: "60vw",
+        alignItems: "center",
+        border: "1px solid #d6cbcb",
+        borderRadius: "10px",
+        marginBottom: "60px",
+      }}
+    >
+      <div>
+        <img style={{ height: "300px" }} src={clinicImg} alt="clinic" />
       </div>
-      <div className="card-clinic-clinic-page">
-        <div className="card-clinic-clinic-page-name">{clinic.name}</div>
+      <div style={{ lineHeight: "3em", marginLeft: "20px", width: "50%" }}>
+        <div style={{ fontSize: "1.5em", fontWeight: "bold" }}>
+          {clinic.name}
+        </div>
         <div className="card-clinic-specialization">
           {clinic.serviceOfClinicResponses.map((service, index) => (
             <span key={index}>
@@ -20,9 +29,9 @@ const ClinicCardComponent = ({ clinic }) => {
             </span>
           ))}
         </div>
-        <div className="card-clinic-location">
+        <div style={{ display: "flex", alignItems: "center" }}>
           <EnvironmentFilled />{" "}
-          <span>
+          <span style={{ marginRight: "5px" }}>
             {clinic.location.ward.district.name +
               " - " +
               clinic.location.ward.district.province.name}
@@ -32,7 +41,10 @@ const ClinicCardComponent = ({ clinic }) => {
           <div>{clinic.avgRatingScore}</div>
           <StarFilled style={{ color: "#FFCB45" }} />
         </div>
-        <div className="card-clinic-clinic-page-button">
+        <div
+          style={{ display: "flex", justifyContent: "flex-end" }}
+          className="card-clinic-clinic-page-button"
+        >
           <Button
             type="primary"
             shape="round"

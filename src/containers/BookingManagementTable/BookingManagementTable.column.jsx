@@ -34,9 +34,13 @@ const BookingManagementTableColumn = [
       let color = "green";
 
       if (status === BookingStatusConstants.TREATMENT) {
-        color = "magenta";
+        color = "blue";
       } else if (status === BookingStatusConstants.PENDING) {
-        color = "geekblue";
+        color = "cyan";
+      } else if (status === BookingStatusConstants.REJECTED) {
+        color = "red";
+      } else if (status === BookingStatusConstants.REQUEST) {
+        color = "purple";
       }
 
       return (
