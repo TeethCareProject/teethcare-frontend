@@ -1,19 +1,13 @@
-import { Avatar, Col, Descriptions, Row, Typography, Button } from "antd";
-import { CalendarOutlined } from "@ant-design/icons";
+import { Avatar, Col, Descriptions, Row, Typography, Button, List } from "antd";
+import { CalendarOutlined, ContainerOutlined } from "@ant-design/icons";
 
 import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
-import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
 
-const AppointmentDetailModalComponent = ({
-  bookingData,
-  role,
-  isUpdated,
-  updateClickHandler,
-}) => {
+const AppointmentDetailModalComponent = ({ appointmentData }) => {
   return (
     <>
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
@@ -21,31 +15,71 @@ const AppointmentDetailModalComponent = ({
           <Avatar size={48} icon={<CalendarOutlined />} />
         </Col>
         <Col span={10}>
-          <Typography>{`Booking ID: ${bookingData?.id}`}</Typography>
-          <Typography>{`Clinic: ${bookingData?.clinic?.name}`}</Typography>
-        </Col>
-        <Col>
-          {role === RoleConstant.CUSTOMER_SERVICE &&
-          bookingData?.status === BookingStatusConstants.REQUEST ? (
-            <Button onClick={updateClickHandler}>
-              {isUpdated ? "Return" : "Update"}
-            </Button>
-          ) : null}
+          <Typography>{`Appointment ID: ${appointmentData?.id}`}</Typography>
+          <Typography>{`Clinic: ${appointmentData?.clinic?.name}`}</Typography>
         </Col>
       </Row>
       <Descriptions title="Patient info">
         <DescriptionsItem label="Patient name">
-          {bookingData?.patient?.firstName +
+          {appointmentData?.patient?.firstName +
             " " +
-            bookingData?.patient?.lastName}
+            appointmentData?.patient?.lastName}
         </DescriptionsItem>
         <DescriptionsItem label="Phone number">
-          {bookingData?.patient?.phone}
+          {appointmentData?.patient?.phone}
         </DescriptionsItem>
         <DescriptionsItem label="Date of birth">
-          {bookingData?.patient?.dateOfBirth}
+          {appointmentData?.patient?.dateOfBirth}
         </DescriptionsItem>
       </Descriptions>
+      <Descriptions title="Appointment info">
+        <DescriptionsItem label="Appointment day">
+          {appointmentData?.appointmentDate
+            ? convertMillisecondsToDate(appointmentData?.appointmentDate)
+            : "Not assigned"}
+        </DescriptionsItem>
+        <DescriptionsItem label="Expired day">
+          {appointmentData?.expireAppointmentDate
+            ? convertMillisecondsToDate(appointmentData?.expireAppointmentDate)
+            : "Not assigned"}
+        </DescriptionsItem>
+      </Descriptions>
+
+      <Descriptions title="Previous treatment Info">
+        <DescriptionsItem label="Examination Day">
+          {appointmentData?.appointmentDate
+            ? convertMillisecondsToDate(
+                appointmentData?.preBooking?.examinationTime
+              )
+            : "Not assigned"}
+        </DescriptionsItem>
+        <DescriptionsItem label="Total price:">
+          {appointmentData?.preBooking?.totalPrice}
+        </DescriptionsItem>
+      </Descriptions>
+      <div>Dentist: {appointmentData?.preBooking?.dentist}</div>
+      <div style={{ marginTop: 15 }}>Services:</div>
+      <List
+        itemLayout="horizontal"
+        dataSource={
+          appointmentData?.preBooking?.services
+            ? appointmentData?.preBooking?.services
+            : []
+        }
+        renderItem={(service) => (
+          <List.Item>
+            <List.Item.Meta
+              avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
+              title={
+                <Typography.Title
+                  level={5}
+                >{`Service name: ${service.name}`}</Typography.Title>
+              }
+              description={`Description: ${service.description}`}
+            />
+          </List.Item>
+        )}
+      />
     </>
   );
 };

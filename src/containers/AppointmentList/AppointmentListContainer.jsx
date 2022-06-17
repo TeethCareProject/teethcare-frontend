@@ -8,7 +8,7 @@ import AppointmentDetailModalContainer from "../AppointmentDetailModal/Appointme
 
 const AppointmentListContainer = () => {
   const [searchValue, setSearchValue] = useState({
-    bookingId: "",
+    appointmentId: "",
     clinicName: "",
   });
   const [appointmentListData, setAppointmentListData] = useState([]);
@@ -81,10 +81,10 @@ const AppointmentListContainer = () => {
   return (
     <>
       <SearchForm form={form} onFinish={onFinish} resetAction={resetAction} />
-      {/* <AppointmentDetailModalContainer
+      <AppointmentDetailModalContainer
         appointmentId={neededAppointment}
         setNeededAppointment={setNeededAppointment}
-      /> */}
+      />
       <AppointmentListComponent appointmentListData={appointmentListData} />
       <div style={{ marginTop: "1rem" }}>
         <Pagination
@@ -114,14 +114,14 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
             <Input placeholder="Search by Clinic name" />
           </Form.Item>
         </Col>
-        <Col span={2}>
+        <Col span={4}>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Search
             </Button>
           </Form.Item>
         </Col>
-        <Col span={2}>
+        <Col span={3}>
           <Form.Item>
             <Button onClick={resetAction}>Reset</Button>
           </Form.Item>
