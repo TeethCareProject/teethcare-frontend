@@ -1,4 +1,5 @@
 const ClinicFormValueToClinicRegisterData = (values) => {
+  debugger;
   return {
     username: values.username,
     password: values.password,
@@ -11,7 +12,8 @@ const ClinicFormValueToClinicRegisterData = (values) => {
     clinicTaxCode: values.clinicTaxCode,
     clinicAddress: values.clinicAddress,
     clinicEmail: values.clinicEmail,
-    wardId: values.wardId,
+    wardId: values.location[2],
+    email: values.email,
   };
 };
 

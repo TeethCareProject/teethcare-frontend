@@ -7,6 +7,7 @@ import {
   updateProfile,
 } from "../../services/teeth-apis/AccountController";
 import moment from "moment";
+import { updateClinicImage } from "../../services/teeth-apis/ClinicController";
 
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -18,14 +19,14 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-const AvatarUploadContainer = ({ imageData, form, fetchProfile }) => {
+const ClinicAvatarUploadContainer = ({ imageData, form, fetchProfile }) => {
   const [fileList, setFileList] = useState([]);
   const [imageUrl, setImageUrl] = useState(imageData);
   const [uploading, setUploading] = useState(false);
 
   const updateData = async (formData) => {
     try {
-      await updateImageProfile(formData);
+      await updateClinicImage(formData);
       notification["success"]({
         message: `Update successfully`,
         duration: 2,
@@ -84,11 +85,7 @@ const AvatarUploadContainer = ({ imageData, form, fetchProfile }) => {
         alignItems: "center",
       }}
     >
-      {imageUrl ? (
-        <Avatar src={<Image src={imageUrl} />} size={300} />
-      ) : (
-        <Avatar icon={<UserOutlined />} size={500} />
-      )}
+      {imageUrl ? <Image src={imageUrl} /> : <Image src={<UserOutlined />} />}
       <Upload {...props}>
         <Button icon={<UploadOutlined />}>Select File</Button>
       </Upload>
@@ -108,4 +105,4 @@ const AvatarUploadContainer = ({ imageData, form, fetchProfile }) => {
   );
 };
 
-export default AvatarUploadContainer;
+export default ClinicAvatarUploadContainer;

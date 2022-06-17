@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Image } from "antd";
 import { EnvironmentFilled, StarFilled } from "@ant-design/icons";
 import "./ClinicCard.style.scss";
 import clinicImg from "../../../assets/clinicImg.png";
@@ -9,7 +9,7 @@ const ClinicCardComponent = ({ clinic }) => {
   return (
     <div className="card-clinic-clinic-page-container">
       <div className="card-clinic-clinic-page-image">
-        <img src={clinicImg} alt="clinic" />
+        <Image src={clinic?.imageUrl} alt="clinic" fallback={clinicImg} />
       </div>
       <div className="card-clinic-clinic-page">
         <div className="card-clinic-clinic-page-name">{clinic.name}</div>

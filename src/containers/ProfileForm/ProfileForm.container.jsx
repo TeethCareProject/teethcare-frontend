@@ -7,6 +7,7 @@ import {
   DatePicker,
   notification,
   Button,
+  Typography,
 } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import moment from "moment";
@@ -16,6 +17,7 @@ import {
   getAccountById,
   updateProfile,
 } from "../../services/teeth-apis/AccountController";
+import { ProfileValidation } from "../../validate/ProfileValidation";
 import AvatarUploadContainer from "./AvatarUpload.container";
 
 const { Option } = Select;
@@ -51,7 +53,7 @@ const ProfileFormContainer = () => {
         firstName: values.firstName,
         gender: values.gender,
         lastName: values.lastName,
-        phoneNumber: values.phoneNumber,
+        phoneNumber: values.phone,
       });
       notification["success"]({
         message: `Update successfully`,
@@ -73,6 +75,7 @@ const ProfileFormContainer = () => {
 
   return (
     <>
+      <Typography.Title level={3}>My Profile</Typography.Title>
       <Row justify="center" style={{ marginTop: "10rem" }}>
         <Col span={8}>
           <AvatarUploadContainer
@@ -85,24 +88,36 @@ const ProfileFormContainer = () => {
           <Form form={form} layout="vertical" onFinish={handleUpdateProfile}>
             <Row>
               <Col span={12}>
-                <Form.Item label="First name" name="firstName">
+                <Form.Item
+                  label="First name"
+                  name="firstName"
+                  rules={ProfileValidation.firstName}
+                >
                   <Input />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item label="Last name" name="lastName">
+                <Form.Item
+                  label="Last name"
+                  name="lastName"
+                  rules={ProfileValidation.lastName}
+                >
                   <Input />
                 </Form.Item>
               </Col>
             </Row>
             <Row>
               <Col span={12}>
-                <Form.Item label="Date of birth" name="dateOfBirth">
-                  {/* <DatePicker /> */}
+                <Form.Item label="Date of birth" name="dateOfBirth" required>
+                  <DatePicker />
                 </Form.Item>
               </Col>
               <Col span={12}>
-                <Form.Item name="gender" label="Gender">
+                <Form.Item
+                  name="gender"
+                  label="Gender"
+                  rules={ProfileValidation.gender}
+                >
                   <Select>
                     <Option value="MALE">Male</Option>
                     <Option value="FEMALE">Female</Option>
@@ -110,10 +125,18 @@ const ProfileFormContainer = () => {
                 </Form.Item>
               </Col>
             </Row>
-            <Form.Item label="Email" name="email">
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={ProfileValidation.email}
+            >
               <Input />
             </Form.Item>
-            <Form.Item label="Phone number" name="phone">
+            <Form.Item
+              label="Phone number"
+              name="phone"
+              rules={ProfileValidation.phone}
+            >
               <Input />
             </Form.Item>
             <Form.Item>
