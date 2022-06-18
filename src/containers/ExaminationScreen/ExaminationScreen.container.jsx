@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { getBookingById } from "../../services/teeth-apis/BookingController";
 import DentistUpdatingBookingFormContainer from "../DentistUpdateBookingForm/DentistUpdateBookingForm.container";
 import DentistBookingDetailComponent from "../../components/DentistBookingDetail/DentistBookingDetail.component";
+import CreateAppointmentFormContainer from "../CreateAppointmentForm/CreateAppointmentForm.container";
 
 const ExaminationScreenContainer = () => {
   const [showInfo, setShowInfo] = useState(false);
@@ -48,13 +49,17 @@ const ExaminationScreenContainer = () => {
       <Row style={{ display: "flex", justifyContent: "space-between" }}>
         <DentistBookingDetailComponent booking={bookingData} />
         <Divider type="vertical" style={{ height: "90vh" }} />
-        <DentistUpdatingBookingFormContainer
-          isRendered={isRendered}
-          setIsRendered={setIsRendered}
-          setShowInfo={setShowInfo}
-          form={form}
-          bookingData={bookingData}
-        />
+        {bookingData?.confirmed ? (
+          <CreateAppointmentFormContainer bookingId={bookingId} />
+        ) : (
+          <DentistUpdatingBookingFormContainer
+            setIsRendered={setIsRendered}
+            setShowInfo={setShowInfo}
+            form={form}
+            bookingData={bookingData}
+            bookingId={bookingId}
+          />
+        )}
       </Row>
     </>
   );

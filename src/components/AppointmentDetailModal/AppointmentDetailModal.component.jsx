@@ -6,8 +6,14 @@ import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 import { RoleConstant } from "../../constants/RoleConstants";
+import { convertMomentToMilliseconds } from "../../utils/convert.utils";
+import moment from "moment";
 
 const AppointmentDetailModalComponent = ({ appointmentData }) => {
+  console.log(
+    convertMomentToMilliseconds(moment()) - appointmentData?.appointmentDate <=
+      0
+  );
   return (
     <>
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
@@ -44,6 +50,7 @@ const AppointmentDetailModalComponent = ({ appointmentData }) => {
             : "Not assigned"}
         </DescriptionsItem>
       </Descriptions>
+      <div style={{ marginBottom: 10 }}>Note: {appointmentData?.note}</div>
 
       <Descriptions title="Previous treatment Info">
         <DescriptionsItem label="Examination Day">
@@ -57,7 +64,12 @@ const AppointmentDetailModalComponent = ({ appointmentData }) => {
           {appointmentData?.preBooking?.totalPrice}
         </DescriptionsItem>
       </Descriptions>
-      <div>Dentist: {appointmentData?.preBooking?.dentist}</div>
+      <div>
+        Dentist:{" "}
+        {appointmentData?.preBooking?.dentist?.firstName +
+          " " +
+          appointmentData?.preBooking?.dentist?.lastName}
+      </div>
       <div style={{ marginTop: 15 }}>Services:</div>
       <List
         itemLayout="horizontal"
@@ -80,6 +92,35 @@ const AppointmentDetailModalComponent = ({ appointmentData }) => {
           </List.Item>
         )}
       />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Button
+          shape="round"
+          type="primary"
+          style={{
+            width: 200,
+            marginLeft: "auto",
+            marginRight: 0,
+            marginBottom: 10,
+          }}
+          disabled={
+            convertMomentToMilliseconds(moment()) -
+              appointmentData?.appointmentDate <=
+            0
+          }
+        >
+          Continue to examine
+        </Button>
+        <div style={{ marginLeft: "auto", marginRight: 0 }}>
+          (Note: you only can register to the next examination until the
+          appointment day)
+        </div>
+      </div>
     </>
   );
 };

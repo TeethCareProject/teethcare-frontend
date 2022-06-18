@@ -1,35 +1,24 @@
 import React from "react";
-import {
-  Col,
-  Form,
-  DatePicker,
-  Select,
-  Button,
-  List,
-  Typography,
-  Avatar,
-} from "antd";
-import {
-  EditOutlined,
-  DeleteOutlined,
-  ContainerOutlined,
-} from "@ant-design/icons";
+import { Col, Form, DatePicker, Button, Input } from "antd";
 import moment from "moment";
 import { convertMomentToDate } from "../../utils/convert.utils";
 
-const CreateAppointmentFormComponent = ({
-  isUpdated,
-  serviceModalClickHandler,
-  form,
-  deleteServiceHandler,
-}) => {
+const CreateAppointmentFormComponent = ({ onFinish }) => {
   const dateFormat = "DD-MM-YYYY HH";
+  const { TextArea } = Input;
   return (
     <Col span={12} style={{ margin: "30px 40px" }}>
-      <Form name="create_appointment_form">
+      <Form name="create_appointment_form" onFinish={onFinish}>
+        <Form.Item name="note">
+          <TextArea
+            rows={12}
+            placeholder="Note during treatment"
+            maxLength={1000}
+          />
+        </Form.Item>
         <Form.Item
-          name="desiredCheckingTime"
-          label="Desired timing"
+          name="appointmentDate"
+          label="Appointment day:"
           rules={[
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -52,66 +41,29 @@ const CreateAppointmentFormComponent = ({
             }}
           />
         </Form.Item>
-        <div>
-          Update services:{" "}
-          {!isUpdated ? (
-            <EditOutlined
-              onClick={serviceModalClickHandler}
-              style={{
-                color: "blue",
-                marginLeft: 30,
-                fontSize: "0.8em",
-                cursor: "pointer",
-              }}
-            />
-          ) : null}{" "}
-        </div>
-        {form.getFieldValue("serviceIds") ? (
-          <List
-            itemLayout="horizontal"
-            dataSource={form.getFieldValue("serviceIds")}
-            renderItem={(service) => (
-              <List.Item>
-                <List.Item.Meta
-                  avatar={<Avatar icon={<ContainerOutlined />} size={32} />}
-                  title={
-                    <Typography.Title
-                      level={5}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <div>{`Service name: ${service.name}`}</div>
-                      <div hidden={isUpdated}>
-                        <DeleteOutlined
-                          style={{ color: "red", cursor: "pointer" }}
-                          onClick={() => deleteServiceHandler(service)}
-                        />
-                      </div>
-                    </Typography.Title>
-                  }
-                  description={`Description: ${service.description}`}
-                />
-              </List.Item>
-            )}
-          />
-        ) : null}
-        <Form.Item name="serviceIds">
-          <Select
-            disabled={isUpdated}
-            mode="multiple"
-            allowClear
-            hidden={true}
-            style={{ width: "100%" }}
-            placeholder="Select services"
-          ></Select>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" disabled={isUpdated}>
-            Save
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            marginTop: 40,
+          }}
+        >
+          <Form.Item>
+            <Button type="primary" shape="round" htmlType="submit">
+              Create appointment
+            </Button>
+          </Form.Item>
+          <Button
+            shape="round"
+            style={{
+              backgroundColor: "#00B507",
+              color: "white",
+              border: "#00B507",
+            }}
+          >
+            Next examination
           </Button>
-        </Form.Item>
+        </div>
       </Form>
     </Col>
   );

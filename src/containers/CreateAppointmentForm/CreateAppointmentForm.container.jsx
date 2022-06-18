@@ -1,13 +1,33 @@
 import React from "react";
 import CreateAppointmentFormComponent from "../../components/CreateAppointmentForm/CreateAppointmentForm.component";
-import { updateBookingDuringTreatment } from "../../services/teeth-apis/BookingController";
-import RequestUpdateFormToRequestUpdateData from "../../mapper/RequestUpdateFormToRequestUpdateData.js";
-import { notification } from "antd";
+import { createAppointments } from "../../services/teeth-apis/AppointmentController";
+import AppointmentFormValueToAppointmentData from "../../mapper/AppointmentFormValueToAppointmentData";
 
-const CreateAppointmentFormContainer = ({}) => {
+import { notification, Form } from "antd";
+
+const CreateAppointmentFormContainer = ({ bookingId }) => {
+  const [form] = Form.useForm();
+
+  const onFinish = async (values) => {
+    try {
+      await createAppointments(
+        AppointmentFormValueToAppointmentData({
+          preBookingId: bookingId,
+          ...values,
+        })
+      );
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while updating booking data, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
   return (
     <>
-      <CreateAppointmentFormComponent />
+      <CreateAppointmentFormComponent form={form} onFinish={onFinish} />
     </>
   );
 };
