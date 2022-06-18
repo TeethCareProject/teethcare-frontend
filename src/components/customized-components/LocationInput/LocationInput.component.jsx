@@ -9,6 +9,7 @@ const LocationInputComponent = ({
   arrayOption,
   selectedValue,
   handleValueChange,
+  dependencies,
 }) => {
   const { Option } = Select;
   return (
@@ -16,6 +17,7 @@ const LocationInputComponent = ({
       <Form.Item
         name={name}
         label={label}
+        dependencies={dependencies}
         // rules={ClinicRegisterValidation.province}
       >
         <Select
