@@ -16,7 +16,7 @@ const ClinicCardComponent = ({ clinic }) => {
       }}
     >
       <div>
-        <img style={{ height: "300px" }} src={clinicImg} alt="clinic" />
+        <Image src={clinic?.imageUrl} alt="clinic-img" fallback={clinicImg} />
       </div>
       <div style={{ lineHeight: "3em", marginLeft: "20px", width: "50%" }}>
         <div style={{ fontSize: "1.5em", fontWeight: "bold" }}>

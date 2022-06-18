@@ -108,7 +108,11 @@ const ProfileFormContainer = () => {
             </Row>
             <Row>
               <Col span={12}>
-                <Form.Item label="Date of birth" name="dateOfBirth" required>
+                <Form.Item
+                  label="Date of birth"
+                  name="dateOfBirth"
+                  rules={ProfileValidation.dateOfBirth}
+                >
                   <DatePicker />
                 </Form.Item>
               </Col>

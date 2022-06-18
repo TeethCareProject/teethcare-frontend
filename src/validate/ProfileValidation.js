@@ -9,4 +9,15 @@ export const ProfileValidation = {
   gender: [REQUIRED_VALIDATOR("Gender")],
   specialization: [REQUIRED_VALIDATOR("Specialization")],
   description: [REQUIRED_VALIDATOR("Description")],
+  dateOfBirth: [
+    REQUIRED_VALIDATOR("Date of birth"),
+    ({ getFieldValue }) => ({
+      validator(_, value) {
+        if (!value || value.valueOf() < Date.now().valueOf())
+          return Promise.resolve();
+
+        return Promise.reject(new Error("Invalid date of birth"));
+      },
+    }),
+  ],
 };
