@@ -5,9 +5,6 @@ import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
-import { convertMomentToMilliseconds } from "../../utils/convert.utils";
-import moment from "moment";
-
 const AppointmentDetailModalComponent = ({ appointmentData, showModal }) => {
   return (
     <>
@@ -103,19 +100,11 @@ const AppointmentDetailModalComponent = ({ appointmentData, showModal }) => {
             marginRight: 0,
             marginBottom: 10,
           }}
-          disabled={
-            appointmentData?.appointmentDate -
-              convertMomentToMilliseconds(moment()) >=
-            259200000
-          }
           onClick={() => showModal()}
         >
           Continue to examine
         </Button>
-        <div style={{ marginLeft: "auto", marginRight: 0 }}>
-          (Note: you only can register to the next examination until 3 days
-          before the appointment day)
-        </div>
+        <div style={{ marginLeft: "auto", marginRight: 0 }}></div>
       </div>
     </>
   );

@@ -6,12 +6,12 @@ import moment from "moment";
 import { convertMomentToDate } from "../../utils/convert.utils";
 import AppointmentToBookingForm from "../../mapper/AppointmentToBookingForm";
 import { createBookingFromAppointment } from "../../services/teeth-apis/BookingController";
+import { convertMillisecondsToMoment } from "../../utils/convert.utils";
 
 const AppointmentDetailModalContainer = ({
   appointmentId,
   setNeededAppointment,
 }) => {
-  console.log(appointmentId);
   const dateFormat = "DD-MM-YYYY HH";
   const [appointmentData, setAppointmentData] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -103,7 +103,7 @@ const AppointmentDetailModalContainer = ({
               showTime={{ format: "HH" }}
               format={`${dateFormat}:00`}
               disabledDate={(current) => {
-                let customDate = moment().format("DD-MM-YYYY HH");
+                let customDate = moment(appointmentData?.appointmentDate);
                 return current && current < moment(customDate, "DD-MM-YYYY HH");
               }}
             />
