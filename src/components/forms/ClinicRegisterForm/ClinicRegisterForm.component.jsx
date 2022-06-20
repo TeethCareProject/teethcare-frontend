@@ -34,6 +34,9 @@ const ClinicRegisterFormComponent = (props) => {
             >
               <Input type="password" placeholder="Confirm Password" />
             </Form.Item>
+            <Form.Item name="email" required>
+              <Input type="email" placeholder="Email" />
+            </Form.Item>
             <Form.Item
               name="firstName"
               rules={UserRegisterValidation.firstName}

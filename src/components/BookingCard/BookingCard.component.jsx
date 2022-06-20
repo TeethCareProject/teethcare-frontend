@@ -6,7 +6,7 @@ const BookingCardComponent = ({ booking }) => {
   const { Meta } = Card;
   return (
     <div>
-      {booking && booking[0] ? (
+      {booking && booking.length > 0 ? (
         <div>
           <div
             style={{

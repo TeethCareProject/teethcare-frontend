@@ -16,6 +16,7 @@ const RoutePath = {
   REJECT_CONFIRM_PAGE: "/confirmBooking-result/reject",
   ACCEPT_CONFIRM_PAGE: "/confirmBooking-result/accept",
   REDIRECT_BOOKING_DETAIL_PAGE: "/redirectToBookingDetail/:bookingId",
+  PROFILE_PAGE: "/profile",
   CONFIRM_BOOKING_PAGE: "/confirmBooking/:bookingId",
 };
 
