@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Form, DatePicker, Button, Input } from "antd";
+import { Col, Form, DatePicker, Button, Input, Typography } from "antd";
 import moment from "moment";
 import { convertMomentToDate } from "../../utils/convert.utils";
 
@@ -12,6 +12,9 @@ const CreateAppointmentFormComponent = ({
   const { TextArea } = Input;
   return (
     <Col span={12} style={{ margin: "30px 40px" }}>
+      <Typography.Title level={4}>
+        Create appointment for next examination:
+      </Typography.Title>
       <Form name="create_appointment_form" onFinish={onFinish} form={form}>
         <Form.Item name="note">
           <TextArea

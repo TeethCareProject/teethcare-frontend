@@ -29,13 +29,19 @@ const DentistUpdateBookingFormComponent = ({
   return (
     <Col span={12} style={{ margin: "30px 40px" }}>
       {bookingData?.status === BookingStatusConstants.TREATMENT ? (
-        <Button
-          style={{ marginBottom: 20 }}
-          onClick={() => switchUpdateState()}
-        >
-          Update
-        </Button>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Typography.Title level={4}>
+            Update booking information during treatment:
+          </Typography.Title>
+          <Button
+            style={{ marginBottom: 20 }}
+            onClick={() => switchUpdateState()}
+          >
+            Update
+          </Button>
+        </div>
       ) : null}
+
       <Form name="info_treatment-update" onFinish={onFinish} form={form}>
         <Form.Item name="note">
           <TextArea
