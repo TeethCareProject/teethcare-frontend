@@ -7,6 +7,7 @@ const CreateAppointmentFormComponent = ({
   onFinish,
   goToNextExamination,
   form,
+  isDisplayed,
 }) => {
   const dateFormat = "DD-MM-YYYY HH";
   const { TextArea } = Input;
@@ -19,7 +20,7 @@ const CreateAppointmentFormComponent = ({
         <Form.Item name="note">
           <TextArea
             rows={12}
-            placeholder="Note during treatment"
+            placeholder="Note for next treatment"
             maxLength={1000}
           />
         </Form.Item>
@@ -56,7 +57,12 @@ const CreateAppointmentFormComponent = ({
           }}
         >
           <Form.Item>
-            <Button type="primary" shape="round" htmlType="submit">
+            <Button
+              type="primary"
+              shape="round"
+              htmlType="submit"
+              disabled={isDisplayed}
+            >
               Create appointment
             </Button>
           </Form.Item>

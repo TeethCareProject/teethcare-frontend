@@ -26,7 +26,6 @@ const ExaminationScreenContainer = () => {
   const { bookingId } = useParams();
   const [isRendered, setIsRendered] = useState(false);
   const history = useHistory();
-
   const [bookingData, setBookingData] = useState({});
 
   const [form] = Form.useForm();
