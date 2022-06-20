@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { notification, Form, Row, Alert, Divider } from "antd";
+import {
+  notification,
+  Form,
+  Row,
+  Alert,
+  Divider,
+  PageHeader,
+  Descriptions,
+} from "antd";
 import { useParams, useHistory, generatePath } from "react-router-dom";
 import {
   getBookingById,
@@ -10,6 +18,7 @@ import DentistBookingDetailComponent from "../../components/DentistBookingDetail
 import CreateAppointmentFormContainer from "../CreateAppointmentForm/CreateAppointmentForm.container";
 import RoutePath from "../../routers/Path";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 const ExaminationScreenContainer = () => {
   const [showInfo, setShowInfo] = useState(false);
@@ -21,6 +30,7 @@ const ExaminationScreenContainer = () => {
   const [bookingData, setBookingData] = useState({});
 
   const [form] = Form.useForm();
+  const index = bookingArray ? bookingArray.indexOf(bookingId) : -1;
 
   const fetchBookingData = async () => {
     try {
@@ -44,8 +54,7 @@ const ExaminationScreenContainer = () => {
         status: BookingStatusConstants.TREATMENT,
         isConfirmed: false,
       });
-      console.log(data);
-      setBookingArray(data?.content?.map((booking) => booking?.id));
+      setBookingArray(data?.content);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -56,11 +65,10 @@ const ExaminationScreenContainer = () => {
   };
 
   const goToNextExamination = () => {
-    const index = bookingArray.indexOf(bookingId);
     if (index !== bookingArray.length) {
       history.push(
         generatePath(RoutePath.EXAMINATION_PAGE, {
-          bookingId: bookingArray[index + 1],
+          bookingId: bookingArray[index + 1]?.id,
         })
       );
     } else {
@@ -82,6 +90,30 @@ const ExaminationScreenContainer = () => {
 
   return (
     <>
+      <div className="site-page-header-ghost-wrapper">
+        {bookingArray &&
+        bookingData?.confirmed &&
+        index !== bookingArray.length ? (
+          <PageHeader
+            ghost={false}
+            title="Next examination:"
+            subTitle={`BookingId: ${bookingArray[index + 1]?.id}`}
+          >
+            <Descriptions size="small" column={3}>
+              <Descriptions.Item label="Next patient">
+                {bookingArray[index + 1]?.patient?.firstName +
+                  " " +
+                  bookingArray[index + 1]?.patient?.lastName}
+              </Descriptions.Item>
+              <Descriptions.Item label="Examination time: ">
+                {convertMillisecondsToDate(
+                  bookingArray[index + 1]?.examinationTime
+                )}
+              </Descriptions.Item>
+            </Descriptions>
+          </PageHeader>
+        ) : null}
+      </div>
       <Row style={{ marginLeft: 20 }}>
         {showInfo ? (
           <Alert
