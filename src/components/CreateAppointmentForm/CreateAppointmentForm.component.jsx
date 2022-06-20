@@ -3,12 +3,16 @@ import { Col, Form, DatePicker, Button, Input } from "antd";
 import moment from "moment";
 import { convertMomentToDate } from "../../utils/convert.utils";
 
-const CreateAppointmentFormComponent = ({ onFinish }) => {
+const CreateAppointmentFormComponent = ({
+  onFinish,
+  goToNextExamination,
+  form,
+}) => {
   const dateFormat = "DD-MM-YYYY HH";
   const { TextArea } = Input;
   return (
     <Col span={12} style={{ margin: "30px 40px" }}>
-      <Form name="create_appointment_form" onFinish={onFinish}>
+      <Form name="create_appointment_form" onFinish={onFinish} form={form}>
         <Form.Item name="note">
           <TextArea
             rows={12}
@@ -55,6 +59,7 @@ const CreateAppointmentFormComponent = ({ onFinish }) => {
           </Form.Item>
           <Button
             shape="round"
+            onClick={() => goToNextExamination()}
             style={{
               backgroundColor: "#00B507",
               color: "white",

@@ -47,7 +47,6 @@ const AppRouter = () => {
   useEffect(() => {
     const unsubscribe = onMessage(messaging, (payload) => {
       const { notification: notificationData } = payload;
-      console.log(notificationData.title);
 
       switch (notificationData.title) {
         case notificationTypes.OPEN_BOOKING_NOTIFICATION:

@@ -14,7 +14,6 @@ const DentistUpdateBookingFormContainer = ({
 }) => {
   const [isUpdated, setIsUpdated] = useState(true);
   const [isServiceModalOpened, setServiceModalOpened] = useState(false);
-  console.log(bookingId);
 
   const serviceModalClickHandler = () => {
     setServiceModalOpened((isServiceModalOpened) => !isServiceModalOpened);

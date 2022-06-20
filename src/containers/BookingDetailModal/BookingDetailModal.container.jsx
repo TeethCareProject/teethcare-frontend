@@ -217,7 +217,8 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
           <Button onClick={() => handleAssign(false)}>Reject</Button>
         </Space>
       ) : null}
-      {bookingData?.confirmed ? (
+      {bookingData?.confirmed &&
+      bookingData?.status === BookingStatusConstants.TREATMENT ? (
         <Button onClick={() => checkOutHandler()}>Checkout</Button>
       ) : null}
     </Modal>

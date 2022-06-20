@@ -3,7 +3,7 @@ import { Col, Row, Typography, Button, List, Avatar } from "antd";
 import { ContainerOutlined } from "@ant-design/icons";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
-const DentistBookingDetailComponent = ({ booking }) => {
+const DentistBookingDetailComponent = ({ booking, returnToDashboard }) => {
   let examinationTime = booking?.examinationTime
     ? convertMillisecondsToDate(booking?.examinationTime)
     : convertMillisecondsToDate(booking?.createBookingDate);
@@ -79,6 +79,12 @@ const DentistBookingDetailComponent = ({ booking }) => {
           </Col>
         </Row>
       </div>
+      <Button
+        onClick={() => returnToDashboard()}
+        style={{ margin: "0 0 30px 30px" }}
+      >
+        Return to dashboard
+      </Button>
     </Col>
   );
 };

@@ -5,7 +5,7 @@ import AppointmentFormValueToAppointmentData from "../../mapper/AppointmentFormV
 
 import { notification, Form } from "antd";
 
-const CreateAppointmentFormContainer = ({ bookingId }) => {
+const CreateAppointmentFormContainer = ({ bookingId, goToNextExamination }) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values) => {
@@ -27,7 +27,11 @@ const CreateAppointmentFormContainer = ({ bookingId }) => {
 
   return (
     <>
-      <CreateAppointmentFormComponent form={form} onFinish={onFinish} />
+      <CreateAppointmentFormComponent
+        form={form}
+        onFinish={onFinish}
+        goToNextExamination={goToNextExamination}
+      />
     </>
   );
 };

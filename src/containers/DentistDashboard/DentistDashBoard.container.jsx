@@ -14,8 +14,6 @@ const DentistDashBoardContainer = () => {
   const [bookingData, setBookingData] = useState();
   const [neededBooking, setNeededBooking] = useState(null);
 
-  const dentistId = useSelector((state) => state?.authentication?.user?.id);
-
   const fullName = useSelector(
     (state) =>
       state?.authentication?.user?.firstName +
@@ -37,7 +35,6 @@ const DentistDashBoardContainer = () => {
       if (!options) {
         data = (
           await getAllBooking({
-            dentistId: dentistId,
             status: BookingStatusConstants.TREATMENT,
             isConfirmed: false,
           })
@@ -46,7 +43,6 @@ const DentistDashBoardContainer = () => {
         data = (
           await getAllBooking({
             ...options,
-            dentistId: dentistId,
             status: BookingStatusConstants.TREATMENT,
             isConfirmed: false,
           })

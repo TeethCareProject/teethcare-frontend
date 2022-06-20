@@ -5,15 +5,10 @@ import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
-import { RoleConstant } from "../../constants/RoleConstants";
 import { convertMomentToMilliseconds } from "../../utils/convert.utils";
 import moment from "moment";
 
-const AppointmentDetailModalComponent = ({ appointmentData }) => {
-  console.log(
-    convertMomentToMilliseconds(moment()) - appointmentData?.appointmentDate <=
-      0
-  );
+const AppointmentDetailModalComponent = ({ appointmentData, showModal }) => {
   return (
     <>
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
@@ -109,16 +104,17 @@ const AppointmentDetailModalComponent = ({ appointmentData }) => {
             marginBottom: 10,
           }}
           disabled={
-            convertMomentToMilliseconds(moment()) -
-              appointmentData?.appointmentDate <=
-            0
+            appointmentData?.appointmentDate -
+              convertMomentToMilliseconds(moment()) >=
+            259200000
           }
+          onClick={() => showModal()}
         >
           Continue to examine
         </Button>
         <div style={{ marginLeft: "auto", marginRight: 0 }}>
-          (Note: you only can register to the next examination until the
-          appointment day)
+          (Note: you only can register to the next examination until 3 days
+          before the appointment day)
         </div>
       </div>
     </>

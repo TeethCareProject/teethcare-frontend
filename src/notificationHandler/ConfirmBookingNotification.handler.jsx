@@ -7,7 +7,6 @@ const confirmBookingNotificationHandler = (history, notificationData) => {
       message: notificationData.title,
       description: notificationData.body,
     });
-    console.log("success");
     window.location.reload();
   } else {
     notification["success"]({
