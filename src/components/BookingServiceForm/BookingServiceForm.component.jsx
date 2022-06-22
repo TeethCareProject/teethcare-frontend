@@ -18,6 +18,7 @@ import {
   convertMomentToDate,
   getDisabledTime,
 } from "../../utils/convert.utils";
+import ServiceEntityToServiceCard from "../../mapper/ServiceEntityToServiceCard";
 const { Option } = Select;
 
 const dateFormat = "DD-MM-YYYY HH";
@@ -124,7 +125,7 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
       </Row>
       <Row gutter={[40, 16]} justify="center">
         <Col span={16}>
-          <ServiceCard serviceData={serviceData} />
+          <ServiceCard serviceData={ServiceEntityToServiceCard(serviceData)} />
         </Col>
       </Row>
       <Row gutter={[40, 16]} justify="center">
@@ -148,7 +149,7 @@ const ServiceCard = ({ serviceData }) => {
           <img
             style={{ width: "100%" }}
             alt="service"
-            src={serviceData.serviceImage}
+            src={serviceData?.serviceImage}
           />
         </Col>
         <Col span={12}>
