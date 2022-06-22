@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 import { bookService } from "../../services/teeth-apis/BookingController";
 import UserToBookingFormMapper from "../../mapper/UserToBookingFormMapper";
-import { convertMomentToMilliseconds } from "../../utils/convert.utils";
+import { convertDateToMilliseconds } from "../../utils/convert.utils";
 import { getServiceById } from "../../services/teeth-apis/ServiceController";
 import { notification } from "antd";
 import ServiceEntityToServiceCard from "../../mapper/ServiceEntityToServiceCard";
@@ -39,19 +39,20 @@ const BookingServiceFormContainer = () => {
     //submit form
     const submitBooking = async () => {
       try {
-        const { data } = await bookService({
+        await bookService({
           serviceId: serviceId,
-          desiredCheckingTime: convertMomentToMilliseconds(
-            values.desiredCheckingTime
+          desiredCheckingTime: convertDateToMilliseconds(
+            values.desiredCheckingTime -
+              (values.desiredCheckingTime % (60 * 60 * 1000))
           ),
           description: values.description,
         });
         history.push(RoutePath.BOOKING_SUCCESSFUL_PAGE);
       } catch (e) {
-        history.push(RoutePath.BOOKING_FAILED_PAGE);
+        console.log(e);
+        // history.push(RoutePath.BOOKING_FAILED_PAGE);
       }
     };
-
     submitBooking();
   };
 

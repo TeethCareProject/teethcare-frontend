@@ -1,12 +1,14 @@
 import React from "react";
 import { StarOutlined, EnvironmentOutlined } from "@ant-design/icons";
-import { Card } from "antd";
+import { Card, Typography } from "antd";
 import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
 import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";
+import { convertMillisecondsToHour } from "../../../utils/convert.utils";
 
 const ClinicDetailComponent = ({ clinicData, feedback }) => {
   const { Meta } = Card;
+  console.log(convertMillisecondsToHour(clinicData?.startTimeShift1));
   return (
     <>
       <div className="clinic-detail-page-information">
@@ -25,7 +27,6 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             <div className="clinic-detail-page-information-rating">
               <StarOutlined /> {clinicData?.avgRatingScore}
             </div>
-            <div></div>
           </div>
         </div>
         <div className="clinic-detail-page-information-address">
@@ -33,6 +34,23 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             <EnvironmentOutlined /> Clinic address
           </div>
           <div>{clinicData?.location?.address}</div>
+          <div>
+            <Typography.Title level={4} style={{ margin: "0 auto" }}>
+              <div>Operating Hours: </div>
+            </Typography.Title>
+            <div>
+              Morning:{" "}
+              {convertMillisecondsToHour(clinicData?.startTimeShift1) +
+                " - " +
+                convertMillisecondsToHour(clinicData?.endTimeShift1)}
+            </div>
+            <div>
+              Evening:{" "}
+              {convertMillisecondsToHour(clinicData?.startTimeShift2) +
+                " - " +
+                convertMillisecondsToHour(clinicData?.endTimeShift2)}
+            </div>
+          </div>
         </div>
       </div>
       <div className="clinic-detail-page-banner">
@@ -40,7 +58,8 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
         <img src={avtImg} alt="clinic-img" />
       </div>
       <div className="clinic-detail-page-description">
-        {clinicData?.description}
+        <Typography.Title level={3}>About us:</Typography.Title>
+        <div>{clinicData?.description}</div>
       </div>
       <div className="clinic-detail-page-feedback-container">
         <div style={{ fontSize: "2em", fontWeight: "bold" }}>Feedbacks</div>

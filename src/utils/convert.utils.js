@@ -10,9 +10,14 @@ export const convertMillisecondsToDate = (milliseconds) => {
   return new Date(milliseconds).toLocaleString();
 };
 
+export const convertMillisecondsToHour = (milliseconds) => {
+  return new Date(milliseconds).toLocaleString().substr(0, 8);
+};
+
 export const convertDateToMilliseconds = (date) => {
   return new Date(date).getTime();
 };
+
 export const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
