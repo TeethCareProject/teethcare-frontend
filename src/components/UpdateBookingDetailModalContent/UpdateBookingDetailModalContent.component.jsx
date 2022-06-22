@@ -63,20 +63,17 @@ const UpdateBookingDetailModalContentComponent = ({
         </Form.Item>
       </div>
       <Descriptions title="Booking Info">
-        <DescriptionsItem label="Description">
-          {form.getFieldValue("description")?.description}
-        </DescriptionsItem>
+        <div>
+          <span>New Examination Time: </span>
+          <Form.Item name="examinationTime">
+            <DatePicker
+              showTime
+              placeholder="Select Time"
+              style={{ marginLeft: 10 }}
+            />
+          </Form.Item>
+        </div>
       </Descriptions>
-      <div>
-        <span>New Examination Time: </span>
-        <Form.Item name="examinationTime">
-          <DatePicker
-            showTime
-            placeholder="Select Time"
-            style={{ marginLeft: 10 }}
-          />
-        </Form.Item>
-      </div>
       <div>
         <div className="ant-descriptions-title">
           Service{" "}

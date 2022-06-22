@@ -38,6 +38,7 @@ import RedirectBookingDetail from "../pages/CustomerServiceDashboardPage/Redirec
 import notificationTypes from "../notificationHandler/notification.types";
 import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
 import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
+import checkInCheckOutNotificationHandler from "../notificationHandler/CheckInCheckOutNotification.handler";
 
 const AppRouter = () => {
   const history = useHistory();

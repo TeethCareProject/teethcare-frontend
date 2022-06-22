@@ -12,10 +12,7 @@ const BookingDetailModalContentComponent = ({
   role,
   checkInHandler,
 }) => {
-  let examinationTime = bookingData?.examinationTime
-    ? convertMillisecondsToDate(bookingData?.examinationTime)
-    : convertMillisecondsToDate(bookingData?.createBookingDate);
-
+  console.log(bookingData);
   return (
     <>
       <Descriptions title="Staff Incharge">
@@ -48,10 +45,20 @@ const BookingDetailModalContentComponent = ({
           {bookingData?.description}
         </DescriptionsItem>
       </Descriptions>
-      <div>
-        Current Examination Time: {`${" "}`}
-        <span>{examinationTime}</span>
-      </div>
+      {bookingData?.examinationTime ? (
+        <div>
+          Current Examination Time: {`${" "}`}
+          <span>{convertMillisecondsToDate(bookingData?.examinationTime)}</span>
+        </div>
+      ) : (
+        <div>
+          Desired Examination Time: {`${" "}`}
+          <span>
+            {convertMillisecondsToDate(bookingData?.desiredCheckingTime)}
+          </span>
+        </div>
+      )}
+
       <List
         itemLayout="horizontal"
         dataSource={bookingData?.services ? bookingData?.services : []}
@@ -64,7 +71,7 @@ const BookingDetailModalContentComponent = ({
                   level={5}
                 >{`Service name: ${service.name}`}</Typography.Title>
               }
-              description={`Description: ${service.description}`}
+              description={`Price: ${service.price}`}
             />
           </List.Item>
         )}

@@ -20,7 +20,7 @@ const DentistBookingDetailComponent = ({ booking, returnToDashboard }) => {
       >
         <Typography.Title level={4}>Patient details:</Typography.Title>
         <Row style={{ display: "flex", alignItems: "center" }}>
-          <Col style={{ marginLeft: 30 }}>
+          <Col>
             <div>
               Name:{" "}
               <span>
@@ -58,17 +58,17 @@ const DentistBookingDetailComponent = ({ booking, returnToDashboard }) => {
                 title={
                   <Typography.Title
                     level={5}
-                  >{`Service name: ${service.name} Price: ${service.price}`}</Typography.Title>
+                  >{`Service name: ${service.name}`}</Typography.Title>
                 }
-                description={`Description: ${service.description}`}
+                description={`Price: ${service.price}`}
               />
             </List.Item>
           )}
         />
         <Row style={{ display: "flex", alignItems: "center" }}>
-          <Col style={{ marginLeft: 30 }}>
+          <Col style={{ marginTop: 20 }}>
             <div>
-              Total Price:{" "}
+              <span style={{ fontWeight: 600 }}>Total Price: </span>
               <span>
                 {booking?.services?.reduce(
                   (acc, service) => acc + service?.price,
