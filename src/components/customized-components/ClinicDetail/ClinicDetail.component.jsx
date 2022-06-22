@@ -8,7 +8,6 @@ import { convertMillisecondsToHour } from "../../../utils/convert.utils";
 
 const ClinicDetailComponent = ({ clinicData, feedback }) => {
   const { Meta } = Card;
-  console.log(convertMillisecondsToHour(clinicData?.startTimeShift1));
   return (
     <>
       <div className="clinic-detail-page-information">

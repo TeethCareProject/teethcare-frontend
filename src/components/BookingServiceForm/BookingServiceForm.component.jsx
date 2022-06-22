@@ -14,13 +14,26 @@ import {
   Space,
 } from "antd";
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import { convertMomentToDate } from "../../utils/convert.utils";
+import {
+  convertMomentToDate,
+  getDisabledTime,
+} from "../../utils/convert.utils";
 const { Option } = Select;
 
 const dateFormat = "DD-MM-YYYY HH";
 
 const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
   const { form, ...restAntdFormProps } = antdFormProps;
+  const disabledDateTime = () => ({
+    disabledHours: () =>
+      getDisabledTime(
+        serviceData?.clinic?.startTimeShift1,
+        serviceData?.clinic?.endTimeShift1,
+        serviceData?.clinic?.startTimeShift2,
+        serviceData?.clinic?.endTimeShift2
+      ),
+  });
+
   return (
     <Form form={form} {...restAntdFormProps}>
       <Row gutter={[40, 16]} justify="center">
@@ -95,6 +108,7 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
                 let customDate = moment().format("DD-MM-YYYY HH");
                 return current && current < moment(customDate, "DD-MM-YYYY HH");
               }}
+              disabledTime={disabledDateTime}
             />
           </Form.Item>
         </Col>
