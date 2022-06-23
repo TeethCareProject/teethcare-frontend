@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getAppointmentById } from "../../services/teeth-apis/AppointmentController";
 import AppointmentDetailModalComponent from "../../components/AppointmentDetailModal/AppointmentDetailModal.component";
 import moment from "moment";
-import { convertMomentToDate } from "../../utils/convert.utils";
+import { BookingFromAppointmentValidation } from "../../validate/BookingFromAppointmentValidation";
 import AppointmentToBookingForm from "../../mapper/AppointmentToBookingForm";
 import { createBookingFromAppointment } from "../../services/teeth-apis/BookingController";
 
@@ -11,7 +11,6 @@ const AppointmentDetailModalContainer = ({
   appointmentId,
   setNeededAppointment,
 }) => {
-  const dateFormat = "DD-MM-YYYY HH";
   const [appointmentData, setAppointmentData] = useState();
 
   const fetchAppointmentData = async () => {
@@ -64,66 +63,63 @@ const AppointmentDetailModalContainer = ({
       closable: true,
       okButtonProps: { style: { display: "none" } },
       content: (
-        <Form
-          name="create_booking_from_modal_form"
+        <CreateBookingFromModalForm
           onFinish={onFinish}
-          style={{ marginTop: 40, marginRight: 40 }}
-        >
-          <Form.Item name="description" label="Description">
-            <Input placeholder="Enter description" />
-          </Form.Item>
-          <Form.Item
-            name="desiredCheckingTime"
-            label="Desired checking day:"
-            rules={[
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || convertMomentToDate(value) > Date.now()) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    new Error("Booking date should be from tomorrow")
-                  );
-                },
-              }),
-              { required: true },
-            ]}
-          >
-            <DatePicker
-              showTime={{ format: "HH" }}
-              format={`${dateFormat}:00`}
-              disabledDate={(current) => {
-                let customDate = moment(appointmentData?.appointmentDate);
-                return current && current < moment(customDate, "DD-MM-YYYY HH");
-              }}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" shape="round" htmlType="submit">
-              Create appointment
-            </Button>
-          </Form.Item>
-        </Form>
+          appointmentData={appointmentData}
+        />
       ),
     });
   };
 
   return (
-    <>
-      <Modal
-        destroyOnClose
-        visible={appointmentId !== null}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        width="80vw"
-        footer={false}
+    <Modal
+      destroyOnClose
+      visible={appointmentId !== null}
+      onOk={handleOk}
+      onCancel={handleCancel}
+      width="80vw"
+      footer={false}
+    >
+      <AppointmentDetailModalComponent
+        appointmentData={appointmentData}
+        createBooking={createBooking}
+      />
+    </Modal>
+  );
+};
+
+const CreateBookingFromModalForm = ({ onFinish, appointmentData }) => {
+  const dateFormat = "DD-MM-YYYY HH";
+  return (
+    <Form
+      name="create_booking_from_modal_form"
+      onFinish={onFinish}
+      style={{ marginTop: 40, marginRight: 40 }}
+    >
+      <Form.Item
+        name="description"
+        label="Description"
+        rules={BookingFromAppointmentValidation.description}
       >
-        <AppointmentDetailModalComponent
-          appointmentData={appointmentData}
-          createBooking={createBooking}
+        <Input placeholder="Enter description" />
+      </Form.Item>
+      <Form.Item name="desiredCheckingTime" label="Desired checking day:">
+        <DatePicker
+          showTime={{ format: "HH" }}
+          format={`${dateFormat}:00`}
+          disabledDate={(current) => {
+            let customDate = moment(appointmentData?.appointmentDate);
+            return current && current < moment(customDate, "DD-MM-YYYY HH");
+          }}
+          rules={BookingFromAppointmentValidation.desiredCheckingTime}
         />
-      </Modal>
-    </>
+      </Form.Item>
+      <Form.Item>
+        <Button type="primary" shape="round" htmlType="submit">
+          Create appointment
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 

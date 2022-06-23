@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { notification, Form, Row, Alert, Divider } from "antd";
+import { notification, Form, Row, Alert, Divider, Button, Col } from "antd";
 import { useParams, useHistory } from "react-router-dom";
 import { getBookingById } from "../../services/teeth-apis/BookingController";
 import DentistUpdatingBookingFormContainer from "../DentistUpdateBookingForm/DentistUpdateBookingForm.container";
@@ -14,8 +14,6 @@ const ExaminationScreenContainer = () => {
   const [bookingData, setBookingData] = useState({});
 
   const [form] = Form.useForm();
-
-  //get the index of the first booking that is not confirmed
 
   const fetchBookingData = async () => {
     try {
@@ -53,10 +51,15 @@ const ExaminationScreenContainer = () => {
         ) : null}
       </Row>
       <Row style={{ display: "flex", justifyContent: "space-between" }}>
-        <DentistBookingDetailComponent
-          booking={bookingData}
-          returnToDashboard={returnToDashboard}
-        />
+        <Col span={10}>
+          <DentistBookingDetailComponent booking={bookingData} />
+          <Button
+            onClick={() => returnToDashboard()}
+            style={{ margin: "0 0 30px 30px" }}
+          >
+            Return to dashboard
+          </Button>
+        </Col>
         <Divider type="vertical" style={{ height: "90vh" }} />
         {bookingData?.confirmed ? (
           <CreateAppointmentFormContainer
