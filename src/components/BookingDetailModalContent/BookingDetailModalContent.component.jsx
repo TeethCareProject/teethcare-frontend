@@ -12,7 +12,6 @@ const BookingDetailModalContentComponent = ({
   role,
   checkInHandler,
 }) => {
-  console.log(bookingData);
   return (
     <>
       <Descriptions title="Staff Incharge">

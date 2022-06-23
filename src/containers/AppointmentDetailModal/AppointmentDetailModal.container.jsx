@@ -6,7 +6,6 @@ import moment from "moment";
 import { convertMomentToDate } from "../../utils/convert.utils";
 import AppointmentToBookingForm from "../../mapper/AppointmentToBookingForm";
 import { createBookingFromAppointment } from "../../services/teeth-apis/BookingController";
-import { convertMillisecondsToMoment } from "../../utils/convert.utils";
 
 const AppointmentDetailModalContainer = ({
   appointmentId,

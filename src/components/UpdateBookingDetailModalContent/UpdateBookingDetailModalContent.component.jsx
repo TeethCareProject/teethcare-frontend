@@ -16,6 +16,9 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 
+import { getDisabledTime } from "../../utils/convert.utils";
+import { useSelector } from "react-redux";
+
 import DescriptionsItem from "antd/lib/descriptions/Item";
 
 const UpdateBookingDetailModalContentComponent = ({
@@ -25,6 +28,17 @@ const UpdateBookingDetailModalContentComponent = ({
   serviceModalClickHandler,
   deleteServiceHandler,
 }) => {
+  const clinic = useSelector((state) => state?.authentication?.user?.clinic);
+
+  const disabledDateTime = () => ({
+    disabledHours: () =>
+      getDisabledTime(
+        clinic?.startTimeShift1,
+        clinic?.endTimeShift1,
+        clinic?.startTimeShift2,
+        clinic?.endTimeShift2
+      ),
+  });
   return (
     <Form
       name="update_dentist_time_form"
@@ -70,6 +84,7 @@ const UpdateBookingDetailModalContentComponent = ({
               showTime
               placeholder="Select Time"
               style={{ marginLeft: 10 }}
+              disabledTime={disabledDateTime}
             />
           </Form.Item>
         </div>

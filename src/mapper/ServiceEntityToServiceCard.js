@@ -1,5 +1,4 @@
 const ServiceEntityToServiceCard = (service) => {
-  console.log(service);
   return {
     serviceId: service?.id,
     clinicName: service?.clinic?.name,
