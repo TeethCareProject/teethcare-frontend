@@ -12,7 +12,7 @@ const CreateAppointmentFormComponent = ({
   const dateFormat = "DD-MM-YYYY HH";
   const { TextArea } = Input;
   return (
-    <Col span={12} style={{ margin: "30px 40px" }}>
+    <>
       <Typography.Title level={4}>
         Create appointment for next examination:
       </Typography.Title>
@@ -53,7 +53,8 @@ const CreateAppointmentFormComponent = ({
           style={{
             display: "flex",
             justifyContent: "space-between",
-            marginTop: 40,
+            marginTop: 20,
+            marginBottom: 20,
           }}
         >
           <Form.Item>
@@ -79,7 +80,7 @@ const CreateAppointmentFormComponent = ({
           </Button>
         </div>
       </Form>
-    </Col>
+    </>
   );
 };
 

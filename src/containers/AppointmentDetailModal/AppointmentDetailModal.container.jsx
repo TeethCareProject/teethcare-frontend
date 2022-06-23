@@ -6,7 +6,7 @@ import moment from "moment";
 import { convertMomentToDate } from "../../utils/convert.utils";
 import AppointmentToBookingForm from "../../mapper/AppointmentToBookingForm";
 import { createBookingFromAppointment } from "../../services/teeth-apis/BookingController";
-import { convertMillisecondsToMoment } from "../../utils/convert.utils";
+import { REQUIRED_VALIDATOR } from "../../validate/GeneralValidation";
 
 const AppointmentDetailModalContainer = ({
   appointmentId,
@@ -97,6 +97,7 @@ const AppointmentDetailModalContainer = ({
                   );
                 },
               }),
+              { required: true },
             ]}
           >
             <DatePicker

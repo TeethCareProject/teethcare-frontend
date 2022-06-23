@@ -7,5 +7,5 @@ export const getAllAppointments = (options) =>
 export const getAppointmentById = (appointmentId) =>
   CallAPI(`${APPOINTMENT_END_POINT}/${appointmentId}`, "GET");
 
-export const createAppointments = (values) =>
-  CallAPI(`${APPOINTMENT_END_POINT}`, "POST", values);
+export const createAppointments = (appointmentData) =>
+  CallAPI(`${APPOINTMENT_END_POINT}`, "POST", appointmentData);
