@@ -13,6 +13,7 @@ import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import {
+  checkIn,
   getAllBooking,
   getBookingById,
 } from "../../services/teeth-apis/BookingController";
@@ -120,15 +121,26 @@ const BookingManagementTableContainer = () => {
     try {
       Modal.destroyAll();
       const bookingId = value.substring(value.lastIndexOf("/") + 1);
-      //check before get bookingId
-      await getBookingById(bookingId);
-
-      setNeededBooking(bookingId);
-    } catch (e) {
-      Modal.error({
-        title: "Invalid booking Id",
-        content: "Invalid booking Id, try again later!",
+      await checkIn(bookingId);
+      notification["success"]({
+        message: `Checkin successfully`,
+        duration: 2,
       });
+      setNeededBooking(bookingId);
+    } catch ({ response }) {
+      const { status, data } = response;
+      if (status == 404) {
+        Modal.error({
+          title: "Invalid booking Id",
+          content: "Invalid booking Id, try again later!",
+        });
+      }
+      if (status == 400) {
+        Modal.error({
+          title: "Invalid booking Id",
+          content: "Invalid booking to checkin!",
+        });
+      }
     }
   };
 
