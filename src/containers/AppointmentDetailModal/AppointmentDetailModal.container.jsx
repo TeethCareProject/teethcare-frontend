@@ -6,7 +6,6 @@ import moment from "moment";
 import { convertMomentToDate } from "../../utils/convert.utils";
 import AppointmentToBookingForm from "../../mapper/AppointmentToBookingForm";
 import { createBookingFromAppointment } from "../../services/teeth-apis/BookingController";
-import { REQUIRED_VALIDATOR } from "../../validate/GeneralValidation";
 
 const AppointmentDetailModalContainer = ({
   appointmentId,
@@ -14,7 +13,6 @@ const AppointmentDetailModalContainer = ({
 }) => {
   const dateFormat = "DD-MM-YYYY HH";
   const [appointmentData, setAppointmentData] = useState();
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const fetchAppointmentData = async () => {
     try {
@@ -55,31 +53,22 @@ const AppointmentDetailModalContainer = ({
     setNeededAppointment(null);
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCreateBookingModalOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCreateBookingModalCancel = () => {
-    setIsModalVisible(false);
-  };
-
   useEffect(() => {
     appointmentId && fetchAppointmentData();
   }, [appointmentId]);
 
-  return (
-    <>
-      <Modal
-        title="Register for next examination"
-        visible={isModalVisible}
-        onOk={handleCreateBookingModalOk}
-        onCancel={handleCreateBookingModalCancel}
-      >
-        <Form name="create_booking_from_modal_form" onFinish={onFinish}>
+  const createBooking = () => {
+    Modal.info({
+      title: "Register for the next examination",
+      maskClosable: true,
+      closable: true,
+      okButtonProps: { style: { display: "none" } },
+      content: (
+        <Form
+          name="create_booking_from_modal_form"
+          onFinish={onFinish}
+          style={{ marginTop: 40, marginRight: 40 }}
+        >
           <Form.Item name="description" label="Description">
             <Input placeholder="Enter description" />
           </Form.Item>
@@ -115,7 +104,12 @@ const AppointmentDetailModalContainer = ({
             </Button>
           </Form.Item>
         </Form>
-      </Modal>
+      ),
+    });
+  };
+
+  return (
+    <>
       <Modal
         destroyOnClose
         visible={appointmentId !== null}
@@ -126,7 +120,7 @@ const AppointmentDetailModalContainer = ({
       >
         <AppointmentDetailModalComponent
           appointmentData={appointmentData}
-          showModal={showModal}
+          createBooking={createBooking}
         />
       </Modal>
     </>
