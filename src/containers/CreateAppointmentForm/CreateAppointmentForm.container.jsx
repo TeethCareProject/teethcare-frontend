@@ -6,16 +6,16 @@ import { getAllBooking } from "../../services/teeth-apis/BookingController";
 import { notification, Form, PageHeader, Descriptions, Col } from "antd";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
+import { useHistory, generatePath } from "react-router-dom";
+import RoutePath from "../../routers/Path";
 
-const CreateAppointmentFormContainer = ({
-  bookingId,
-  goToNextExamination,
-  bookingData,
-  bookingArray,
-}) => {
+const CreateAppointmentFormContainer = ({ bookingId, bookingData }) => {
+  const history = useHistory();
   const [form] = Form.useForm();
   const [isDisplayed, setIsDisplayed] = useState(false);
+  const [bookingArray, setBookingArray] = useState();
 
+  const index = bookingArray ? 0 : -1;
   const nextBooking = bookingArray ? bookingArray[0] : null;
 
   const onFinish = async (values) => {
@@ -35,6 +35,38 @@ const CreateAppointmentFormContainer = ({
       });
     }
   };
+
+  const fetchBookingArray = async () => {
+    try {
+      const { data } = await getAllBooking({
+        status: BookingStatusConstants.TREATMENT,
+        isConfirmed: false,
+      });
+      setBookingArray(data?.content);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching booking data, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
+  const goToNextExamination = () => {
+    if (index !== bookingArray.length) {
+      history.push(
+        generatePath(RoutePath.EXAMINATION_PAGE, {
+          bookingId: nextBooking?.id,
+        })
+      );
+    } else {
+      history.push(RoutePath.DASHBOARD_PAGE);
+    }
+  };
+
+  useEffect(() => {
+    fetchBookingArray();
+  }, [bookingId]);
 
   return (
     <Col span={12} style={{ margin: "30px 40px" }}>

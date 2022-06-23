@@ -1,19 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { notification, Form, Row, Alert, Divider } from "antd";
-import { useParams, useHistory, generatePath } from "react-router-dom";
-import {
-  getBookingById,
-  getAllBooking,
-} from "../../services/teeth-apis/BookingController";
+import { useParams, useHistory } from "react-router-dom";
+import { getBookingById } from "../../services/teeth-apis/BookingController";
 import DentistUpdatingBookingFormContainer from "../DentistUpdateBookingForm/DentistUpdateBookingForm.container";
 import DentistBookingDetailComponent from "../../components/DentistBookingDetail/DentistBookingDetail.component";
 import CreateAppointmentFormContainer from "../CreateAppointmentForm/CreateAppointmentForm.container";
 import RoutePath from "../../routers/Path";
-import BookingStatusConstants from "../../constants/BookingStatusConstants";
-
 const ExaminationScreenContainer = () => {
   const [showInfo, setShowInfo] = useState(false);
-  const [bookingArray, setBookingArray] = useState();
   const { bookingId } = useParams();
   const [isRendered, setIsRendered] = useState(false);
   const history = useHistory();
@@ -22,7 +16,6 @@ const ExaminationScreenContainer = () => {
   const [form] = Form.useForm();
 
   //get the index of the first booking that is not confirmed
-  const index = bookingArray ? 0 : -1;
 
   const fetchBookingData = async () => {
     try {
@@ -40,44 +33,12 @@ const ExaminationScreenContainer = () => {
     }
   };
 
-  const fetchBookingArray = async () => {
-    try {
-      const { data } = await getAllBooking({
-        status: BookingStatusConstants.TREATMENT,
-        isConfirmed: false,
-      });
-      setBookingArray(data?.content);
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching booking data, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
-  const goToNextExamination = () => {
-    if (index !== bookingArray.length - 1) {
-      history.push(
-        generatePath(RoutePath.EXAMINATION_PAGE, {
-          bookingId: bookingArray[index]?.id,
-        })
-      );
-    } else {
-      history.push(RoutePath.DASHBOARD_PAGE);
-    }
-  };
-
   const returnToDashboard = () => {
     history.push(RoutePath.DASHBOARD_PAGE);
   };
 
   useEffect(() => {
     bookingId && fetchBookingData();
-  }, [bookingId]);
-
-  useEffect(() => {
-    fetchBookingArray();
   }, [bookingId]);
 
   return (
@@ -100,9 +61,7 @@ const ExaminationScreenContainer = () => {
         {bookingData?.confirmed ? (
           <CreateAppointmentFormContainer
             bookingId={bookingId}
-            goToNextExamination={goToNextExamination}
             bookingData={bookingData}
-            bookingArray={bookingArray}
           />
         ) : (
           <DentistUpdatingBookingFormContainer
