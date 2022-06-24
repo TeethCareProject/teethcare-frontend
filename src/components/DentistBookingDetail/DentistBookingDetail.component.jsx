@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Row, Typography, Button, List, Avatar } from "antd";
+import { Col, Row, Typography, List, Avatar } from "antd";
 import { ContainerOutlined } from "@ant-design/icons";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
@@ -8,7 +8,7 @@ const DentistBookingDetailComponent = ({ booking }) => {
     ? convertMillisecondsToDate(booking?.examinationTime)
     : convertMillisecondsToDate(booking?.createBookingDate);
   return (
-    <Col span={10}>
+    <>
       <div
         style={{
           border: "1px solid #D8F1FF",
@@ -79,7 +79,7 @@ const DentistBookingDetailComponent = ({ booking }) => {
           </Col>
         </Row>
       </div>
-    </Col>
+    </>
   );
 };
 

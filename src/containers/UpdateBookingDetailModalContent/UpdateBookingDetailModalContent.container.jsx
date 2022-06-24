@@ -7,7 +7,6 @@ import ServicePickingModalContainer from "../ServicePickingModal/ServicePickingM
 import UpdateBookingFormValueToUpdateBookingData from "../../mapper/UpdateBookingFormValueToUpdateBookingData";
 
 import { updateBooking } from "../../services/teeth-apis/BookingController";
-import moment from "moment";
 
 const UpdateBookingDetailModalContentContainer = ({
   bookingData,
@@ -20,7 +19,7 @@ const UpdateBookingDetailModalContentContainer = ({
   useEffect(() => {
     form.setFieldsValue({
       ...bookingData,
-      examinationTime: moment(bookingData?.examinationTime),
+      examinationTime: null,
     });
   }, [bookingData]);
 

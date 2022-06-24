@@ -46,3 +46,6 @@ export const checkIn = (bookingId) =>
       bookingId: bookingId,
     }
   );
+
+export const createBookingFromAppointment = (values) =>
+  CallAPI(`${BOOKING_END_POINT}/create-from-appointment`, "POST", values);
