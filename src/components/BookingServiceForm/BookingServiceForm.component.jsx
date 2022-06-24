@@ -14,8 +14,7 @@ import {
   Space,
 } from "antd";
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import { convertMomentToDate } from "../../utils/convert.utils";
-import { checkAvailableTime } from "../../services/teeth-apis/BookingController";
+import { BookingServiceFormValidation } from "../../validate/BookingServiceFormValidation";
 const { Option } = Select;
 
 const dateFormat = "DD-MM-YYYY HH";
@@ -77,35 +76,7 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
             name="desiredCheckingTime"
             label="Desired timing"
             validateTrigger="onOk"
-            rules={[
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  const handleCheckAvailableTime = async () => {
-                    try {
-                      await checkAvailableTime(
-                        serviceData?.clinicId,
-                        value.valueOf()
-                      );
-                      return true;
-                    } catch (e) {
-                      return false;
-                    }
-                  };
-
-                  if (!value || convertMomentToDate(value) > Date.now()) {
-                    return handleCheckAvailableTime()
-                      ? Promise.resolve()
-                      : Promise.reject(
-                          new Error("You can't book at this time")
-                        );
-                  } else {
-                    return Promise.reject(
-                      new Error("Booking date should be from tomorow")
-                    );
-                  }
-                },
-              }),
-            ]}
+            rules={BookingServiceFormValidation.desiredCheckingTime}
           >
             <DatePicker
               showTime={{ format: "HH" }}
@@ -121,7 +92,7 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
           <Form.Item
             name="description"
             label="Description"
-            rules={[{ required: true }]}
+            rules={BookingServiceFormValidation.description}
           >
             <Input />
           </Form.Item>

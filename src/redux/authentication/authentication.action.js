@@ -16,3 +16,4 @@ export const logoutHandler = () => {
     dispatch(authenticationActions.logout());
   };
 };
+ 

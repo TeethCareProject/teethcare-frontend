@@ -53,8 +53,10 @@ const AppRouter = () => {
         case notificationTypes.OPEN_BOOKING_NOTIFICATION:
           openBookingDetailNotificationHandler(notificationData);
           break;
-        case (notificationTypes.CONFIRM_BOOKING,
-        notificationTypes.CONFIRM_BOOKING_FAIL):
+        case notificationTypes.CONFIRM_BOOKING_FAIL:
+          confirmBookingNotificationHandler(history, notificationData);
+          break;
+        case notificationTypes.CONFIRM_BOOKING_SUCCESS:
           confirmBookingNotificationHandler(history, notificationData);
           break;
         default:

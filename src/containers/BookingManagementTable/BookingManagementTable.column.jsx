@@ -1,5 +1,6 @@
 import { Space, Tag, Button } from "antd";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 const BookingManagementTableColumn = [
   {
@@ -23,7 +24,7 @@ const BookingManagementTableColumn = [
     title: "Booking time",
     key: "createBookingDate",
     render: (_, record) => (
-      <p>{new Date(record?.createBookingDate).toISOString()}</p>
+      <p>{convertMillisecondsToDate(record?.createBookingDate)}</p>
     ),
   },
   {
