@@ -57,3 +57,11 @@ export const checkAvailableTime = (clinicId, bookingTime) =>
 
 export const createBookingFromAppointment = (values) =>
   CallAPI(`${BOOKING_END_POINT}/create-from-appointment`, "POST", values);
+
+export const getAvailableTime = (clinicId, date) =>
+  CallAPI(
+    `${BOOKING_END_POINT}/get-available-time`,
+    "GET",
+    {},
+    { clinicId, date }
+  );

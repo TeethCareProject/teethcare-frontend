@@ -5,7 +5,10 @@ import { useSelector } from "react-redux";
 import { useForm } from "antd/lib/form/Form";
 import { useHistory } from "react-router-dom";
 import RoutePath from "../../routers/Path";
-import { bookService } from "../../services/teeth-apis/BookingController";
+import {
+  bookService,
+  getAvailableTime,
+} from "../../services/teeth-apis/BookingController";
 import UserToBookingFormMapper from "../../mapper/UserToBookingFormMapper";
 import { convertMomentToMilliseconds } from "../../utils/convert.utils";
 import { getServiceById } from "../../services/teeth-apis/ServiceController";
@@ -16,19 +19,19 @@ const BookingServiceFormContainer = () => {
   const { serviceId } = useParams();
   const user = useSelector((state) => state?.authentication?.user);
   const [serviceData, setServiceData] = useState({});
+  const [availableHourList, setAvailableHourList] = useState([]);
   const [form] = useForm();
   const history = useHistory();
 
   const onFinish = (values) => {
     //submit form
-    debugger;
     const submitBooking = async () => {
       try {
         const { data } = await bookService({
           serviceId: serviceId,
-          desiredCheckingTime: convertMomentToMilliseconds(
-            values.desiredCheckingTime
-          ),
+          desiredCheckingTime:
+            convertMomentToMilliseconds(values.desiredCheckingTime) +
+            values.desiredHour * 60 * 60 * 1000,
           description: values.description,
         });
         history.push(RoutePath.BOOKING_SUCCESSFUL_PAGE);
@@ -61,10 +64,30 @@ const BookingServiceFormContainer = () => {
     }
   };
 
+  const handleGetAvailableHourList = async () => {
+    try {
+      const { data } = await getAvailableTime(
+        serviceData?.clinicId,
+        form
+          ?.getFieldValue("desiredCheckingTime")
+          ?.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+          ?.valueOf()
+      );
+
+      setAvailableHourList(data?.availableTimeList);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching available hours, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
   useEffect(() => {
     if (user) {
       const mapperResult = UserToBookingFormMapper(user);
-      form.setFieldsValue({ ...mapperResult, ...serviceData });
+      form.setFieldsValue({ ...mapperResult });
     }
   }, [user, serviceData]);
 
@@ -75,6 +98,8 @@ const BookingServiceFormContainer = () => {
       onFinish={onFinish}
       layout="vertical"
       serviceData={serviceData}
+      availableHourList={availableHourList}
+      handleGetAvailableHourList={handleGetAvailableHourList}
     />
   );
 };
