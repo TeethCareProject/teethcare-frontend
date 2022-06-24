@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { notification, Form, Row, Alert, Divider } from "antd";
-import { useParams } from "react-router-dom";
+import { notification, Form, Row, Alert, Divider, Button, Col } from "antd";
+import { useParams, useHistory } from "react-router-dom";
 import { getBookingById } from "../../services/teeth-apis/BookingController";
 import DentistUpdatingBookingFormContainer from "../DentistUpdateBookingForm/DentistUpdateBookingForm.container";
 import DentistBookingDetailComponent from "../../components/DentistBookingDetail/DentistBookingDetail.component";
-
+import CreateAppointmentFormContainer from "../CreateAppointmentForm/CreateAppointmentForm.container";
+import RoutePath from "../../routers/Path";
 const ExaminationScreenContainer = () => {
   const [showInfo, setShowInfo] = useState(false);
   const { bookingId } = useParams();
   const [isRendered, setIsRendered] = useState(false);
-
+  const history = useHistory();
   const [bookingData, setBookingData] = useState({});
 
   const [form] = Form.useForm();
@@ -30,6 +31,10 @@ const ExaminationScreenContainer = () => {
     }
   };
 
+  const returnToDashboard = () => {
+    history.push(RoutePath.DASHBOARD_PAGE);
+  };
+
   useEffect(() => {
     bookingId && fetchBookingData();
   }, [bookingId]);
@@ -46,15 +51,30 @@ const ExaminationScreenContainer = () => {
         ) : null}
       </Row>
       <Row style={{ display: "flex", justifyContent: "space-between" }}>
-        <DentistBookingDetailComponent booking={bookingData} />
+        <Col span={10}>
+          <DentistBookingDetailComponent booking={bookingData} />
+          <Button
+            onClick={() => returnToDashboard()}
+            style={{ margin: "0 0 30px 30px" }}
+          >
+            Return to dashboard
+          </Button>
+        </Col>
         <Divider type="vertical" style={{ height: "90vh" }} />
-        <DentistUpdatingBookingFormContainer
-          isRendered={isRendered}
-          setIsRendered={setIsRendered}
-          setShowInfo={setShowInfo}
-          form={form}
-          bookingData={bookingData}
-        />
+        {bookingData?.confirmed ? (
+          <CreateAppointmentFormContainer
+            bookingId={bookingId}
+            bookingData={bookingData}
+          />
+        ) : (
+          <DentistUpdatingBookingFormContainer
+            setIsRendered={setIsRendered}
+            setShowInfo={setShowInfo}
+            form={form}
+            bookingData={bookingData}
+            bookingId={bookingId}
+          />
+        )}
       </Row>
     </>
   );
