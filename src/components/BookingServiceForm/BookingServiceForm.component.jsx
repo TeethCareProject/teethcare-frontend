@@ -15,6 +15,7 @@ import {
 } from "antd";
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMomentToDate } from "../../utils/convert.utils";
+import { checkAvailableTime } from "../../services/teeth-apis/BookingController";
 const { Option } = Select;
 
 const dateFormat = "DD-MM-YYYY HH";
@@ -75,15 +76,33 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
           <Form.Item
             name="desiredCheckingTime"
             label="Desired timing"
+            validateTrigger="onOk"
             rules={[
               ({ getFieldValue }) => ({
                 validator(_, value) {
+                  const handleCheckAvailableTime = async () => {
+                    try {
+                      await checkAvailableTime(
+                        serviceData?.clinicId,
+                        value.valueOf()
+                      );
+                      return true;
+                    } catch (e) {
+                      return false;
+                    }
+                  };
+
                   if (!value || convertMomentToDate(value) > Date.now()) {
-                    return Promise.resolve();
+                    return handleCheckAvailableTime()
+                      ? Promise.resolve()
+                      : Promise.reject(
+                          new Error("You can't book at this time")
+                        );
+                  } else {
+                    return Promise.reject(
+                      new Error("Booking date should be from tomorow")
+                    );
                   }
-                  return Promise.reject(
-                    new Error("Booking date should be from tomorow")
-                  );
                 },
               }),
             ]}

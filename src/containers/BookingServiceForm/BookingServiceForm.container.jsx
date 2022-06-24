@@ -19,22 +19,6 @@ const BookingServiceFormContainer = () => {
   const [form] = useForm();
   const history = useHistory();
 
-  const fetchServiceData = async () => {
-    try {
-      const { data } = await getServiceById(serviceId);
-      const mapperResult = ServiceEntityToServiceCard(data);
-      setServiceData(mapperResult);
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching service data, try again later`,
-        duration: 2,
-      });
-      //TODO: come back to clinic page?
-      history.push(RoutePath.HOME_PAGE);
-    }
-  };
-
   const onFinish = (values) => {
     //submit form
     const submitBooking = async () => {
@@ -58,6 +42,22 @@ const BookingServiceFormContainer = () => {
   useEffect(() => {
     fetchServiceData();
   }, []);
+
+  const fetchServiceData = async () => {
+    try {
+      const { data } = await getServiceById(serviceId);
+      const mapperResult = ServiceEntityToServiceCard(data);
+      setServiceData(mapperResult);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching service data, try again later`,
+        duration: 2,
+      });
+      //TODO: come back to clinic page?
+      history.push(RoutePath.HOME_PAGE);
+    }
+  };
 
   useEffect(() => {
     if (user) {

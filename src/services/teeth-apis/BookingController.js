@@ -46,3 +46,11 @@ export const checkIn = (bookingId) =>
       bookingId: bookingId,
     }
   );
+
+export const checkAvailableTime = (clinicId, bookingTime) =>
+  CallAPI(
+    `${BOOKING_END_POINT}/check-available-time`,
+    "GET",
+    {},
+    { clinicId: clinicId, desiredCheckingTime: bookingTime }
+  );
