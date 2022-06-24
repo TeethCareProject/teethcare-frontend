@@ -138,7 +138,7 @@ const BookingManagementTableContainer = () => {
       if (status == 400) {
         Modal.error({
           title: "Invalid booking Id",
-          content: "Invalid booking to checkin!",
+          content: "This booking cant be checkin at this time!",
         });
       }
     }
