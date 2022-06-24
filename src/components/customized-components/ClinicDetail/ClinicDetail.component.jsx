@@ -1,6 +1,6 @@
 import React from "react";
 import { StarOutlined, EnvironmentOutlined } from "@ant-design/icons";
-import { Card, Typography } from "antd";
+import { Card, Typography, Image } from "antd";
 import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
 import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";
@@ -12,8 +12,11 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
     <>
       <div className="clinic-detail-page-information">
         <div className="clinic-detail-page-information-img">
-          {/* TODO: change image url */}
-          <img src={avtImg} alt="clinic-img" />
+          <Image
+            src={clinicData?.imageUrl}
+            alt="clinic-img"
+            fallback={avtImg}
+          />
         </div>
         <div>
           <div className="clinic-detail-page-information-name">
@@ -53,8 +56,7 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
         </div>
       </div>
       <div className="clinic-detail-page-banner">
-        {/* TODO: change image url */}
-        <img src={avtImg} alt="clinic-img" />
+        <Image src={clinicData?.imageUrl} alt="clinic-img" fallback={avtImg} />
       </div>
       <div className="clinic-detail-page-description">
         <Typography.Title level={3}>About us:</Typography.Title>

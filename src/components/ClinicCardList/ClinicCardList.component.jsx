@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Row, Col, Card } from "antd";
+import { Row, Col, Card, Image } from "antd";
 
 import clinicImg from "../../assets/clinicImg.png";
 import { StarFilled } from "@ant-design/icons";
@@ -22,9 +22,10 @@ const ClinicCardListComponent = ({ layoutDirection, listData }) => {
                   hoverable
                   //   style={{ height: 300 }}
                   cover={
-                    <img
+                    <Image
                       alt="example"
-                      src={clinicImg}
+                      src={clinic?.imageUrl}
+                      fallback={clinicImg}
                       style={{ height: 400 }}
                     />
                   }

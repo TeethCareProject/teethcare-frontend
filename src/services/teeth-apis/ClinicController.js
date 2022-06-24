@@ -6,3 +6,9 @@ export const getClinicById = (clinicId) =>
 
 export const getClinics = (option) =>
   CallAPI(`${CLINIC_END_POINT}`, "GET", {}, option);
+
+export const updateClinic = (data) =>
+  CallAPI(`${CLINIC_END_POINT}`, "PUT", { ...data });
+
+export const updateClinicImage = (image) =>
+  CallAPI(`${CLINIC_END_POINT}/update-image`, "PUT", image);
