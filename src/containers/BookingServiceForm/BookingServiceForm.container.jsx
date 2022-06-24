@@ -21,6 +21,7 @@ const BookingServiceFormContainer = () => {
 
   const onFinish = (values) => {
     //submit form
+    debugger;
     const submitBooking = async () => {
       try {
         const { data } = await bookService({
@@ -46,6 +47,7 @@ const BookingServiceFormContainer = () => {
   const fetchServiceData = async () => {
     try {
       const { data } = await getServiceById(serviceId);
+
       const mapperResult = ServiceEntityToServiceCard(data);
       setServiceData(mapperResult);
     } catch (e) {
@@ -64,7 +66,7 @@ const BookingServiceFormContainer = () => {
       const mapperResult = UserToBookingFormMapper(user);
       form.setFieldsValue({ ...mapperResult, ...serviceData });
     }
-  }, [user]);
+  }, [user, serviceData]);
 
   return (
     <BookingServiceFormComponent

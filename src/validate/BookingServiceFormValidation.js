@@ -1,6 +1,6 @@
 import { REQUIRED_VALIDATOR } from "./GeneralValidation";
-import { convertMomentToDate } from "../convert.utils/";
 import { checkAvailableTime } from "../services/teeth-apis/BookingController";
+import { convertMomentToDate } from "../utils/convert.utils";
 
 export const BookingServiceFormValidation = {
   desiredCheckingTime: [
@@ -11,16 +11,14 @@ export const BookingServiceFormValidation = {
         const handleCheckAvailableTime = async () => {
           try {
             await checkAvailableTime(clinicId, value.valueOf());
-            return true;
+            return Promise.resolve();
           } catch (e) {
-            return false;
+            return Promise.reject(new Error("You can't book at this time"));
           }
         };
 
         if (!value || convertMomentToDate(value) > Date.now()) {
-          return handleCheckAvailableTime()
-            ? Promise.resolve()
-            : Promise.reject(new Error("You can't book at this time"));
+          return handleCheckAvailableTime();
         } else {
           return Promise.reject(
             new Error("Booking date should be from tomorow")
