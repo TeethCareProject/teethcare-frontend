@@ -39,7 +39,6 @@ import notificationTypes from "../notificationHandler/notification.types";
 import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
-import checkInCheckOutNotificationHandler from "../notificationHandler/CheckInCheckOutNotification.handler";
 
 const AppRouter = () => {
   const history = useHistory();
@@ -147,19 +146,6 @@ const AppRouter = () => {
             ADMIN: () => <AdminDashboardPage />,
           }}
           path={RoutePath.DASHBOARD_PAGE}
-          exact
-          accessibleRoles={Object.keys(RoleConstant)}
-        />
-        <DynamicRouter
-          key="dashboard"
-          componentList={{
-            MANAGER: () => <ManagerDashboardPage />,
-            CUSTOMER_SERVICE: () => <CustomerServiceDashboardPage />,
-            DENTIST: () => <DentistDashboardPage />,
-            PATIENT: () => <PatientDashboardPage />,
-            ADMIN: () => <AdminDashboardPage />,
-          }}
-          path={RoutePath.DASHBOARD_WITH_TAB_PAGE}
           exact
           accessibleRoles={Object.keys(RoleConstant)}
         />

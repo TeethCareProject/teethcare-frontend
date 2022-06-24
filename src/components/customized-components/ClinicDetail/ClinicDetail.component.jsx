@@ -43,20 +43,27 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             <div>
               Morning:{" "}
               {convertMillisecondsToHour(clinicData?.startTimeShift1) +
-                " - " +
-                convertMillisecondsToHour(clinicData?.endTimeShift1)}
+                ":00 - " +
+                convertMillisecondsToHour(clinicData?.endTimeShift1) +
+                ":00"}
             </div>
             <div>
               Evening:{" "}
               {convertMillisecondsToHour(clinicData?.startTimeShift2) +
-                " - " +
-                convertMillisecondsToHour(clinicData?.endTimeShift2)}
+                ":00 - " +
+                convertMillisecondsToHour(clinicData?.endTimeShift2) +
+                ":00"}
             </div>
           </div>
         </div>
       </div>
       <div className="clinic-detail-page-banner">
-        <Image src={clinicData?.imageUrl} alt="clinic-img" fallback={avtImg} />
+        <Image
+          src={clinicData?.imageUrl}
+          alt="clinic-img"
+          fallback={avtImg}
+          style={{ width: "90vw" }}
+        />
       </div>
       <div className="clinic-detail-page-description">
         <Typography.Title level={3}>About us:</Typography.Title>

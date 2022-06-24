@@ -1,10 +1,7 @@
 import React from "react";
 import { Col, Form, DatePicker, Button, Input, Typography } from "antd";
 import moment from "moment";
-import {
-  convertMomentToDate,
-  getDisabledTime,
-} from "../../utils/convert.utils";
+import { getDisabledTime } from "../../utils/convert.utils";
 import { useSelector } from "react-redux";
 import { CreateAppointmentFormValidation } from "../../validate/CreateAppointmentFormValidation";
 
@@ -29,7 +26,7 @@ const CreateAppointmentFormComponent = ({
   });
 
   return (
-    <Col span={12} style={{ margin: "30px 40px" }}>
+    <>
       <Typography.Title level={4}>
         Create appointment for next examination:
       </Typography.Title>
@@ -39,6 +36,7 @@ const CreateAppointmentFormComponent = ({
             rows={12}
             placeholder="Note for next treatment"
             maxLength={1000}
+            style={{ width: "100%" }}
           />
         </Form.Item>
         <Form.Item
@@ -87,7 +85,7 @@ const CreateAppointmentFormComponent = ({
           </Button>
         </div>
       </Form>
-    </Col>
+    </>
   );
 };
 

@@ -11,14 +11,15 @@ export const convertMillisecondsToDate = (milliseconds) => {
 };
 
 export const convertMillisecondsToHour = (milliseconds) => {
-  return milliseconds / (60 * 60 * 1000);
+  //must shift 7 hour for correct display
+  return milliseconds / (60 * 60 * 1000) + 7;
 };
 
 export const getDisabledTime = (startTime1, endTime1, startTime2, endTime2) => {
-  let start1 = convertMillisecondsToHour(startTime1) + 7;
-  let end1 = convertMillisecondsToHour(endTime1) + 7;
-  let start2 = convertMillisecondsToHour(startTime2) + 7;
-  let end2 = convertMillisecondsToHour(endTime2) + 7;
+  let start1 = convertMillisecondsToHour(startTime1);
+  let end1 = convertMillisecondsToHour(endTime1);
+  let start2 = convertMillisecondsToHour(startTime2);
+  let end2 = convertMillisecondsToHour(endTime2);
 
   let range1 = [];
   let range2 = [];

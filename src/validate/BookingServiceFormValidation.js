@@ -1,5 +1,5 @@
 import { REQUIRED_VALIDATOR } from "./GeneralValidation";
-import { convertMomentToDate } from "../convert.utils/";
+import { convertMomentToDate } from "../utils/convert.utils";
 
 export const BookingServiceFormValidation = {
   desiredCheckingTime: [
