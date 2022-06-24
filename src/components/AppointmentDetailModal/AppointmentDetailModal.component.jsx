@@ -5,7 +5,10 @@ import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
-const AppointmentDetailModalComponent = ({ appointmentData, showModal }) => {
+const AppointmentDetailModalComponent = ({
+  appointmentData,
+  createBooking,
+}) => {
   return (
     <>
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
@@ -100,7 +103,7 @@ const AppointmentDetailModalComponent = ({ appointmentData, showModal }) => {
             marginRight: 0,
             marginBottom: 10,
           }}
-          onClick={() => showModal()}
+          onClick={() => createBooking()}
         >
           Continue to examine
         </Button>

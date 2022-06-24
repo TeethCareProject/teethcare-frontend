@@ -6,6 +6,7 @@ import {
   getDisabledTime,
 } from "../../utils/convert.utils";
 import { useSelector } from "react-redux";
+import { CreateAppointmentFormValidation } from "../../validate/CreateAppointmentFormValidation";
 
 const CreateAppointmentFormComponent = ({
   onFinish,
@@ -33,7 +34,7 @@ const CreateAppointmentFormComponent = ({
         Create appointment for next examination:
       </Typography.Title>
       <Form name="create_appointment_form" onFinish={onFinish} form={form}>
-        <Form.Item name="note">
+        <Form.Item name="note" rules={CreateAppointmentFormValidation.note}>
           <TextArea
             rows={12}
             placeholder="Note for next treatment"
@@ -43,18 +44,7 @@ const CreateAppointmentFormComponent = ({
         <Form.Item
           name="appointmentDate"
           label="Appointment day:"
-          rules={[
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || convertMomentToDate(value) > Date.now()) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(
-                  new Error("Booking date should be from tomorrow")
-                );
-              },
-            }),
-          ]}
+          rules={CreateAppointmentFormValidation.appointmentDate}
         >
           <DatePicker
             showTime={{ format: "HH" }}
@@ -70,7 +60,8 @@ const CreateAppointmentFormComponent = ({
           style={{
             display: "flex",
             justifyContent: "space-between",
-            marginTop: 40,
+            marginTop: 20,
+            marginBottom: 20,
           }}
         >
           <Form.Item>

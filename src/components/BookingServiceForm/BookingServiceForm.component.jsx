@@ -14,11 +14,9 @@ import {
   Space,
 } from "antd";
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import {
-  convertMomentToDate,
-  getDisabledTime,
-} from "../../utils/convert.utils";
+import { getDisabledTime } from "../../utils/convert.utils";
 import ServiceEntityToServiceCard from "../../mapper/ServiceEntityToServiceCard";
+import { BookingServiceFormValidation } from "../../validate/BookingServiceFormValidation";
 const { Option } = Select;
 
 const dateFormat = "DD-MM-YYYY HH";
@@ -89,18 +87,7 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
           <Form.Item
             name="desiredCheckingTime"
             label="Desired timing"
-            rules={[
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || convertMomentToDate(value) > Date.now()) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(
-                    new Error("Booking date should be from tomorow")
-                  );
-                },
-              }),
-            ]}
+            rules={BookingServiceFormValidation.desiredCheckingTime}
           >
             <DatePicker
               showTime={{ format: "HH" }}
@@ -117,7 +104,7 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
           <Form.Item
             name="description"
             label="Description"
-            rules={[{ required: true }]}
+            rules={BookingServiceFormValidation.description}
           >
             <Input />
           </Form.Item>
