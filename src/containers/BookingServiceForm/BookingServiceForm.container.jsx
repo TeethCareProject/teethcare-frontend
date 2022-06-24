@@ -62,7 +62,7 @@ const BookingServiceFormContainer = () => {
   useEffect(() => {
     if (user) {
       const mapperResult = UserToBookingFormMapper(user);
-      form.setFieldsValue(mapperResult);
+      form.setFieldsValue({ ...mapperResult, ...serviceData });
     }
   }, [user]);
 
