@@ -15,6 +15,7 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import { DentistUpdateFormValidation } from "../../validate/DentistUpdateFormValidation";
 
 const DentistUpdateBookingFormComponent = ({
   onFinish,
@@ -43,7 +44,7 @@ const DentistUpdateBookingFormComponent = ({
       ) : null}
 
       <Form name="info_treatment-update" onFinish={onFinish} form={form}>
-        <Form.Item name="note">
+        <Form.Item name="note" rules={DentistUpdateFormValidation.note}>
           <TextArea
             disabled={isUpdated}
             rows={8}
@@ -97,7 +98,10 @@ const DentistUpdateBookingFormComponent = ({
           />
         ) : null}
 
-        <Form.Item name="serviceIds">
+        <Form.Item
+          name="serviceIds"
+          rules={DentistUpdateFormValidation.serviceIds}
+        >
           <Select
             disabled={isUpdated}
             mode="multiple"

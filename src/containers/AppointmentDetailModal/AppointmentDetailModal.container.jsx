@@ -27,23 +27,6 @@ const AppointmentDetailModalContainer = ({
     }
   };
 
-  const onFinish = async (values) => {
-    try {
-      await createBookingFromAppointment(
-        AppointmentToBookingForm({
-          appointmentId: appointmentId,
-          ...values,
-        })
-      );
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while creating booking data, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
   const handleOk = () => {
     setNeededAppointment(null);
   };
@@ -64,8 +47,8 @@ const AppointmentDetailModalContainer = ({
       okButtonProps: { style: { display: "none" } },
       content: (
         <CreateBookingFromModalForm
-          onFinish={onFinish}
           appointmentData={appointmentData}
+          appointmentId={appointmentId}
         />
       ),
     });
@@ -88,8 +71,26 @@ const AppointmentDetailModalContainer = ({
   );
 };
 
-const CreateBookingFromModalForm = ({ onFinish, appointmentData }) => {
+const CreateBookingFromModalForm = ({ appointmentData, appointmentId }) => {
   const dateFormat = "DD-MM-YYYY HH";
+
+  const onFinish = async (values) => {
+    try {
+      await createBookingFromAppointment(
+        AppointmentToBookingForm({
+          appointmentId: appointmentId,
+          ...values,
+        })
+      );
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while creating booking data, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
   return (
     <Form
       name="create_booking_from_modal_form"
