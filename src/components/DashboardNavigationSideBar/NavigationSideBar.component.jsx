@@ -1,7 +1,7 @@
 import { Menu } from "antd";
 import React from "react";
 
-const DashboardSideBarComponent = ({ items }) => {
+const DashboardSideBarComponent = ({ items, selectedKey }) => {
   const onClick = (e) => {
     //handle onclick item
     items.find((item) => item.key === e.key)?.onClick();
@@ -14,7 +14,7 @@ const DashboardSideBarComponent = ({ items }) => {
         style={{
           width: 256,
         }}
-        defaultSelectedKeys={items[0].key}
+        selectedKeys={selectedKey}
         mode="inline"
         items={items}
       />

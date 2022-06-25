@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
@@ -6,6 +6,9 @@ import ErrorHandlerComponent from "./components/commons/ErrorHandler/ErrorHandle
 import { createBrowserHistory } from "history";
 import AppRouter from "./routers/AppRouter";
 import store from "./redux";
+import { notification } from "antd";
+import { messaging } from "./services/firebase/firebase-init";
+import { onMessage } from "firebase/messaging";
 
 function App() {
   const history = createBrowserHistory();

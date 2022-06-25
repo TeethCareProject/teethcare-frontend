@@ -9,3 +9,9 @@ export const getAccountById = (accountId) =>
 
 export const setAccountStatus = (status, accountId) =>
   CallAPI(`${ACCOUNT_END_POINT}/${accountId}`, "PUT", status);
+
+export const updateProfile = (accountData) =>
+  CallAPI(`${ACCOUNT_END_POINT}`, "PUT", accountData);
+
+export const updateImageProfile = (image) =>
+  CallAPI(`${ACCOUNT_END_POINT}/update-image`, "PUT", image);

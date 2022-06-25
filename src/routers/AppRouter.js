@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavigationBar from "../components/commons/NavigationBar/NavigationBar.component";
 import { Redirect, Route, Switch } from "react-router-dom";
 import LoginPage from "../pages/LoginPage/LoginPage";
@@ -14,13 +14,65 @@ import ManagerDashboardPage from "../pages/ManagerDashboardPage/ManagerDashboard
 import AdminDashboardPage from "../pages/AdminDashboardPage/AdminDashboardPage";
 import PatientDashboardPage from "../pages/PatientDashboardPage/PatientDashboardPage";
 import DynamicRouter from "../routers/components/DynamicRouter";
+import PrivateRouter from "./components/PrivateRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {
+  getNotificationList,
+  initFcmToken,
+} from "../redux/notification/notification.action";
+import { messaging } from "../services/firebase/firebase-init";
 import BookingServicePage from "../pages/BookingServicePage/BookingServicePage";
 import BookingSuccessfulPage from "../pages/BookingServicePage/BookingResultPage/BookingSuccessfulPage";
 import BookingFailedPage from "../pages/BookingServicePage/BookingResultPage/BookingFailedPage";
+import ExaminationPage from "../pages/ExaminationPage/ExaminationPage";
+import ConfirmBookingPage from "../pages/BookingServicePage/ConfirmBookingPage";
+import AcceptConfirmPage from "../pages/BookingServicePage/BookingResultPage/AcceptConfirmPage";
+import RejectConfirmPage from "../pages/BookingServicePage/BookingResultPage/RejectConfirmPage";
+import { notification } from "antd";
+import { onMessage } from "firebase/messaging";
+import TriggerQrCodeNotificationPage from "../pages/TriggerQrCodeNotificationPage/TriggerQrCodeNotificationPage";
+import RedirectBookingDetail from "../pages/CustomerServiceDashboardPage/RedirectBookingDetailPage";
+import notificationTypes from "../notificationHandler/notification.types";
+import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
+import ProfilePage from "../pages/ProfilePage/ProfilePage";
+import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
 
 const AppRouter = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  dispatch(initFcmToken());
+
+  useEffect(() => {
+    const unsubscribe = onMessage(messaging, (payload) => {
+      const { notification: notificationData } = payload;
+
+      switch (notificationData.title) {
+        case notificationTypes.OPEN_BOOKING_NOTIFICATION:
+          openBookingDetailNotificationHandler(notificationData);
+          break;
+        case notificationTypes.CONFIRM_BOOKING_FAIL:
+          confirmBookingNotificationHandler(history, notificationData);
+          break;
+        case notificationTypes.CONFIRM_BOOKING_SUCCESS:
+          confirmBookingNotificationHandler(history, notificationData);
+          break;
+        default:
+          notification["info"]({
+            message: notificationData.title,
+            description: notificationData.body,
+          });
+          break;
+      }
+
+      dispatch(getNotificationList());
+    });
+
+    return unsubscribe;
+  });
+
   return (
     <>
       <NavigationBar />
@@ -46,15 +98,44 @@ const AppRouter = () => {
         <Route path={RoutePath.SERVICE_DETAIL_PAGE} exact>
           <ServiceDetailPage />
         </Route>
-        <Route path={RoutePath.BOOKING_PAGE}>
+        <Route path={RoutePath.BOOKING_PAGE} exact>
           <BookingServicePage />
         </Route>
-        <Route path={RoutePath.BOOKING_SUCCESSFUL_PAGE}>
+        <Route path={RoutePath.BOOKING_SUCCESSFUL_PAGE} exact>
           <BookingSuccessfulPage />
         </Route>
-        <Route path={RoutePath.BOOKING_FAILED_PAGE}>
+        <Route path={RoutePath.BOOKING_FAILED_PAGE} exact>
           <BookingFailedPage />
         </Route>
+        <Route path={RoutePath.EXAMINATION_PAGE} exact>
+          <ExaminationPage />
+        </Route>
+        <Route path={RoutePath.CONFIRM_BOOKING_PAGE} exact>
+          <ConfirmBookingPage />
+        </Route>
+        <Route path={RoutePath.ACCEPT_CONFIRM_PAGE} exact>
+          <AcceptConfirmPage />
+        </Route>
+        <Route path={RoutePath.REJECT_CONFIRM_PAGE} exact>
+          <RejectConfirmPage />
+        </Route>
+        <Route path={RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE} exact>
+          <TriggerQrCodeNotificationPage />
+        </Route>
+        <PrivateRouter
+          key="redirectBookingDetail"
+          component={() => <RedirectBookingDetail />}
+          path={RoutePath.REDIRECT_BOOKING_DETAIL_PAGE} //there is a bug that can't use RoutePath, will fix later
+          exact
+          accessibleRoles={[RoleConstant.CUSTOMER_SERVICE]}
+        />
+        <PrivateRouter
+          key="profilePage"
+          component={() => <ProfilePage />}
+          path={RoutePath.PROFILE_PAGE}
+          exact
+          accessibleRoles={Object.keys(RoleConstant)}
+        />
         <DynamicRouter
           key="dashboard"
           componentList={{
@@ -65,6 +146,19 @@ const AppRouter = () => {
             ADMIN: () => <AdminDashboardPage />,
           }}
           path={RoutePath.DASHBOARD_PAGE}
+          exact
+          accessibleRoles={Object.keys(RoleConstant)}
+        />
+        <DynamicRouter
+          key="dashboard"
+          componentList={{
+            MANAGER: () => <ManagerDashboardPage />,
+            CUSTOMER_SERVICE: () => <CustomerServiceDashboardPage />,
+            DENTIST: () => <DentistDashboardPage />,
+            PATIENT: () => <PatientDashboardPage />,
+            ADMIN: () => <AdminDashboardPage />,
+          }}
+          path={RoutePath.DASHBOARD_WITH_TAB_PAGE}
           exact
           accessibleRoles={Object.keys(RoleConstant)}
         />

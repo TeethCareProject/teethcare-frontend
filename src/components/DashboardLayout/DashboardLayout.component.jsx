@@ -7,7 +7,10 @@ const DashboardLayout = ({ navigationList, elementList, currentTab }) => {
     <>
       <Row>
         <Col>
-          <DashboardSideBarComponent items={navigationList} />
+          <DashboardSideBarComponent
+            items={navigationList}
+            selectedKey={navigationList[currentTab].key}
+          />
         </Col>
         <Col flex="auto">
           <div

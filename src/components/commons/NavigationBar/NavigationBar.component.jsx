@@ -1,15 +1,25 @@
 import React, { useState } from "react";
-import { Menu } from "antd";
-import { MailOutlined, AppstoreOutlined } from "@ant-design/icons";
+import { Menu, Space, Avatar, Typography } from "antd";
+import {
+  MailOutlined,
+  AppstoreOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { logoutHandler } from "../../../redux/authentication/authentication.action";
 import RoutePath from "../../../routers/Path";
+import NotificationContainer from "../../../containers/Notification/Notification.container";
 
 const items = [
   {
     label: "Home",
     key: "home",
+    icon: <MailOutlined />,
+  },
+  {
+    label: "Dashboard",
+    key: "dashboard",
     icon: <MailOutlined />,
   },
   {
@@ -37,6 +47,11 @@ const NavigationBar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const isAuthUser = useSelector((state) => state.authentication.isAuthUser);
+  const userName = useSelector(
+    (state) =>
+      state?.authentication?.user?.firstName +
+      state?.authentication?.user?.lastName
+  );
 
   const onClick = (e) => {
     if (e.key === "logout") {
@@ -49,16 +64,52 @@ const NavigationBar = () => {
     } else if (e.key === "home") {
       history.push(RoutePath.HOME_PAGE);
       setCurrent(e.key);
+    } else if (e.key === "dashboard") {
+      history.push(RoutePath.DASHBOARD_PAGE);
+      setCurrent(e.key);
     }
   };
 
   return (
-    <Menu
-      onClick={onClick}
-      selectedKeys={[current]}
-      mode="horizontal"
-      items={isAuthUser ? items : defaultItems}
-    />
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "0.5rem 3rem",
+      }}
+    >
+      <Space>
+        <Menu
+          onClick={onClick}
+          selectedKeys={[current]}
+          mode="horizontal"
+          items={isAuthUser ? items : defaultItems}
+        />
+      </Space>
+      {isAuthUser ? (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-around",
+          }}
+        >
+          <div style={{ marginRight: "3rem" }}>
+            <NotificationContainer />
+          </div>
+          <Space>
+            <Avatar
+              style={{ backgroundColor: "#87d068", cursor: "pointer" }}
+              size={48}
+              icon={<UserOutlined />}
+              onClick={() => history.push(RoutePath.PROFILE_PAGE)}
+            />
+            <Typography>{userName}</Typography>
+          </Space>
+        </div>
+      ) : null}
+    </div>
   );
 };
 
