@@ -1,5 +1,5 @@
 import { REQUIRED_VALIDATOR } from "./GeneralValidation";
-import { convertMomentToDate } from "../convert.utils/";
+import { convertMomentToDate } from "../utils/convert.utils";
 
 export const BookingServiceFormValidation = {
   desiredCheckingTime: [
@@ -9,7 +9,9 @@ export const BookingServiceFormValidation = {
         if (!value || convertMomentToDate(value) > Date.now()) {
           return Promise.resolve();
         }
-        return Promise.reject(new Error("Booking date should be from tomorow"));
+        return Promise.reject(
+          new Error("Booking date should be from tomorrow")
+        );
       },
     }),
   ],
