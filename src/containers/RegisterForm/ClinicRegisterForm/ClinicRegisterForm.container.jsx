@@ -8,16 +8,12 @@ import UserInfoInputComponent from "../../../components/forms/UserInfoInput/User
 
 import ClinicRegisterFormComponent from "../../../components/forms/ClinicRegisterForm/ClinicRegisterForm.component";
 import ClinicFormValueToClinicRegisterData from "../../../mapper/ClinicFormValueToClinicRegisterData";
-import moment from "moment";
-import { convertMomentToMilliseconds } from "../../../utils/convert.utils";
 import { ClinicRegisterValidation } from "../../../validate/RegisterValidation";
 
 const ClinicRegisterFormContainer = () => {
   const { Step } = Steps;
 
   const [form] = Form.useForm();
-  const [registerData, setRegisterData] = useState({});
-
   const [current, setCurrent] = useState(0);
 
   const next = () => {
@@ -110,13 +106,13 @@ const OperatingHourFormComponent = () => {
         name="operatingTimeMorning"
         rules={ClinicRegisterValidation.operatingTimeMorning}
       >
-        <TimePicker.RangePicker />
+        <TimePicker.RangePicker format="HH:mm" />
       </Form.Item>
       <Form.Item
         name="operatingTimeEvening"
         rules={ClinicRegisterValidation.operatingTimeEvening}
       >
-        <TimePicker.RangePicker />
+        <TimePicker.RangePicker format="HH:mm" />
       </Form.Item>
     </>
   );

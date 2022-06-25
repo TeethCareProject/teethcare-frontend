@@ -2,7 +2,6 @@ import moment from "moment";
 import { convertMomentToMilliseconds } from "../utils/convert.utils";
 
 const ClinicFormValueToClinicRegisterData = (values) => {
-  debugger;
   return {
     username: values.username,
     password: values.password,
@@ -16,7 +15,7 @@ const ClinicFormValueToClinicRegisterData = (values) => {
     clinicTaxCode: values.clinicTaxCode,
     clinicAddress: values.clinicAddress,
     clinicEmail: values.clinicEmail,
-    wardId: values.wardId,
+    wardId: values.location[2],
     startTimeShift1: convertMomentToMilliseconds(
       moment(values.operatingTimeMorning[0])
     ),
