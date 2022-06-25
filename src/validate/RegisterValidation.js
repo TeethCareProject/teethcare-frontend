@@ -55,4 +55,6 @@ export const ClinicRegisterValidation = {
       },
     }),
   ],
+  operatingTimeMorning: [REQUIRED_VALIDATOR("Morning operating time")],
+  operatingTimeEvening: [REQUIRED_VALIDATOR("Evening operating time")],
 };

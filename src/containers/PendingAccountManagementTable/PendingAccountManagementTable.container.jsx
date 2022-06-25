@@ -40,8 +40,6 @@ const PendingAccountManagementTableContainer = () => {
       fullName: null,
     });
     setFilterData({
-      id: null,
-      role: RoleConstant.MANAGER,
       status: AccountStatusConstants.PENDING,
       fullName: null,
     });
