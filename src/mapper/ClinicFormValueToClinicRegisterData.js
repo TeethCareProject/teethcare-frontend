@@ -1,3 +1,6 @@
+import moment from "moment";
+import { convertMomentToMilliseconds } from "../utils/convert.utils";
+
 const ClinicFormValueToClinicRegisterData = (values) => {
   debugger;
   return {
@@ -13,8 +16,19 @@ const ClinicFormValueToClinicRegisterData = (values) => {
     clinicTaxCode: values.clinicTaxCode,
     clinicAddress: values.clinicAddress,
     clinicEmail: values.clinicEmail,
-    wardId: values.location[2],
-    email: values.email,
+    wardId: values.wardId,
+    startTimeShift1: convertMomentToMilliseconds(
+      moment(values.operatingTimeMorning[0])
+    ),
+    endTimeShift1: convertMomentToMilliseconds(
+      moment(values.operatingTimeMorning[1])
+    ),
+    startTimeShift2: convertMomentToMilliseconds(
+      moment(values.operatingTimeEvening[0])
+    ),
+    endTimeShift2: convertMomentToMilliseconds(
+      moment(values.operatingTimeEvening[1])
+    ),
   };
 };
 
