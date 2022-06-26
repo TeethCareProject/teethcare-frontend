@@ -92,7 +92,12 @@ const BookingServiceFormComponent = ({
             />
           </Form.Item>
           {availableHourList && availableHourList?.length > 0 ? (
-            <Form.Item name="desiredHour" required label="Desired time">
+            <Form.Item
+              name="desiredHour"
+              required
+              label="Desired time"
+              initialValue={availableHourList[0]}
+            >
               <Radio.Group
                 defaultValue={availableHourList[0]}
                 buttonStyle="solid"
