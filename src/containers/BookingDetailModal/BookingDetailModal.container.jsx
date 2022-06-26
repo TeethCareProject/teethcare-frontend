@@ -185,7 +185,10 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
           isRendered={isRendered}
         />
       )}
-      {bookingId && role === RoleConstant.PATIENT ? (
+      {bookingId &&
+      role === RoleConstant.PATIENT &&
+      bookingData &&
+      bookingData?.status === BookingStatusConstants.REQUEST ? (
         <>
           <div style={{ background: "white", padding: "16px" }}>
             <QRCode

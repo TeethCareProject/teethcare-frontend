@@ -117,10 +117,11 @@ const BookingManagementTableContainer = () => {
     });
   };
 
-  const handleResult = async (value) => {
+  const handleQrScanResult = async (value) => {
+    const bookingId = value.substring(value.lastIndexOf("/") + 1);
     try {
       Modal.destroyAll();
-      const bookingId = value.substring(value.lastIndexOf("/") + 1);
+
       await checkIn(bookingId);
       notification["success"]({
         message: `Checkin successfully`,
@@ -132,14 +133,15 @@ const BookingManagementTableContainer = () => {
       if (status == 404) {
         Modal.error({
           title: "Invalid booking Id",
-          content: "Invalid booking Id, try again later!",
+          content: data?.message[0],
         });
       }
       if (status == 400) {
         Modal.error({
-          title: "Invalid booking Id",
-          content: "This booking cant be checkin at this time!",
+          title: "Error!",
+          content: data?.message[0],
         });
+        setNeededBooking(bookingId);
       }
     }
   };
@@ -148,7 +150,7 @@ const BookingManagementTableContainer = () => {
     Modal.info({
       closable: true,
       title: "Scan QR for booking ID",
-      content: <QrScannerComponent handleResult={handleResult} />,
+      content: <QrScannerComponent handleResult={handleQrScanResult} />,
     });
   };
 
@@ -196,7 +198,7 @@ const BookingManagementTableContainer = () => {
           </Col>
           <Col>
             <Button type="primary" onClick={handleOpenScanQr}>
-              Scan QR
+              Auto checkin
             </Button>
           </Col>
         </Row>
