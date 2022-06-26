@@ -1,9 +1,10 @@
 import React from "react";
-import { Col, Form, DatePicker, Button, Input, Typography } from "antd";
+import { Form, DatePicker, Button, Input, Typography } from "antd";
 import moment from "moment";
 import { getDisabledTime } from "../../utils/convert.utils";
 import { useSelector } from "react-redux";
 import { CreateAppointmentFormValidation } from "../../validate/CreateAppointmentFormValidation";
+import ClinicOperatingTimeMapper from "../../mapper/ClinicOperatingTimeMapper";
 
 const CreateAppointmentFormComponent = ({
   onFinish,
@@ -16,13 +17,7 @@ const CreateAppointmentFormComponent = ({
   const clinic = useSelector((state) => state?.authentication?.user?.clinic);
 
   const disabledDateTime = () => ({
-    disabledHours: () =>
-      getDisabledTime(
-        clinic?.startTimeShift1,
-        clinic?.endTimeShift1,
-        clinic?.startTimeShift2,
-        clinic?.endTimeShift2
-      ),
+    disabledHours: () => getDisabledTime(ClinicOperatingTimeMapper(clinic)),
   });
 
   return (

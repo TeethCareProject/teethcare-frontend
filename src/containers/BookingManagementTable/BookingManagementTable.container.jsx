@@ -15,7 +15,6 @@ import CommonTableComponent from "../../components/CommonTable/CommonTable.compo
 import {
   checkIn,
   getAllBooking,
-  getBookingById,
 } from "../../services/teeth-apis/BookingController";
 import BookingManagementTableColumn from "./BookingManagementTable.column";
 import { useSelector } from "react-redux";

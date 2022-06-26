@@ -4,7 +4,7 @@ import { Card, Typography, Image } from "antd";
 import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
 import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";
-import { convertMillisecondsToHour } from "../../../utils/convert.utils";
+import ClinicOperatingTimeMapper from "../../../mapper/ClinicOperatingTimeMapper";
 
 const ClinicDetailComponent = ({ clinicData, feedback }) => {
   const { Meta } = Card;
@@ -42,16 +42,16 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             </Typography.Title>
             <div>
               Morning:{" "}
-              {convertMillisecondsToHour(clinicData?.startTimeShift1) +
+              {ClinicOperatingTimeMapper(clinicData)?.startTimeShift1 +
                 ":00 - " +
-                convertMillisecondsToHour(clinicData?.endTimeShift1) +
+                ClinicOperatingTimeMapper(clinicData)?.endTimeShift1 +
                 ":00"}
             </div>
             <div>
               Evening:{" "}
-              {convertMillisecondsToHour(clinicData?.startTimeShift2) +
+              {ClinicOperatingTimeMapper(clinicData)?.startTimeShift2 +
                 ":00 - " +
-                convertMillisecondsToHour(clinicData?.endTimeShift2) +
+                ClinicOperatingTimeMapper(clinicData)?.endTimeShift2 +
                 ":00"}
             </div>
           </div>

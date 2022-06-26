@@ -20,6 +20,7 @@ import { getDisabledTime } from "../../utils/convert.utils";
 import { useSelector } from "react-redux";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
+import ClinicOperatingTimeMapper from "../../mapper/ClinicOperatingTimeMapper";
 
 const UpdateBookingDetailModalContentComponent = ({
   form,
@@ -31,13 +32,7 @@ const UpdateBookingDetailModalContentComponent = ({
   const clinic = useSelector((state) => state?.authentication?.user?.clinic);
 
   const disabledDateTime = () => ({
-    disabledHours: () =>
-      getDisabledTime(
-        clinic?.startTimeShift1,
-        clinic?.endTimeShift1,
-        clinic?.startTimeShift2,
-        clinic?.endTimeShift2
-      ),
+    disabledHours: () => getDisabledTime(ClinicOperatingTimeMapper(clinic)),
   });
   return (
     <Form
@@ -85,6 +80,7 @@ const UpdateBookingDetailModalContentComponent = ({
               placeholder="Select Time"
               style={{ marginLeft: 10 }}
               disabledTime={disabledDateTime}
+              format="YYYY-MM-DD HH:mm"
             />
           </Form.Item>
         </div>
