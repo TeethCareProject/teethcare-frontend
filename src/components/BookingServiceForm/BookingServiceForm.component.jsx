@@ -12,16 +12,20 @@ import {
   Descriptions,
   Typography,
   Space,
+  Radio,
 } from "antd";
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import { getDisabledTime } from "../../utils/convert.utils";
-import ServiceEntityToServiceCard from "../../mapper/ServiceEntityToServiceCard";
 import { BookingServiceFormValidation } from "../../validate/BookingServiceFormValidation";
 const { Option } = Select;
 
 const dateFormat = "DD-MM-YYYY HH";
 
-const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
+const BookingServiceFormComponent = ({
+  serviceData,
+  availableHourList,
+  handleGetAvailableHourList,
+  ...antdFormProps
+}) => {
   const { form, ...restAntdFormProps } = antdFormProps;
   const disabledDateTime = () => ({
     disabledHours: () =>
@@ -85,20 +89,32 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
       <Row gutter={[40, 4]} justify="center">
         <Col span={16}>
           <Form.Item
-            name="desiredCheckingTime"
-            label="Desired timing"
+            name="desiredCheckingDate"
+            label="Desired date"
             rules={BookingServiceFormValidation.desiredCheckingTime}
           >
             <DatePicker
-              showTime={{ format: "HH" }}
-              format={`${dateFormat}:00`}
               disabledDate={(current) => {
-                let customDate = moment().format("DD-MM-YYYY HH");
-                return current && current < moment(customDate, "DD-MM-YYYY HH");
+                let customDate = moment().format("DD-MM-YYYY");
+                return current && current < moment(customDate, "DD-MM-YYYY");
               }}
-              disabledTime={disabledDateTime}
+              onChange={() => handleGetAvailableHourList()}
             />
           </Form.Item>
+          {availableHourList && availableHourList?.length > 0 ? (
+            <Form.Item name="desiredHour" required label="Desired time">
+              <Radio.Group
+                defaultValue={availableHourList[0]}
+                buttonStyle="solid"
+              >
+                {availableHourList.map((hour) => (
+                  <Radio.Button value={hour}>{`${hour}:00`}</Radio.Button>
+                ))}
+              </Radio.Group>
+            </Form.Item>
+          ) : (
+            <Typography>No available time, please choose other day</Typography>
+          )}
         </Col>
         <Col span={16}>
           <Form.Item
@@ -118,7 +134,7 @@ const BookingServiceFormComponent = ({ serviceData, ...antdFormProps }) => {
       <Row gutter={[40, 16]} justify="center">
         <Col span={16}>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" onClick={() => form.submit()}>
               Submit
             </Button>
           </Form.Item>
