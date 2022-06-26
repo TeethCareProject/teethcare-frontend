@@ -27,16 +27,6 @@ const BookingServiceFormComponent = ({
   ...antdFormProps
 }) => {
   const { form, ...restAntdFormProps } = antdFormProps;
-  const disabledDateTime = () => ({
-    disabledHours: () =>
-      getDisabledTime(
-        serviceData?.clinic?.startTimeShift1,
-        serviceData?.clinic?.endTimeShift1,
-        serviceData?.clinic?.startTimeShift2,
-        serviceData?.clinic?.endTimeShift2
-      ),
-  });
-
   return (
     <Form form={form} {...restAntdFormProps}>
       <Row gutter={[40, 16]} justify="center">
@@ -128,7 +118,7 @@ const BookingServiceFormComponent = ({
       </Row>
       <Row gutter={[40, 16]} justify="center">
         <Col span={16}>
-          <ServiceCard serviceData={ServiceEntityToServiceCard(serviceData)} />
+          <ServiceCard serviceData={serviceData} />
         </Col>
       </Row>
       <Row gutter={[40, 16]} justify="center">
@@ -152,7 +142,7 @@ const ServiceCard = ({ serviceData }) => {
           <img
             style={{ width: "100%" }}
             alt="service"
-            src={serviceData?.serviceImage}
+            src={serviceData.serviceImage}
           />
         </Col>
         <Col span={12}>

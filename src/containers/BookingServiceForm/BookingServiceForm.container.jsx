@@ -10,13 +10,10 @@ import {
   getAvailableTime,
 } from "../../services/teeth-apis/BookingController";
 import UserToBookingFormMapper from "../../mapper/UserToBookingFormMapper";
-import {
-  convertDateToMilliseconds,
-  getDisabledTime,
-  convertMillisecondsToHour,
-} from "../../utils/convert.utils";
+import { convertMomentToMilliseconds } from "../../utils/convert.utils";
 import { getServiceById } from "../../services/teeth-apis/ServiceController";
 import { notification } from "antd";
+import ServiceEntityToServiceCard from "../../mapper/ServiceEntityToServiceCard";
 
 const BookingServiceFormContainer = () => {
   const { serviceId } = useParams();
@@ -30,7 +27,7 @@ const BookingServiceFormContainer = () => {
     //submit form
     const submitBooking = async () => {
       try {
-        await bookService({
+        const { data } = await bookService({
           serviceId: serviceId,
           desiredCheckingTime:
             convertMomentToMilliseconds(values.desiredCheckingDate) +
@@ -42,6 +39,7 @@ const BookingServiceFormContainer = () => {
         history.push(RoutePath.BOOKING_FAILED_PAGE);
       }
     };
+
     submitBooking();
   };
 
