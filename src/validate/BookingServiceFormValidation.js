@@ -1,5 +1,4 @@
 import { REQUIRED_VALIDATOR } from "./GeneralValidation";
-import { checkAvailableTime } from "../services/teeth-apis/BookingController";
 import { convertMomentToDate } from "../utils/convert.utils";
 
 export const BookingServiceFormValidation = {
