@@ -24,7 +24,6 @@ const BookingServiceFormContainer = () => {
   const history = useHistory();
 
   const onFinish = (values) => {
-    debugger;
     //submit form
     const submitBooking = async () => {
       try {
