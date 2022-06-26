@@ -30,7 +30,7 @@ const BookingServiceFormContainer = () => {
         const { data } = await bookService({
           serviceId: serviceId,
           desiredCheckingTime:
-            convertMomentToMilliseconds(values.desiredCheckingTime) +
+            convertMomentToMilliseconds(values.desiredCheckingDate) +
             values.desiredHour * 60 * 60 * 1000,
           description: values.description,
         });
@@ -69,7 +69,7 @@ const BookingServiceFormContainer = () => {
       const { data } = await getAvailableTime(
         serviceData?.clinicId,
         form
-          ?.getFieldValue("desiredCheckingTime")
+          ?.getFieldValue("desiredCheckingDate")
           ?.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
           ?.valueOf()
       );

@@ -79,8 +79,8 @@ const BookingServiceFormComponent = ({
       <Row gutter={[40, 4]} justify="center">
         <Col span={16}>
           <Form.Item
-            name="desiredCheckingTime"
-            label="Desired timing"
+            name="desiredCheckingDate"
+            label="Desired date"
             rules={BookingServiceFormValidation.desiredCheckingTime}
           >
             <DatePicker
@@ -92,7 +92,7 @@ const BookingServiceFormComponent = ({
             />
           </Form.Item>
           {availableHourList && availableHourList?.length > 0 ? (
-            <Form.Item name="desiredHour">
+            <Form.Item name="desiredHour" required label="Desired time">
               <Radio.Group
                 defaultValue={availableHourList[0]}
                 buttonStyle="solid"
