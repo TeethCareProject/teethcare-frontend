@@ -39,6 +39,7 @@ import notificationTypes from "../notificationHandler/notification.types";
 import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
+import Facebook from "../containers/FacebookChatBox/FacebookChatBox.container";
 
 const AppRouter = () => {
   const history = useHistory();
@@ -76,6 +77,7 @@ const AppRouter = () => {
   return (
     <>
       <NavigationBar />
+      <Facebook />
       <Switch>
         <Route path={RoutePath.INTERNAL_ERROR_PAGE} exact>
           <ErrorPage code={500} />
