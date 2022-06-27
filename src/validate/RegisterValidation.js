@@ -4,6 +4,8 @@ import {
   MAX_LENGTH_VALIDATOR,
 } from "./GeneralValidation";
 
+import { checkTimeOverlapped } from "../utils/convert.utils";
+
 export const UserRegisterValidation = {
   email: [REQUIRED_VALIDATOR("Email"), ...EMAIL_VALIDATOR()],
   username: [REQUIRED_VALIDATOR("Username")],
@@ -56,5 +58,18 @@ export const ClinicRegisterValidation = {
     }),
   ],
   operatingTimeMorning: [REQUIRED_VALIDATOR("Morning operating time")],
-  operatingTimeEvening: [REQUIRED_VALIDATOR("Evening operating time")],
+  operatingTimeEvening: [
+    REQUIRED_VALIDATOR("Evening operating time"),
+    ({ getFieldValue }) => ({
+      validator(_, value) {
+        if (
+          !value ||
+          !checkTimeOverlapped(getFieldValue("operatingTimeMorning"), value)
+        )
+          return Promise.resolve();
+
+        return Promise.reject(new Error("Two time mustn't be overlapped!"));
+      },
+    }),
+  ],
 };

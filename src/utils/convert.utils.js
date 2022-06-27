@@ -22,3 +22,7 @@ export const getBase64 = (file) =>
 
     reader.onerror = (error) => reject(error);
   });
+
+export const checkTimeOverlapped = (range1, range2) => {
+  return range1[0] <= range2[1] && range2[0] <= range1[1];
+};
