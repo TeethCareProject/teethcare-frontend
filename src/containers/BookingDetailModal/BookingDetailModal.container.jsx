@@ -26,9 +26,11 @@ import {
 import { generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 import { giveFeedBack } from "../../services/teeth-apis/FeedbackController";
-import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import { convertMomentToMilliseconds } from "../../utils/convert.utils";
+import FeedbackFormComponent from "../../components/FeedbackForm/FeedbackForm.component";
+import RejectBookingFormComponent from "../../components/RejectBookingForm/RejectBookingForm.component";
+import PatientActionButtonGroup from "./PatientActionButtonGroup";
 
 const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const [bookingData, setBookingData] = useState();
@@ -121,7 +123,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       closable: true,
       okButtonProps: { style: { display: "none" } },
       content: (
-        <RejectBookingForm
+        <RejectBookingFormComponent
           handleAssign={handleAssign}
           fetchBookingData={fetchBookingData}
         />
@@ -136,9 +138,10 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         okButtonProps: { style: { display: "none" } },
         title: "Give your feedback",
         content: (
-          <FeedbackForm
+          <FeedbackFormComponent
             bookingId={bookingId}
             fetchBookingData={fetchBookingData}
+            giveFeedBack={giveFeedBack}
           />
         ),
       });
@@ -188,48 +191,13 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       )}
       {bookingId && role === RoleConstant.PATIENT ? (
         <>
-          <div style={{ background: "white", padding: "16px" }}>
-            <QRCode
-              value={`${window.location.origin}${generatePath(
-                RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE,
-                { bookingId: bookingId }
-              )}`}
-            />
-          </div>
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Space>
-              <Typography>Give your feedback for this clinic!!</Typography>
-              <Button
-                type="primary"
-                onClick={() => {
-                  handleGiveFeedback(bookingId);
-                }}
-              >
-                Give feedback
-              </Button>
-            </Space>
-            {bookingData &&
-            convertMomentToMilliseconds(moment()) -
-              bookingData?.createBookingTime <
-              120 * 1000 &&
-            (bookingData.status === BookingStatusConstants.PENDING ||
-              bookingData.status === BookingStatusConstants.REQUEST) ? (
-              <Tooltip title="You can not cancel booking after 120s since created ">
-                <Button
-                  style={{ marginLeft: 100 }}
-                  type="danger"
-                  disabled={disabled}
-                  onClick={() =>
-                    handleAssign({
-                      isAccepted: false,
-                    })
-                  }
-                >
-                  Cancel this booking
-                </Button>
-              </Tooltip>
-            ) : null}
-          </div>
+          <PatientActionButtonGroup
+            bookingId={bookingId}
+            handleGiveFeedback={handleGiveFeedback}
+            bookingData={bookingData}
+            disabled={disabled}
+            handleAssign={handleAssign}
+          />
         </>
       ) : null}
       <Space>
@@ -252,77 +220,6 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         <Button onClick={() => checkOutHandler()}>Checkout</Button>
       ) : null}
     </Modal>
-  );
-};
-
-const FeedbackForm = ({ bookingId, fetchBookingData }) => {
-  const onFinish = async (values) => {
-    try {
-      await giveFeedBack(bookingId, values.detail, values.ratingScore);
-      Modal.destroyAll();
-      await fetchBookingData();
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while giving feedback, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
-  return (
-    <Form onFinish={onFinish}>
-      <Form.Item name="ratingScore" label="Rate">
-        <Rate />
-      </Form.Item>
-      <Form.Item name="detail" label="Description">
-        <TextArea />
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Send!
-        </Button>
-      </Form.Item>
-    </Form>
-  );
-};
-
-const RejectBookingForm = ({ handleAssign, fetchBookingData }) => {
-  const onFinish = async (values) => {
-    try {
-      await handleAssign({
-        isAccepted: false,
-        rejectedNote: values.rejectedNote,
-      });
-      Modal.destroyAll();
-      await fetchBookingData();
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while giving feedback, try again later`,
-        duration: 2,
-      });
-    }
-  };
-  return (
-    <Form
-      name="reject_booking_form"
-      onFinish={onFinish}
-      style={{ marginTop: 40, marginRight: 40 }}
-    >
-      <Form.Item
-        name="rejectedNote"
-        label="Reason"
-        // rules={}
-      >
-        <Input placeholder="Enter reason" />
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" shape="round" htmlType="submit">
-          Rejected
-        </Button>
-      </Form.Item>
-    </Form>
   );
 };
 
