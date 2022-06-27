@@ -16,6 +16,7 @@ import UpdateBookingDetailModalContentContainer from "../UpdateBookingDetailModa
 import BookingDetailModalContentComponent from "../../components/BookingDetailModalContent/BookingDetailModalContent.component";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
+
 import {
   evaluateBooking,
   getBookingById,
@@ -23,7 +24,7 @@ import {
   checkOut,
 } from "../../services/teeth-apis/BookingController";
 import { giveFeedBack } from "../../services/teeth-apis/FeedbackController";
-import FeedbackFormContainer from "../../containers/FeedbackForm/FeedbackForm.container";
+import FeedbackFormContainer from "../../containers/FeedBackForm/FeedBackForm.container";
 import RejectBookingFormContainer from "../../containers/RejectBookingForm/RejectBookingForm.container";
 import PatientActionButtonGroup from "./PatientActionButtonGroup";
 

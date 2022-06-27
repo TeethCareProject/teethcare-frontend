@@ -1,10 +1,11 @@
 import React from "react";
-import { QRCode, Button, Space, Typography, Tooltip } from "antd";
+import { Button, Space, Typography, Tooltip } from "antd";
 import { generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 import { convertMomentToMilliseconds } from "../../utils/convert.utils";
 import moment from "moment";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import QRCode from "react-qr-code";
 
 const PatientActionButtonGroup = ({
   bookingId,

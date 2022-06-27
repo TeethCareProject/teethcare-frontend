@@ -1,7 +1,8 @@
 import React from "react";
-import { Modal, notification, Form, TextArea, Rate, Button } from "antd";
+import { Input, Form, Rate, Button } from "antd";
 
 const FeedbackFormComponent = ({ onFinish }) => {
+  const { TextArea } = Input;
   return (
     <Form onFinish={onFinish}>
       <Form.Item name="ratingScore" label="Rate">
