@@ -12,7 +12,7 @@ export const convertMillisecondsToDate = (milliseconds) => {
 
 export const convertMillisecondsToHour = (milliseconds) => {
   //must shift 7 hour for correct display
-  return milliseconds / (60 * 60 * 1000) + 7;
+  return Math.floor(milliseconds / (60 * 60 * 1000)) + 7;
 };
 
 export const getDisabledTime = (startTime1, endTime1, startTime2, endTime2) => {
@@ -21,16 +21,18 @@ export const getDisabledTime = (startTime1, endTime1, startTime2, endTime2) => {
   let start2 = convertMillisecondsToHour(startTime2);
   let end2 = convertMillisecondsToHour(endTime2);
 
+  console.log(start1, end1, start2, end2);
+
   let range1 = [];
   let range2 = [];
   let range3 = [];
   for (let i = 0; i < start1; i++) {
     range1.push(i);
   }
-  for (let i = parseInt(end1); i < start2; i++) {
+  for (let i = parseInt(end1 + 1); i < start2; i++) {
     range2.push(i);
   }
-  for (let i = parseInt(end2); i <= 24; i++) {
+  for (let i = parseInt(end2 + 1); i <= 23; i++) {
     range3.push(i);
   }
 

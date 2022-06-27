@@ -16,7 +16,10 @@ import {
   EditOutlined,
 } from "@ant-design/icons";
 
-import { getDisabledTime } from "../../utils/convert.utils";
+import {
+  convertMillisecondsToHour,
+  getDisabledTime,
+} from "../../utils/convert.utils";
 import { useSelector } from "react-redux";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
@@ -30,15 +33,51 @@ const UpdateBookingDetailModalContentComponent = ({
 }) => {
   const clinic = useSelector((state) => state?.authentication?.user?.clinic);
 
-  const disabledDateTime = () => ({
-    disabledHours: () =>
-      getDisabledTime(
-        clinic?.startTimeShift1,
-        clinic?.endTimeShift1,
-        clinic?.startTimeShift2,
-        clinic?.endTimeShift2
-      ),
-  });
+  const disabledDateTime = (date) => {
+    const clinicWorkingTimes = {
+      clinicShift1: {
+        startTime: clinic?.startTimeShift1,
+        endTime: clinic?.endTimeShift1,
+      },
+      clinicShift2: {
+        startTime: clinic?.startTimeShift2,
+        endTime: clinic?.endTimeShift2,
+      },
+    };
+    return {
+      disabledHours: () =>
+        getDisabledTime(
+          clinic?.startTimeShift1,
+          clinic?.endTimeShift1,
+          clinic?.startTimeShift2,
+          clinic?.endTimeShift2
+        ),
+      disabledMinutes: () => {
+        if (date == null) return;
+        for (const shiftName in clinicWorkingTimes) {
+          const shift = clinicWorkingTimes[shiftName];
+          if (date.hour() == convertMillisecondsToHour(shift.startTime)) {
+            const calculatedMinute = Math.floor(
+              (shift.startTime % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            console.log(Math.floor(shift.startTime / 1000 / 60 / 60) + 7);
+            const minutesArr = [];
+            for (let i = 0; i <= calculatedMinute; i++) minutesArr.push(i);
+            return minutesArr;
+          }
+          if (date.hour() == convertMillisecondsToHour(shift.endTime)) {
+            const calculatedMinute = Math.floor(
+              (shift.endTime % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const minutesArr = [];
+            for (let i = calculatedMinute; i <= 59; i++) minutesArr.push(i);
+            return minutesArr;
+          }
+        }
+      },
+    };
+  };
+
   return (
     <Form
       name="update_dentist_time_form"
@@ -79,12 +118,13 @@ const UpdateBookingDetailModalContentComponent = ({
       <Descriptions title="Booking Info">
         <div>
           <span>New Examination Time: </span>
-          <Form.Item name="examinationTime">
+          <Form.Item name="examinationTime" shouldUpdate>
             <DatePicker
               showTime
               placeholder="Select Time"
               style={{ marginLeft: 10 }}
               disabledTime={disabledDateTime}
+              format="YYYY-MM-DD HH:mm"
             />
           </Form.Item>
         </div>
