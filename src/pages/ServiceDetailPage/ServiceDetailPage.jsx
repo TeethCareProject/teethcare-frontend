@@ -1,6 +1,4 @@
 import React from "react";
-
-import { Button, Typography } from "antd";
 import { generatePath } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
