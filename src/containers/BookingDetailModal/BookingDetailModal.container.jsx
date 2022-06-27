@@ -7,6 +7,7 @@ import {
   Space,
   Typography,
   Input,
+  Tooltip,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -26,11 +27,13 @@ import { generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 import { giveFeedBack } from "../../services/teeth-apis/FeedbackController";
 import TextArea from "antd/lib/input/TextArea";
+import moment from "moment";
+import { convertMomentToMilliseconds } from "../../utils/convert.utils";
 
 const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const [bookingData, setBookingData] = useState();
   const [isUpdated, setIsUpdated] = useState(false);
-
+  const [disabled, setDisabled] = useState(false);
   const [isRendered, setIsRendered] = useState(false);
 
   const role = useSelector((state) => state?.authentication?.user?.roleName);
@@ -63,18 +66,28 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
 
   useEffect(() => {
     bookingId && fetchBookingData();
+    setDisabled(false);
   }, [bookingId, isRendered]);
 
   const handleAssign = async (evaluateValues) => {
     try {
       await evaluateBooking({ bookingId, ...evaluateValues });
       await fetchBookingData();
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching assigning, try again later`,
-        duration: 2,
-      });
+    } catch ({ response }) {
+      const { status, data } = response;
+      if (status === 400) {
+        setDisabled((prev) => !prev);
+        notification["error"]({
+          message: `Something went wrong! Try again latter!`,
+          description: `You can't cancel a booking after 120s from creating`,
+          duration: 2,
+        });
+      } else {
+        notification["error"]({
+          message: `Something went wrong! Try again latter!`,
+          description: `There is something wrong! Try again later!`,
+        });
+      }
     }
   };
 
@@ -183,17 +196,40 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
               )}`}
             />
           </div>
-          <Space>
-            <Typography>Give your feedback for this clinic!!</Typography>
-            <Button
-              type="primary"
-              onClick={() => {
-                handleGiveFeedback(bookingId);
-              }}
-            >
-              Give feedback
-            </Button>
-          </Space>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <Space>
+              <Typography>Give your feedback for this clinic!!</Typography>
+              <Button
+                type="primary"
+                onClick={() => {
+                  handleGiveFeedback(bookingId);
+                }}
+              >
+                Give feedback
+              </Button>
+            </Space>
+            {bookingData &&
+            convertMomentToMilliseconds(moment()) -
+              bookingData?.createBookingTime <
+              120 * 1000 &&
+            (bookingData.status === BookingStatusConstants.PENDING ||
+              bookingData.status === BookingStatusConstants.REQUEST) ? (
+              <Tooltip title="You can not cancel booking after 120s since created ">
+                <Button
+                  style={{ marginLeft: 100 }}
+                  type="danger"
+                  disabled={disabled}
+                  onClick={() =>
+                    handleAssign({
+                      isAccepted: false,
+                    })
+                  }
+                >
+                  Cancel this booking
+                </Button>
+              </Tooltip>
+            ) : null}
+          </div>
         </>
       ) : null}
       <Space>
