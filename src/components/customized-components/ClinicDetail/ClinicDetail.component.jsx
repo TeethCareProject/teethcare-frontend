@@ -1,9 +1,10 @@
 import React from "react";
 import { StarOutlined, EnvironmentOutlined } from "@ant-design/icons";
-import { Card, Image } from "antd";
+import { Card, Typography, Image } from "antd";
 import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
 import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";
+import ClinicOperatingTimeMapper from "../../../mapper/ClinicOperatingTimeMapper";
 
 const ClinicDetailComponent = ({ clinicData, feedback }) => {
   const { Meta } = Card;
@@ -28,7 +29,6 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             <div className="clinic-detail-page-information-rating">
               <StarOutlined /> {clinicData?.avgRatingScore}
             </div>
-            <div></div>
           </div>
         </div>
         <div className="clinic-detail-page-information-address">
@@ -36,13 +36,38 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             <EnvironmentOutlined /> Clinic address
           </div>
           <div>{clinicData?.location?.address}</div>
+          <div>
+            <Typography.Title level={4} style={{ margin: "0 auto" }}>
+              <div>Operating Hours: </div>
+            </Typography.Title>
+            <div>
+              Morning:{" "}
+              {ClinicOperatingTimeMapper(clinicData)?.startTimeShift1 +
+                ":00 - " +
+                ClinicOperatingTimeMapper(clinicData)?.endTimeShift1 +
+                ":00"}
+            </div>
+            <div>
+              Evening:{" "}
+              {ClinicOperatingTimeMapper(clinicData)?.startTimeShift2 +
+                ":00 - " +
+                ClinicOperatingTimeMapper(clinicData)?.endTimeShift2 +
+                ":00"}
+            </div>
+          </div>
         </div>
       </div>
       <div className="clinic-detail-page-banner">
-        <Image src={clinicData?.imageUrl} alt="clinic-img" fallback={avtImg} />
+        <Image
+          src={clinicData?.imageUrl}
+          alt="clinic-img"
+          fallback={avtImg}
+          style={{ width: "90vw" }}
+        />
       </div>
       <div className="clinic-detail-page-description">
-        {clinicData?.description}
+        <Typography.Title level={3}>About us:</Typography.Title>
+        <div>{clinicData?.description}</div>
       </div>
       <div className="clinic-detail-page-feedback-container">
         <div style={{ fontSize: "2em", fontWeight: "bold" }}>Feedbacks</div>

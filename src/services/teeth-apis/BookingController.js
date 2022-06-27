@@ -24,28 +24,30 @@ export const confirmBooking = (options) =>
   CallAPI(`${BOOKING_END_POINT}/confirm`, "PUT", options);
 
 export const checkOut = (bookingId) => {
-  CallAPI(
-    `${BOOKING_END_POINT}/checkout`,
-    "PUT",
-    {},
-    {
-      bookingId: bookingId,
-    }
-  );
+  CallAPI(`${BOOKING_END_POINT}/checkout/${bookingId}`, "PUT");
 };
 
 export const updateBooking = (options) =>
   CallAPI(`${BOOKING_END_POINT}/first-update`, "PUT", options);
 
 export const checkIn = (bookingId) =>
+  CallAPI(`${BOOKING_END_POINT}/checkin/${bookingId}`, "PUT");
+
+export const checkAvailableTime = (clinicId, bookingTime) =>
   CallAPI(
-    `${BOOKING_END_POINT}/checkin`,
-    "PUT",
+    `${BOOKING_END_POINT}/check-available-time`,
+    "GET",
     {},
-    {
-      bookingId: bookingId,
-    }
+    { clinicId: clinicId, desiredCheckingTime: bookingTime }
   );
 
 export const createBookingFromAppointment = (values) =>
   CallAPI(`${BOOKING_END_POINT}/create-from-appointment`, "POST", values);
+
+export const getAvailableTime = (clinicId, date) =>
+  CallAPI(
+    `${BOOKING_END_POINT}/get-available-time`,
+    "GET",
+    {},
+    { clinicId, date }
+  );

@@ -29,7 +29,7 @@ const ServiceDetailComponent = ({ service, bookingHandler }) => {
           </div>
           <div>
             <Typography.Title level={4}>Price</Typography.Title>
-            <div>{service.money}VND</div>
+            <div>{service.price + " "} VND</div>
           </div>
           <div>
             <Typography.Title level={4}>Duration</Typography.Title>

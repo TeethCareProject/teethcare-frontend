@@ -91,7 +91,6 @@ const DentistUpdateBookingFormComponent = ({
                       </div>
                     </Typography.Title>
                   }
-                  description={`Description: ${service.description}`}
                 />
               </List.Item>
             )}

@@ -1,8 +1,10 @@
 import React from "react";
-import { Col, Form, DatePicker, Button, Input, Typography } from "antd";
+import { Form, DatePicker, Button, Input, Typography } from "antd";
 import moment from "moment";
-import { convertMomentToDate } from "../../utils/convert.utils";
+import { getDisabledTime } from "../../utils/convert.utils";
+import { useSelector } from "react-redux";
 import { CreateAppointmentFormValidation } from "../../validate/CreateAppointmentFormValidation";
+import ClinicOperatingTimeMapper from "../../mapper/ClinicOperatingTimeMapper";
 
 const CreateAppointmentFormComponent = ({
   onFinish,
@@ -12,6 +14,12 @@ const CreateAppointmentFormComponent = ({
 }) => {
   const dateFormat = "DD-MM-YYYY HH";
   const { TextArea } = Input;
+  const clinic = useSelector((state) => state?.authentication?.user?.clinic);
+
+  const disabledDateTime = () => ({
+    disabledHours: () => getDisabledTime(ClinicOperatingTimeMapper(clinic)),
+  });
+
   return (
     <>
       <Typography.Title level={4}>
@@ -23,6 +31,7 @@ const CreateAppointmentFormComponent = ({
             rows={12}
             placeholder="Note for next treatment"
             maxLength={1000}
+            style={{ width: "100%" }}
           />
         </Form.Item>
         <Form.Item
@@ -37,6 +46,7 @@ const CreateAppointmentFormComponent = ({
               let customDate = moment().format("DD-MM-YYYY HH");
               return current && current < moment(customDate, "DD-MM-YYYY HH");
             }}
+            disabledTime={disabledDateTime}
           />
         </Form.Item>
         <div
