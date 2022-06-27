@@ -16,20 +16,15 @@ import UpdateBookingDetailModalContentContainer from "../UpdateBookingDetailModa
 import BookingDetailModalContentComponent from "../../components/BookingDetailModalContent/BookingDetailModalContent.component";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
-import QRCode from "react-qr-code";
 import {
   evaluateBooking,
   getBookingById,
   checkIn,
   checkOut,
 } from "../../services/teeth-apis/BookingController";
-import { generatePath } from "react-router-dom";
-import RoutePath from "../../routers/Path";
 import { giveFeedBack } from "../../services/teeth-apis/FeedbackController";
-import moment from "moment";
-import { convertMomentToMilliseconds } from "../../utils/convert.utils";
-import FeedbackFormComponent from "../../components/FeedbackForm/FeedbackForm.component";
-import RejectBookingFormComponent from "../../components/RejectBookingForm/RejectBookingForm.component";
+import FeedbackFormContainer from "../../containers/FeedbackForm/FeedbackForm.container";
+import RejectBookingFormContainer from "../../containers/RejectBookingForm/RejectBookingForm.container";
 import PatientActionButtonGroup from "./PatientActionButtonGroup";
 
 const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
@@ -123,7 +118,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       closable: true,
       okButtonProps: { style: { display: "none" } },
       content: (
-        <RejectBookingFormComponent
+        <RejectBookingFormContainer
           handleAssign={handleAssign}
           fetchBookingData={fetchBookingData}
         />
@@ -138,7 +133,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         okButtonProps: { style: { display: "none" } },
         title: "Give your feedback",
         content: (
-          <FeedbackFormComponent
+          <FeedbackFormContainer
             bookingId={bookingId}
             fetchBookingData={fetchBookingData}
             giveFeedBack={giveFeedBack}
