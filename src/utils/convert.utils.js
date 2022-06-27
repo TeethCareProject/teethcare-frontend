@@ -30,8 +30,8 @@ export const getDisabledTime = (clinicData) => {
   let end2 = clinicData?.endTimeShift2;
 
   let range1 = getTimeRange(0, start1);
-  let range2 = getTimeRange(end1, start2);
-  let range3 = getTimeRange(end2, 24);
+  let range2 = getTimeRange(end1 + 1, start2);
+  let range3 = getTimeRange(end2 + 1, 24);
 
   return [...range1, ...range2, ...range3];
 };
