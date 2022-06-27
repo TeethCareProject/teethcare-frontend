@@ -185,19 +185,14 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
           isRendered={isRendered}
         />
       )}
-      {bookingId &&
-      role === RoleConstant.PATIENT &&
-      bookingData &&
-      bookingData?.status === BookingStatusConstants.REQUEST ? (
-        <>
-          <PatientActionButtonGroup
-            bookingId={bookingId}
-            handleGiveFeedback={handleGiveFeedback}
-            bookingData={bookingData}
-            disabled={disabled}
-            handleAssign={handleAssign}
-          />
-        </>
+      {bookingId && role === RoleConstant.PATIENT ? (
+        <PatientActionButtonGroup
+          bookingId={bookingId}
+          handleGiveFeedback={handleGiveFeedback}
+          bookingData={bookingData}
+          disabled={disabled}
+          handleAssign={handleAssign}
+        />
       ) : null}
       <Space>
         {bookingData?.status === BookingStatusConstants.PENDING &&
