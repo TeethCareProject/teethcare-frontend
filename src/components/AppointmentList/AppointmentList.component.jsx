@@ -16,7 +16,7 @@ const AppointmentListComponent = ({ appointmentListData }) => {
                 level={5}
               >{`Appointment Id: ${appointment?.id}`}</Typography.Title>
             }
-            description={`Service: ${appointment?.services[0]?.name} - Clinic: ${appointment?.clinic?.name}`}
+            description={`Clinic: ${appointment?.clinic?.name}`}
           />
           <Button type="link" onClick={() => appointment?.onClick()}>
             Xem chi tiết

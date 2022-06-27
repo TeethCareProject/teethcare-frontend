@@ -22,9 +22,15 @@ const BookingManagementTableColumn = [
   },
   {
     title: "Booking time",
-    key: "createBookingDate",
+    key: "examinationTime",
     render: (_, record) => (
-      <p>{convertMillisecondsToDate(record?.createBookingDate)}</p>
+      <p>
+        {convertMillisecondsToDate(
+          record?.examinationTime
+            ? record?.examinationTime
+            : record?.desiredCheckingTime
+        )}
+      </p>
     ),
   },
   {

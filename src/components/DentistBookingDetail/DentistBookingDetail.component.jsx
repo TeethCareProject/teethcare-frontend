@@ -3,7 +3,7 @@ import { Col, Row, Typography, List, Avatar } from "antd";
 import { ContainerOutlined } from "@ant-design/icons";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
-const DentistBookingDetailComponent = ({ booking }) => {
+const DentistBookingDetailComponent = ({ booking, returnToDashboard }) => {
   let examinationTime = booking?.examinationTime
     ? convertMillisecondsToDate(booking?.examinationTime)
     : convertMillisecondsToDate(booking?.createBookingDate);
@@ -20,7 +20,7 @@ const DentistBookingDetailComponent = ({ booking }) => {
       >
         <Typography.Title level={4}>Patient details:</Typography.Title>
         <Row style={{ display: "flex", alignItems: "center" }}>
-          <Col style={{ marginLeft: 30 }}>
+          <Col>
             <div>
               Name:{" "}
               <span>
@@ -58,17 +58,17 @@ const DentistBookingDetailComponent = ({ booking }) => {
                 title={
                   <Typography.Title
                     level={5}
-                  >{`Service name: ${service.name} Price: ${service.price}`}</Typography.Title>
+                  >{`Service name: ${service.name}`}</Typography.Title>
                 }
-                description={`Description: ${service.description}`}
+                description={`Price: ${service.price}`}
               />
             </List.Item>
           )}
         />
         <Row style={{ display: "flex", alignItems: "center" }}>
-          <Col style={{ marginLeft: 30 }}>
+          <Col style={{ marginTop: 20 }}>
             <div>
-              Total Price:{" "}
+              <span style={{ fontWeight: 600 }}>Total Price: </span>
               <span>
                 {booking?.services?.reduce(
                   (acc, service) => acc + service?.price,

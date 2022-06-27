@@ -25,11 +25,11 @@ const LoginFormContainer = () => {
       //go to page
       history.push(RoutePath.DASHBOARD_PAGE);
     } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while login, try again later`,
-        duration: 2,
-      });
+      // notification["error"]({
+      //   message: `Something went wrong! Try again latter!`,
+      //   description: `There is problem while login, try again later`,
+      //   duration: 2,
+      // });
     }
   };
 
