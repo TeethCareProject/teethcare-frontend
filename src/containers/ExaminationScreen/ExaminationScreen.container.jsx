@@ -6,6 +6,7 @@ import DentistUpdatingBookingFormContainer from "../DentistUpdateBookingForm/Den
 import DentistBookingDetailComponent from "../../components/DentistBookingDetail/DentistBookingDetail.component";
 import CreateAppointmentFormContainer from "../CreateAppointmentForm/CreateAppointmentForm.container";
 import RoutePath from "../../routers/Path";
+
 const ExaminationScreenContainer = () => {
   const [showInfo, setShowInfo] = useState(false);
   const { bookingId } = useParams();
