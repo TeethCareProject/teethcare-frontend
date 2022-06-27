@@ -149,19 +149,6 @@ const AppRouter = () => {
           exact
           accessibleRoles={Object.keys(RoleConstant)}
         />
-        <DynamicRouter
-          key="dashboard"
-          componentList={{
-            MANAGER: () => <ManagerDashboardPage />,
-            CUSTOMER_SERVICE: () => <CustomerServiceDashboardPage />,
-            DENTIST: () => <DentistDashboardPage />,
-            PATIENT: () => <PatientDashboardPage />,
-            ADMIN: () => <AdminDashboardPage />,
-          }}
-          path={RoutePath.DASHBOARD_WITH_TAB_PAGE}
-          exact
-          accessibleRoles={Object.keys(RoleConstant)}
-        />
         {/* for production deployment*/}
         <Route path="/index.html">
           <Redirect to={RoutePath.HOME_PAGE} />
