@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Result, Descriptions } from "antd";
+import { Button, Result } from "antd";
 const ConfirmBookingComponent = ({
   bookingData,
   rejectUpdate,

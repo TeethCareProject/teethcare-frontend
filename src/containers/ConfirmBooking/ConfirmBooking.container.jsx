@@ -11,7 +11,7 @@ import RoutePath from "../../routers/Path";
 const ConfirmBookingContainer = () => {
   const history = useHistory();
   const { search } = useLocation();
-  const version = search.split("")[search.length - 1];
+  const emailVersion = search.split("")[search.length - 1];
   const { bookingId } = useParams();
   const [bookingData, setBookingData] = useState();
 
@@ -66,7 +66,7 @@ const ConfirmBookingContainer = () => {
 
   return (
     <div>
-      {bookingData?.version && version == bookingData.version ? (
+      {bookingData?.version && emailVersion == bookingData.version ? (
         <ConfirmBookingComponent
           bookingData={bookingData}
           rejectUpdate={rejectUpdate}

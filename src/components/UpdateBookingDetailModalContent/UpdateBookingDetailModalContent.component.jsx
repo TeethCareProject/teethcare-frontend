@@ -23,6 +23,7 @@ import {
 import { useSelector } from "react-redux";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
+import ClinicOperatingTimeMapper from "../../mapper/ClinicOperatingTimeMapper";
 
 const UpdateBookingDetailModalContentComponent = ({
   form,
@@ -45,13 +46,7 @@ const UpdateBookingDetailModalContentComponent = ({
       },
     };
     return {
-      disabledHours: () =>
-        getDisabledTime(
-          clinic?.startTimeShift1,
-          clinic?.endTimeShift1,
-          clinic?.startTimeShift2,
-          clinic?.endTimeShift2
-        ),
+      disabledHours: () => getDisabledTime(ClinicOperatingTimeMapper(clinic)),
       disabledMinutes: () => {
         if (date == null) return;
         for (const shiftName in clinicWorkingTimes) {

@@ -10,31 +10,28 @@ export const convertMillisecondsToDate = (milliseconds) => {
   return new Date(milliseconds).toLocaleString();
 };
 
+export const getTimeRange = (start, end) => {
+  const range = [];
+  for (let i = parseInt(start); i < parseInt(end); i++) {
+    range.push(i);
+  }
+  return range;
+};
+
 export const convertMillisecondsToHour = (milliseconds) => {
   //must shift 7 hour for correct display
   return Math.floor(milliseconds / (60 * 60 * 1000)) + 7;
 };
 
-export const getDisabledTime = (startTime1, endTime1, startTime2, endTime2) => {
-  let start1 = convertMillisecondsToHour(startTime1);
-  let end1 = convertMillisecondsToHour(endTime1);
-  let start2 = convertMillisecondsToHour(startTime2);
-  let end2 = convertMillisecondsToHour(endTime2);
+export const getDisabledTime = (clinicData) => {
+  let start1 = clinicData?.startTimeShift1;
+  let end1 = clinicData?.endTimeShift1;
+  let start2 = clinicData?.startTimeShift2;
+  let end2 = clinicData?.endTimeShift2;
 
-  console.log(start1, end1, start2, end2);
-
-  let range1 = [];
-  let range2 = [];
-  let range3 = [];
-  for (let i = 0; i < start1; i++) {
-    range1.push(i);
-  }
-  for (let i = parseInt(end1 + 1); i < start2; i++) {
-    range2.push(i);
-  }
-  for (let i = parseInt(end2 + 1); i <= 23; i++) {
-    range3.push(i);
-  }
+  let range1 = getTimeRange(0, start1);
+  let range2 = getTimeRange(end1, start2);
+  let range3 = getTimeRange(end2, 24);
 
   return [...range1, ...range2, ...range3];
 };
