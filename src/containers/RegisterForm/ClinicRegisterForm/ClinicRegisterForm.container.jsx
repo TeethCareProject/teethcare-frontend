@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { managerRegister } from "../../../services/teeth-apis/RegisterController";
 import { notification } from "antd";
 import { useHistory } from "react-router-dom";
-import { Button, Steps, Form, Input, TimePicker } from "antd";
+import { Button, Steps, Form } from "antd";
 import RoutePath from "../../../routers/Path";
 import UserInfoInputComponent from "../../../components/forms/UserInfoInput/UserInfoInput.component";
 
 import ClinicRegisterFormComponent from "../../../components/forms/ClinicRegisterForm/ClinicRegisterForm.component";
 import ClinicFormValueToClinicRegisterData from "../../../mapper/ClinicFormValueToClinicRegisterData";
-import { ClinicRegisterValidation } from "../../../validate/RegisterValidation";
+
+import OperatingHourFormComponent from "../../../components/forms/ClinicRegisterForm/OperatingHourForm.component";
 
 const ClinicRegisterFormContainer = () => {
   const { Step } = Steps;
@@ -95,25 +96,6 @@ const ClinicRegisterFormContainer = () => {
           )}
         </div>
       </Form>
-    </>
-  );
-};
-
-const OperatingHourFormComponent = () => {
-  return (
-    <>
-      <Form.Item
-        name="operatingTimeMorning"
-        rules={ClinicRegisterValidation.operatingTimeMorning}
-      >
-        <TimePicker.RangePicker format="HH:mm" />
-      </Form.Item>
-      <Form.Item
-        name="operatingTimeEvening"
-        rules={ClinicRegisterValidation.operatingTimeEvening}
-      >
-        <TimePicker.RangePicker format="HH:mm" />
-      </Form.Item>
     </>
   );
 };

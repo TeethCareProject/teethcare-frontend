@@ -9,6 +9,11 @@ import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
 import SearchAccountFormComponent from "../../components/SearchAccountForm/SearchAccountForm.component";
 
+const managerAccountData = {
+  status: AccountStatusConstants.PENDING,
+  role: RoleConstant.MANAGER,
+};
+
 const PendingAccountManagementTableContainer = () => {
   const [form] = useForm();
 
@@ -28,8 +33,7 @@ const PendingAccountManagementTableContainer = () => {
   const onFinish = async (values) => {
     setFilterData({
       id: values.id,
-      role: RoleConstant.MANAGER,
-      status: AccountStatusConstants.PENDING,
+      ...managerAccountData,
       fullName: values.fullName,
     });
   };
@@ -52,16 +56,14 @@ const PendingAccountManagementTableContainer = () => {
         data = (
           await getAllAccounts({
             pageSize: null,
-            status: AccountStatusConstants.PENDING,
-            role: RoleConstant.MANAGER,
+            ...managerAccountData,
           })
         ).data;
       } else {
         data = (
           await getAllAccounts({
             ...options,
-            status: AccountStatusConstants.PENDING,
-            role: RoleConstant.MANAGER,
+            ...managerAccountData,
           })
         ).data;
       }

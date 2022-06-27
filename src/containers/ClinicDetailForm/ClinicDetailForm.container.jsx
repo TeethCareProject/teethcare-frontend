@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { setAccountStatus } from "../../services/teeth-apis/AccountController";
 import { getManagerById } from "../../services/teeth-apis/ManagerController";
 import ClinicDetailFormComponent from "../../components/ClinicDetailForm/ClinicDetailForm.component";
+import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
 
 const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
   const [accountDetail, setAccountDetail] = useState({});
@@ -26,17 +27,17 @@ const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
     }
   }, [accountId]);
 
-  const handleOk = () => {
-    setNeededAccount(null);
-  };
-
   const handleCancel = () => {
     setNeededAccount(null);
   };
 
   const handleUpdateStatus = async (status) => {
     try {
-      await setAccountStatus(status, accountId);
+      if (status === AccountStatusConstants.ACTIVE) {
+        await setAccountStatus(AccountStatusConstants.INACTIVE, accountId);
+      } else {
+        await setAccountStatus(AccountStatusConstants.ACTIVE, accountId);
+      }
       fetchData();
     } catch (e) {
       notification["error"]({
@@ -52,32 +53,16 @@ const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
       <Modal
         destroyOnClose
         visible={accountId !== null}
-        onOk={handleOk}
+        footer={null}
         onCancel={handleCancel}
         width={800}
       >
         <ClinicDetailFormComponent accountDetail={accountDetail} />
-        {accountDetail.status === "ACTIVE" ? (
-          <Button
-            onClick={() =>
-              handleUpdateStatus({
-                status: "INACTIVE",
-              })
-            }
-          >
-            Deactivate
-          </Button>
-        ) : (
-          <Button
-            onClick={() =>
-              handleUpdateStatus({
-                status: "ACTIVE",
-              })
-            }
-          >
-            Activate
-          </Button>
-        )}
+        <Button onClick={() => handleUpdateStatus(accountDetail.status)}>
+          {accountDetail.status === AccountStatusConstants.ACTIVE
+            ? AccountStatusConstants.INACTIVE
+            : AccountStatusConstants.ACTIVE}
+        </Button>
       </Modal>
     </div>
   );
