@@ -55,7 +55,6 @@ const UpdateBookingDetailModalContentComponent = ({
             const calculatedMinute = Math.floor(
               (shift.startTime % (1000 * 60 * 60)) / (1000 * 60)
             );
-            console.log(Math.floor(shift.startTime / 1000 / 60 / 60) + 7);
             const minutesArr = [];
             for (let i = 0; i <= calculatedMinute; i++) minutesArr.push(i);
             return minutesArr;
