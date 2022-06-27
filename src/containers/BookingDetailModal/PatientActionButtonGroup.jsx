@@ -14,7 +14,6 @@ const PatientActionButtonGroup = ({
   disabled,
   handleAssign,
 }) => {
-  console.log(bookingData);
   return (
     <>
       <div style={{ background: "white", padding: "16px" }}>
