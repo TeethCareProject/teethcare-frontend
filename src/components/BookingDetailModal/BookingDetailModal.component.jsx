@@ -3,8 +3,6 @@ import { CalendarOutlined } from "@ant-design/icons";
 
 import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
-import { convertMillisecondsToDate } from "../../utils/convert.utils";
-
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import { RoleConstant } from "../../constants/RoleConstants";
 

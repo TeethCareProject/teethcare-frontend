@@ -4,14 +4,8 @@ import { ContainerOutlined } from "@ant-design/icons";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
-import BookingStatusConstants from "../../constants/BookingStatusConstants";
-import { RoleConstant } from "../../constants/RoleConstants";
 
-const BookingDetailModalContentComponent = ({
-  bookingData,
-  role,
-  checkInHandler,
-}) => {
+const BookingDetailModalContentComponent = ({ bookingData }) => {
   return (
     <>
       <Descriptions title="Staff Incharge">
@@ -75,10 +69,6 @@ const BookingDetailModalContentComponent = ({
           </List.Item>
         )}
       />
-      {role === RoleConstant.CUSTOMER_SERVICE &&
-      bookingData?.status === BookingStatusConstants.REQUEST ? (
-        <Button onClick={checkInHandler}>Check in</Button>
-      ) : null}
     </>
   );
 };

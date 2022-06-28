@@ -9,7 +9,9 @@ export const BookingServiceFormValidation = {
         if (!value || convertMomentToDate(value) > Date.now()) {
           return Promise.resolve();
         }
-        return Promise.reject(new Error("Booking date should be from tomorow"));
+        return Promise.reject(
+          new Error("Booking date should be from tomorrow")
+        );
       },
     }),
   ],

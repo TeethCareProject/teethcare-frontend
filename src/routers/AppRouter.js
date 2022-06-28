@@ -39,11 +39,13 @@ import notificationTypes from "../notificationHandler/notification.types";
 import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
+import { useSelector } from "react-redux";
 
 const AppRouter = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   dispatch(initFcmToken());
+  const role = useSelector((state) => state.authentication.user?.roleName);
 
   useEffect(() => {
     const unsubscribe = onMessage(messaging, (payload) => {
@@ -51,13 +53,13 @@ const AppRouter = () => {
 
       switch (notificationData.title) {
         case notificationTypes.OPEN_BOOKING_NOTIFICATION:
-          openBookingDetailNotificationHandler(notificationData);
+          openBookingDetailNotificationHandler(notificationData, history);
           break;
         case notificationTypes.CONFIRM_BOOKING_FAIL:
-          confirmBookingNotificationHandler(history, notificationData);
+          confirmBookingNotificationHandler(notificationData, role);
           break;
         case notificationTypes.CONFIRM_BOOKING_SUCCESS:
-          confirmBookingNotificationHandler(history, notificationData);
+          confirmBookingNotificationHandler(notificationData, role);
           break;
         default:
           notification["info"]({
