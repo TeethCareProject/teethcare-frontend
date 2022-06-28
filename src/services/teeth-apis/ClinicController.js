@@ -12,9 +12,3 @@ export const updateClinic = (data) =>
 
 export const updateClinicImage = (image) =>
   CallAPI(`${CLINIC_END_POINT}/update-image`, "PUT", image);
-
-export const approveClinic = (clinicId) =>
-  CallAPI(`${CLINIC_END_POINT}/${clinicId}/approve`, "PUT");
-
-export const rejectClinic = (clinicId) =>
-  CallAPI(`${CLINIC_END_POINT}/${clinicId}/reject`, "PUT");

@@ -63,6 +63,7 @@ const AccountManagementTableContainer = () => {
           setNeededAccount(account.id);
         },
       }));
+
       setData(accountData);
     } catch (e) {
       notification["error"]({
@@ -97,7 +98,6 @@ const AccountManagementTableContainer = () => {
         accountId={neededAccount}
         setNeededAccount={setNeededAccount}
         fetchData={fetchData}
-        setCurrentPage={setCurrentPage}
       ></DetailForm>
       <CommonTableComponent
         tableTitle="User Management"

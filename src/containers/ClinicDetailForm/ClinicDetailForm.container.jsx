@@ -1,11 +1,9 @@
-import { Modal, notification, Button, Space } from "antd";
+import { Modal, notification, Button } from "antd";
 import React, { useEffect, useState } from "react";
+import { setAccountStatus } from "../../services/teeth-apis/AccountController";
 import { getManagerById } from "../../services/teeth-apis/ManagerController";
 import ClinicDetailFormComponent from "../../components/ClinicDetailForm/ClinicDetailForm.component";
-import {
-  approveClinic,
-  rejectClinic,
-} from "../../services/teeth-apis/ClinicController";
+import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
 
 const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
   const [accountDetail, setAccountDetail] = useState({});
@@ -17,7 +15,7 @@ const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while update clinic's status, try again later`,
+        description: `There is problem while fetching account data, try again later`,
         duration: 2,
       });
     }
@@ -33,19 +31,14 @@ const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
     setNeededAccount(null);
   };
 
-  const handleUpdateStatus = async (options) => {
+  const handleUpdateStatus = async (status) => {
     try {
-      if (options === "approve") {
-        await approveClinic(accountDetail?.clinic?.id);
+      if (status === AccountStatusConstants.ACTIVE) {
+        await setAccountStatus(AccountStatusConstants.INACTIVE, accountId);
       } else {
-        await rejectClinic(accountDetail?.clinic?.id);
+        await setAccountStatus(AccountStatusConstants.ACTIVE, accountId);
       }
-      notification["success"]({
-        message: `Successfully!`,
-        duration: 2,
-      });
       fetchData();
-      setNeededAccount(null);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -65,12 +58,11 @@ const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
         width={800}
       >
         <ClinicDetailFormComponent accountDetail={accountDetail} />
-        <Space style={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button onClick={() => handleUpdateStatus("approve")}>Approve</Button>
-          <Button type="danger" onClick={() => handleUpdateStatus("reject")}>
-            Reject
-          </Button>
-        </Space>
+        <Button onClick={() => handleUpdateStatus(accountDetail.status)}>
+          {accountDetail.status === AccountStatusConstants.ACTIVE
+            ? AccountStatusConstants.INACTIVE
+            : AccountStatusConstants.ACTIVE}
+        </Button>
       </Modal>
     </div>
   );

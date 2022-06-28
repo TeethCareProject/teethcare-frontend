@@ -20,7 +20,7 @@ export const navigationList = [
   getItem("Dashboard", "sub1", <MailOutlined />),
   getItem("User management", "sub2", <AppstoreOutlined />),
   getItem("Feedback reports", "sub3", <SettingOutlined />),
-  getItem("Pending account", "sub4", <SettingOutlined />),
+  getItem("Account request", "sub4", <SettingOutlined />),
 ];
 
 export const elementList = [

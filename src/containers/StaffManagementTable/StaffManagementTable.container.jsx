@@ -96,7 +96,6 @@ const DetailForm = ({ accountId, setNeededStaff }) => {
         visible={accountId !== null}
         onOk={handleOk}
         onCancel={handleCancel}
-        footer={null}
       >
         <Row>
           <Col span={8}>
