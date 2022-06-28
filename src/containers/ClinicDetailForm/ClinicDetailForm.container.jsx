@@ -1,9 +1,12 @@
 import { Modal, notification, Button } from "antd";
 import React, { useEffect, useState } from "react";
-import { setAccountStatus } from "../../services/teeth-apis/AccountController";
 import { getManagerById } from "../../services/teeth-apis/ManagerController";
 import ClinicDetailFormComponent from "../../components/ClinicDetailForm/ClinicDetailForm.component";
 import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
+import {
+  approveClinic,
+  rejectClinic,
+} from "../../services/teeth-apis/ClinicController";
 
 const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
   const [accountDetail, setAccountDetail] = useState({});
@@ -15,7 +18,7 @@ const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while fetching account data, try again later`,
+        description: `There is problem while update clinic's status, try again later`,
         duration: 2,
       });
     }
@@ -33,10 +36,13 @@ const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
 
   const handleUpdateStatus = async (status) => {
     try {
-      if (status === AccountStatusConstants.ACTIVE) {
-        await setAccountStatus(AccountStatusConstants.INACTIVE, accountId);
+      if (
+        status === AccountStatusConstants.INACTIVE ||
+        status === AccountStatusConstants.PENDING
+      ) {
+        await approveClinic(accountDetail?.clinic?.id);
       } else {
-        await setAccountStatus(AccountStatusConstants.ACTIVE, accountId);
+        await rejectClinic(accountDetail?.clinic?.id);
       }
       fetchData();
     } catch (e) {
@@ -60,8 +66,8 @@ const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
         <ClinicDetailFormComponent accountDetail={accountDetail} />
         <Button onClick={() => handleUpdateStatus(accountDetail.status)}>
           {accountDetail.status === AccountStatusConstants.ACTIVE
-            ? AccountStatusConstants.INACTIVE
-            : AccountStatusConstants.ACTIVE}
+            ? "Deactivate"
+            : "Activate"}
         </Button>
       </Modal>
     </div>
