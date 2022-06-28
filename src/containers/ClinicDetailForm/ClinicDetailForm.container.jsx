@@ -1,8 +1,7 @@
-import { Modal, notification, Button } from "antd";
+import { Modal, notification, Button, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { getManagerById } from "../../services/teeth-apis/ManagerController";
 import ClinicDetailFormComponent from "../../components/ClinicDetailForm/ClinicDetailForm.component";
-import { AccountStatusConstants } from "../../constants/AccountStatusConstants";
 import {
   approveClinic,
   rejectClinic,
@@ -34,17 +33,19 @@ const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
     setNeededAccount(null);
   };
 
-  const handleUpdateStatus = async (status) => {
+  const handleUpdateStatus = async (options) => {
     try {
-      if (
-        status === AccountStatusConstants.INACTIVE ||
-        status === AccountStatusConstants.PENDING
-      ) {
+      if (options === "approve") {
         await approveClinic(accountDetail?.clinic?.id);
       } else {
         await rejectClinic(accountDetail?.clinic?.id);
       }
+      notification["success"]({
+        message: `Successfully!`,
+        duration: 2,
+      });
       fetchData();
+      setNeededAccount(null);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -64,11 +65,12 @@ const ClinicDetailForm = ({ accountId, setNeededAccount, fetchData }) => {
         width={800}
       >
         <ClinicDetailFormComponent accountDetail={accountDetail} />
-        <Button onClick={() => handleUpdateStatus(accountDetail.status)}>
-          {accountDetail.status === AccountStatusConstants.ACTIVE
-            ? "Deactivate"
-            : "Activate"}
-        </Button>
+        <Space style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button onClick={() => handleUpdateStatus("approve")}>Approve</Button>
+          <Button type="danger" onClick={() => handleUpdateStatus("reject")}>
+            Reject
+          </Button>
+        </Space>
       </Modal>
     </div>
   );
