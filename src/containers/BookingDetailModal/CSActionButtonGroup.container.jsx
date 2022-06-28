@@ -10,6 +10,7 @@ const CSActionButtonGroupContainer = ({
   role,
   handleAssign,
   fetchBookingData,
+  setNeededBooking,
 }) => {
   const rejectBooking = () => {
     Modal.info({
@@ -29,6 +30,7 @@ const CSActionButtonGroupContainer = ({
   const checkInHandler = async () => {
     try {
       await checkIn(bookingId);
+      setNeededBooking(null);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
@@ -41,6 +43,7 @@ const CSActionButtonGroupContainer = ({
   const checkOutHandler = async () => {
     try {
       await checkOut(bookingId);
+      setNeededBooking(null);
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,

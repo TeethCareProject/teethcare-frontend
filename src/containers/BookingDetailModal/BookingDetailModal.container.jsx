@@ -116,6 +116,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         role={role}
         handleAssign={handleAssign}
         fetchBookingData={fetchBookingData}
+        setNeededBooking={setNeededBooking}
       />
     </Modal>
   );
