@@ -1,14 +1,4 @@
-import {
-  Button,
-  Form,
-  Modal,
-  notification,
-  Rate,
-  Space,
-  Typography,
-  Input,
-  Tooltip,
-} from "antd";
+import { Button, Modal, notification, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import BookingDetailModalComponent from "../../components/BookingDetailModal/BookingDetailModal.component";
@@ -20,13 +10,9 @@ import { RoleConstant } from "../../constants/RoleConstants";
 import {
   evaluateBooking,
   getBookingById,
-  checkIn,
-  checkOut,
 } from "../../services/teeth-apis/BookingController";
-import { giveFeedBack } from "../../services/teeth-apis/FeedbackController";
-import FeedbackFormContainer from "../../containers/FeedBackForm/FeedBackForm.container";
-import RejectBookingFormContainer from "../../containers/RejectBookingForm/RejectBookingForm.container";
-import PatientActionButtonGroup from "./PatientActionButtonGroup";
+import PatientActionButtonGroupContainer from "./PatientActionButtonGroup.container";
+import CSActionButtonGroupContainer from "./CSActionButtonGroup.container";
 
 const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
   const [bookingData, setBookingData] = useState();
@@ -47,10 +33,6 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         duration: 2,
       });
     }
-  };
-
-  const handleOk = () => {
-    setNeededBooking(null);
   };
 
   const handleCancel = () => {
@@ -89,83 +71,19 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
     }
   };
 
-  const checkInHandler = async () => {
-    try {
-      await checkIn(bookingId);
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while check in, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
-  const checkOutHandler = async () => {
-    try {
-      await checkOut(bookingId);
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while check out, try again later`,
-      });
-    }
-  };
-
-  const rejectBooking = () => {
-    Modal.info({
-      title: "Reject this booking",
-      maskClosable: true,
-      closable: true,
-      okButtonProps: { style: { display: "none" } },
-      content: (
-        <RejectBookingFormContainer
-          handleAssign={handleAssign}
-          fetchBookingData={fetchBookingData}
-        />
-      ),
-    });
-  };
-
-  const handleGiveFeedback = (bookingId) => {
-    try {
-      Modal.info({
-        closable: true,
-        okButtonProps: { style: { display: "none" } },
-        title: "Give your feedback",
-        content: (
-          <FeedbackFormContainer
-            bookingId={bookingId}
-            fetchBookingData={fetchBookingData}
-            giveFeedBack={giveFeedBack}
-          />
-        ),
-      });
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while giving feedback, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
   return (
     <Modal
       destroyOnClose
       visible={bookingId !== null}
-      onOk={handleOk}
       onCancel={handleCancel}
       width="80vw"
-      footer={false}
+      footer={null}
     >
       <BookingDetailModalComponent
         bookingData={bookingData}
         role={role}
-        checkInHandler={checkInHandler}
         isUpdated={isUpdated}
         updateClickHandler={updateClickHandler}
-        setIsUpdated={setIsUpdated}
       />
       {role === RoleConstant.CUSTOMER_SERVICE &&
       bookingData?.status === BookingStatusConstants.REQUEST &&
@@ -179,40 +97,26 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
       ) : (
         <BookingDetailModalContentComponent
           bookingData={bookingData}
-          checkInHandler={checkInHandler}
           role={role}
           setIsRendered={setIsRendered}
           isRendered={isRendered}
         />
       )}
       {bookingId && role === RoleConstant.PATIENT ? (
-        <PatientActionButtonGroup
+        <PatientActionButtonGroupContainer
           bookingId={bookingId}
-          handleGiveFeedback={handleGiveFeedback}
           bookingData={bookingData}
           disabled={disabled}
           handleAssign={handleAssign}
         />
       ) : null}
-      <Space>
-        {bookingData?.status === BookingStatusConstants.PENDING &&
-        role === RoleConstant.CUSTOMER_SERVICE ? (
-          <Button onClick={() => handleAssign({ isAccepted: true })}>
-            Process this booking
-          </Button>
-        ) : null}
-        {bookingData?.status === BookingStatusConstants.REQUEST ||
-        (bookingData?.status === BookingStatusConstants.PENDING &&
-          role === RoleConstant.CUSTOMER_SERVICE) ? (
-          <Button onClick={() => rejectBooking()} style={{ marginLeft: 20 }}>
-            Reject
-          </Button>
-        ) : null}
-      </Space>
-      {bookingData?.confirmed &&
-      bookingData?.status === BookingStatusConstants.TREATMENT ? (
-        <Button onClick={() => checkOutHandler()}>Checkout</Button>
-      ) : null}
+      <CSActionButtonGroupContainer
+        bookingId={bookingId}
+        bookingData={bookingData}
+        role={role}
+        handleAssign={handleAssign}
+        fetchBookingData={fetchBookingData}
+      />
     </Modal>
   );
 };

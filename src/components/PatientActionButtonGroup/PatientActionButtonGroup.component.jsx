@@ -7,12 +7,12 @@ import moment from "moment";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
 import QRCode from "react-qr-code";
 
-const PatientActionButtonGroup = ({
+const PatientActionButtonGroupComponent = ({
   bookingId,
-  handleGiveFeedback,
   bookingData,
   disabled,
   handleAssign,
+  handleGiveFeedback,
 }) => {
   return (
     <>
@@ -61,4 +61,4 @@ const PatientActionButtonGroup = ({
   );
 };
 
-export default PatientActionButtonGroup;
+export default PatientActionButtonGroupComponent;
