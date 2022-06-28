@@ -110,14 +110,16 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
           handleAssign={handleAssign}
         />
       ) : null}
-      <CSActionButtonGroupContainer
-        bookingId={bookingId}
-        bookingData={bookingData}
-        role={role}
-        handleAssign={handleAssign}
-        fetchBookingData={fetchBookingData}
-        setNeededBooking={setNeededBooking}
-      />
+      {bookingId && role === RoleConstant.CUSTOMER_SERVICE ? (
+        <CSActionButtonGroupContainer
+          bookingId={bookingId}
+          bookingData={bookingData}
+          role={role}
+          handleAssign={handleAssign}
+          fetchBookingData={fetchBookingData}
+          setNeededBooking={setNeededBooking}
+        />
+      ) : null}
     </Modal>
   );
 };
