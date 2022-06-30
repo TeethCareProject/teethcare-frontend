@@ -2,13 +2,14 @@ import React, { Fragment } from "react";
 import { Row, Col, Card, Image } from "antd";
 
 import clinicImg from "../../assets/clinicImg.png";
-import { StarFilled } from "@ant-design/icons";
-
+import { StarFilled, RightCircleOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 import ClinicCardComponent from "../../components/customized-components/ClinicCard/ClinicCard.component";
 import "./ClinicCardList.style.scss";
 
 const ClinicCardListComponent = ({ layoutDirection, listData }) => {
   const { Meta } = Card;
+  const history = useHistory();
   return (
     <Fragment>
       {layoutDirection === "row" ? (
@@ -90,6 +91,19 @@ const ClinicCardListComponent = ({ layoutDirection, listData }) => {
                   </Card>
                 </div>
               ))}
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                width: "100px",
+              }}
+            >
+              <RightCircleOutlined
+                style={{ color: "#3A8EF6", fontSize: "200%" }}
+              />
+              <div style={{ width: 60, textAlign: "center" }}>See All</div>
+            </div>
           </div>
         </>
       ) : (

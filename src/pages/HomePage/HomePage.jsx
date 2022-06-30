@@ -17,7 +17,21 @@ const HomePage = () => {
       <IntroductionPartComponent homePageImg={homePageImg} />
       <HomePageContentCardPreviewComponent />
       <div className="card-clinic-container">
-        <div className="card-clinic-title">Top rated dental clinics</div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <div className="card-clinic-title">Top rated dental clinics</div>
+          <div
+            className="view-all-text-mobile"
+            style={{ color: "#3A8EF6", cursor: "pointer" }}
+            onClick={() => history.push(RoutePath.CLINIC_PAGE)}
+          >
+            View all clinics
+          </div>
+        </div>
         <ClinicCardContainer layoutDirection="row" />
       </div>
       <Row justify="center">

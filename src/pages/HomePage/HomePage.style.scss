@@ -14,6 +14,11 @@
   display: none;
 }
 
+.view-all-text-mobile {
+  margin-top: 15px;
+  display: none;
+}
+
 @media screen and (max-width: 1024px) {
   .homepage-card-container {
     justify-content: center;
@@ -40,6 +45,14 @@
   .site-card-wrapper {
     padding: 50px 40px;
   }
+
+  .clinic-card-homepage {
+    width: 100%;
+    margin-right: 100px;
+    img {
+      height: 250px !important;
+    }
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -56,9 +69,9 @@
     overflow-x: auto;
   }
 
-  // .clinic-slider::-webkit-scrollbar {
-  //   width: 0;
-  // }
+  .clinic-slider::-webkit-scrollbar {
+    width: 0;
+  }
 
   .clinic-card-homepage {
     width: 100%;
@@ -70,5 +83,23 @@
 
   .clinic-card-list-row {
     display: none;
+  }
+
+  .view-all-text-mobile {
+    display: block;
+  }
+
+  .viewClinicBtn {
+    display: none;
+  }
+
+  .introduction-part {
+    .title {
+      font-size: 2.4em;
+    }
+
+    .description {
+      font-size: 1.2em;
+    }
   }
 }
