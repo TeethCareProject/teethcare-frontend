@@ -20,6 +20,8 @@ const UpdateBookingDetailModalContentContainer = ({
     form.setFieldsValue({
       ...bookingData,
       examinationTime: null,
+      dentistId: bookingData.dentist,
+      serviceIds: bookingData.services,
     });
   }, [bookingData]);
 

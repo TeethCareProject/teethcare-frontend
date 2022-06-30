@@ -53,6 +53,11 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
     try {
       await evaluateBooking({ bookingId, ...evaluateValues });
       await fetchBookingData();
+      notification["success"]({
+        message: `Successfully!`,
+        duration: 2,
+      });
+      setNeededBooking(null);
     } catch ({ response }) {
       const { status, data } = response;
       if (status === 400) {
@@ -110,7 +115,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
           handleAssign={handleAssign}
         />
       ) : null}
-      {bookingId && role === RoleConstant.CUSTOMER_SERVICE ? (
+      {bookingId && role === RoleConstant.CUSTOMER_SERVICE && !isUpdated ? (
         <CSActionButtonGroupContainer
           bookingId={bookingId}
           bookingData={bookingData}

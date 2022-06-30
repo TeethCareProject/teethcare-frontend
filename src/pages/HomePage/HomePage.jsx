@@ -8,7 +8,7 @@ import homePageImg from "../../assets/homepage_image.png";
 import IntroductionPartComponent from "../../components/customized-components/IntroductionPart/IntroductionPart.component";
 import { useHistory } from "react-router-dom";
 
-import "./HomePage.style.css";
+import "./HomePage.style.scss";
 
 const HomePage = () => {
   const history = useHistory();

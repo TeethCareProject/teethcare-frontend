@@ -1,0 +1,74 @@
+.viewClinicBtn {
+  margin-bottom: 20px;
+}
+
+.viewClinicBtn span {
+  font-weight: 600;
+  font-size: 1.1em;
+  line-height: 1.1em;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.clinic-slider {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) {
+  .homepage-card-container {
+    justify-content: center;
+  }
+
+  .homepage-card-description {
+    display: none;
+  }
+
+  .homepage-card-img-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .homepage-card-title {
+    font-size: 1.5em;
+    text-align: center;
+  }
+
+  .site-card {
+    width: 25%;
+  }
+
+  .site-card-wrapper {
+    padding: 50px 40px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .homepage-card-description {
+    display: none;
+  }
+
+  .homepage-card-title {
+    font-size: 1.2em;
+  }
+
+  .clinic-slider {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  // .clinic-slider::-webkit-scrollbar {
+  //   width: 0;
+  // }
+
+  .clinic-card-homepage {
+    width: 100%;
+    margin-right: 100px;
+    img {
+      height: 200px !important;
+    }
+  }
+
+  .clinic-card-list-row {
+    display: none;
+  }
+}
