@@ -4,6 +4,7 @@ import { Row, Col, Card, Image } from "antd";
 import clinicImg from "../../assets/clinicImg.png";
 import { StarFilled, RightCircleOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
+import RoutePath from "../../routers/Path";
 import ClinicCardComponent from "../../components/customized-components/ClinicCard/ClinicCard.component";
 import "./ClinicCardList.style.scss";
 
@@ -102,7 +103,12 @@ const ClinicCardListComponent = ({ layoutDirection, listData }) => {
               <RightCircleOutlined
                 style={{ color: "#3A8EF6", fontSize: "200%" }}
               />
-              <div style={{ width: 60, textAlign: "center" }}>See All</div>
+              <div
+                style={{ width: 60, textAlign: "center" }}
+                onClick={() => history.push(RoutePath.CLINIC_PAGE)}
+              >
+                See All
+              </div>
             </div>
           </div>
         </>

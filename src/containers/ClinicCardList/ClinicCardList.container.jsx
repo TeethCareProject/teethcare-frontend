@@ -157,18 +157,18 @@ const ClinicCardListContainer = () => {
           </Form>
         </div>
       </div>
-      <ClinicCardContainer
-        clinicData={filteredClinic}
-        layoutDirection="column"
-      />
       <Pagination
-        style={{ position: "fixed", left: "60px", bottom: "60px" }}
+        style={{ position: "fixed", right: "115px", top: "60px" }}
         total={totalElements}
         current={currentPage}
         pageSize={pageSize}
         onChange={(page) => {
           setCurrentPage(page);
         }}
+      />
+      <ClinicCardContainer
+        clinicData={filteredClinic}
+        layoutDirection="column"
       />
     </div>
   );

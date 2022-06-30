@@ -10,6 +10,11 @@
     border-radius: 50%;
   }
 
+  .clinic-detail-page-services {
+    display: flex;
+    overflow-x: auto;
+  }
+
   .clinic-detail-page-information-name {
     font-size: 2.5em;
     font-weight: bold;
@@ -26,27 +31,30 @@
     font-size: 1.5em;
   }
 
-  .clinic-detail-page-information-address {
-    background: #f8f8f8;
-    border-radius: 10px;
-    margin-top: 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .clinic-detail-page-information-address-pc div {
+    padding: 15px 30px;
+  }
 
-    div {
-      padding: 15px 30px;
-    }
-
-    .clinic-detail-page-information-address-title {
-      font-size: 2em;
-      font-weight: bold;
-    }
+  .clinic-detail-page-information-address-title {
+    font-size: 2em;
+    font-weight: bold;
   }
 }
 
+.clinic-detail-page-information-address-pc {
+  background: #f8f8f8;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clinic-detail-page-information-address-mobile {
+  display: none;
+}
+
 .clinic-detail-page-banner {
-  margin-bottom: 100px;
+  margin-bottom: 40px;
 
   img {
     width: 100%;
@@ -91,4 +99,106 @@
 
 .clinic-detail-page-feedback-container {
   margin-bottom: 40px;
+}
+
+@media (min-width: 1024px) and (max-width: 1280px) {
+  .clinic-detail-page-information {
+    .clinic-detail-page-information-name {
+      font-size: 2.5em;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .clinic-detail-page-information {
+    .clinic-detail-page-information-name {
+      font-size: 3em;
+    }
+
+    .clinic-detail-page-information-img {
+      display: flex;
+      justify-content: center;
+
+      img {
+        width: 400px;
+        height: 400px;
+      }
+    }
+  }
+
+  .clinic-detail-page-banner {
+    .ant-image-img {
+      height: 70vh;
+    }
+  }
+
+  .clinic-detail-page-information-address-pc {
+    display: none;
+  }
+
+  .clinic-detail-page-information-address-mobile {
+    background: #f8f8f8;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .clinic-detail-page-information-address-title {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .clinic-detail-page-information {
+    div {
+      padding: 0px;
+    }
+
+    margin-bottom: 40px;
+
+    .clinic-detail-page-information-img {
+      display: flex;
+      justify-content: center;
+
+      img {
+        width: 300px;
+        height: 300px;
+      }
+    }
+
+    .clinic-detail-page-information-name {
+      font-size: 2em;
+    }
+  }
+
+  .clinic-detail-page-banner {
+    display: flex;
+    justify-content: center;
+
+    .ant-image-img {
+      height: 40vh;
+      width: 80vw !important;
+    }
+  }
+
+  .clinic-detail-page-information-address-pc {
+    display: none;
+  }
+
+  .clinic-detail-page-information-address-mobile {
+    background: #f8f8f8;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .clinic-detail-page-information-address-title {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+  }
 }

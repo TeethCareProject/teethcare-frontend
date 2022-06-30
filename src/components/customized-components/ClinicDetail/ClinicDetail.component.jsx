@@ -18,11 +18,25 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             fallback={avtImg}
           />
         </div>
-        <div>
-          <div className="clinic-detail-page-information-name">
+        <div
+          className="clinic-detail-page-information-text"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <div
+            className="clinic-detail-page-information-name"
+            style={{ textAlign: "center" }}
+          >
             {clinicData?.name}
           </div>
-          <div className="clinic-detail-page-information-district">
+          <div
+            className="clinic-detail-page-information-district"
+            style={{ textAlign: "center" }}
+          >
             {clinicData?.location?.ward?.district?.name}{" "}
           </div>
           <div>
@@ -31,7 +45,7 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             </div>
           </div>
         </div>
-        <div className="clinic-detail-page-information-address">
+        <div className="clinic-detail-page-information-address-pc">
           <div className="clinic-detail-page-information-address-title">
             <EnvironmentOutlined /> Clinic address
           </div>
@@ -65,6 +79,31 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
           style={{ width: "90vw" }}
         />
       </div>
+      <div className="clinic-detail-page-information-address-mobile">
+        <div className="clinic-detail-page-information-address-title">
+          <EnvironmentOutlined /> Clinic address
+        </div>
+        <div>{clinicData?.location?.address}</div>
+        <div>
+          <Typography.Title level={4} style={{ margin: "0 auto" }}>
+            <div>Operating Hours: </div>
+          </Typography.Title>
+          <div>
+            Morning:{" "}
+            {ClinicOperatingTimeMapper(clinicData)?.startTimeShift1 +
+              ":00 - " +
+              ClinicOperatingTimeMapper(clinicData)?.endTimeShift1 +
+              ":00"}
+          </div>
+          <div>
+            Evening:{" "}
+            {ClinicOperatingTimeMapper(clinicData)?.startTimeShift2 +
+              ":00 - " +
+              ClinicOperatingTimeMapper(clinicData)?.endTimeShift2 +
+              ":00"}
+          </div>
+        </div>
+      </div>
       <div className="clinic-detail-page-description">
         <Typography.Title level={3}>About us:</Typography.Title>
         <div>{clinicData?.description}</div>
@@ -75,23 +114,30 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
       </div>
       <div className="clinic-detail-page-service-container">
         <div className="clinic-detail-page-services-title">Our services:</div>
-        <div className="clinic-detail-page-services">
+        <div
+          className="clinic-detail-page-services"
+          style={{ margin: "0px 45px" }}
+        >
           {clinicData?.serviceOfClinicResponses?.map((service, index) => (
-            <Card
-              key={index}
-              hoverable
-              style={{ width: 400, height: 400 }}
-              //TODO: change img Url
-              cover={
-                <img
-                  alt="example"
-                  src="http://australiandentalclinic.vn/wp-content/uploads/2017/02/teeth-whitening-sample1.jpg"
+            <div style={{ margin: "15px" }}>
+              <Card
+                key={index}
+                hoverable
+                //TODO: change img Url
+                cover={
+                  <img
+                    alt="example"
+                    src="http://australiandentalclinic.vn/wp-content/uploads/2017/02/teeth-whitening-sample1.jpg"
+                  />
+                }
+                onClick={service.onClick}
+              >
+                <Meta
+                  title={service?.name}
+                  description={service?.description}
                 />
-              }
-              onClick={service.onClick}
-            >
-              <Meta title={service?.name} description={service?.description} />
-            </Card>
+              </Card>
+            </div>
           ))}
         </div>
       </div>
