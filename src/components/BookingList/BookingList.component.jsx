@@ -5,6 +5,7 @@ import { CalendarOutlined } from "@ant-design/icons";
 const BookingListComponent = ({ bookingListData }) => {
   return (
     <List
+      style={{ maxHeight: 450, overflow: "auto" }}
       itemLayout="horizontal"
       dataSource={bookingListData ? bookingListData : []}
       renderItem={(booking) => (
@@ -18,9 +19,8 @@ const BookingListComponent = ({ bookingListData }) => {
             }
             description={`Service: ${booking?.services[0]?.name} - Clinic: ${booking?.clinic?.name}`}
           />
-          <Typography>{`${booking?.description}`}</Typography>
           <Button type="link" onClick={() => booking?.onClick()}>
-            Xem chi tiết
+            View detail
           </Button>
         </List.Item>
       )}

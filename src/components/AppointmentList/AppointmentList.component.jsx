@@ -19,7 +19,7 @@ const AppointmentListComponent = ({ appointmentListData }) => {
             description={`Clinic: ${appointment?.clinic?.name}`}
           />
           <Button type="link" onClick={() => appointment?.onClick()}>
-            Xem chi tiết
+            View detail
           </Button>
         </List.Item>
       )}

@@ -1,18 +1,27 @@
 import React from "react";
-import { Row, Col, Space } from "antd";
+import { Row, Col } from "antd";
 import DashboardSideBarComponent from "../DashboardNavigationSideBar/NavigationSideBar.component";
+import "./DashboardLayout.style.scss";
 
 const DashboardLayout = ({ navigationList, elementList, currentTab }) => {
   return (
     <>
+      <Row className="dashboard-menu-md">
+        <DashboardSideBarComponent
+          items={navigationList}
+          selectedKey={navigationList[currentTab].key}
+          mode="horizontal"
+        />
+      </Row>
       <Row>
-        <Col>
+        <Col span={4} className="dashboard-menu-lg">
           <DashboardSideBarComponent
             items={navigationList}
             selectedKey={navigationList[currentTab].key}
+            mode="inline"
           />
         </Col>
-        <Col flex="auto">
+        <Col flex="auto" span={24}>
           <div
             style={{
               width: "100%",
@@ -24,6 +33,13 @@ const DashboardLayout = ({ navigationList, elementList, currentTab }) => {
             {elementList[currentTab]}
           </div>
         </Col>
+      </Row>
+      <Row className="dashboard-menu-sm">
+        <DashboardSideBarComponent
+          items={navigationList}
+          selectedKey={navigationList[currentTab].key}
+          mode="horizontal"
+        />
       </Row>
     </>
   );

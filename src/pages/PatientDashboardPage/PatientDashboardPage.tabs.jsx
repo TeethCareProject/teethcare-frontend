@@ -23,7 +23,13 @@ export const navigationList = [
 
 export const elementList = [
   <div>Dashboard element</div>,
-  <div style={{ width: "80%" }}>
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    }}
+  >
     <BookingListContainer />
   </div>,
   <div>

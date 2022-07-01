@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom";
 import { logoutHandler } from "../../../redux/authentication/authentication.action";
 import RoutePath from "../../../routers/Path";
 import NotificationContainer from "../../../containers/Notification/Notification.container";
+import "./NavigationBar.style.scss";
 
 const items = [
   {
@@ -76,8 +77,9 @@ const NavigationBar = () => {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "0.5rem 3rem",
+        padding: "0 3rem",
       }}
+      className="navigation"
     >
       <Space>
         <Menu
