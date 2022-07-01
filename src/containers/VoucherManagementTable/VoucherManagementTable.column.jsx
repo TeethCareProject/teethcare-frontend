@@ -69,9 +69,11 @@ const VoucherManagementTableColumn = [
           <Button type="link" onClick={record.getDetail}>
             Detail
           </Button>
-          <Button type="link" onClick={record.onDelete}>
-            Delete
-          </Button>
+          {record.status == voucherStatusConstants.AVAILABLE ? (
+            <Button type="link" onClick={record.onDelete}>
+              Delete
+            </Button>
+          ) : null}
         </Space>
       );
     },

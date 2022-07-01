@@ -7,6 +7,7 @@ import {
   Typography,
 } from "antd";
 import { useForm } from "antd/lib/form/Form";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { getVoucherById } from "../../services/teeth-apis/VoucherController";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
@@ -66,7 +67,7 @@ const VoucherFormContainer = ({ voucherId, handleSubmit }) => {
             <Input />
           </Form.Item>
         )}
-        {!voucherData?.voucherCode ? (
+        {voucherData?.voucherCode ? (
           <>
             <Typography>
               If you ignore this field, the quantity will be infinite
@@ -80,6 +81,7 @@ const VoucherFormContainer = ({ voucherId, handleSubmit }) => {
             label="Quantity"
             name="quantity"
             rules={VoucherValidation.quantity}
+            dependencies={["expiredTime"]}
           >
             <Input />
           </Form.Item>
@@ -89,8 +91,22 @@ const VoucherFormContainer = ({ voucherId, handleSubmit }) => {
             <Typography>
               If you ignore this field, the expired time will be infinite
             </Typography>
-            <Form.Item label="Expired time" name="expiredTime">
-              <DatePicker showTime />
+            <Form.Item
+              label="Expired time"
+              name="expiredTime"
+              dependencies={["quantity"]}
+              rules={VoucherValidation.expiredTime}
+            >
+              <DatePicker
+                showTime
+                disabledDate={(current) => {
+                  let customDate = moment().format("DD-MM-YYYY HH:mm:ss");
+                  return (
+                    current &&
+                    current < moment(customDate, "DD-MM-YYYY HH:mm:ss")
+                  );
+                }}
+              />
             </Form.Item>
           </>
         ) : (
