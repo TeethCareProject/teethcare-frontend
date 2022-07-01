@@ -15,3 +15,11 @@ export const createVoucher = (voucherData) =>
 
 export const deleteVoucher = (voucherId) =>
   CallAPI(`${VOUCHER_END_POINT}/${voucherId}`, "DELETE");
+
+export const checkAvailableVoucherCode = (voucherCode, clinicId) =>
+  CallAPI(
+    `${VOUCHER_END_POINT}/${voucherCode}/check-available`,
+    "GET",
+    {},
+    { clinicId }
+  );
