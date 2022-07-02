@@ -97,20 +97,6 @@ const VoucherManagementTableContainer = () => {
     setCurrentPage(page);
   };
 
-  const handleUpdateVoucher = async (values) => {
-    try {
-      await updateVoucher({ ...values });
-      setNeededVoucher(null);
-      setFilterData((preFilter) => ({ ...preFilter }));
-    } catch (e) {
-      notification["error"]({
-        message: `Something went wrong! Try again latter!`,
-        description: `There is problem while updating voucher, try again later`,
-        duration: 2,
-      });
-    }
-  };
-
   const handleCreateVoucher = async (values) => {
     try {
       await createVoucher({
@@ -189,7 +175,7 @@ const VoucherManagementTableContainer = () => {
         {neededVoucher ? (
           <VoucherFormContainer
             voucherId={neededVoucher}
-            handleSubmit={handleUpdateVoucher}
+            handleSubmit={() => {}}
           />
         ) : null}
       </Modal>
