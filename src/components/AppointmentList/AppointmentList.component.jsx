@@ -3,6 +3,7 @@ import { Avatar, Button, List, Typography } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
 import { countDayBetween } from "../../utils/convert.utils";
 import moment from "moment";
+import { convertMomentToMilliseconds } from "../../utils/convert.utils";
 
 const AppointmentListComponent = ({ appointmentListData }) => {
   return (
@@ -18,12 +19,22 @@ const AppointmentListComponent = ({ appointmentListData }) => {
               title={
                 <Typography.Title level={5}>
                   {`Appointment Id: ${appointment?.id}`}{" "}
-                  <span
-                    style={{ color: "red", fontWeight: "500" }}
-                  >{`(${countDayBetween(
-                    moment(),
-                    appointment.expireAppointmentDate
-                  )} day left until expired)`}</span>
+                  <span style={{ color: "red", fontWeight: "500" }}>
+                    {appointment.appointmentDate <
+                    convertMomentToMilliseconds(moment()) ? (
+                      <span>{`(${countDayBetween(
+                        moment(),
+                        appointment.expireAppointmentDate
+                      )} day left until expired)`}</span>
+                    ) : (
+                      <span>
+                        {`(${countDayBetween(
+                          moment(),
+                          appointment?.appointmentDate
+                        )} day left until appointment day)`}
+                      </span>
+                    )}
+                  </span>
                 </Typography.Title>
               }
               description={`Clinic: ${appointment?.clinic?.name}`}
@@ -47,15 +58,23 @@ const AppointmentListComponent = ({ appointmentListData }) => {
                 title={
                   <Typography.Title level={5}>
                     {`Appointment Id: ${appointment?.id}`}{" "}
-                    <span
-                      style={{ color: "red", fontWeight: "500" }}
-                    >{`(${countDayBetween(
-                      moment(),
-                      appointment.expireAppointmentDate
-                    )} day left until expired)`}</span>
+                    <span style={{ color: "red", fontWeight: "500" }}>
+                      {appointment.appointmentDate <
+                      convertMomentToMilliseconds(moment()) ? (
+                        <span>{`(${countDayBetween(
+                          moment(),
+                          appointment.expireAppointmentDate
+                        )} day left until expired)`}</span>
+                      ) : (
+                        <span>{`(${countDayBetween(
+                          moment(),
+                          appointment?.appointmentDate
+                        )} day left until appointment day)`}</span>
+                      )}
+                    </span>
                   </Typography.Title>
                 }
-                description={`Service: ${appointment?.services[0]?.name} - Clinic: ${appointment?.clinic?.name}`}
+                description={`Clinic: ${appointment?.clinic?.name}`}
               />
             </List.Item>
           </>

@@ -18,6 +18,7 @@ const PatientActionButtonGroupComponent = ({
     <>
       <div style={{ background: "white", padding: "16px" }}>
         <QRCode
+          size={200}
           value={`${window.location.origin}${generatePath(
             RoutePath.TRIGGER_QR_CODE_NOTIFICATION_PAGE,
             { bookingId: bookingId }
