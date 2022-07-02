@@ -97,7 +97,7 @@ const PatientDashboardContainer = () => {
           />
         </div>
         <div>
-          <div className="dashboard-title">Nearly expired appointments:</div>
+          <div className="dashboard-title">Incoming appointments:</div>
           <AppointmentDetailModalContainer
             appointmentId={neededAppointment}
             setNeededAppointment={setNeededAppointment}

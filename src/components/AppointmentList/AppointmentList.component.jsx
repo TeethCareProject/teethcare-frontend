@@ -23,7 +23,7 @@ const AppointmentListComponent = ({ appointmentListData }) => {
                   >{`(${countDayBetween(
                     moment(),
                     appointment.expireAppointmentDate
-                  )} day left)`}</span>
+                  )} day left until expired)`}</span>
                 </Typography.Title>
               }
               description={`Clinic: ${appointment?.clinic?.name}`}
@@ -52,7 +52,7 @@ const AppointmentListComponent = ({ appointmentListData }) => {
                     >{`(${countDayBetween(
                       moment(),
                       appointment.expireAppointmentDate
-                    )} day left)`}</span>
+                    )} day left until expired)`}</span>
                   </Typography.Title>
                 }
                 description={`Service: ${appointment?.services[0]?.name} - Clinic: ${appointment?.clinic?.name}`}
