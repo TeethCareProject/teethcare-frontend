@@ -4,9 +4,25 @@
 }
 
 @media (min-width: 1024px) {
+  .title-mobile {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 2em;
+    text-align: center;
+    font-weight: bold;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
+  .title-mobile {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    text-align: center;
+    font-weight: bold;
+  }
 }
 
 @media (max-width: 767px) {
@@ -14,7 +30,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 20px;
-    font-size: 2em;
+    font-size: 1.5em;
     text-align: center;
     width: 100vw;
     background: linear-gradient(96.14deg, #3a8ef6 -10.84%, #6f3afa 196.74%);

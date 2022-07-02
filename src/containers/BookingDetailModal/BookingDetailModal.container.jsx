@@ -89,6 +89,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
         role={role}
         isUpdated={isUpdated}
         updateClickHandler={updateClickHandler}
+        handleCancel={handleCancel}
       />
       {role === RoleConstant.CUSTOMER_SERVICE &&
       bookingData?.status === BookingStatusConstants.REQUEST &&

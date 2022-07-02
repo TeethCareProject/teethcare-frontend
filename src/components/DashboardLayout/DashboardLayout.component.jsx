@@ -13,7 +13,7 @@ const DashboardLayout = ({ navigationList, elementList, currentTab }) => {
           mode="horizontal"
         />
       </Row>
-      <Row>
+      <Row style={{ display: "flex", justifyContent: "center" }}>
         <Col span={4} className="dashboard-menu-lg">
           <DashboardSideBarComponent
             items={navigationList}
@@ -21,17 +21,8 @@ const DashboardLayout = ({ navigationList, elementList, currentTab }) => {
             mode="inline"
           />
         </Col>
-        <Col flex="auto" span={24}>
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            {elementList[currentTab]}
-          </div>
+        <Col flex="auto" sm={24} md={20} lg={20}>
+          <div>{elementList[currentTab]}</div>
         </Col>
       </Row>
       <Row className="dashboard-menu-sm">

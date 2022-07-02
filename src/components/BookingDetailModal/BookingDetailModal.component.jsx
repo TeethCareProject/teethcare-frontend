@@ -1,5 +1,5 @@
 import { Avatar, Col, Descriptions, Row, Typography, Button } from "antd";
-import { CalendarOutlined } from "@ant-design/icons";
+import { LeftOutlined, CalendarOutlined } from "@ant-design/icons";
 
 import React from "react";
 import DescriptionsItem from "antd/lib/descriptions/Item";
@@ -11,10 +11,14 @@ const BookingDetailModalComponent = ({
   role,
   isUpdated,
   updateClickHandler,
+  handleCancel,
 }) => {
   return (
     <>
       <Row gutter={[16, 16]} style={{ marginBottom: "0.5rem" }}>
+        <Col>
+          <LeftOutlined onClick={() => handleCancel()} />
+        </Col>
         <Col>
           <Avatar size={48} icon={<CalendarOutlined />} />
         </Col>

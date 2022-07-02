@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Input, Form, Row, Col, notification, Button, Pagination } from "antd";
 import { useForm } from "antd/lib/form/Form";
 import { getAllAppointments } from "../../services/teeth-apis/AppointmentController";
-import AppointmentStatusConstants from "../../constants/AppointmentStatusConstants";
 import AppointmentListComponent from "../../components/AppointmentList/AppointmentList.component";
 import AppointmentDetailModalContainer from "../AppointmentDetailModal/AppointmentDetailModal.container";
 
@@ -79,13 +78,22 @@ const AppointmentListContainer = () => {
   }, [currentPage]);
 
   return (
-    <>
-      <SearchForm form={form} onFinish={onFinish} resetAction={resetAction} />
-      <AppointmentDetailModalContainer
-        appointmentId={neededAppointment}
-        setNeededAppointment={setNeededAppointment}
-      />
-      <AppointmentListComponent appointmentListData={appointmentListData} />
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
+      <div className="title-mobile">Your appointment list</div>
+      <div
+        style={{
+          width: "80vw",
+        }}
+      >
+        <SearchForm form={form} onFinish={onFinish} resetAction={resetAction} />
+        <AppointmentDetailModalContainer
+          appointmentId={neededAppointment}
+          setNeededAppointment={setNeededAppointment}
+        />
+        <AppointmentListComponent appointmentListData={appointmentListData} />
+      </div>
       <div style={{ marginTop: "1rem" }}>
         <Pagination
           total={totalElements}
@@ -96,7 +104,7 @@ const AppointmentListContainer = () => {
           }}
         />
       </div>
-    </>
+    </div>
   );
 };
 
@@ -104,24 +112,24 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
   return (
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
-        <Col span={7}>
+        <Col xs={9} sm={9} md={9} lg={8}>
           <Form.Item name="appointmentId" label="Search appointment Id">
             <Input placeholder="Search by appointment Id" />
           </Form.Item>
         </Col>
-        <Col span={7}>
+        <Col xs={9} sm={9} md={9} lg={8}>
           <Form.Item name="clinicName" label="Search clinic name">
             <Input placeholder="Search by Clinic name" />
           </Form.Item>
         </Col>
-        <Col span={4}>
+        <Col xs={3} sm={3} md={3} lg={2}>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Search
             </Button>
           </Form.Item>
         </Col>
-        <Col span={3}>
+        <Col xs={0} sm={3} md={3} lg={3}>
           <Form.Item>
             <Button onClick={resetAction}>Reset</Button>
           </Form.Item>

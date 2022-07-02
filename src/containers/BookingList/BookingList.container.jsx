@@ -98,7 +98,7 @@ const BookingListContainer = () => {
   return (
     <>
       <div className="title-mobile">Your booking list</div>
-      <div style={{ width: "90vw" }}>
+      <div style={{ width: "80vw" }}>
         <SearchForm
           form={form}
           statusButtonClick={statusButtonClick}
@@ -131,12 +131,12 @@ const SearchForm = ({ resetAction, statusButtonClick, ...antdProps }) => {
     <>
       <Form layout="vertical" {...antdProps}>
         <Row gutter={[16, 16]} align="bottom">
-          <Col span={6}>
+          <Col xs={8} sm={8} md={7} lg={8}>
             <Form.Item name="bookingId" label="Search by booking Id">
               <Input placeholder="Search by booking Id" />
             </Form.Item>
           </Col>
-          <Col span={6}>
+          <Col xs={8} sm={8} md={7} lg={8}>
             <Form.Item name="clinicName" label="Search by clinic name">
               <Input placeholder="Search by Clinic name" />
             </Form.Item>
@@ -157,25 +157,32 @@ const SearchForm = ({ resetAction, statusButtonClick, ...antdProps }) => {
               </Select>
             </Form.Item>
           </Col>
-          <Col sm={3} md={2} lg={2}>
+          <Col xs={3} sm={4} md={3} lg={2}>
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 Search
               </Button>
             </Form.Item>
           </Col>
-          <Col span={2}>
+          <Col xs={0} sm={2} md={2} lg={2}>
             <Form.Item>
-              <Button onClick={resetAction}>Reset</Button>
+              <Button onClick={() => resetAction}>Reset</Button>
             </Form.Item>
           </Col>
         </Row>
       </Form>
       <div className="status-option">
-        <Button className="status-button">All</Button>
+        <Button
+          className="status-button"
+          shape="round"
+          onClick={() => resetAction()}
+        >
+          All
+        </Button>
         {Object.keys(BookingStatusConstants).map((status) => (
           <Button
             className="status-button"
+            shape="round"
             onClick={() => statusButtonClick(status)}
           >
             {status}

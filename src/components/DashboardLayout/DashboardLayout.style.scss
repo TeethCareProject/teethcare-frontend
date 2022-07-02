@@ -1,6 +1,39 @@
+.booking-list-pc,
+.booking-list-mobile,
+.appointment-list-pc,
+.appointment-list-mobile {
+  li:nth-child(odd) {
+    background-color: #f3f6f9 !important;
+  }
+
+  div {
+    padding: 0 5px;
+  }
+}
+
+.dashboard-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
 @media (min-width: 1024px) {
   .navigation {
     display: flex !important;
+  }
+
+  .booking-list-mobile {
+    display: none;
+  }
+
+  .appointment-list-mobile {
+    display: none;
+  }
+
+  .status-option {
+    display: none;
   }
 
   .dashboard-menu-md {
@@ -21,6 +54,18 @@
 @media (min-width: 768px) and (max-width: 1023px) {
   .navigation {
     display: flex !important;
+  }
+
+  .booking-list-mobile {
+    display: none;
+  }
+
+  .appointment-list-mobile {
+    display: none;
+  }
+
+  .status-option {
+    display: none;
   }
 
   .dashboard-menu-lg {
@@ -54,8 +99,34 @@
 }
 
 @media (max-width: 767px) {
+  .booking-list-mobile::-webkit-scrollbar {
+    height: 0px;
+  }
+
+  .ant-modal-content {
+    width: 100vw;
+    top: -15vh;
+    left: -10vw;
+  }
+
   .navigation {
     display: none !important;
+  }
+
+  .booking-list-mobile {
+    display: block;
+  }
+
+  .booking-list-pc {
+    display: none;
+  }
+
+  .appointment-list-mobile {
+    display: block;
+  }
+
+  .appointment-list-pc {
+    display: none;
   }
 
   .status-select {
@@ -76,6 +147,14 @@
 
   .status-option::-webkit-scrollbar {
     width: 0;
+  }
+
+  .booking-list-mobile {
+    display: block;
+  }
+
+  .booking-list-pc {
+    display: none;
   }
 
   .dashboard-menu-lg {
@@ -107,6 +186,13 @@
 
       li {
         padding: 10px;
+        .appointment-list-mobile {
+          display: block;
+        }
+
+        .appointment-list-pc {
+          display: none;
+        }
         display: flex !important;
         justify-content: center;
         align-items: center;

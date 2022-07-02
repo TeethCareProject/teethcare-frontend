@@ -10,6 +10,10 @@ export const convertMillisecondsToDate = (milliseconds) => {
   return new Date(milliseconds).toLocaleString();
 };
 
+export const countDayBetween = (day1, day2) => {
+  return Math.floor((day2 - day1) / 1000 / 60 / 60 / 24);
+};
+
 export const getTimeRange = (start, end) => {
   const range = [];
   for (let i = parseInt(start); i < parseInt(end); i++) {
