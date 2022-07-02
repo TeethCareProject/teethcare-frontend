@@ -6,6 +6,7 @@ import {
 import AccountManagementTableContainer from "../../containers/AccountManagementTable/AccountManagementTable.container";
 import ReportManagementTableContainer from "../../containers/ReportManagementTable/ReportManagementTable.container";
 import PendingAccountManagementTableContainer from "../../containers/PendingAccountManagementTable/PendingAccountManagementTable.container";
+import VoucherManagementTableContainer from "../../containers/VoucherManagementTable/VoucherManagementTable.container";
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -21,6 +22,7 @@ export const navigationList = [
   getItem("User management", "sub2", <AppstoreOutlined />),
   getItem("Feedback reports", "sub3", <SettingOutlined />),
   getItem("Pending account", "sub4", <SettingOutlined />),
+  getItem("Voucher management", "sub5", <SettingOutlined />),
 ];
 
 export const elementList = [
@@ -28,4 +30,5 @@ export const elementList = [
   <AccountManagementTableContainer />,
   <ReportManagementTableContainer />,
   <PendingAccountManagementTableContainer />,
+  <VoucherManagementTableContainer />,
 ];

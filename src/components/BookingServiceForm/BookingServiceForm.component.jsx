@@ -24,6 +24,9 @@ const BookingServiceFormComponent = ({
   serviceData,
   availableHourList,
   handleGetAvailableHourList,
+  checkVoucherCode,
+  voucherCodeMess,
+  setVoucherCodeMess,
   ...antdFormProps
 }) => {
   const { form, ...restAntdFormProps } = antdFormProps;
@@ -119,6 +122,33 @@ const BookingServiceFormComponent = ({
           >
             <Input />
           </Form.Item>
+        </Col>
+      </Row>
+      <Row gutter={[40, 16]} justify="center">
+        <Col span={8}>
+          <Form.Item
+            name="voucherCode"
+            label="Voucher"
+            onChange={() => {
+              if (voucherCodeMess) {
+                setVoucherCodeMess(null);
+              }
+            }}
+            hasFeedback
+            validateStatus={
+              voucherCodeMess
+                ? voucherCodeMess == "success"
+                  ? "success"
+                  : "error"
+                : null
+            }
+            help={voucherCodeMess === "success" ? null : voucherCodeMess}
+          >
+            <Input placeholder="Apply voucher now" />
+          </Form.Item>
+        </Col>
+        <Col span={8}>
+          <Button onClick={checkVoucherCode}>Apply</Button>
         </Col>
       </Row>
       <Row gutter={[40, 16]} justify="center">
