@@ -51,6 +51,8 @@ const VoucherManagementTableColumn = [
 
       if (status === voucherStatusConstants.UNAVAILABLE) {
         color = "volcano";
+      } else if (status === voucherStatusConstants.INACTIVE) {
+        color = "magenta";
       }
 
       return (

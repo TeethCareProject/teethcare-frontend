@@ -36,29 +36,21 @@ const VoucherManagementTableContainer = () => {
   const pageSize = 6;
 
   const [filterData, setFilterData] = useState({
-    id: null,
-    status: null,
-    name: null,
+    voucherCode: null,
   });
 
   const onFinish = async (values) => {
     setFilterData({
-      id: values.id,
-      status: values.status,
-      name: values.name,
+      voucherCode: values.voucherCode,
     });
   };
 
   const resetAction = () => {
     form.setFieldsValue({
-      id: null,
-      status: null,
-      name: null,
+      voucherCode: null,
     });
     setFilterData({
-      id: null,
-      status: null,
-      name: null,
+      voucherCode: null,
     });
   };
 
@@ -75,10 +67,10 @@ const VoucherManagementTableContainer = () => {
       const voucherData = data?.content.map((voucher) => ({
         ...voucher,
         getDetail: () => {
-          setNeededVoucher(voucher?.voucherCode);
+          setNeededVoucher(voucher?.id);
         },
         onDelete: () => {
-          handleDeleteVoucher(voucher?.voucherCode);
+          handleDeleteVoucher(voucher?.id);
         },
       }));
 
@@ -143,24 +135,38 @@ const VoucherManagementTableContainer = () => {
 
   const handleDeleteVoucher = (voucherId) => {
     try {
-      Modal.confirm({
+      const modal = Modal.confirm();
+      modal.update({
         title: "Delete voucher",
         content: "Are you sure you want to delete this voucher?",
-        onOk: async () => {
-          await deleteVoucher(voucherId);
-          notification["success"]({
-            message: `Delete Successfully`,
-            description: `Delete new voucher succesfully`,
-            duration: 2,
-          });
-          setFilterData((preFilter) => ({ ...preFilter }));
+        onOk: () => {
+          const deleteFunc = async () => {
+            try {
+              await deleteVoucher(voucherId);
+              notification["success"]({
+                message: `Delete Successfully`,
+                description: `Delete voucher succesfully`,
+                duration: 2,
+              });
+            } catch (e) {
+              notification["error"]({
+                message: `Something went wrong! Try again latter!`,
+                description: `There is problem while deleting voucher, try again later`,
+                duration: 2,
+              });
+            } finally {
+              setFilterData((preFilter) => ({ ...preFilter }));
+              modal.destroy();
+            }
+          };
+          deleteFunc();
         },
         onCancel: () => {},
       });
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while updating voucher, try again later`,
+        description: `There is problem while deleting voucher, try again later`,
         duration: 2,
       });
     }
@@ -230,28 +236,10 @@ const SearchVoucherFormComponent = ({ resetAction, ...antdProps }) => {
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
         <Col span={6}>
-          <Form.Item name="id" label="Search voucher Id">
-            <Input placeholder="Search by voucher Id" />
+          <Form.Item name="voucherCode" label="Search voucher code">
+            <Input placeholder="Search by voucher code" />
           </Form.Item>
         </Col>
-        <Col span={8}>
-          <Form.Item name="name" label="Search voucher name">
-            <Input placeholder="Search by voucher name" />
-          </Form.Item>
-        </Col>
-        <Col span={4}>
-          <Form.Item name="status" label="Search status">
-            <Select placeholder="select status">
-              <Option>None</Option>
-              {Object.keys(VoucherStatusConstants).map((status) => (
-                <Option key={status} value={status}>
-                  {status}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Col>
-
         <Col span={2}>
           <Form.Item>
             <Button type="primary" htmlType="submit">

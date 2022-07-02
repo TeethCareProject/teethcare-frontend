@@ -24,6 +24,9 @@ const NotificationComponent = ({
   return (
     <div>
       <Dropdown
+        onVisibleChange={(visible) => {
+          if (visible) loadMoreData();
+        }}
         overlayStyle={{ height: "100px" }}
         overlay={
           <>
