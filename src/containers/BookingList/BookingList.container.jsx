@@ -14,6 +14,7 @@ import { useForm } from "antd/lib/form/Form";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import MobileNavigationBar from "../MobileNavigationBar/MobileNavigationBar.container";
 
 const BookingListContainer = () => {
   const [searchValue, setSearchValue] = useState({
@@ -97,7 +98,7 @@ const BookingListContainer = () => {
 
   return (
     <>
-      <div className="title-mobile">Your booking list</div>
+      <MobileNavigationBar title="Your booking list" />
       <div style={{ width: "80vw" }}>
         <SearchForm
           form={form}

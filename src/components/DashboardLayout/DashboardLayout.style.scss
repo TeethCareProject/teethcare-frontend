@@ -24,6 +24,10 @@
     display: flex !important;
   }
 
+  .mobile-feature {
+    display: none;
+  }
+
   .booking-list-mobile {
     display: none;
   }
@@ -54,6 +58,10 @@
 @media (min-width: 768px) and (max-width: 1023px) {
   .navigation {
     display: flex !important;
+  }
+
+  .mobile-feature {
+    display: none;
   }
 
   .booking-list-mobile {

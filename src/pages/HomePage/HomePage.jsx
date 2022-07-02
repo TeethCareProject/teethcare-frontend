@@ -1,19 +1,19 @@
 import React from "react";
 import { Row, Button } from "antd";
-
 import HomePageContentCardPreviewComponent from "../../components/customized-components/HomePageContentCardPreview/HomePageContentCardPreview.component";
 import ClinicCardContainer from "../../containers/ClinicCard/ClinicCard.container";
 import RoutePath from "../../routers/Path";
 import homePageImg from "../../assets/homepage_image.png";
 import IntroductionPartComponent from "../../components/customized-components/IntroductionPart/IntroductionPart.component";
 import { useHistory } from "react-router-dom";
-
 import "./HomePage.style.scss";
+import MobileNavigationBar from "../../containers/MobileNavigationBar/MobileNavigationBar.container";
 
 const HomePage = () => {
   const history = useHistory();
   return (
     <div>
+      <MobileNavigationBar title="Teethcare" />
       <IntroductionPartComponent homePageImg={homePageImg} />
       <HomePageContentCardPreviewComponent />
       <div className="card-clinic-container">
