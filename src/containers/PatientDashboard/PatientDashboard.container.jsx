@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import PatientDashboardComponent from "../../components/PatientDashboard/PatientDashboard.component";
 import { notification } from "antd";
 import BookingListComponent from "../../components/BookingList/BookingList.component";
 import AppointmentListComponent from "../../components/AppointmentList/AppointmentList.component";
