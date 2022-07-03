@@ -4,7 +4,7 @@ import { useForm } from "antd/lib/form/Form";
 import { getAllAppointments } from "../../services/teeth-apis/AppointmentController";
 import AppointmentListComponent from "../../components/AppointmentList/AppointmentList.component";
 import AppointmentDetailModalContainer from "../AppointmentDetailModal/AppointmentDetailModal.container";
-import MobileNavigationBar from "../MobileNavigationBar/MobileNavigationBar.container";
+import MobileMenuBar from "../MobileMenuBar/MobileMenuBar.container";
 
 const AppointmentListContainer = () => {
   const [searchValue, setSearchValue] = useState({
@@ -82,7 +82,7 @@ const AppointmentListContainer = () => {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <MobileNavigationBar title="Your apopintment list" />
+      <MobileMenuBar title="Your apopintment list" />
       <div
         style={{
           width: "80vw",

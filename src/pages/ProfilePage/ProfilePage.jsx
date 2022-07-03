@@ -1,11 +1,11 @@
 import React from "react";
 import ProfileFormContainer from "../../containers/ProfileForm/ProfileForm.container";
-import MobileNavigationBar from "../../containers/MobileNavigationBar/MobileNavigationBar.container";
+import MobileMenuBar from "../../containers/MobileMenuBar/MobileMenuBar.container";
 
 const ProfilePage = () => {
   return (
     <>
-      <MobileNavigationBar title="Teethcare" />
+      <MobileMenuBar title="Teethcare" />
       <ProfileFormContainer />
     </>
   );

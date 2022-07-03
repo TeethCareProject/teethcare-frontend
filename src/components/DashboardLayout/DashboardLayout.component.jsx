@@ -25,23 +25,14 @@ const DashboardLayout = ({ navigationList, elementList, currentTab }) => {
           <div>{elementList[currentTab]}</div>
         </Col>
       </Row>
-      <PatientMobileNavigation
-        navigationList={navigationList}
-        currentTab={currentTab}
-      />
+      <Row className="dashboard-menu-sm">
+        <DashboardSideBarComponent
+          items={navigationList}
+          selectedKey={navigationList[currentTab].key}
+          mode="horizontal"
+        />
+      </Row>
     </>
-  );
-};
-
-export const PatientMobileNavigation = ({ navigationList, currentTab }) => {
-  return (
-    <Row className="dashboard-menu-sm">
-      <DashboardSideBarComponent
-        items={navigationList}
-        selectedKey={navigationList[currentTab].key}
-        mode="horizontal"
-      />
-    </Row>
   );
 };
 

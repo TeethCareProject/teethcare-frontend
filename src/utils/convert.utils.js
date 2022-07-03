@@ -1,3 +1,5 @@
+import ClinicOperatingTimeMapper from "../mapper/ClinicOperatingTimeMapper";
+
 export const convertMomentToDate = (momentData) => {
   return new Date(momentData.utc());
 };
@@ -25,6 +27,26 @@ export const getTimeRange = (start, end) => {
 export const convertMillisecondsToHour = (milliseconds) => {
   //must shift 7 hour for correct display
   return Math.floor(milliseconds / (60 * 60 * 1000)) + 7;
+};
+
+export const convertMillisecondsToMinutes = (milliseconds) => {
+  return Math.floor(milliseconds / (60 * 1000));
+};
+
+export const getClinicOperatingTime = (clinicData, option) => {
+  if (option === "morning") {
+    return `${ClinicOperatingTimeMapper(clinicData)?.startTimeShiftHour1}:${
+      ClinicOperatingTimeMapper(clinicData)?.startTimeShiftMinute1
+    } - ${ClinicOperatingTimeMapper(clinicData)?.endTimeShiftHour1}:${
+      ClinicOperatingTimeMapper(clinicData)?.endTimeShiftMinute1
+    } `;
+  } else {
+    return `${ClinicOperatingTimeMapper(clinicData)?.startTimeShiftHour2}:${
+      ClinicOperatingTimeMapper(clinicData)?.startTimeShiftMinute2
+    } - ${ClinicOperatingTimeMapper(clinicData)?.endTimeShiftHour2}:${
+      ClinicOperatingTimeMapper(clinicData)?.endTimeShiftMinute2
+    } `;
+  }
 };
 
 export const getDisabledTime = (clinicData) => {

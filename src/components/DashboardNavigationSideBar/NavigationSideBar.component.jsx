@@ -10,9 +10,6 @@ const DashboardSideBarComponent = ({ items, selectedKey, mode }) => {
   return (
     <Menu
       onClick={onClick}
-      // style={{
-      //   textOverflow: "ellipsis",
-      // }}
       selectedKeys={selectedKey}
       mode={mode}
       items={items}

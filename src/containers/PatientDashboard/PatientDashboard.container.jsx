@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { notification, Menu, Dropdown } from "antd";
-import { useHistory } from "react-router-dom";
-import RoutePath from "../../routers/Path";
+import { notification } from "antd";
 import BookingListComponent from "../../components/BookingList/BookingList.component";
 import AppointmentListComponent from "../../components/AppointmentList/AppointmentList.component";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
@@ -11,17 +9,13 @@ import moment from "moment";
 import { convertMomentToMilliseconds } from "../../utils/convert.utils";
 import AppointmentDetailModalContainer from "../AppointmentDetailModal/AppointmentDetailModal.container";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
-import { useDispatch } from "react-redux";
-import MobileNavigationBar from "../MobileNavigationBar/MobileNavigationBar.container";
+import MobileMenuBar from "../MobileMenuBar/MobileMenuBar.container";
 
 const PatientDashboardContainer = () => {
   const [bookingListData, setBookingListData] = useState([]);
   const [appointmentListData, setAppointmentListData] = useState([]);
   const [neededBooking, setNeededBooking] = useState(null);
   const [neededAppointment, setNeededAppointment] = useState(null);
-
-  const history = useHistory();
-  const dispatch = useDispatch();
 
   const fetchBookingData = async (options) => {
     try {
@@ -86,7 +80,7 @@ const PatientDashboardContainer = () => {
   return (
     <>
       <div>
-        <MobileNavigationBar title="Dashboard" />
+        <MobileMenuBar title="Dashboard" />
         <div>
           <div className="dashboard-title">Your incoming examinations:</div>
           <BookingDetailModalContainer

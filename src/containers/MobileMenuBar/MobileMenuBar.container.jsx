@@ -14,7 +14,7 @@ import RoutePath from "../../routers/Path";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutHandler } from "../../redux/authentication/authentication.action";
 
-const MobileNavigationBar = ({ title }) => {
+const MobileMenuBar = ({ title }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const isAuthUser = useSelector((state) => state.authentication.isAuthUser);
@@ -61,7 +61,7 @@ const MobileNavigationBar = ({ title }) => {
   return (
     <>
       <div
-        className="title-mobile"
+        className="menu-title"
         style={{ display: "flex", justifyContent: "center" }}
       >
         <div
@@ -78,10 +78,10 @@ const MobileNavigationBar = ({ title }) => {
         >
           <BellOutlined />
         </div>
-        <div>{title}</div>
+        <div className="title-mobile">{title}</div>
       </div>
     </>
   );
 };
 
-export default MobileNavigationBar;
+export default MobileMenuBar;

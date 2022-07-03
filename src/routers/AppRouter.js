@@ -39,6 +39,7 @@ import notificationTypes from "../notificationHandler/notification.types";
 import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
+import MobileMenuBar from "../containers/MobileMenuBar/MobileMenuBar.container";
 import { useSelector } from "react-redux";
 
 const AppRouter = () => {
@@ -83,12 +84,15 @@ const AppRouter = () => {
           <ErrorPage code={500} />
         </Route>
         <Route path={RoutePath.HOME_PAGE} exact>
+          <MobileMenuBar title="Teethcare" />
           <HomePage />
         </Route>
         <Route path={RoutePath.CLINIC_PAGE} exact>
+          <MobileMenuBar title="Teethcare" />
           <ClinicPage />
         </Route>
         <Route path={RoutePath.CLINIC_DETAIL_PAGE} exact>
+          <MobileMenuBar title="Teethcare" />
           <ClinicDetailPage />
         </Route>
         <Route path={RoutePath.REGISTER_PARE} exact>
@@ -98,15 +102,19 @@ const AppRouter = () => {
           <LoginPage />
         </Route>
         <Route path={RoutePath.SERVICE_DETAIL_PAGE} exact>
+          <MobileMenuBar title="Teethcare" />
           <ServiceDetailPage />
         </Route>
         <Route path={RoutePath.BOOKING_PAGE} exact>
+          <MobileMenuBar title="Teethcare" />
           <BookingServicePage />
         </Route>
         <Route path={RoutePath.BOOKING_SUCCESSFUL_PAGE} exact>
+          <MobileMenuBar title="Teethcare" />
           <BookingSuccessfulPage />
         </Route>
         <Route path={RoutePath.BOOKING_FAILED_PAGE} exact>
+          <MobileMenuBar title="Teethcare" />
           <BookingFailedPage />
         </Route>
         <Route path={RoutePath.EXAMINATION_PAGE} exact>

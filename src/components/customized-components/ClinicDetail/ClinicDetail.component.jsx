@@ -5,6 +5,7 @@ import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
 import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";
 import ClinicOperatingTimeMapper from "../../../mapper/ClinicOperatingTimeMapper";
+import { getClinicOperatingTime } from "../../../utils/convert.utils";
 
 const ClinicDetailComponent = ({ clinicData, feedback }) => {
   const { Meta } = Card;
@@ -54,20 +55,8 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             <Typography.Title level={4} style={{ margin: "0 auto" }}>
               <div>Operating Hours: </div>
             </Typography.Title>
-            <div>
-              Morning:{" "}
-              {ClinicOperatingTimeMapper(clinicData)?.startTimeShift1 +
-                ":00 - " +
-                ClinicOperatingTimeMapper(clinicData)?.endTimeShift1 +
-                ":00"}
-            </div>
-            <div>
-              Evening:{" "}
-              {ClinicOperatingTimeMapper(clinicData)?.startTimeShift2 +
-                ":00 - " +
-                ClinicOperatingTimeMapper(clinicData)?.endTimeShift2 +
-                ":00"}
-            </div>
+            <div>Morning: {getClinicOperatingTime(clinicData, "morning")}</div>
+            <div>Evening: {getClinicOperatingTime(clinicData, "evening")}</div>
           </div>
         </div>
       </div>

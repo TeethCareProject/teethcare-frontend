@@ -4,7 +4,7 @@
 }
 
 @media (min-width: 1024px) {
-  .title-mobile {
+  .menu-title {
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 20px;
@@ -12,10 +12,14 @@
     text-align: center;
     font-weight: bold;
   }
+
+  .title-mobile {
+    display: none;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  .title-mobile {
+  .menu-title {
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 20px;
@@ -23,10 +27,14 @@
     text-align: center;
     font-weight: bold;
   }
+
+  .title-mobile {
+    display: none;
+  }
 }
 
 @media (max-width: 767px) {
-  .title-mobile {
+  .menu-title {
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 20px;
