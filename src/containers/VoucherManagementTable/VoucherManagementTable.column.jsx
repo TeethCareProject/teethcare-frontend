@@ -3,6 +3,11 @@ import voucherStatusConstants from "../../constants/VoucherStatusConstants";
 
 const VoucherManagementTableColumn = [
   {
+    title: "Voucher ID",
+    dataIndex: "id",
+    key: "id",
+  },
+  {
     title: "Voucher code",
     dataIndex: "voucherCode",
     key: "voucherCode",
