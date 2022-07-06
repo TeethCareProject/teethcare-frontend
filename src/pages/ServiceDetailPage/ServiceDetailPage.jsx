@@ -3,7 +3,6 @@ import { generatePath } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import RoutePath from "../../routers/Path";
-import MobileMenuBar from "../../containers/MobileMenuBar/MobileMenuBar.container";
 
 import ServiceDetailContainer from "../../containers/ServiceDetail/ServiceDetail.container";
 
@@ -16,12 +15,7 @@ const ServiceDetailPage = () => {
       generatePath(RoutePath.BOOKING_PAGE, { serviceId: serviceId })
     );
   };
-  return (
-    <>
-      <MobileMenuBar title="Teethcare" />
-      <ServiceDetailContainer bookingHandler={bookingService} />
-    </>
-  );
+  return <ServiceDetailContainer bookingHandler={bookingService} />;
 };
 
 export default ServiceDetailPage;

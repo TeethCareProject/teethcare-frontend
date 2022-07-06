@@ -18,7 +18,7 @@ import PrivateRouter from "./components/PrivateRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation, matchPath } from "react-router-dom";
 import {
   getNotificationList,
   initFcmToken,
@@ -45,8 +45,23 @@ import { useSelector } from "react-redux";
 const AppRouter = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const location = useLocation();
   dispatch(initFcmToken());
   const role = useSelector((state) => state.authentication.user?.roleName);
+
+  const match = matchPath(location.pathname, {
+    path: [
+      RoutePath.HOME_PAGE,
+      RoutePath.BOOKING_PAGE,
+      RoutePath.SERVICE_DETAIL_PAGE,
+      RoutePath.CLINIC_PAGE,
+      RoutePath.CLINIC_DETAIL_PAGE,
+    ],
+    exact: true,
+    strict: true,
+  });
+
+  console.log(location.pathname);
 
   useEffect(() => {
     const unsubscribe = onMessage(messaging, (payload) => {
@@ -76,23 +91,23 @@ const AppRouter = () => {
     return unsubscribe;
   });
 
+  console.log(location.pathname);
+
   return (
     <>
       <NavigationBar />
+      {match ? <MobileMenuBar title="Teethcare" /> : null}
       <Switch>
         <Route path={RoutePath.INTERNAL_ERROR_PAGE} exact>
           <ErrorPage code={500} />
         </Route>
         <Route path={RoutePath.HOME_PAGE} exact>
-          <MobileMenuBar title="Teethcare" />
           <HomePage />
         </Route>
         <Route path={RoutePath.CLINIC_PAGE} exact>
-          <MobileMenuBar title="Teethcare" />
           <ClinicPage />
         </Route>
         <Route path={RoutePath.CLINIC_DETAIL_PAGE} exact>
-          <MobileMenuBar title="Teethcare" />
           <ClinicDetailPage />
         </Route>
         <Route path={RoutePath.REGISTER_PARE} exact>
@@ -102,19 +117,15 @@ const AppRouter = () => {
           <LoginPage />
         </Route>
         <Route path={RoutePath.SERVICE_DETAIL_PAGE} exact>
-          <MobileMenuBar title="Teethcare" />
           <ServiceDetailPage />
         </Route>
         <Route path={RoutePath.BOOKING_PAGE} exact>
-          <MobileMenuBar title="Teethcare" />
           <BookingServicePage />
         </Route>
         <Route path={RoutePath.BOOKING_SUCCESSFUL_PAGE} exact>
-          <MobileMenuBar title="Teethcare" />
           <BookingSuccessfulPage />
         </Route>
         <Route path={RoutePath.BOOKING_FAILED_PAGE} exact>
-          <MobileMenuBar title="Teethcare" />
           <BookingFailedPage />
         </Route>
         <Route path={RoutePath.EXAMINATION_PAGE} exact>
