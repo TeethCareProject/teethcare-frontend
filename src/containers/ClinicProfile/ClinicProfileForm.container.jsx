@@ -14,6 +14,7 @@ import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import OperatingHourFormComponent from "../../components/forms/ClinicRegisterForm/OperatingHourForm.component";
 import {
   getAccountById,
   updateProfile,
@@ -27,6 +28,8 @@ import { ProfileValidation } from "../../validate/ProfileValidation";
 import { ClinicRegisterValidation } from "../../validate/RegisterValidation";
 import LocationInputContainer from "../LocationInput/LocationInput.container";
 import AvatarUploadContainer from "./ClinicAvatarUpload.container";
+
+const { RangePicker } = DatePicker;
 
 const { Option } = Select;
 
@@ -138,6 +141,18 @@ const ClinicProfileFormContainer = () => {
             <LocationInputContainer defaultValues={clinicData?.location} />
             <Form.Item label="Clinic description" name="description" required>
               <TextArea row={5} />
+            </Form.Item>
+            <Typography.Title level={5}>Opperation attributes</Typography.Title>
+            <OperatingHourFormComponent />
+            <Form.Item name={"bookingGap"} label="Booking gap" required>
+              <Input placeholder="Booking gap" />
+            </Form.Item>
+            <Form.Item
+              name={"facebookPageId"}
+              label="Facebook page ID"
+              required
+            >
+              <Input placeholder="Facebook page ID" />
             </Form.Item>
             <Row justify="center">
               <Form.Item>
