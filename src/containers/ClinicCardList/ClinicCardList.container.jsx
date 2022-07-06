@@ -3,7 +3,7 @@ import React, { useState, useLayoutEffect, useEffect } from "react";
 import { useHistory, generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 
-import { notification, Form, Button, Select, Pagination } from "antd";
+import { notification, Form, Button, Select, Pagination, Input } from "antd";
 import ClinicCardContainer from "../ClinicCard/ClinicCard.container";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
 import { getClinics } from "../../services/teeth-apis/ClinicController";
@@ -16,6 +16,7 @@ const ClinicCardListContainer = () => {
   const history = useHistory();
 
   const [filterData, setFilterData] = useState({
+    name: null,
     serviceId: null,
     provinceId: "",
     districtId: "",
@@ -31,6 +32,7 @@ const ClinicCardListContainer = () => {
 
   const onFinish = async (values) => {
     setFilterData({
+      name: values.name,
       serviceId: values.serviceId,
       provinceId: values.provinceId,
       districtId: values.districtId,
@@ -122,6 +124,9 @@ const ClinicCardListContainer = () => {
             className="clinic-filter"
             onFinish={onFinish}
           >
+            <Form.Item name="name" label="Name">
+              <Input />
+            </Form.Item>
             <Form.Item name="serviceId" label="Service">
               <Select
                 value={selectedService}
@@ -152,18 +157,18 @@ const ClinicCardListContainer = () => {
           </Form>
         </div>
       </div>
-      <ClinicCardContainer
-        clinicData={filteredClinic}
-        layoutDirection="column"
-      />
       <Pagination
-        style={{ position: "fixed", left: "60px", bottom: "60px" }}
+        style={{ position: "fixed", right: "115px", top: "60px" }}
         total={totalElements}
         current={currentPage}
         pageSize={pageSize}
         onChange={(page) => {
           setCurrentPage(page);
         }}
+      />
+      <ClinicCardContainer
+        clinicData={filteredClinic}
+        layoutDirection="column"
       />
     </div>
   );

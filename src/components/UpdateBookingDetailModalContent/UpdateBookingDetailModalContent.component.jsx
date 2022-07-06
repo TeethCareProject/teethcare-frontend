@@ -15,12 +15,14 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+import moment from "moment";
 
 import {
   convertMillisecondsToHour,
   getDisabledTime,
 } from "../../utils/convert.utils";
 import { useSelector } from "react-redux";
+import { UpdateBookingDataValidation } from "../../validate/UpdateBookingDataValidation";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import ClinicOperatingTimeMapper from "../../mapper/ClinicOperatingTimeMapper";
@@ -105,19 +107,31 @@ const UpdateBookingDetailModalContentComponent = ({
             }}
           />
         </div>
-        <Form.Item name="dentistId" hidden>
+        <Form.Item
+          name="dentistId"
+          hidden={true}
+          rules={UpdateBookingDataValidation.dentist}
+        >
           <Input />
         </Form.Item>
       </div>
       <Descriptions title="Booking Info">
         <div>
           <span>New Examination Time: </span>
-          <Form.Item name="examinationTime" shouldUpdate>
+          <Form.Item
+            name="examinationTime"
+            shouldUpdate
+            rules={UpdateBookingDataValidation.examinationTime}
+          >
             <DatePicker
               showTime
               placeholder="Select Time"
               style={{ marginLeft: 10 }}
               disabledTime={disabledDateTime}
+              disabledDate={(current) => {
+                let customDate = moment().format("DD-MM-YYYY");
+                return current && current < moment(customDate, "DD-MM-YYYY");
+              }}
               format="YYYY-MM-DD HH:mm"
             />
           </Form.Item>
@@ -168,7 +182,7 @@ const UpdateBookingDetailModalContentComponent = ({
         />
       </div>
 
-      <Form.Item name="serviceIds">
+      <Form.Item name="serviceIds" rules={UpdateBookingDataValidation.services}>
         <Select
           mode="multiple"
           allowClear

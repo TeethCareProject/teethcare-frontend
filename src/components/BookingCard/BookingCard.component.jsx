@@ -46,7 +46,7 @@ const BookingCardComponent = ({ booking }) => {
                 <span style={{ fontWeight: "bold" }}>Examination Time: </span>
                 {convertMillisecondsToDate(booking[0]?.examinationTime)}
                 <Button type="link" onClick={() => booking[0]?.onClick()}>
-                  Xem chi tiết
+                  View detail
                 </Button>
               </div>
               <div
@@ -102,7 +102,7 @@ const BookingCardComponent = ({ booking }) => {
                         type="link"
                         onClick={() => bookingElement?.onClick()}
                       >
-                        Xem chi tiết
+                        View detail
                       </Button>
                     </Card>
                   </Col>

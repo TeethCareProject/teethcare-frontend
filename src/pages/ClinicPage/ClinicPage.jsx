@@ -3,7 +3,11 @@ import "./ClinicPage.style.scss";
 import ClinicCardListContainer from "../../containers/ClinicCardList/ClinicCardList.container";
 
 const ClinicPage = () => {
-  return <ClinicCardListContainer />;
+  return (
+    <>
+      <ClinicCardListContainer />
+    </>
+  );
 };
 
 export default ClinicPage;

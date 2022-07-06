@@ -14,7 +14,7 @@ const RejectBookingFormContainer = ({ handleAssign, fetchBookingData }) => {
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while giving feedback, try again later`,
+        description: `There is problem while reject this booking, try again later`,
         duration: 2,
       });
     }

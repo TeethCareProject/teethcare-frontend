@@ -14,6 +14,7 @@ import { useForm } from "antd/lib/form/Form";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
 import BookingStatusConstants from "../../constants/BookingStatusConstants";
+import MobileMenuBar from "../MobileMenuBar/MobileMenuBar.container";
 
 const BookingListContainer = () => {
   const [searchValue, setSearchValue] = useState({
@@ -62,6 +63,13 @@ const BookingListContainer = () => {
     });
   };
 
+  const statusButtonClick = (status) => {
+    setSearchValue({
+      ...searchValue,
+      status: status,
+    });
+  };
+
   const resetAction = () => {
     form.setFieldsValue({
       bookingId: "",
@@ -90,67 +98,99 @@ const BookingListContainer = () => {
 
   return (
     <>
-      <SearchForm form={form} onFinish={onFinish} resetAction={resetAction} />
-      <BookingDetailModalContainer
-        bookingId={neededBooking}
-        setNeededBooking={setNeededBooking}
-      />
-      <BookingListComponent bookingListData={bookingListData} />
-      <div style={{ marginTop: "1rem" }}>
-        <Pagination
-          total={totalElements}
-          current={currentPage}
-          pageSize={pageSize}
-          onChange={(page) => {
-            setCurrentPage(page);
-          }}
+      <MobileMenuBar title="Your booking list" />
+      <div style={{ width: "80vw" }}>
+        <SearchForm
+          form={form}
+          statusButtonClick={statusButtonClick}
+          onFinish={onFinish}
+          resetAction={resetAction}
         />
+        <BookingDetailModalContainer
+          bookingId={neededBooking}
+          setNeededBooking={setNeededBooking}
+        />
+        <BookingListComponent bookingListData={bookingListData} />
+        <div style={{ marginTop: "1rem" }}>
+          <Pagination
+            total={totalElements}
+            current={currentPage}
+            pageSize={pageSize}
+            onChange={(page) => {
+              setCurrentPage(page);
+            }}
+          />
+        </div>
       </div>
     </>
   );
 };
 
-const SearchForm = ({ resetAction, ...antdProps }) => {
+const SearchForm = ({ resetAction, statusButtonClick, ...antdProps }) => {
   const { Option } = Select;
   return (
-    <Form layout="vertical" {...antdProps}>
-      <Row gutter={[16, 16]} align="bottom">
-        <Col span={7}>
-          <Form.Item name="bookingId" label="Search booking Id">
-            <Input placeholder="Search by booking Id" />
-          </Form.Item>
-        </Col>
-        <Col span={7}>
-          <Form.Item name="clinicName" label="Search clinic name">
-            <Input placeholder="Search by Clinic name" />
-          </Form.Item>
-        </Col>
-        <Col span={4}>
-          <Form.Item name="status" label="Search status">
-            <Select placeholder="select status">
-              <Option>None</Option>
-              {Object.keys(BookingStatusConstants).map((status) => (
-                <Option key={status} value={status}>
-                  {status}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Col>
-        <Col span={2}>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Search
-            </Button>
-          </Form.Item>
-        </Col>
-        <Col span={2}>
-          <Form.Item>
-            <Button onClick={resetAction}>Reset</Button>
-          </Form.Item>
-        </Col>
-      </Row>
-    </Form>
+    <>
+      <Form layout="vertical" {...antdProps}>
+        <Row gutter={[16, 16]} align="bottom">
+          <Col xs={8} sm={8} md={7} lg={8}>
+            <Form.Item name="bookingId" label="Search by booking Id">
+              <Input placeholder="Search by booking Id" />
+            </Form.Item>
+          </Col>
+          <Col xs={8} sm={8} md={7} lg={8}>
+            <Form.Item name="clinicName" label="Search by clinic name">
+              <Input placeholder="Search by Clinic name" />
+            </Form.Item>
+          </Col>
+          <Col sm={0} md={4} lg={4}>
+            <Form.Item
+              name="status"
+              label="Search status"
+              className="status-select"
+            >
+              <Select placeholder="select status">
+                <Option>None</Option>
+                {Object.keys(BookingStatusConstants).map((status) => (
+                  <Option key={status} value={status}>
+                    {status}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col xs={3} sm={4} md={3} lg={2}>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Search
+              </Button>
+            </Form.Item>
+          </Col>
+          <Col xs={0} sm={2} md={2} lg={2}>
+            <Form.Item>
+              <Button onClick={() => resetAction}>Reset</Button>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+      <div className="status-option">
+        <Button
+          className="status-button"
+          shape="round"
+          onClick={() => resetAction()}
+        >
+          All
+        </Button>
+        {Object.keys(BookingStatusConstants).map((status) => (
+          <Button
+            className="status-button"
+            shape="round"
+            onClick={() => statusButtonClick(status)}
+          >
+            {status}
+          </Button>
+        ))}
+      </div>
+    </>
   );
 };
 
