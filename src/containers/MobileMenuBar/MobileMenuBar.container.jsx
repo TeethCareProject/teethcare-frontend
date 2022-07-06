@@ -9,14 +9,27 @@ import {
   AppstoreOutlined,
   LoginOutlined,
 } from "@ant-design/icons";
-import { useHistory } from "react-router-dom";
+import { useHistory, matchPath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutHandler } from "../../redux/authentication/authentication.action";
 
-const MobileMenuBar = ({ title }) => {
+const MobileMenuBar = ({ title, location }) => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const match = matchPath(location, {
+    path: [
+      RoutePath.HOME_PAGE,
+      RoutePath.BOOKING_PAGE,
+      RoutePath.SERVICE_DETAIL_PAGE,
+      RoutePath.CLINIC_PAGE,
+      RoutePath.CLINIC_DETAIL_PAGE,
+    ],
+    exact: true,
+    strict: true,
+  });
+
   const isAuthUser = useSelector((state) => state.authentication.isAuthUser);
   const menu = (
     <Menu
@@ -60,26 +73,28 @@ const MobileMenuBar = ({ title }) => {
 
   return (
     <>
-      <div
-        className="menu-title"
-        style={{ display: "flex", justifyContent: "center" }}
-      >
+      {match ? (
         <div
-          style={{ position: "absolute", left: 10, cursor: "pointer" }}
-          className="mobile-feature"
+          className="menu-title"
+          style={{ display: "flex", justifyContent: "center" }}
         >
-          <Dropdown overlay={menu} placement="bottomLeft">
-            <MenuOutlined />
-          </Dropdown>
+          <div
+            style={{ position: "absolute", left: 10, cursor: "pointer" }}
+            className="mobile-feature"
+          >
+            <Dropdown overlay={menu} placement="bottomLeft">
+              <MenuOutlined />
+            </Dropdown>
+          </div>
+          <div
+            style={{ position: "absolute", right: 10, cursor: "pointer" }}
+            className="mobile-feature"
+          >
+            <BellOutlined />
+          </div>
+          <div className="title-mobile">{title}</div>
         </div>
-        <div
-          style={{ position: "absolute", right: 10, cursor: "pointer" }}
-          className="mobile-feature"
-        >
-          <BellOutlined />
-        </div>
-        <div className="title-mobile">{title}</div>
-      </div>
+      ) : null}
     </>
   );
 };

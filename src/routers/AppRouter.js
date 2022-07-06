@@ -18,7 +18,7 @@ import PrivateRouter from "./components/PrivateRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
 import { useDispatch } from "react-redux";
-import { useHistory, useLocation, matchPath } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   getNotificationList,
   initFcmToken,
@@ -48,18 +48,6 @@ const AppRouter = () => {
   const location = useLocation();
   dispatch(initFcmToken());
   const role = useSelector((state) => state.authentication.user?.roleName);
-
-  const match = matchPath(location.pathname, {
-    path: [
-      RoutePath.HOME_PAGE,
-      RoutePath.BOOKING_PAGE,
-      RoutePath.SERVICE_DETAIL_PAGE,
-      RoutePath.CLINIC_PAGE,
-      RoutePath.CLINIC_DETAIL_PAGE,
-    ],
-    exact: true,
-    strict: true,
-  });
 
   useEffect(() => {
     const unsubscribe = onMessage(messaging, (payload) => {
@@ -92,7 +80,7 @@ const AppRouter = () => {
   return (
     <>
       <NavigationBar />
-      {match ? <MobileMenuBar title="Teethcare" /> : null}
+      <MobileMenuBar title="Teethcare" location={location.pathname} />
       <Switch>
         <Route path={RoutePath.INTERNAL_ERROR_PAGE} exact>
           <ErrorPage code={500} />
