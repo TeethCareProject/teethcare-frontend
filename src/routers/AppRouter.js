@@ -61,8 +61,6 @@ const AppRouter = () => {
     strict: true,
   });
 
-  console.log(location.pathname);
-
   useEffect(() => {
     const unsubscribe = onMessage(messaging, (payload) => {
       const { notification: notificationData } = payload;
@@ -90,8 +88,6 @@ const AppRouter = () => {
 
     return unsubscribe;
   });
-
-  console.log(location.pathname);
 
   return (
     <>
