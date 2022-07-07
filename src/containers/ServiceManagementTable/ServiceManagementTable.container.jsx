@@ -20,8 +20,6 @@ import {
 } from "../../services/teeth-apis/ServiceController";
 import { useForm } from "antd/lib/form/Form";
 import ServiceManagementTableColumn from "./ServiceManagementTable.column";
-import DetailForm from "../DetailForm/DetailForm.container";
-import { RoleConstant } from "../../constants/RoleConstants";
 import { ServiceStatusConstants } from "../../constants/ServiceStatusConstants";
 import ServiceFormContainer from "../ServiceForm/ServiceForm.container";
 

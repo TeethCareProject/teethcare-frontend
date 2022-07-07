@@ -6,6 +6,7 @@ export const bookService = (bookingData) =>
     description: bookingData.description,
     desiredCheckingTime: bookingData.desiredCheckingTime,
     serviceId: bookingData.serviceId,
+    voucherCode: bookingData.voucherCode,
   });
 
 export const getAllBooking = (options) =>

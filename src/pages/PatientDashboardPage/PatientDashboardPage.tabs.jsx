@@ -5,6 +5,7 @@ import {
 } from "@ant-design/icons";
 import BookingListContainer from "../../containers/BookingList/BookingList.container";
 import AppointmentListContainer from "../../containers/AppointmentList/AppointmentListContainer";
+import PatientDashboardContainer from "../../containers/PatientDashboard/PatientDashboard.container";
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -22,8 +23,16 @@ export const navigationList = [
 ];
 
 export const elementList = [
-  <div>Dashboard element</div>,
-  <div style={{ width: "80%" }}>
+  <div>
+    <PatientDashboardContainer />
+  </div>,
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    }}
+  >
     <BookingListContainer />
   </div>,
   <div>

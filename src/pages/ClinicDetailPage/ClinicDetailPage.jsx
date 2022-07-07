@@ -2,7 +2,11 @@ import React from "react";
 import ClinicDetailContainer from "../../containers/ClinicDetail/ClinicDetail.container";
 
 const ClinicDetailPage = () => {
-  return <ClinicDetailContainer />;
+  return (
+    <>
+      <ClinicDetailContainer />
+    </>
+  );
 };
 
 export default ClinicDetailPage;

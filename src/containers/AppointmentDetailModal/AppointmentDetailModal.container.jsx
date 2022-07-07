@@ -16,7 +16,6 @@ const AppointmentDetailModalContainer = ({
   const fetchAppointmentData = async () => {
     try {
       const { data } = await getAppointmentById(appointmentId);
-
       setAppointmentData(data);
     } catch (e) {
       notification["error"]({
@@ -25,10 +24,6 @@ const AppointmentDetailModalContainer = ({
         duration: 2,
       });
     }
-  };
-
-  const handleOk = () => {
-    setNeededAppointment(null);
   };
 
   const handleCancel = () => {
@@ -49,6 +44,7 @@ const AppointmentDetailModalContainer = ({
         <CreateBookingFromModalForm
           appointmentData={appointmentData}
           appointmentId={appointmentId}
+          setNeededAppointment={setNeededAppointment}
         />
       ),
     });
@@ -58,20 +54,24 @@ const AppointmentDetailModalContainer = ({
     <Modal
       destroyOnClose
       visible={appointmentId !== null}
-      onOk={handleOk}
       onCancel={handleCancel}
       width="80vw"
-      footer={false}
+      footer={null}
     >
       <AppointmentDetailModalComponent
         appointmentData={appointmentData}
         createBooking={createBooking}
+        setNeededAppointment={setNeededAppointment}
       />
     </Modal>
   );
 };
 
-const CreateBookingFromModalForm = ({ appointmentData, appointmentId }) => {
+const CreateBookingFromModalForm = ({
+  appointmentData,
+  appointmentId,
+  setNeededAppointment,
+}) => {
   const dateFormat = "DD-MM-YYYY HH";
 
   const onFinish = async (values) => {
@@ -82,10 +82,16 @@ const CreateBookingFromModalForm = ({ appointmentData, appointmentId }) => {
           ...values,
         })
       );
+      setNeededAppointment(null);
+      Modal.destroyAll();
+      notification["success"]({
+        message: `Register for next examination successfully!`,
+        duration: 2,
+      });
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
-        description: `There is problem while creating booking data, try again later`,
+        description: `There is problem while creating appointment, try again later`,
         duration: 2,
       });
     }

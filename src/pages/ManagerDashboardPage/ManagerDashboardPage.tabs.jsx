@@ -5,6 +5,7 @@ import {
 } from "@ant-design/icons";
 import ClinicProfileFormContainer from "../../containers/ClinicProfile/ClinicProfileForm.container";
 import StaffManagementTableContainer from "../../containers/StaffManagementTable/StaffManagementTable.container";
+import VoucherManagementTableContainer from "../../containers/VoucherManagementTable/VoucherManagementTable.container";
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -20,6 +21,7 @@ export const navigationList = [
   getItem("Staff management", "sub2", <AppstoreOutlined />),
   getItem("Report request", "sub3", <SettingOutlined />),
   getItem("My clinic", "sub4", <SettingOutlined />),
+  getItem("Voucher management", "sub5", <SettingOutlined />),
 ];
 
 export const elementList = [
@@ -27,4 +29,5 @@ export const elementList = [
   <StaffManagementTableContainer />,
   <div>Report request</div>,
   <ClinicProfileFormContainer />,
+  <VoucherManagementTableContainer />,
 ];

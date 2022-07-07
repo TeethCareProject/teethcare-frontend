@@ -4,7 +4,7 @@ import "./HomePageContentCard.style.css";
 const HomePageContentCardComponent = ({ context }) => {
   return (
     <div className="homepage-card-container">
-      <div>
+      <div className="homepage-card-img-container">
         <img
           className="homepage-card-img"
           src={context.imgUrl}

@@ -18,7 +18,7 @@ import PrivateRouter from "./components/PrivateRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   getNotificationList,
   initFcmToken,
@@ -39,11 +39,13 @@ import notificationTypes from "../notificationHandler/notification.types";
 import openBookingDetailNotificationHandler from "../notificationHandler/OpenBookingDetailNotification.handler";
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
+import MobileMenuBar from "../containers/MobileMenuBar/MobileMenuBar.container";
 import { useSelector } from "react-redux";
 
 const AppRouter = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const location = useLocation();
   dispatch(initFcmToken());
   const role = useSelector((state) => state.authentication.user?.roleName);
 
@@ -78,6 +80,7 @@ const AppRouter = () => {
   return (
     <>
       <NavigationBar />
+      <MobileMenuBar title="Teethcare" location={location.pathname} />
       <Switch>
         <Route path={RoutePath.INTERNAL_ERROR_PAGE} exact>
           <ErrorPage code={500} />
