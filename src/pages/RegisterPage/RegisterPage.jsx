@@ -30,9 +30,6 @@ const RegisterPage = () => {
             </TabPane>
           </Tabs>
         </div>
-        <div className="page-image">
-          <img src={registerImg} alt="registerImg" />
-        </div>
       </div>
     </Fragment>
   );
