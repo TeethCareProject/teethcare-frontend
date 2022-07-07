@@ -5,7 +5,7 @@ import RoutePath from "../../routers/Path";
 import PatientRegisterFormContainer from "../../containers/RegisterForm/PatientRegisterForm/PatientRegisterForm.container";
 import ClinicRegisterFormContainer from "../../containers/RegisterForm/ClinicRegisterForm/ClinicRegisterForm.container";
 
-import "./RegisterPage.style.css";
+import "./RegisterPage.style.scss";
 
 const RegisterPage = () => {
   const { TabPane } = Tabs;

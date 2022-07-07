@@ -27,13 +27,16 @@ const LoginFormComponent = ({ onFinish }) => {
               </a>
             </Form.Item> */}
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            Log in
-          </Button>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="login-form-button"
+              style={{ padding: "0 50px", borderRadius: 20 }}
+            >
+              Log in
+            </Button>
+          </div>
         </Form.Item>
       </Form>
     </Fragment>

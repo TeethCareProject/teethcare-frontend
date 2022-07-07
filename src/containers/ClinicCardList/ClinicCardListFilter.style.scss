@@ -31,9 +31,16 @@
   .card-clinic-preview {
     margin-left: 37vw;
   }
+
+  .mobile {
+    display: none !important;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
+  .mobile {
+    display: none !important;
+  }
   .clinic-page {
     .clinic-filter-part {
       width: 25vw;
@@ -61,6 +68,14 @@
 }
 
 @media (min-width: 575px) and (max-width: 767px) {
+  .clinic-card-element {
+    display: none !important;
+  }
+
+  .mobile {
+    display: flex !important;
+  }
+
   .clinic-page {
     .ant-pagination {
       position: static !important;
@@ -88,6 +103,13 @@
 }
 
 @media (max-width: 575px) {
+  .clinic-card-element {
+    display: none !important;
+  }
+
+  .mobile {
+    display: flex !important;
+  }
   .clinic-name {
     font-size: 1.2em !important;
     margin-bottom: 0px !important;
