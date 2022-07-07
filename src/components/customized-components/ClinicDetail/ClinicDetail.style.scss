@@ -11,6 +11,7 @@
   }
 
   .clinic-detail-page-services {
+    width: 100%;
     display: flex;
     overflow-x: auto;
   }
@@ -56,6 +57,10 @@
 .clinic-detail-page-banner {
   margin-bottom: 40px;
 
+  .ant-image {
+    width: 100%;
+  }
+
   img {
     width: 100%;
     height: 100vh;
@@ -87,6 +92,14 @@
   .clinic-detail-page-services {
     margin-bottom: 50px;
   }
+
+  .ant-card-meta-description {
+    display: -webkit-box;
+    max-width: 80%;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 .clinic-detail-page-description {
@@ -101,15 +114,23 @@
   margin-bottom: 40px;
 }
 
-@media (min-width: 1024px) and (max-width: 1280px) {
+@media (min-width: 1024px) {
   .clinic-detail-page-information {
     .clinic-detail-page-information-name {
       font-size: 2.5em;
     }
   }
+
+  .service-slider {
+    display: none;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
+  .service-slider {
+    display: none;
+  }
+
   .clinic-detail-page-information {
     .clinic-detail-page-information-name {
       font-size: 3em;
@@ -146,6 +167,12 @@
 }
 
 @media screen and (max-width: 767px) {
+  .service-slider {
+    display: flex;
+    overflow-x: auto;
+    margin: 0 50px;
+  }
+
   .clinic-detail-page-information {
     div {
       padding: 0px;
@@ -158,8 +185,8 @@
       justify-content: center;
 
       img {
-        width: 300px;
-        height: 300px;
+        width: 30vw;
+        height: 30vw;
       }
     }
 
@@ -168,12 +195,16 @@
     }
   }
 
+  .clinic-detail-page-container {
+    margin: 30px !important;
+  }
+
   .clinic-detail-page-banner {
     display: flex;
     justify-content: center;
 
-    .ant-image-img {
-      width: 80% !important;
+    img {
+      height: 50vh !important;
     }
   }
 

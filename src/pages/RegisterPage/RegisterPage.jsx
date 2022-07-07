@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { Tabs } from "antd";
-import registerImg from "../../assets/register_image.png";
 import RoutePath from "../../routers/Path";
 import PatientRegisterFormContainer from "../../containers/RegisterForm/PatientRegisterForm/PatientRegisterForm.container";
 import ClinicRegisterFormContainer from "../../containers/RegisterForm/ClinicRegisterForm/ClinicRegisterForm.container";

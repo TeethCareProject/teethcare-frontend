@@ -1,6 +1,10 @@
 import React from "react";
-import { StarOutlined, EnvironmentOutlined } from "@ant-design/icons";
-import { Card, Typography, Image } from "antd";
+import {
+  StarOutlined,
+  EnvironmentOutlined,
+  RightCircleOutlined,
+} from "@ant-design/icons";
+import { Card, Typography, Image, Row, Col } from "antd";
 import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
 import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";
@@ -61,12 +65,7 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
         </div>
       </div>
       <div className="clinic-detail-page-banner">
-        <Image
-          src={clinicData?.imageUrl}
-          alt="clinic-img"
-          fallback={avtImg}
-          style={{ width: "90vw" }}
-        />
+        <Image src={clinicData?.imageUrl} alt="clinic-img" fallback={avtImg} />
       </div>
       <div className="clinic-detail-page-information-address-mobile">
         <div className="clinic-detail-page-information-address-title">
@@ -103,31 +102,70 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
       </div>
       <div className="clinic-detail-page-service-container">
         <div className="clinic-detail-page-services-title">Our services:</div>
-        <div
-          className="clinic-detail-page-services"
-          style={{ margin: "0px 45px" }}
-        >
-          {clinicData?.serviceOfClinicResponses?.map((service, index) => (
-            <div style={{ margin: "15px" }}>
-              <Card
-                key={index}
-                hoverable
-                //TODO: change img Url
-                cover={
-                  <img
-                    alt="example"
-                    src="http://australiandentalclinic.vn/wp-content/uploads/2017/02/teeth-whitening-sample1.jpg"
+        <Row justify="space-around" className="clinic-card-list-row">
+          {clinicData?.serviceOfClinicResponses
+            ?.filter((service, index) => index <= 5)
+            .map((service, index) => (
+              <Col key={index} span={6}>
+                <Card
+                  className="clinic-card-homepage"
+                  hoverable
+                  //   style={{ height: 300 }}
+                  cover={
+                    <Image
+                      alt="example"
+                      src="http://australiandentalclinic.vn/wp-content/uploads/2017/02/teeth-whitening-sample1.jpg"
+                      style={{ height: 250 }}
+                    />
+                  }
+                  onClick={service.onClick}
+                >
+                  <Meta
+                    title={service?.name}
+                    description={service?.description}
                   />
-                }
-                onClick={service.onClick}
-              >
-                <Meta
-                  title={service?.name}
-                  description={service?.description}
-                />
-              </Card>
-            </div>
-          ))}
+                </Card>
+              </Col>
+            ))}
+        </Row>
+        <div className="service-slider">
+          {clinicData?.serviceOfClinicResponses
+            ?.filter((service, index) => index <= 5)
+            .map((service, index) => (
+              <div style={{ width: 200, marginRight: 50 }}>
+                <Card
+                  className="clinic-card-homepage"
+                  hoverable
+                  //   style={{ height: 300 }}
+                  cover={
+                    <Image
+                      alt="example"
+                      src="http://australiandentalclinic.vn/wp-content/uploads/2017/02/teeth-whitening-sample1.jpg"
+                      style={{ height: 400 }}
+                    />
+                  }
+                  onClick={service.onClick}
+                >
+                  <Meta
+                    title={service?.name}
+                    description={service?.description}
+                  />
+                </Card>
+              </div>
+            ))}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              width: "100px",
+            }}
+          >
+            <RightCircleOutlined
+              style={{ color: "#3A8EF6", fontSize: "200%" }}
+            />
+            <div style={{ width: 60, textAlign: "center" }}>See All</div>
+          </div>
         </div>
       </div>
     </>
