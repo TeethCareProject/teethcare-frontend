@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Row, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
-import "./IntroductionPart.style.css";
+import "./IntroductionPart.style.scss";
 import RoutePath from "../../../routers/Path";
 
 const IntroductionPartComponent = ({ homePageImg }) => {

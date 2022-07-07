@@ -9,6 +9,7 @@ import {
   Pagination,
   Select,
 } from "antd";
+import RoutePath from "../../routers/Path";
 import BookingListComponent from "../../components/BookingList/BookingList.component";
 import { useForm } from "antd/lib/form/Form";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
@@ -98,7 +99,7 @@ const BookingListContainer = () => {
 
   return (
     <>
-      <MobileMenuBar title="Your booking list" />
+      <MobileMenuBar title="Your booking list" location={RoutePath.HOME_PAGE} />
       <div style={{ width: "80vw" }}>
         <SearchForm
           form={form}

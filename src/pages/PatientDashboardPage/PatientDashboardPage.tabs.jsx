@@ -4,7 +4,7 @@ import {
   AppstoreOutlined,
 } from "@ant-design/icons";
 import BookingListContainer from "../../containers/BookingList/BookingList.container";
-import AppointmentListContainer from "../../containers/AppointmentList/AppointmentListContainer";
+import AppointmentListContainer from "../../containers/AppointmentList/AppointmentList.container";
 import PatientDashboardContainer from "../../containers/PatientDashboard/PatientDashboard.container";
 
 function getItem(label, key, icon, onClick) {

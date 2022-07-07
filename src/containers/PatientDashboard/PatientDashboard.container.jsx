@@ -10,6 +10,7 @@ import { convertMomentToMilliseconds } from "../../utils/convert.utils";
 import AppointmentDetailModalContainer from "../AppointmentDetailModal/AppointmentDetailModal.container";
 import BookingDetailModalContainer from "../BookingDetailModal/BookingDetailModal.container";
 import MobileMenuBar from "../MobileMenuBar/MobileMenuBar.container";
+import RoutePath from "../../routers/Path";
 
 const PatientDashboardContainer = () => {
   const [bookingListData, setBookingListData] = useState([]);
@@ -80,7 +81,7 @@ const PatientDashboardContainer = () => {
   return (
     <>
       <div>
-        <MobileMenuBar title="Dashboard" />
+        <MobileMenuBar title="Dashboard" location={RoutePath.HOME_PAGE} />
         <div>
           <div className="dashboard-title">Your incoming examinations:</div>
           <BookingDetailModalContainer

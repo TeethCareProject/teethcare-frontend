@@ -25,9 +25,7 @@ const BookingCardComponent = ({ booking }) => {
                 alt="clinic"
               />
             </div>
-            <div
-              style={{ lineHeight: "3em", marginLeft: "20px", width: "50%" }}
-            >
+            <div style={{ marginLeft: "20px", width: "50%" }}>
               <div style={{ fontSize: "1.5em" }}>
                 <span style={{ fontWeight: "bold" }}>Services: </span>
                 {booking[0]?.services.map((service, index) => (

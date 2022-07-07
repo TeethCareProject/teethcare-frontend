@@ -5,6 +5,7 @@ import { getAllAppointments } from "../../services/teeth-apis/AppointmentControl
 import AppointmentListComponent from "../../components/AppointmentList/AppointmentList.component";
 import AppointmentDetailModalContainer from "../AppointmentDetailModal/AppointmentDetailModal.container";
 import MobileMenuBar from "../MobileMenuBar/MobileMenuBar.container";
+import RoutePath from "../../routers/Path";
 
 const AppointmentListContainer = () => {
   const [searchValue, setSearchValue] = useState({
@@ -82,7 +83,10 @@ const AppointmentListContainer = () => {
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
-      <MobileMenuBar title="Your apopintment list" />
+      <MobileMenuBar
+        title="Your apopintment list"
+        location={RoutePath.HOME_PAGE}
+      />
       <div
         style={{
           width: "80vw",

@@ -126,12 +126,6 @@
     }
   }
 
-  .clinic-detail-page-banner {
-    .ant-image-img {
-      height: 70vh;
-    }
-  }
-
   .clinic-detail-page-information-address-pc {
     display: none;
   }
@@ -179,8 +173,7 @@
     justify-content: center;
 
     .ant-image-img {
-      height: 40vh;
-      width: 80vw !important;
+      width: 80% !important;
     }
   }
 

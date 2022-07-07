@@ -144,21 +144,23 @@ const ClinicCardListContainer = () => {
             <LocationInputContainer />
 
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                shape="round"
-                size="large"
-                className="search-clinic-button"
-              >
-                Search for clinics
-              </Button>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  shape="round"
+                  size="large"
+                  className="search-clinic-button"
+                >
+                  Search for clinics
+                </Button>
+              </div>
             </Form.Item>
           </Form>
         </div>
       </div>
       <Pagination
-        style={{ position: "fixed", right: "115px", top: "60px" }}
+        style={{ position: "fixed", right: "30px", top: "90px" }}
         total={totalElements}
         current={currentPage}
         pageSize={pageSize}

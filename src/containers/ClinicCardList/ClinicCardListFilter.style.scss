@@ -5,7 +5,7 @@
   height: 67vh;
   padding: 20px;
   line-height: 2.5em;
-  width: 300px;
+  width: 30vw;
   //   margin-top: 30px;
   margin-left: 60px;
   position: fixed;
@@ -18,5 +18,124 @@
   .clinic-filter-part-subtitle {
     font-weight: 500;
     margin-bottom: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .clinic-page {
+    .clinic-filter-part {
+      width: 30vw;
+    }
+  }
+
+  .card-clinic-preview {
+    margin-left: 37vw;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .clinic-page {
+    .clinic-filter-part {
+      width: 25vw;
+    }
+
+    .clinic-name {
+      font-size: 1.4em !important;
+    }
+
+    .card-clinic-preview {
+      margin-left: 35vw;
+    }
+
+    height: 500px !important;
+  }
+
+  .view-detail-btn {
+    height: 30px !important;
+    padding: 3px 10px 30px 10px !important;
+
+    span {
+      font-size: 0.8em !important;
+    }
+  }
+}
+
+@media (min-width: 575px) and (max-width: 767px) {
+  .clinic-page {
+    .ant-pagination {
+      position: static !important;
+      margin-top: 50px;
+      margin-left: 7.5%;
+    }
+  }
+
+  .clinic-filter-part {
+    margin-left: 7.5% !important;
+    width: 85% !important;
+    height: auto !important;
+    position: static;
+  }
+
+  .card-clinic-preview {
+    margin-left: 7.5% !important;
+    width: 85% !important;
+    margin-top: 15px !important;
+
+    .clinic-card-element {
+      width: 100% !important;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .clinic-name {
+    font-size: 1.2em !important;
+    margin-bottom: 0px !important;
+  }
+
+  .clinic-filter-part-title {
+    font-size: 1.5em !important;
+  }
+
+  .clinic-filter-part-subtitle {
+    margin-bottom: 0px !important;
+  }
+
+  .clinic-address,
+  .card-home-page-rating {
+    font-size: 0.9em !important;
+    margin-bottom: 0px !important;
+  }
+
+  .clinic-page {
+    .ant-pagination {
+      position: static !important;
+      margin-top: 50px;
+      margin-left: 7.5%;
+    }
+  }
+
+  .clinic-filter-part {
+    margin-left: 7.5% !important;
+    width: 85% !important;
+    height: auto !important;
+    position: static;
+  }
+
+  .card-clinic-preview {
+    margin-left: 7.5% !important;
+    width: 85% !important;
+    margin-top: 15px !important;
+
+    .clinic-card-element {
+      width: 100% !important;
+    }
+  }
+
+  .card-clinic-specialization {
+    display: none !important;
+  }
+  .card-clinic-clinic-page-button {
+    display: none !important;
   }
 }
