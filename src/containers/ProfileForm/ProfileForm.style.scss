@@ -1,0 +1,33 @@
+.profile-form {
+  .ant-picker {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-form {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-top: 30px !important;
+    margin-left: 20px;
+    margin-right: 20px;
+
+    .ant-picker {
+      width: 100%;
+    }
+
+    .profile-page-title {
+      display: none;
+    }
+
+    .ant-form {
+      margin-top: 30px;
+    }
+
+    .profile-page-button {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
