@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, matchPath } from "react-router-dom";
 import { logoutHandler } from "../../redux/authentication/authentication.action";
@@ -7,7 +7,6 @@ import RoutePath from "../../routers/Path";
 import NavigationBarComponent from "../../components/commons/NavigationBar/NavigationBar.component";
 
 const NavigationBarContainer = ({ location }) => {
-  const [current, setCurrent] = useState("mail");
   const dispatch = useDispatch();
   const history = useHistory();
   const isAuthUser = useSelector((state) => state.authentication.isAuthUser);
@@ -24,19 +23,24 @@ const NavigationBarContainer = ({ location }) => {
   });
 
   const onClick = (e) => {
-    if (e.key === "logout") {
+    const nav = document.querySelectorAll(".nav-element");
+    for (let i = 0; i < nav.length; i++) {
+      if (nav[i].innerHTML == e.target.innerHTML) {
+        nav[i].classList.add("active");
+      } else {
+        nav[i].classList.remove("active");
+      }
+    }
+    if (e.target.innerHTML === "Logout") {
       //call logout
       dispatch(logoutHandler());
       history.push(RoutePath.HOME_PAGE);
-    } else if (e.key === "login") {
+    } else if (e.target.innerHTML === "Login") {
       history.push(RoutePath.LOGIN_PAGE);
-      setCurrent(e.key);
-    } else if (e.key === "home") {
+    } else if (e.target.innerHTML === "Home") {
       history.push(RoutePath.HOME_PAGE);
-      setCurrent(e.key);
-    } else if (e.key === "dashboard") {
+    } else if (e.target.innerHTML === "Dashboard") {
       history.push(RoutePath.DASHBOARD_PAGE);
-      setCurrent(e.key);
     }
   };
 
@@ -44,10 +48,10 @@ const NavigationBarContainer = ({ location }) => {
     <>
       {match ? null : (
         <NavigationBarComponent
+          location={location}
           isAuthUser={isAuthUser}
           onClick={onClick}
           userName={userName}
-          current={current}
           history={history}
         />
       )}
