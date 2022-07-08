@@ -29,7 +29,6 @@ const BookingServiceFormComponent = ({
   ...antdFormProps
 }) => {
   const { form, ...restAntdFormProps } = antdFormProps;
-  console.log(serviceData);
   return (
     <>
       <Form form={form} {...restAntdFormProps} className="booking-service-form">

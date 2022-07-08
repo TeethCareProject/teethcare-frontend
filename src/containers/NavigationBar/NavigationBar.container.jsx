@@ -24,14 +24,12 @@ const NavigationBarContainer = ({ location }) => {
   });
 
   const onClick = (e) => {
-    console.log(e);
     if (e.key === "logout") {
       //call logout
       dispatch(logoutHandler());
       history.push(RoutePath.HOME_PAGE);
     } else if (e.key === "login") {
       history.push(RoutePath.LOGIN_PAGE);
-      console.log(history);
       setCurrent(e.key);
     } else if (e.key === "home") {
       history.push(RoutePath.HOME_PAGE);
