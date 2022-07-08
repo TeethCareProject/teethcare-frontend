@@ -29,7 +29,7 @@ const LoginPage = () => {
         <div>
           Visit our{" "}
           <span
-            onClick={() => history.push(RoutePath.DASHBOARD_PAGE)}
+            onClick={() => history.push(RoutePath.HOME_PAGE)}
             style={{
               cursor: "pointer",
               color: "#3A8EF6",

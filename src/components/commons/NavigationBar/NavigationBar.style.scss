@@ -4,13 +4,17 @@
 }
 
 @media (min-width: 1024px) {
+  // .menu-title {
+  //   padding-top: 10px;
+  //   padding-bottom: 10px;
+  //   margin-bottom: 20px;
+  //   font-size: 2em;
+  //   text-align: center;
+  //   font-weight: bold;
+  // }
+
   .menu-title {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    font-size: 2em;
-    text-align: center;
-    font-weight: bold;
+    display: none;
   }
 
   .title-mobile {
@@ -19,13 +23,17 @@
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
+  // .menu-title {
+  //   padding-top: 10px;
+  //   padding-bottom: 10px;
+  //   margin-bottom: 20px;
+  //   font-size: 1.5em;
+  //   text-align: center;
+  //   font-weight: bold;
+  // }
+
   .menu-title {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-    font-size: 1.5em;
-    text-align: center;
-    font-weight: bold;
+    display: none;
   }
 
   .title-mobile {

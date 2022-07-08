@@ -3,13 +3,13 @@ import React, { useState, useEffect } from "react";
 import { notification } from "antd";
 
 import { getServiceById } from "../../services/teeth-apis/ServiceController";
-
 import ServiceDetailComponent from "../../components/customized-components/ServiceDetail/ServiceDetail.component";
-import { useParams } from "react-router-dom";
+import RoutePath from "../../routers/Path";
+import { useParams, useHistory, generatePath } from "react-router-dom";
 
 const ServiceDetailContainer = ({ bookingHandler }) => {
   const { serviceId } = useParams();
-
+  const history = useHistory();
   const [service, setService] = useState({});
 
   const fetchingService = async () => {
@@ -25,12 +25,24 @@ const ServiceDetailContainer = ({ bookingHandler }) => {
     }
   };
 
+  const returnHandler = () => {
+    history.push(
+      generatePath(RoutePath.CLINIC_DETAIL_PAGE, {
+        clinicId: service?.clinic?.id,
+      })
+    );
+  };
+
   useEffect(() => {
     fetchingService();
   }, []);
 
   return (
-    <ServiceDetailComponent bookingHandler={bookingHandler} service={service} />
+    <ServiceDetailComponent
+      bookingHandler={bookingHandler}
+      service={service}
+      returnHandler={returnHandler}
+    />
   );
 };
 
