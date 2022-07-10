@@ -77,6 +77,7 @@ const NotificationComponent = ({
         }
       >
         <Badge
+          className="count-icon"
           count={totalMarkAsUnread}
           showZero
           onClick={(e) => e.preventDefault()}
