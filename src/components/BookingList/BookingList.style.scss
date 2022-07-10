@@ -1,0 +1,16 @@
+@media (min-width: 769px) {
+  .search-btn-booking,
+  .reset-btn-booking {
+    margin-top: 0px !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+  .search-btn-booking {
+    justify-content: flex-end !important;
+  }
+
+  .reset-btn-booking {
+    justify-content: flex-start !important;
+  }
+}

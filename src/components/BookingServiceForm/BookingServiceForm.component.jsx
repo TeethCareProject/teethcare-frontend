@@ -32,8 +32,8 @@ const BookingServiceFormComponent = ({
   return (
     <>
       <Form form={form} {...restAntdFormProps} className="booking-service-form">
-        <Row gutter={[40, 16]} justify="center" style={{ margin: "20px 0 " }}>
-          <Col span={16}>
+        <Row gutter={[40, 16]} justify="center">
+          <Col span={16} style={{ margin: "20px 0 " }}>
             <ServiceCard serviceData={serviceData} />
           </Col>
         </Row>
