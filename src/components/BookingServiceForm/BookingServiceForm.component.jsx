@@ -32,10 +32,10 @@ const BookingServiceFormComponent = ({
   return (
     <>
       <Form form={form} {...restAntdFormProps} className="booking-service-form">
-        <Row gutter={[40, 16]} justify="center">
-          <Typography.Title level={3} style={{ marginBottom: 20 }}>
-            Booking Service: {serviceData.serviceName}
-          </Typography.Title>
+        <Row gutter={[40, 16]} justify="center" style={{ margin: "20px 0 " }}>
+          <Col span={16}>
+            <ServiceCard serviceData={serviceData} />
+          </Col>
         </Row>
         <Row gutter={[40, 16]} justify="center">
           <Col xs={16} sm={8} md={8} lg={8}>
@@ -158,15 +158,13 @@ const BookingServiceFormComponent = ({
               <Input placeholder="Apply voucher now" />
             </Form.Item>
           </Col>
-          <Col span={8}>
-            <Button onClick={checkVoucherCode}>Apply</Button>
+          <Col span={8} style={{ display: "flex", alignItems: "center" }}>
+            <Button onClick={checkVoucherCode} style={{ marginTop: 8 }}>
+              Apply
+            </Button>
           </Col>
         </Row>
-        <Row gutter={[40, 16]} justify="center">
-          <Col span={16}>
-            <ServiceCard serviceData={serviceData} />
-          </Col>
-        </Row>
+
         <Row gutter={[40, 16]} justify="center">
           <Col span={16}>
             <Form.Item>
@@ -185,14 +183,22 @@ const ServiceCard = ({ serviceData }) => {
   return (
     <Card bodyStyle={{ padding: 0 }}>
       <Row>
-        <Col xs={0} sm={8} md={8} lg={8}>
+        <Col
+          xs={0}
+          sm={12}
+          md={12}
+          lg={10}
+          className="booking-service-img"
+          style={{ width: "400px", maxWidth: "100%" }}
+        >
           <img
-            style={{ width: "100%" }}
+            style={{ width: "100%", height: "100%" }}
             alt="service"
-            src={serviceData.serviceImage}
+            // src={serviceData.serviceImage}
+            src="http://australiandentalclinic.vn/wp-content/uploads/2017/02/teeth-whitening-sample1.jpg"
           />
         </Col>
-        <Col xs={24} sm={16} md={16} lg={16}>
+        <Col xs={24} sm={12} md={12} lg={14}>
           <Space style={{ padding: "2rem" }} direction="vertical">
             <Typography.Title level={4}>
               {`Clinic: ${serviceData?.clinicName}`}

@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  StarFilled,
   StarOutlined,
   EnvironmentOutlined,
   RightCircleOutlined,
@@ -8,7 +9,6 @@ import { Card, Typography, Image, Row, Col } from "antd";
 import "./ClinicDetail.style.scss";
 import avtImg from "../../../assets/clinicImg.png";
 import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.component";
-import ClinicOperatingTimeMapper from "../../../mapper/ClinicOperatingTimeMapper";
 import { getClinicOperatingTime } from "../../../utils/convert.utils";
 
 const ClinicDetailComponent = ({ clinicData, feedback }) => {
@@ -67,39 +67,39 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
       <div className="clinic-detail-page-banner">
         <Image src={clinicData?.imageUrl} alt="clinic-img" fallback={avtImg} />
       </div>
-      <div className="clinic-detail-page-information-address-mobile">
-        <div className="clinic-detail-page-information-address-title">
-          <EnvironmentOutlined /> Clinic address
-        </div>
-        <div>{clinicData?.location?.address}</div>
-        <div>
-          <Typography.Title level={4} style={{ margin: "0 auto" }}>
-            <div>Operating Hours: </div>
-          </Typography.Title>
-          <div>
-            Morning:{" "}
-            {ClinicOperatingTimeMapper(clinicData)?.startTimeShift1 +
-              ":00 - " +
-              ClinicOperatingTimeMapper(clinicData)?.endTimeShift1 +
-              ":00"}
+      <Row className="clinic-detail-information-mobile">
+        <Col xs={24} sm={11} md={11} lg={11}>
+          <div style={{ display: "flex" }}>
+            <div className="clinic-name-mobile">{clinicData?.name}</div>
+            <div
+              className="clinic-rating-mobile"
+              style={{ color: "#FADB14", marginLeft: 10 }}
+            >
+              <StarFilled /> {clinicData?.avgRatingScore}
+            </div>
           </div>
-          <div>
-            Evening:{" "}
-            {ClinicOperatingTimeMapper(clinicData)?.startTimeShift2 +
-              ":00 - " +
-              ClinicOperatingTimeMapper(clinicData)?.endTimeShift2 +
-              ":00"}
+          <div>{clinicData?.description}</div>
+        </Col>
+        <Col xs={0} sm={2} md={2} lg={2}></Col>
+        <Col xs={24} sm={11} md={11} lg={11}>
+          <div className="clinic-address-mobile">
+            <EnvironmentOutlined /> Clinic address
           </div>
-        </div>
-      </div>
+          <div>{clinicData?.location?.address}</div>
+          <div>
+            <Typography.Title level={4} style={{ margin: "0 auto" }}>
+              <div className="clinic-hour-mobile">Operating Hours: </div>
+            </Typography.Title>
+            <div>Morning: {getClinicOperatingTime(clinicData, "morning")}</div>
+            <div>Evening: {getClinicOperatingTime(clinicData, "evening")}</div>
+          </div>
+        </Col>
+      </Row>
       <div className="clinic-detail-page-description">
         <Typography.Title level={3}>About us:</Typography.Title>
         <div>{clinicData?.description}</div>
       </div>
-      <div className="clinic-detail-page-feedback-container">
-        <div style={{ fontSize: "2em", fontWeight: "bold" }}>Feedbacks</div>
-        <FeedbackPreviewComponent feedbacks={feedback?.content} />
-      </div>
+
       <div className="clinic-detail-page-service-container">
         <div className="clinic-detail-page-services-title">Our services:</div>
         <Row justify="space-around" className="clinic-card-list-row">
@@ -167,6 +167,10 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
             <div style={{ width: 60, textAlign: "center" }}>See All</div>
           </div>
         </div>
+      </div>
+      <div className="clinic-detail-page-feedback-container">
+        <div style={{ fontSize: "2em", fontWeight: "bold" }}>Feedbacks</div>
+        <FeedbackPreviewComponent feedbacks={feedback?.content} />
       </div>
     </>
   );
