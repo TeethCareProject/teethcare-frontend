@@ -13,6 +13,7 @@ import { useHistory, matchPath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutHandler } from "../../redux/authentication/authentication.action";
+import NotificationContainer from "../Notification/Notification.container";
 
 const MobileMenuBar = ({ title, location }) => {
   const history = useHistory();
@@ -90,7 +91,7 @@ const MobileMenuBar = ({ title, location }) => {
             style={{ position: "absolute", right: 10, cursor: "pointer" }}
             className="mobile-feature"
           >
-            <BellOutlined />
+            <NotificationContainer />
           </div>
           <div className="title-mobile">{title}</div>
         </div>

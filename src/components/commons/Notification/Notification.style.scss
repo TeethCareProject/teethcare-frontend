@@ -1,0 +1,13 @@
+@media (max-width: 768px) {
+  .notification-icon {
+    color: white;
+  }
+
+  .notification-list {
+    width: 100vw !important;
+
+    .ant-list-item-meta-description {
+      margin-left: 10px !important;
+    }
+  }
+}
