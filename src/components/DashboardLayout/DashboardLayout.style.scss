@@ -11,6 +11,14 @@
   }
 }
 
+.voucher-table {
+  .ant-table-cell {
+    p {
+      margin-bottom: 0px !important;
+    }
+  }
+}
+
 .dashboard-title {
   font-size: 1.3em;
   font-weight: bold;

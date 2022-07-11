@@ -9,6 +9,7 @@ import {
   Select,
   Modal,
   Space,
+  Typography,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
@@ -160,6 +161,7 @@ const VoucherManagementTableContainer = () => {
 
   return (
     <div>
+      <Typography.Title level={3}>Voucher Management</Typography.Title>
       <SearchVoucherFormComponent
         form={form}
         onFinish={onFinish}
@@ -201,7 +203,7 @@ const VoucherManagementTableContainer = () => {
         </Button>
       </Space>
       <CommonTableComponent
-        tableTitle="Voucher Management"
+        className="voucher-table"
         columns={VoucherManagementTableColumn}
         dataSource={data}
         pagination={false}

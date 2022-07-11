@@ -99,7 +99,7 @@ const StaffManagementTableContainer = () => {
 
   return (
     <>
-      <Typography.Title level={3}>Staff Manager</Typography.Title>
+      <Typography.Title level={3}>Staff Management</Typography.Title>
       <SearchStaffFormComponent
         form={form}
         onFinish={onFinish}
