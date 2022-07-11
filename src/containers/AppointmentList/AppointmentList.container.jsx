@@ -133,7 +133,13 @@ const SearchForm = ({ resetAction, form, ...antdProps }) => {
             <Input placeholder="Search by Clinic name" />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={12} md={3} lg={2}>
+        <Col
+          xs={24}
+          sm={24}
+          md={6}
+          lg={3}
+          style={{ display: "flex", justifyContent: "flex-end" }}
+        >
           <Form.Item>
             <div
               className="search-btn-appointment"
@@ -143,16 +149,18 @@ const SearchForm = ({ resetAction, form, ...antdProps }) => {
                 marginTop: "-40px",
               }}
             >
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ marginRight: 10 }}
+              >
                 Search
               </Button>
             </div>
           </Form.Item>
-        </Col>
-        <Col xs={0} sm={12} md={2} lg={2}>
           <Form.Item>
             <div
-              className="reset-btn-booking"
+              className="reset-btn-appointment"
               style={{
                 display: "flex",
                 justifyContent: "center",

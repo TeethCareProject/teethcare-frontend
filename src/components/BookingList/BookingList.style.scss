@@ -4,6 +4,10 @@
   .reset-btn-booking {
     margin-top: 0px !important;
   }
+
+  .reset-btn-appointment {
+    margin: 0px !important;
+  }
 }
 
 @media (min-width: 769px) and (max-width: 1023px) {
@@ -11,6 +15,10 @@
   .search-btn-appointment,
   .reset-btn-booking {
     margin-top: 0px !important;
+  }
+
+  .reset-btn-appointment {
+    margin: 0px !important;
   }
 
   .search-name-booking-list {
@@ -56,6 +64,11 @@
   }
 
   .search-btn-booking {
+    justify-content: flex-end !important;
+    margin-top: -60px !important;
+  }
+
+  .reset-btn-booking {
     justify-content: flex-end !important;
     margin-top: -60px !important;
   }

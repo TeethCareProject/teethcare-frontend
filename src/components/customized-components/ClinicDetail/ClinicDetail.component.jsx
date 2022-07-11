@@ -153,7 +153,7 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
                 </Card>
               </div>
             ))}
-          {clinicData?.serviceOfClinicResponses.length > 3 ? (
+          {clinicData?.serviceOfClinicResponses?.length > 3 ? (
             <div
               style={{
                 display: "flex",
