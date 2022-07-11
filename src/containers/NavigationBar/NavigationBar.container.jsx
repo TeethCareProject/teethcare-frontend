@@ -31,16 +31,22 @@ const NavigationBarContainer = ({ location }) => {
         nav[i].classList.remove("active");
       }
     }
-    if (e.target.innerHTML === "Logout") {
-      //call logout
-      dispatch(logoutHandler());
-      history.push(RoutePath.HOME_PAGE);
-    } else if (e.target.innerHTML === "Login") {
-      history.push(RoutePath.LOGIN_PAGE);
-    } else if (e.target.innerHTML === "Home") {
-      history.push(RoutePath.HOME_PAGE);
-    } else if (e.target.innerHTML === "Dashboard") {
-      history.push(RoutePath.DASHBOARD_PAGE);
+    switch (e.target.innerHTML) {
+      case "Logout": //call logout
+        dispatch(logoutHandler());
+        history.push(RoutePath.HOME_PAGE);
+        break;
+      case "Login":
+        history.push(RoutePath.LOGIN_PAGE);
+        break;
+      case "Home":
+        history.push(RoutePath.HOME_PAGE);
+        break;
+      case "Dashboard":
+        history.push(RoutePath.DASHBOARD_PAGE);
+        break;
+      default:
+        break;
     }
   };
 
