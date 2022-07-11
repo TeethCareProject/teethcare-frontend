@@ -1,0 +1,54 @@
+.introduction-part {
+  margin-top: 5vh;
+  margin-bottom: 10vh;
+
+  .title {
+    font-size: 3em;
+    line-height: 1.5em;
+  }
+
+  .description {
+    font-size: 1.5em;
+    margin-bottom: 3vh;
+    color: #6c87ae;
+  }
+
+  .findBtn {
+    font-weight: 600;
+  }
+
+  img {
+    width: 30vw;
+    height: 37.5vw;
+  }
+}
+
+@media (max-width: 1024px) {
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+}
+
+@media (max-width: 767px) {
+  .introduction-part {
+    margin: 0 20px;
+
+    img {
+      width: 60vw;
+      height: 70vw;
+      margin-top: 10px;
+    }
+  }
+
+  .site-card-wrapper {
+    flex-direction: column !important;
+    align-items: center;
+
+    .site-card {
+      width: 70%;
+      display: flex;
+      justify-content: center;
+      margin: 10px;
+    }
+  }
+}

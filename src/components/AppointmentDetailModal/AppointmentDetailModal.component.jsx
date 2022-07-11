@@ -29,9 +29,6 @@ const AppointmentDetailModalComponent = ({
         <DescriptionsItem label="Phone number">
           {appointmentData?.patient?.phone}
         </DescriptionsItem>
-        <DescriptionsItem label="Date of birth">
-          {appointmentData?.patient?.dateOfBirth}
-        </DescriptionsItem>
       </Descriptions>
       <Descriptions title="Appointment info">
         <DescriptionsItem label="Appointment day">

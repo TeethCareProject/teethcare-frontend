@@ -99,7 +99,7 @@ const ClinicProfileFormContainer = () => {
 
   return (
     <>
-      <Row justify="center" style={{ marginTop: "10rem" }}>
+      <Row justify="center">
         <Col span={8}>
           <AvatarUploadContainer
             form={form}

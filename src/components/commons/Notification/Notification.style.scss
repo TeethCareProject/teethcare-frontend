@@ -1,0 +1,17 @@
+@media (max-width: 768px) {
+  .notification-icon {
+    color: white;
+  }
+
+  .count-icon {
+    margin-right: 10px !important;
+  }
+
+  .notification-list {
+    width: 100vw !important;
+
+    .ant-list-item-meta-description {
+      margin-left: 10px !important;
+    }
+  }
+}

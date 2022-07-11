@@ -2,6 +2,16 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  img {
+    width: 40vw;
+    height: 40vw;
+  }
+
+  .register-form-container {
+    margin-top: 20px;
+    width: 60vw;
+  }
 }
 
 .register-form-button {
@@ -21,9 +31,4 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-img {
-  width: 40vw;
-  height: 40vw;
 }

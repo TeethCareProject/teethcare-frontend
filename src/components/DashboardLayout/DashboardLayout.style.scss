@@ -1,0 +1,227 @@
+.booking-list-pc,
+.booking-list-mobile,
+.appointment-list-pc,
+.appointment-list-mobile {
+  li:nth-child(odd) {
+    background-color: #f3f6f9 !important;
+  }
+
+  div {
+    padding: 0 5px;
+  }
+}
+
+.dashboard-title {
+  font-size: 1.3em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+@media (min-width: 1024px) {
+  .dashboard {
+    margin-top: 20px !important;
+  }
+
+  .navigation {
+    display: flex !important;
+  }
+
+  .mobile-feature {
+    display: none;
+  }
+
+  .booking-list-mobile {
+    display: none;
+  }
+
+  .appointment-list-mobile {
+    display: none;
+  }
+
+  .status-option {
+    display: none;
+  }
+
+  .dashboard-menu-md {
+    display: none;
+  }
+
+  .dashboard-menu-sm {
+    display: none;
+  }
+
+  .dashboard-menu-lg {
+    .ant-menu {
+      width: 200px !important;
+    }
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .navigation {
+    display: flex !important;
+  }
+
+  .dashboard {
+    margin-top: 20px !important;
+  }
+
+  .mobile-feature {
+    display: none;
+  }
+
+  .booking-list-mobile {
+    display: none;
+  }
+
+  .appointment-list-mobile {
+    display: none;
+  }
+
+  .status-option {
+    display: none;
+  }
+
+  .dashboard-menu-lg {
+    display: none;
+  }
+
+  .dashboard-menu-sm {
+    display: none;
+  }
+
+  .dashboard-menu-md {
+    ul {
+      width: 100vw !important;
+
+      li {
+        width: 33.33% !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .ant-menu-item-selected,
+      .ant-menu-item-active,
+      .ant-menu-horizontal > .ant-menu-item:hover,
+      .ant-menu-horizontal > .ant-menu-item-active {
+        background-color: #1890ff !important;
+        color: #ffffff !important;
+        font-weight: bold !important;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .booking-list-mobile::-webkit-scrollbar {
+    height: 0px;
+  }
+
+  .dashboard {
+    margin-top: 0px !important;
+  }
+
+  .ant-modal-content {
+    top: -5vh;
+  }
+
+  .navigation {
+    display: none !important;
+  }
+
+  .booking-list-mobile {
+    display: block;
+  }
+
+  .booking-list-pc {
+    display: none;
+  }
+
+  .appointment-list-mobile {
+    display: block;
+  }
+
+  .appointment-list-pc {
+    display: none;
+  }
+
+  .status-select {
+    display: none !important;
+  }
+
+  .status-option {
+    overflow-x: auto;
+    display: flex;
+
+    .status-button {
+      margin-right: 10px;
+      display: block;
+      padding: 20px;
+      line-height: 0;
+    }
+  }
+
+  .status-option::-webkit-scrollbar {
+    width: 0;
+  }
+
+  .booking-list-mobile {
+    display: block;
+  }
+
+  .booking-list-pc {
+    display: none;
+  }
+
+  .dashboard-menu-lg {
+    display: none;
+  }
+  .dashboard-menu-md {
+    display: none;
+  }
+
+  .ant-list-item-meta-content {
+    .ant-list-item-meta-title {
+      text-overflow: ellipsis;
+    }
+  }
+
+  .dashboard-menu-sm {
+    position: fixed;
+    bottom: 0px;
+    width: 100vw;
+    height: 80px;
+
+    ul {
+      width: 100% !important;
+      border-top: 0.5px solid #edebeb;
+      span {
+        margin: 0 !important;
+        line-height: 30px !important;
+      }
+
+      li {
+        padding: 10px;
+        .appointment-list-mobile {
+          display: block;
+        }
+
+        .appointment-list-pc {
+          display: none;
+        }
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+        width: 33%;
+      }
+      .ant-menu-item-selected {
+        background-color: #1890ff !important;
+        color: #ffffff !important;
+        font-weight: bold !important;
+      }
+    }
+  }
+}

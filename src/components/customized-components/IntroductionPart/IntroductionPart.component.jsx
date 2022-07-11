@@ -1,10 +1,12 @@
 import React from "react";
 import { Col, Row, Button } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-
-import "./IntroductionPart.style.css";
+import { useHistory } from "react-router-dom";
+import "./IntroductionPart.style.scss";
+import RoutePath from "../../../routers/Path";
 
 const IntroductionPartComponent = ({ homePageImg }) => {
+  const history = useHistory();
   return (
     <div className="introduction-part">
       <Row justify="space-around" align="middle">
@@ -18,8 +20,8 @@ const IntroductionPartComponent = ({ homePageImg }) => {
             className="findBtn"
             type="primary"
             shape="round"
-            size="large"
             icon={<SearchOutlined />}
+            onClick={() => history.push(RoutePath.CLINIC_PAGE)}
           >
             Find your clinic now!
           </Button>

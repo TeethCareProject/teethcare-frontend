@@ -7,26 +7,36 @@ const BookingSuccessfulPage = () => {
   const history = useHistory();
 
   return (
-    <Result
-      status="success"
-      title="Successfully Serive Booking!"
-      subTitle="Booking number: 2017182818828182881 is booked successfully! Please come to your booking history to check booking status or come back to homepage to book a new service!"
-      extra={[
-        <Button
-          type="primary"
-          key="homepage"
-          onClick={() => history.push(RoutePath.HOME_PAGE)}
-        >
-          Go to Homepage
-        </Button>,
-        <Button
-          key="my-booking"
-          onClick={() => history.push(RoutePath.DASHBOARD_PAGE)}
-        >
-          Go to My booking
-        </Button>,
-      ]}
-    />
+    <div
+      style={{
+        height: "70vh",
+        width: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <Result
+        status="success"
+        title="Successfully Booking!"
+        subTitle="Your booking is booked successfully! Please come to your booking history to check booking status or come back to homepage to book a new service!"
+        extra={[
+          <Button
+            type="primary"
+            key="homepage"
+            onClick={() => history.push(RoutePath.HOME_PAGE)}
+          >
+            Go to Homepage
+          </Button>,
+          <Button
+            key="my-booking"
+            onClick={() => history.push(RoutePath.DASHBOARD_PAGE)}
+          >
+            Go to My booking
+          </Button>,
+        ]}
+      />
+    </div>
   );
 };
 

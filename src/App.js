@@ -9,6 +9,7 @@ import store from "./redux";
 import { notification } from "antd";
 import { messaging } from "./services/firebase/firebase-init";
 import { onMessage } from "firebase/messaging";
+import "./App.css";
 
 function App() {
   const history = createBrowserHistory();

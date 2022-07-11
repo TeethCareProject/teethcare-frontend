@@ -2,8 +2,16 @@ import React, { useState, useLayoutEffect, useEffect } from "react";
 
 import { useHistory, generatePath } from "react-router-dom";
 import RoutePath from "../../routers/Path";
-
-import { notification, Form, Button, Select, Pagination } from "antd";
+import { FilterOutlined } from "@ant-design/icons";
+import {
+  notification,
+  Form,
+  Button,
+  Select,
+  Pagination,
+  Input,
+  Modal,
+} from "antd";
 import ClinicCardContainer from "../ClinicCard/ClinicCard.container";
 import { getAllServices } from "../../services/teeth-apis/ServiceController";
 import { getClinics } from "../../services/teeth-apis/ClinicController";
@@ -16,6 +24,7 @@ const ClinicCardListContainer = () => {
   const history = useHistory();
 
   const [filterData, setFilterData] = useState({
+    name: null,
     serviceId: null,
     provinceId: "",
     districtId: "",
@@ -31,6 +40,7 @@ const ClinicCardListContainer = () => {
 
   const onFinish = async (values) => {
     setFilterData({
+      name: values.name,
       serviceId: values.serviceId,
       provinceId: values.provinceId,
       districtId: values.districtId,
@@ -56,6 +66,66 @@ const ClinicCardListContainer = () => {
         duration: 2,
       });
     }
+  };
+
+  const toggleFilter = () => {
+    Modal.info({
+      maskClosable: true,
+      closable: true,
+      okButtonProps: { style: { display: "none" } },
+      content: (
+        <div className="clinic-filter-part-mobile">
+          <div>
+            <div className="clinic-filter-part-title">
+              Find a dental clinic for yourself
+            </div>
+            <div className="clinic-filter-part-subtitle">
+              Best offer guaranteed
+            </div>
+          </div>
+          <div>
+            <Form
+              name="clinic-filter"
+              className="clinic-filter"
+              onFinish={onFinish}
+            >
+              <Form.Item name="name" label="Name">
+                <Input placeholder="Search by clinic's name" />
+              </Form.Item>
+              <Form.Item name="serviceId" label="Service">
+                <Select
+                  value={selectedService}
+                  onChange={handleServiceChange}
+                  placeholder="Select services"
+                >
+                  <Option>None</Option>
+                  {services?.map((element, index) => (
+                    <Option key={index} value={element.id}>
+                      {element.name}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <LocationInputContainer />
+
+              <Form.Item>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    shape="round"
+                    size="large"
+                    className="search-clinic-button"
+                  >
+                    Search for clinics
+                  </Button>
+                </div>
+              </Form.Item>
+            </Form>
+          </div>
+        </div>
+      ),
+    });
   };
 
   const fetchingClinic = async (options) => {
@@ -122,6 +192,9 @@ const ClinicCardListContainer = () => {
             className="clinic-filter"
             onFinish={onFinish}
           >
+            <Form.Item name="name" label="Name">
+              <Input placeholder="Search by clinic's name" />
+            </Form.Item>
             <Form.Item name="serviceId" label="Service">
               <Select
                 value={selectedService}
@@ -139,31 +212,46 @@ const ClinicCardListContainer = () => {
             <LocationInputContainer />
 
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                shape="round"
-                size="large"
-                className="search-clinic-button"
-              >
-                Search for clinics
-              </Button>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  shape="round"
+                  size="large"
+                  className="search-clinic-button"
+                >
+                  Search for clinics
+                </Button>
+              </div>
             </Form.Item>
           </Form>
         </div>
       </div>
+      <div className="action-group-clinic-page">
+        <Pagination
+          style={{ position: "fixed", right: "30px", top: "90px" }}
+          total={totalElements}
+          current={currentPage}
+          pageSize={pageSize}
+          onChange={(page) => {
+            setCurrentPage(page);
+          }}
+        />
+        <FilterOutlined
+          className="filter-icon"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            fontSize: "1.5rem",
+            marginRight: 50,
+          }}
+          onClick={() => toggleFilter()}
+        />
+      </div>
+
       <ClinicCardContainer
         clinicData={filteredClinic}
         layoutDirection="column"
-      />
-      <Pagination
-        style={{ position: "fixed", left: "60px", bottom: "60px" }}
-        total={totalElements}
-        current={currentPage}
-        pageSize={pageSize}
-        onChange={(page) => {
-          setCurrentPage(page);
-        }}
       />
     </div>
   );
