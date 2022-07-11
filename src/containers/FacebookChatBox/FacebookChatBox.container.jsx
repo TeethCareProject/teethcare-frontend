@@ -1,11 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { matchPath, useLocation, useParams } from "react-router-dom";
+import RoutePath from "../../routers/Path";
+import { getFacebookPageIdByClinicId } from "../../services/teeth-apis/ClinicController";
 /*global FB*/
 /**
  *
  */
-export function init() {
+export function init(facebookPageId) {
+  console.log("rest");
   var chatbox = document.getElementById("fb-customer-chat");
-  chatbox.setAttribute("page_id", "102067262565704"); // TODO: move to args
+  chatbox.setAttribute("page_id", facebookPageId); // TODO: move to args
   chatbox.setAttribute("attribution", "biz_inbox");
 
   window.fbAsyncInit = function () {
@@ -41,14 +45,47 @@ export function cleanup() {
 }
 
 export function Facebook() {
-  useEffect(() => {
-    console.log("Facebook1");
-    init();
+  const location = useLocation();
+  const params = useParams();
 
+  const [facebookPageId, setFacebookPageId] = useState();
+
+  const fetchFacebookPageId = async () => {
+    try {
+      const match = matchPath(location.pathname, {
+        path: RoutePath.CLINIC_DETAIL_PAGE,
+        exact: true,
+        strict: false,
+      });
+
+      if (!match?.params?.clinicId) {
+        setFacebookPageId(null);
+        return;
+      }
+
+      const { data } = await getFacebookPageIdByClinicId(
+        match?.params?.clinicId
+      );
+      setFacebookPageId(data?.facebookPageId);
+    } catch (e) {
+      setFacebookPageId(null);
+    }
+  };
+
+  useEffect(() => {
+    fetchFacebookPageId();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    facebookPageId && init(facebookPageId);
     return () => {
       cleanup();
     };
-  }, []);
+  }, [facebookPageId]);
+
+  if (!facebookPageId) return null;
+
+  console.log(facebookPageId);
 
   return (
     <div>

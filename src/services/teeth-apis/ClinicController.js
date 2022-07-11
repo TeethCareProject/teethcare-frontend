@@ -18,3 +18,6 @@ export const approveClinic = (clinicId) =>
 
 export const rejectClinic = (clinicId) =>
   CallAPI(`${CLINIC_END_POINT}/${clinicId}/reject`, "PUT");
+
+export const getFacebookPageIdByClinicId = (clinicId) =>
+  CallAPI(`${CLINIC_END_POINT}/${clinicId}/facebookPageId`, "GET");

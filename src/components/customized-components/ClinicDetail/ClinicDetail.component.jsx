@@ -105,7 +105,7 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
         <Row justify="space-around" className="clinic-card-list-row">
           {clinicData?.serviceOfClinicResponses
             ?.filter((service, index) => index <= 5)
-            .map((service, index) => (
+            ?.map((service, index) => (
               <Col key={index} span={6}>
                 <Card
                   className="clinic-card-homepage"
@@ -131,7 +131,7 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
         <div className="service-slider">
           {clinicData?.serviceOfClinicResponses
             ?.filter((service, index) => index <= 5)
-            .map((service, index) => (
+            ?.map((service, index) => (
               <div style={{ width: 200, marginRight: 50 }}>
                 <Card
                   className="clinic-card-homepage"
@@ -153,7 +153,7 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
                 </Card>
               </div>
             ))}
-          {clinicData?.serviceOfClinicResponses.length > 3 ? (
+          {clinicData?.serviceOfClinicResponses?.length > 3 ? (
             <div
               style={{
                 display: "flex",
