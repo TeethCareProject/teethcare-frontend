@@ -19,6 +19,7 @@ import {
 } from "../../services/teeth-apis/AccountController";
 import { ProfileValidation } from "../../validate/ProfileValidation";
 import AvatarUploadContainer from "./AvatarUpload.container";
+import "./ProfileForm.style.scss";
 
 const { Option } = Select;
 
@@ -75,19 +76,18 @@ const ProfileFormContainer = () => {
 
   return (
     <>
-      <Typography.Title level={3}>My Profile</Typography.Title>
-      <Row justify="center" style={{ marginTop: "10rem" }}>
-        <Col span={8}>
-          <AvatarUploadContainer
-            form={form}
-            imageData={form.getFieldValue("avatarImage")}
-            fetchProfile={fetchProfile}
-          />
-        </Col>
-        <Col span={8}>
+      <Row
+        justify="center"
+        className="profile-form"
+        style={{ marginTop: "10vh" }}
+      >
+        <Col xs={24} sm={24} md={10} lg={10}>
+          <Typography.Title level={3} className="profile-page-title">
+            My Profile
+          </Typography.Title>
           <Form form={form} layout="vertical" onFinish={handleUpdateProfile}>
             <Row>
-              <Col span={12}>
+              <Col xs={24} sm={24} md={12} lg={12}>
                 <Form.Item
                   label="First name"
                   name="firstName"
@@ -96,7 +96,7 @@ const ProfileFormContainer = () => {
                   <Input />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} sm={24} md={12} lg={12}>
                 <Form.Item
                   label="Last name"
                   name="lastName"
@@ -107,7 +107,7 @@ const ProfileFormContainer = () => {
               </Col>
             </Row>
             <Row>
-              <Col span={12}>
+              <Col xs={24} sm={24} md={12} lg={12}>
                 <Form.Item
                   label="Date of birth"
                   name="dateOfBirth"
@@ -116,7 +116,7 @@ const ProfileFormContainer = () => {
                   <DatePicker />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col xs={24} sm={24} md={12} lg={12}>
                 <Form.Item
                   name="gender"
                   label="Gender"
@@ -129,26 +129,39 @@ const ProfileFormContainer = () => {
                 </Form.Item>
               </Col>
             </Row>
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={ProfileValidation.email}
-            >
-              <Input />
-            </Form.Item>
-            <Form.Item
-              label="Phone number"
-              name="phone"
-              rules={ProfileValidation.phone}
-            >
-              <Input />
-            </Form.Item>
+            <Col xs={24} sm={24} md={12} lg={12}>
+              <Form.Item
+                label="Email"
+                name="email"
+                rules={ProfileValidation.email}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col xs={24} sm={24} md={12} lg={12}>
+              <Form.Item
+                label="Phone number"
+                name="phone"
+                rules={ProfileValidation.phone}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Update
-              </Button>
+              <div className="profile-page-button">
+                <Button type="primary" htmlType="submit">
+                  Update
+                </Button>
+              </div>
             </Form.Item>
           </Form>
+        </Col>
+        <Col xs={24} sm={24} md={10} lg={10}>
+          <AvatarUploadContainer
+            form={form}
+            imageData={form.getFieldValue("avatarImage")}
+            fetchProfile={fetchProfile}
+          />
         </Col>
       </Row>
     </>

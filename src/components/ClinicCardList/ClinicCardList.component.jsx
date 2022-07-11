@@ -92,24 +92,26 @@ const ClinicCardListComponent = ({ layoutDirection, listData }) => {
                   </Card>
                 </div>
               ))}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                width: "100px",
-              }}
-            >
-              <RightCircleOutlined
-                style={{ color: "#3A8EF6", fontSize: "200%" }}
-              />
+            {listData.length > 3 ? (
               <div
-                style={{ width: 60, textAlign: "center" }}
-                onClick={() => history.push(RoutePath.CLINIC_PAGE)}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  width: "100px",
+                }}
               >
-                See All
+                <RightCircleOutlined
+                  style={{ color: "#3A8EF6", fontSize: "200%" }}
+                />
+                <div
+                  style={{ width: 60, textAlign: "center" }}
+                  onClick={() => history.push(RoutePath.CLINIC_PAGE)}
+                >
+                  See All
+                </div>
               </div>
-            </div>
+            ) : null}
           </div>
         </>
       ) : (

@@ -195,14 +195,25 @@ const BookingManagementTableContainer = () => {
               resetAction={resetAction}
             />
           </Col>
-          <Col>
-            <Button type="primary" onClick={handleOpenScanQr}>
+          <Col
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              className="auto-check-in-btn"
+              style={{ marginTop: "6px" }}
+              type="primary"
+              onClick={handleOpenScanQr}
+            >
               Auto checkin
             </Button>
           </Col>
         </Row>
-        <Row>
+        <Row style={{ display: "block", width: "90%" }}>
           <CommonTableComponent
+            className="booking-table"
             tableTitle="Booking Management"
             columns={BookingManagementTableColumn}
             dataSource={data}

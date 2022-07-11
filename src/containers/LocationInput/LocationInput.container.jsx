@@ -31,7 +31,11 @@ const LocationInputContainer = ({ defaultValues }) => {
   return (
     <>
       <Form.Item name="location" label="Location" required>
-        <Cascader options={locationData} defaultValues={data} />
+        <Cascader
+          options={locationData}
+          defaultValues={data}
+          placeholder="Search by location"
+        />
       </Form.Item>
     </>
   );

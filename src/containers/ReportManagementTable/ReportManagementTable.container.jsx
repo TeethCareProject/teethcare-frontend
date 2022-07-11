@@ -127,7 +127,7 @@ const SearchReportFormComponent = ({ resetAction, ...antdProps }) => {
             <Input placeholder="Search by clinic name" />
           </Form.Item>
         </Col>
-        <Col span={4}>
+        <Col span={3}>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Search

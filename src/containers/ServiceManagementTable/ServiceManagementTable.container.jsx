@@ -181,7 +181,7 @@ const ServiceManagementTableContainer = () => {
           />
         ) : null}
       </Modal>
-      <Space>
+      <Space style={{ position: "absolute", left: "63.3vw", top: "80px" }}>
         <Button
           type="primary"
           onClick={() => {
