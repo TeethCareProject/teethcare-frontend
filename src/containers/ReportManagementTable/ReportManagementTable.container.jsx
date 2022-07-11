@@ -117,7 +117,7 @@ const SearchReportFormComponent = ({ resetAction, ...antdProps }) => {
   return (
     <Form layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
-        <Col span={4}>
+        <Col span={6}>
           <Form.Item name="id" label="Search report Id">
             <Input placeholder="Search by report Id" />
           </Form.Item>
@@ -127,14 +127,14 @@ const SearchReportFormComponent = ({ resetAction, ...antdProps }) => {
             <Input placeholder="Search by clinic name" />
           </Form.Item>
         </Col>
-        <Col span={2}>
+        <Col span={3}>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Search
             </Button>
           </Form.Item>
         </Col>
-        <Col span={2}>
+        <Col span={4}>
           <Form.Item>
             <Button onClick={resetAction}>Reset</Button>
           </Form.Item>

@@ -6,6 +6,7 @@ export const bookService = (bookingData) =>
     description: bookingData.description,
     desiredCheckingTime: bookingData.desiredCheckingTime,
     serviceId: bookingData.serviceId,
+    voucherCode: bookingData.voucherCode,
   });
 
 export const getAllBooking = (options) =>
@@ -14,8 +15,8 @@ export const getAllBooking = (options) =>
 export const getBookingById = (bookingId) =>
   CallAPI(`${BOOKING_END_POINT}/${bookingId}`, "GET");
 
-export const evaluateBooking = (bookingId, isAccepted) =>
-  CallAPI(`${BOOKING_END_POINT}/accept`, "PUT", {}, { bookingId, isAccepted });
+export const evaluateBooking = ({ bookingId, ...restValues }) =>
+  CallAPI(`${BOOKING_END_POINT}/${bookingId}/accept`, "PUT", restValues);
 
 export const updateBookingDuringTreatment = (options) =>
   CallAPI(`${BOOKING_END_POINT}/second-update`, "PUT", options);
@@ -24,28 +25,14 @@ export const confirmBooking = (options) =>
   CallAPI(`${BOOKING_END_POINT}/confirm`, "PUT", options);
 
 export const checkOut = (bookingId) => {
-  CallAPI(
-    `${BOOKING_END_POINT}/checkout`,
-    "PUT",
-    {},
-    {
-      bookingId: bookingId,
-    }
-  );
+  CallAPI(`${BOOKING_END_POINT}/checkout/${bookingId}`, "PUT");
 };
 
 export const updateBooking = (options) =>
   CallAPI(`${BOOKING_END_POINT}/first-update`, "PUT", options);
 
 export const checkIn = (bookingId) =>
-  CallAPI(
-    `${BOOKING_END_POINT}/checkin`,
-    "PUT",
-    {},
-    {
-      bookingId: bookingId,
-    }
-  );
+  CallAPI(`${BOOKING_END_POINT}/checkin/${bookingId}`, "PUT");
 
 export const checkAvailableTime = (clinicId, bookingTime) =>
   CallAPI(

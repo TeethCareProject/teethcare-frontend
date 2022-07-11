@@ -14,17 +14,28 @@ import { convertMomentToMilliseconds } from "../../utils/convert.utils";
 import { getServiceById } from "../../services/teeth-apis/ServiceController";
 import { notification } from "antd";
 import ServiceEntityToServiceCard from "../../mapper/ServiceEntityToServiceCard";
+import { checkAvailableVoucherCode } from "../../services/teeth-apis/VoucherController";
 
 const BookingServiceFormContainer = () => {
   const { serviceId } = useParams();
   const user = useSelector((state) => state?.authentication?.user);
   const [serviceData, setServiceData] = useState({});
   const [availableHourList, setAvailableHourList] = useState([]);
+  const [voucherCodeMess, setVoucherCodeMess] = useState();
   const [form] = useForm();
   const history = useHistory();
 
   const onFinish = (values) => {
     //submit form
+
+    if (voucherCodeMess && voucherCodeMess !== "success") return;
+    if (!voucherCodeMess && form.getFieldValue("voucherCode")?.length > 0) {
+      setVoucherCodeMess(
+        "Please validate your voucher code before submitting!"
+      );
+      return;
+    }
+
     const submitBooking = async () => {
       try {
         const { data } = await bookService({
@@ -33,6 +44,7 @@ const BookingServiceFormContainer = () => {
             convertMomentToMilliseconds(values.desiredCheckingDate) +
             values.desiredHour * 60 * 60 * 1000,
           description: values.description,
+          voucherCode: values.voucherCode,
         });
         history.push(RoutePath.BOOKING_SUCCESSFUL_PAGE);
       } catch (e) {
@@ -84,6 +96,18 @@ const BookingServiceFormContainer = () => {
     }
   };
 
+  const checkVoucherCode = async () => {
+    try {
+      await checkAvailableVoucherCode(
+        form.getFieldValue("voucherCode"),
+        serviceData?.clinicId
+      );
+      setVoucherCodeMess("success");
+    } catch (e) {
+      setVoucherCodeMess("Invalid voucher code! Please try other voucher!");
+    }
+  };
+
   useEffect(() => {
     if (user) {
       const mapperResult = UserToBookingFormMapper(user);
@@ -100,6 +124,9 @@ const BookingServiceFormContainer = () => {
       serviceData={serviceData}
       availableHourList={availableHourList}
       handleGetAvailableHourList={handleGetAvailableHourList}
+      checkVoucherCode={checkVoucherCode}
+      voucherCodeMess={voucherCodeMess}
+      setVoucherCodeMess={setVoucherCodeMess}
     />
   );
 };

@@ -1,13 +1,15 @@
 import { notification } from "antd";
 import { checkMobile } from "../utils/checkUserAgent";
 
-const confirmBookingNotificationHandler = (history, notificationData) => {
+const confirmBookingNotificationHandler = (notificationData, role) => {
   if (!checkMobile()) {
     notification["info"]({
       message: notificationData.title,
       description: notificationData.body,
     });
-    window.location.reload();
+    if (role === "DENTIST") {
+      window.location.reload();
+    }
   } else {
     notification["success"]({
       message: "Send notification successfully",

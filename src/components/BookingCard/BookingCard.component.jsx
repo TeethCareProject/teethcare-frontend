@@ -25,9 +25,7 @@ const BookingCardComponent = ({ booking }) => {
                 alt="clinic"
               />
             </div>
-            <div
-              style={{ lineHeight: "3em", marginLeft: "20px", width: "50%" }}
-            >
+            <div style={{ marginLeft: "20px", width: "50%" }}>
               <div style={{ fontSize: "1.5em" }}>
                 <span style={{ fontWeight: "bold" }}>Services: </span>
                 {booking[0]?.services.map((service, index) => (
@@ -46,7 +44,7 @@ const BookingCardComponent = ({ booking }) => {
                 <span style={{ fontWeight: "bold" }}>Examination Time: </span>
                 {convertMillisecondsToDate(booking[0]?.examinationTime)}
                 <Button type="link" onClick={() => booking[0]?.onClick()}>
-                  Xem chi tiết
+                  View detail
                 </Button>
               </div>
               <div
@@ -102,7 +100,7 @@ const BookingCardComponent = ({ booking }) => {
                         type="link"
                         onClick={() => bookingElement?.onClick()}
                       >
-                        Xem chi tiết
+                        View detail
                       </Button>
                     </Card>
                   </Col>

@@ -3,9 +3,9 @@ import BookingServiceFormContainer from "../../containers/BookingServiceForm/Boo
 
 const BookingServicePage = () => {
   return (
-    <div className="page" style={{ marginTop: "2rem" }}>
+    <>
       <BookingServiceFormContainer />
-    </div>
+    </>
   );
 };
 

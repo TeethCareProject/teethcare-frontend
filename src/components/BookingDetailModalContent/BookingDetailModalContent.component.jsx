@@ -4,18 +4,8 @@ import { ContainerOutlined } from "@ant-design/icons";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
 import { convertMillisecondsToDate } from "../../utils/convert.utils";
-import BookingStatusConstants from "../../constants/BookingStatusConstants";
-import { RoleConstant } from "../../constants/RoleConstants";
 
-const BookingDetailModalContentComponent = ({
-  bookingData,
-  role,
-  checkInHandler,
-}) => {
-  let examinationTime = bookingData?.examinationTime
-    ? convertMillisecondsToDate(bookingData?.examinationTime)
-    : convertMillisecondsToDate(bookingData?.createBookingDate);
-
+const BookingDetailModalContentComponent = ({ bookingData }) => {
   return (
     <>
       <Descriptions title="Staff Incharge">
@@ -48,10 +38,20 @@ const BookingDetailModalContentComponent = ({
           {bookingData?.description}
         </DescriptionsItem>
       </Descriptions>
-      <div>
-        Current Examination Time: {`${" "}`}
-        <span>{examinationTime}</span>
-      </div>
+      {bookingData?.examinationTime ? (
+        <div>
+          Current Examination Time: {`${" "}`}
+          <span>{convertMillisecondsToDate(bookingData?.examinationTime)}</span>
+        </div>
+      ) : (
+        <div>
+          Desired Examination Time: {`${" "}`}
+          <span>
+            {convertMillisecondsToDate(bookingData?.desiredCheckingTime)}
+          </span>
+        </div>
+      )}
+
       <List
         itemLayout="horizontal"
         dataSource={bookingData?.services ? bookingData?.services : []}
@@ -64,15 +64,11 @@ const BookingDetailModalContentComponent = ({
                   level={5}
                 >{`Service name: ${service.name}`}</Typography.Title>
               }
-              description={`Description: ${service.description}`}
+              description={`Price: ${service.price}`}
             />
           </List.Item>
         )}
       />
-      {role === RoleConstant.CUSTOMER_SERVICE &&
-      bookingData?.status === BookingStatusConstants.REQUEST ? (
-        <Button onClick={checkInHandler}>Check in</Button>
-      ) : null}
     </>
   );
 };

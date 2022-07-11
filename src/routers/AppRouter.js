@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import NavigationBar from "../components/commons/NavigationBar/NavigationBar.component";
+import NavigationBarContainer from "../containers/NavigationBar/NavigationBar.container";
 import { Redirect, Route, Switch } from "react-router-dom";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
@@ -18,7 +18,7 @@ import PrivateRouter from "./components/PrivateRouter";
 import { RoleConstant } from "../constants/RoleConstants";
 import RoutePath from "./Path";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   getNotificationList,
   initFcmToken,
@@ -40,11 +40,15 @@ import openBookingDetailNotificationHandler from "../notificationHandler/OpenBoo
 import ProfilePage from "../pages/ProfilePage/ProfilePage";
 import confirmBookingNotificationHandler from "../notificationHandler/ConfirmBookingNotification.handler";
 import Facebook from "../containers/FacebookChatBox/FacebookChatBox.container";
+import MobileMenuBar from "../containers/MobileMenuBar/MobileMenuBar.container";
+import { useSelector } from "react-redux";
 
 const AppRouter = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const location = useLocation();
   dispatch(initFcmToken());
+  const role = useSelector((state) => state.authentication.user?.roleName);
 
   useEffect(() => {
     const unsubscribe = onMessage(messaging, (payload) => {
@@ -52,13 +56,13 @@ const AppRouter = () => {
 
       switch (notificationData.title) {
         case notificationTypes.OPEN_BOOKING_NOTIFICATION:
-          openBookingDetailNotificationHandler(notificationData);
+          openBookingDetailNotificationHandler(notificationData, history);
           break;
         case notificationTypes.CONFIRM_BOOKING_FAIL:
-          confirmBookingNotificationHandler(history, notificationData);
+          confirmBookingNotificationHandler(notificationData, role);
           break;
         case notificationTypes.CONFIRM_BOOKING_SUCCESS:
-          confirmBookingNotificationHandler(history, notificationData);
+          confirmBookingNotificationHandler(notificationData, role);
           break;
         default:
           notification["info"]({
@@ -76,7 +80,8 @@ const AppRouter = () => {
 
   return (
     <>
-      <NavigationBar />
+      <NavigationBarContainer location={location.pathname} />
+      <MobileMenuBar title="Teethcare" location={location.pathname} />
       <Facebook />
       <Switch>
         <Route path={RoutePath.INTERNAL_ERROR_PAGE} exact>
@@ -148,19 +153,6 @@ const AppRouter = () => {
             ADMIN: () => <AdminDashboardPage />,
           }}
           path={RoutePath.DASHBOARD_PAGE}
-          exact
-          accessibleRoles={Object.keys(RoleConstant)}
-        />
-        <DynamicRouter
-          key="dashboard"
-          componentList={{
-            MANAGER: () => <ManagerDashboardPage />,
-            CUSTOMER_SERVICE: () => <CustomerServiceDashboardPage />,
-            DENTIST: () => <DentistDashboardPage />,
-            PATIENT: () => <PatientDashboardPage />,
-            ADMIN: () => <AdminDashboardPage />,
-          }}
-          path={RoutePath.DASHBOARD_WITH_TAB_PAGE}
           exact
           accessibleRoles={Object.keys(RoleConstant)}
         />

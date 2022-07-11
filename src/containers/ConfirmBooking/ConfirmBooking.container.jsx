@@ -4,12 +4,14 @@ import {
   getBookingById,
   confirmBooking,
 } from "../../services/teeth-apis/BookingController";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { notification } from "antd";
 import RoutePath from "../../routers/Path";
 
 const ConfirmBookingContainer = () => {
   const history = useHistory();
+  const { search } = useLocation();
+  const emailVersion = search.split("")[search.length - 1];
   const { bookingId } = useParams();
   const [bookingData, setBookingData] = useState();
 
@@ -30,7 +32,7 @@ const ConfirmBookingContainer = () => {
     try {
       await confirmBooking({
         bookingId,
-        version: 0,
+        version: bookingData.version - 1,
       });
       history.push(RoutePath.REJECT_CONFIRM_PAGE);
     } catch (e) {
@@ -64,11 +66,15 @@ const ConfirmBookingContainer = () => {
 
   return (
     <div>
-      <ConfirmBookingComponent
-        bookingData={bookingData}
-        rejectUpdate={rejectUpdate}
-        confirmUpdate={confirmUpdate}
-      />
+      {bookingData?.version && emailVersion == bookingData.version ? (
+        <ConfirmBookingComponent
+          bookingData={bookingData}
+          rejectUpdate={rejectUpdate}
+          confirmUpdate={confirmUpdate}
+        />
+      ) : (
+        <div>This is not the latest update version</div>
+      )}
     </div>
   );
 };

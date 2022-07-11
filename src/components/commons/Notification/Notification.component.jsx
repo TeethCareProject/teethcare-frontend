@@ -1,18 +1,8 @@
-import {
-  Avatar,
-  Badge,
-  Button,
-  Divider,
-  Dropdown,
-  List,
-  Menu,
-  Skeleton,
-  Space,
-  Typography,
-} from "antd";
+import { Badge, Button, Divider, Dropdown, List, Typography } from "antd";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { BellOutlined } from "@ant-design/icons";
+import "./Notification.style.scss";
 
 const NotificationComponent = ({
   notificationList,
@@ -24,15 +14,26 @@ const NotificationComponent = ({
   return (
     <div>
       <Dropdown
+        onVisibleChange={(visible) => {
+          if (visible) loadMoreData();
+        }}
         overlayStyle={{ height: "100px" }}
         overlay={
           <>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                marginTop: 10,
+                background: "white",
+              }}
+            >
               <Button type="link" onClick={markAllAsReadAction}>
                 Mark all as read
               </Button>
             </div>
             <InfiniteScroll
+              className="notification-list"
               style={{
                 zIndex: 10000,
                 background: "#FFFFFF",
@@ -77,11 +78,12 @@ const NotificationComponent = ({
         }
       >
         <Badge
+          className="count-icon"
           count={totalMarkAsUnread}
           showZero
           onClick={(e) => e.preventDefault()}
         >
-          <BellOutlined />
+          <BellOutlined className="notification-icon" />
         </Badge>
       </Dropdown>
     </div>

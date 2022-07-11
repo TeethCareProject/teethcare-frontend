@@ -13,8 +13,8 @@ import { useForm } from "antd/lib/form/Form";
 import React, { useEffect, useState } from "react";
 import CommonTableComponent from "../../components/CommonTable/CommonTable.component";
 import {
+  checkIn,
   getAllBooking,
-  getBookingById,
 } from "../../services/teeth-apis/BookingController";
 import BookingManagementTableColumn from "./BookingManagementTable.column";
 import { useSelector } from "react-redux";
@@ -116,19 +116,32 @@ const BookingManagementTableContainer = () => {
     });
   };
 
-  const handleResult = async (value) => {
+  const handleQrScanResult = async (value) => {
+    const bookingId = value.substring(value.lastIndexOf("/") + 1);
     try {
       Modal.destroyAll();
-      const bookingId = value.substring(value.lastIndexOf("/") + 1);
-      //check before get bookingId
-      await getBookingById(bookingId);
 
-      setNeededBooking(bookingId);
-    } catch (e) {
-      Modal.error({
-        title: "Invalid booking Id",
-        content: "Invalid booking Id, try again later!",
+      await checkIn(bookingId);
+      notification["success"]({
+        message: `Checkin successfully`,
+        duration: 2,
       });
+      setNeededBooking(bookingId);
+    } catch ({ response }) {
+      const { status, data } = response;
+      if (status == 404) {
+        Modal.error({
+          title: "Invalid booking Id",
+          content: data?.message[0],
+        });
+      }
+      if (status == 400) {
+        Modal.error({
+          title: "Error!",
+          content: data?.message[0],
+        });
+        setNeededBooking(bookingId);
+      }
     }
   };
 
@@ -136,7 +149,7 @@ const BookingManagementTableContainer = () => {
     Modal.info({
       closable: true,
       title: "Scan QR for booking ID",
-      content: <QrScannerComponent handleResult={handleResult} />,
+      content: <QrScannerComponent handleResult={handleQrScanResult} />,
     });
   };
 
@@ -182,14 +195,25 @@ const BookingManagementTableContainer = () => {
               resetAction={resetAction}
             />
           </Col>
-          <Col>
-            <Button type="primary" onClick={handleOpenScanQr}>
-              Scan QR
+          <Col
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Button
+              className="auto-check-in-btn"
+              style={{ marginTop: "6px" }}
+              type="primary"
+              onClick={handleOpenScanQr}
+            >
+              Auto checkin
             </Button>
           </Col>
         </Row>
-        <Row>
+        <Row style={{ display: "block", width: "90%" }}>
           <CommonTableComponent
+            className="booking-table"
             tableTitle="Booking Management"
             columns={BookingManagementTableColumn}
             dataSource={data}

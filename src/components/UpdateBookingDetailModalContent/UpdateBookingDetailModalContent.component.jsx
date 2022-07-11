@@ -15,8 +15,17 @@ import {
   DeleteOutlined,
   EditOutlined,
 } from "@ant-design/icons";
+import moment from "moment";
+
+import {
+  convertMillisecondsToHour,
+  getDisabledTime,
+} from "../../utils/convert.utils";
+import { useSelector } from "react-redux";
+import { UpdateBookingDataValidation } from "../../validate/UpdateBookingDataValidation";
 
 import DescriptionsItem from "antd/lib/descriptions/Item";
+import ClinicOperatingTimeMapper from "../../mapper/ClinicOperatingTimeMapper";
 
 const UpdateBookingDetailModalContentComponent = ({
   form,
@@ -25,6 +34,46 @@ const UpdateBookingDetailModalContentComponent = ({
   serviceModalClickHandler,
   deleteServiceHandler,
 }) => {
+  const clinic = useSelector((state) => state?.authentication?.user?.clinic);
+
+  const disabledDateTime = (date) => {
+    const clinicWorkingTimes = {
+      clinicShift1: {
+        startTime: clinic?.startTimeShift1,
+        endTime: clinic?.endTimeShift1,
+      },
+      clinicShift2: {
+        startTime: clinic?.startTimeShift2,
+        endTime: clinic?.endTimeShift2,
+      },
+    };
+    return {
+      disabledHours: () => getDisabledTime(ClinicOperatingTimeMapper(clinic)),
+      disabledMinutes: () => {
+        if (date == null) return;
+        for (const shiftName in clinicWorkingTimes) {
+          const shift = clinicWorkingTimes[shiftName];
+          if (date.hour() == convertMillisecondsToHour(shift.startTime)) {
+            const calculatedMinute = Math.floor(
+              (shift.startTime % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const minutesArr = [];
+            for (let i = 0; i <= calculatedMinute; i++) minutesArr.push(i);
+            return minutesArr;
+          }
+          if (date.hour() == convertMillisecondsToHour(shift.endTime)) {
+            const calculatedMinute = Math.floor(
+              (shift.endTime % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const minutesArr = [];
+            for (let i = calculatedMinute; i <= 59; i++) minutesArr.push(i);
+            return minutesArr;
+          }
+        }
+      },
+    };
+  };
+
   return (
     <Form
       name="update_dentist_time_form"
@@ -58,25 +107,36 @@ const UpdateBookingDetailModalContentComponent = ({
             }}
           />
         </div>
-        <Form.Item name="dentistId" hidden>
+        <Form.Item
+          name="dentistId"
+          hidden={true}
+          rules={UpdateBookingDataValidation.dentist}
+        >
           <Input />
         </Form.Item>
       </div>
       <Descriptions title="Booking Info">
-        <DescriptionsItem label="Description">
-          {form.getFieldValue("description")?.description}
-        </DescriptionsItem>
+        <div>
+          <span>New Examination Time: </span>
+          <Form.Item
+            name="examinationTime"
+            shouldUpdate
+            rules={UpdateBookingDataValidation.examinationTime}
+          >
+            <DatePicker
+              showTime
+              placeholder="Select Time"
+              style={{ marginLeft: 10 }}
+              disabledTime={disabledDateTime}
+              disabledDate={(current) => {
+                let customDate = moment().format("DD-MM-YYYY");
+                return current && current < moment(customDate, "DD-MM-YYYY");
+              }}
+              format="YYYY-MM-DD HH:mm"
+            />
+          </Form.Item>
+        </div>
       </Descriptions>
-      <div>
-        <span>New Examination Time: </span>
-        <Form.Item name="examinationTime">
-          <DatePicker
-            showTime
-            placeholder="Select Time"
-            style={{ marginLeft: 10 }}
-          />
-        </Form.Item>
-      </div>
       <div>
         <div className="ant-descriptions-title">
           Service{" "}
@@ -122,7 +182,7 @@ const UpdateBookingDetailModalContentComponent = ({
         />
       </div>
 
-      <Form.Item name="serviceIds">
+      <Form.Item name="serviceIds" rules={UpdateBookingDataValidation.services}>
         <Select
           mode="multiple"
           allowClear
