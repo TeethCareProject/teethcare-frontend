@@ -127,18 +127,24 @@ const BookingListContainer = () => {
   );
 };
 
-const SearchForm = ({ resetAction, statusButtonClick, ...antdProps }) => {
+const SearchForm = ({ resetAction, statusButtonClick, form, ...antdProps }) => {
   const { Option } = Select;
   return (
     <>
-      <Form layout="vertical" {...antdProps}>
+      <Form form={form} layout="vertical" {...antdProps}>
         <Row gutter={[16, 16]} align="bottom">
           <Col xs={24} sm={24} md={7} lg={8}>
             <Form.Item name="bookingId" label="Search by booking Id">
               <Input placeholder="Search by booking Id" />
             </Form.Item>
           </Col>
-          <Col xs={24} sm={24} md={7} lg={8}>
+          <Col
+            className="search-name-booking-list"
+            xs={24}
+            sm={24}
+            md={7}
+            lg={8}
+          >
             <Form.Item name="clinicName" label="Search by clinic name">
               <Input placeholder="Search by Clinic name" />
             </Form.Item>
@@ -185,7 +191,7 @@ const SearchForm = ({ resetAction, statusButtonClick, ...antdProps }) => {
                   marginTop: "-40px",
                 }}
               >
-                <Button onClick={() => resetAction}>Reset</Button>
+                <Button onClick={() => resetAction()}>Reset</Button>
               </div>
             </Form.Item>
           </Col>

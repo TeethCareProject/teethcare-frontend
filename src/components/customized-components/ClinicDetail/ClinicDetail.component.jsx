@@ -153,19 +153,21 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
                 </Card>
               </div>
             ))}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              width: "100px",
-            }}
-          >
-            <RightCircleOutlined
-              style={{ color: "#3A8EF6", fontSize: "200%" }}
-            />
-            <div style={{ width: 60, textAlign: "center" }}>See All</div>
-          </div>
+          {clinicData?.serviceOfClinicResponses.length > 3 ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                width: "100px",
+              }}
+            >
+              <RightCircleOutlined
+                style={{ color: "#3A8EF6", fontSize: "200%" }}
+              />
+              <div style={{ width: 60, textAlign: "center" }}>See All</div>
+            </div>
+          ) : null}
         </div>
       </div>
       <div className="clinic-detail-page-feedback-container">

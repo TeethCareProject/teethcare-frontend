@@ -113,16 +113,22 @@ const AppointmentListContainer = () => {
   );
 };
 
-const SearchForm = ({ resetAction, ...antdProps }) => {
+const SearchForm = ({ resetAction, form, ...antdProps }) => {
   return (
-    <Form layout="vertical" {...antdProps}>
+    <Form form={form} layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
         <Col xs={24} sm={24} md={9} lg={8}>
           <Form.Item name="appointmentId" label="Search appointment Id">
             <Input placeholder="Search by appointment Id" />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={24} md={9} lg={8}>
+        <Col
+          className="search-name-appointment-list"
+          xs={24}
+          sm={24}
+          md={9}
+          lg={8}
+        >
           <Form.Item name="clinicName" label="Search clinic name">
             <Input placeholder="Search by Clinic name" />
           </Form.Item>
@@ -130,7 +136,7 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
         <Col xs={24} sm={12} md={3} lg={2}>
           <Form.Item>
             <div
-              className="search-btn-booking"
+              className="search-btn-appointment"
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -153,7 +159,7 @@ const SearchForm = ({ resetAction, ...antdProps }) => {
                 marginTop: "-40px",
               }}
             >
-              <Button onClick={() => resetAction}>Reset</Button>
+              <Button onClick={() => resetAction()}>Reset</Button>
             </div>
           </Form.Item>
         </Col>

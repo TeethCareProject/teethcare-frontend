@@ -1,13 +1,72 @@
-@media (min-width: 769px) {
+@media (min-width: 1024px) {
   .search-btn-booking,
+  .search-btn-appointment,
   .reset-btn-booking {
     margin-top: 0px !important;
   }
 }
 
+@media (min-width: 769px) and (max-width: 1023px) {
+  .search-btn-booking,
+  .search-btn-appointment,
+  .reset-btn-booking {
+    margin-top: 0px !important;
+  }
+
+  .search-name-booking-list {
+    margin-top: -20px !important;
+  }
+
+  .auto-check-in-btn {
+    position: absolute;
+    right: 8.5vw;
+    top: 70px;
+  }
+}
+
 @media (min-width: 576px) and (max-width: 768px) {
+  .search-btn-appointment {
+    justify-content: flex-end !important;
+    margin-top: -40px !important;
+  }
+
   .search-btn-booking {
     justify-content: flex-end !important;
+    margin-top: -40px !important;
+  }
+
+  .status-option {
+    margin-top: -20px !important;
+  }
+
+  .search-name-booking-list,
+  .search-name-appointment-list {
+    margin-top: -20px !important;
+  }
+
+  .reset-btn-booking {
+    justify-content: flex-start !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-btn-appointment {
+    justify-content: flex-end !important;
+    margin-top: -40px !important;
+  }
+
+  .search-btn-booking {
+    justify-content: flex-end !important;
+    margin-top: -60px !important;
+  }
+
+  .status-option {
+    margin-top: -40px !important;
+  }
+
+  .search-name-booking-list,
+  .search-name-appointment-list {
+    margin-top: -20px !important;
   }
 
   .reset-btn-booking {

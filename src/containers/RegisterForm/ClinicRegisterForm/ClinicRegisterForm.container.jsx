@@ -48,6 +48,10 @@ const ClinicRegisterFormContainer = () => {
         ClinicFormValueToClinicRegisterData(form.getFieldsValue(true))
       );
       history.push(RoutePath.LOGIN_PAGE);
+      notification["success"]({
+        message: `Register successfully`,
+        duration: 2,
+      });
     } catch (e) {
       notification["error"]({
         message: `Something went wrong! Try again latter!`,

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout.component";
 import { elementList, navigationList } from "./ManagerDashboardPage.tabs";
-import CreateStaffModalContainer from "../../containers/CreateStaffModal/CreateStaffModal.container";
 import { useParams } from "react-router-dom";
 
 const ManagerDashboardPage = () => {
@@ -10,9 +9,6 @@ const ManagerDashboardPage = () => {
 
   return (
     <>
-      <div style={{ padding: "1rem 0" }}>
-        <h1>Manager Dashboard</h1>
-      </div>
       <DashboardLayout
         navigationList={navigationList.map((item, index) => ({
           ...item,
@@ -21,7 +17,6 @@ const ManagerDashboardPage = () => {
         elementList={elementList}
         currentTab={currentTab}
       />
-      <CreateStaffModalContainer />
     </>
   );
 };

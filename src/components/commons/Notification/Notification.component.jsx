@@ -25,6 +25,7 @@ const NotificationComponent = ({
                 display: "flex",
                 justifyContent: "flex-end",
                 marginTop: 10,
+                background: "white",
               }}
             >
               <Button type="link" onClick={markAllAsReadAction}>
