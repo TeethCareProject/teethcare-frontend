@@ -53,12 +53,36 @@ const ClinicProfileFormContainer = () => {
           data?.location?.ward?.id,
         ],
         operatingTimeMorning: [
-          moment().startOf("year").add(data?.startTimeShift1, "ms"),
-          moment().startOf("year").add(data?.endTimeShift1, "ms"),
+          moment(
+            moment()
+              .startOf("year")
+              .add(data?.startTimeShift1 + 7 * 60 * 60 * 1000, "ms")
+              .format("HH:mm"),
+            "HH:mm"
+          ),
+          moment(
+            moment()
+              .startOf("year")
+              .add(data?.endTimeShift1 + 7 * 60 * 60 * 1000, "ms")
+              .format("HH:mm"),
+            "HH:mm"
+          ),
         ],
         operatingTimeEvening: [
-          moment().startOf("year").add(data?.startTimeShift2, "ms"),
-          moment().startOf("year").add(data?.endTimeShift2, "ms"),
+          moment(
+            moment()
+              .startOf("year")
+              .add(data?.startTimeShift2 + 7 * 60 * 60 * 1000, "ms")
+              .format("HH:mm"),
+            "HH:mm"
+          ),
+          moment(
+            moment()
+              .startOf("year")
+              .add(data?.endTimeShift2 + 7 * 60 * 60 * 1000, "ms")
+              .format("HH:mm"),
+            "HH:mm"
+          ),
         ],
       });
       setClinicData({
@@ -81,11 +105,19 @@ const ClinicProfileFormContainer = () => {
 
   const handleUpdateProfile = async (values) => {
     try {
+      console.log(values.operatingTimeMorning[0].valueOf());
       await updateClinic({
         clinicAddress: values.clinicAddress,
         description: values.description,
         name: values.name,
         wardId: values.location[2],
+        bookingGap: values.bookingGap,
+        facebookPageId: values.facebookPageId,
+        expiredDay: values.expiredDay,
+        startTimeShift1: values.operatingTimeMorning[0].valueOf(),
+        endTimeShift1: values.operatingTimeMorning[1].valueOf(),
+        startTimeShift2: values.operatingTimeEvening[0].valueOf(),
+        endTimeShift2: values.operatingTimeEvening[1].valueOf(),
       });
       notification["success"]({
         message: `Update successfully`,

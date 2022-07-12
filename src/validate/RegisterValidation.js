@@ -63,7 +63,7 @@ export const ClinicRegisterValidation = {
       validator(_, value) {
         if (
           !value ||
-          !checkTimeOverlapped(value, getFieldValue("operatingTimeEvening"))
+          !checkTimeOverlapped(getFieldValue("operatingTimeEvening"), value)
         )
           return Promise.resolve();
 
