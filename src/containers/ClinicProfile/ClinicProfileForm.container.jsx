@@ -52,6 +52,14 @@ const ClinicProfileFormContainer = () => {
           data?.location?.ward?.district?.id,
           data?.location?.ward?.id,
         ],
+        operatingTimeMorning: [
+          moment().startOf("year").add(data?.startTimeShift1, "ms"),
+          moment().startOf("year").add(data?.endTimeShift1, "ms"),
+        ],
+        operatingTimeEvening: [
+          moment().startOf("year").add(data?.startTimeShift2, "ms"),
+          moment().startOf("year").add(data?.endTimeShift2, "ms"),
+        ],
       });
       setClinicData({
         ...data,
@@ -144,15 +152,26 @@ const ClinicProfileFormContainer = () => {
             </Form.Item>
             <Typography.Title level={5}>Opperation attributes</Typography.Title>
             <OperatingHourFormComponent />
-            <Form.Item name={"bookingGap"} label="Booking gap" required>
-              <Input placeholder="Booking gap" />
+            <Form.Item
+              name={"bookingGap"}
+              label="Booking gap"
+              rules={ClinicProfileValidation.bookingGap}
+            >
+              <Input placeholder="Booking gap" type={"number"} />
             </Form.Item>
             <Form.Item
               name={"facebookPageId"}
               label="Facebook page ID"
-              required
+              rules={ClinicProfileValidation.facebookPageId}
             >
               <Input placeholder="Facebook page ID" />
+            </Form.Item>
+            <Form.Item
+              name={"expiredDay"}
+              label="Expired booking day"
+              rules={ClinicProfileValidation.expiredDay}
+            >
+              <Input placeholder="Expired booking day" type={"number"} />
             </Form.Item>
             <Row justify="center">
               <Form.Item>
