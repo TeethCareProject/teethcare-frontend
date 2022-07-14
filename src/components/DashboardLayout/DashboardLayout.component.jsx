@@ -13,7 +13,10 @@ const DashboardLayout = ({ navigationList, elementList, currentTab }) => {
           mode="horizontal"
         />
       </Row>
-      <Row style={{ display: "flex", justifyContent: "center" }}>
+      <Row
+        className="dashboard"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
         <Col span={4} className="dashboard-menu-lg">
           <DashboardSideBarComponent
             items={navigationList}

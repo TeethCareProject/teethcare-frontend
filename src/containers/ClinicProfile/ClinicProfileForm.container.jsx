@@ -14,6 +14,7 @@ import TextArea from "antd/lib/input/TextArea";
 import moment from "moment";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import OperatingHourFormComponent from "../../components/forms/ClinicRegisterForm/OperatingHourForm.component";
 import {
   getAccountById,
   updateProfile,
@@ -27,6 +28,8 @@ import { ProfileValidation } from "../../validate/ProfileValidation";
 import { ClinicRegisterValidation } from "../../validate/RegisterValidation";
 import LocationInputContainer from "../LocationInput/LocationInput.container";
 import AvatarUploadContainer from "./ClinicAvatarUpload.container";
+
+const { RangePicker } = DatePicker;
 
 const { Option } = Select;
 
@@ -49,6 +52,38 @@ const ClinicProfileFormContainer = () => {
           data?.location?.ward?.district?.id,
           data?.location?.ward?.id,
         ],
+        operatingTimeMorning: [
+          moment(
+            moment()
+              .startOf("year")
+              .add(data?.startTimeShift1 + 7 * 60 * 60 * 1000, "ms")
+              .format("HH:mm"),
+            "HH:mm"
+          ),
+          moment(
+            moment()
+              .startOf("year")
+              .add(data?.endTimeShift1 + 7 * 60 * 60 * 1000, "ms")
+              .format("HH:mm"),
+            "HH:mm"
+          ),
+        ],
+        operatingTimeEvening: [
+          moment(
+            moment()
+              .startOf("year")
+              .add(data?.startTimeShift2 + 7 * 60 * 60 * 1000, "ms")
+              .format("HH:mm"),
+            "HH:mm"
+          ),
+          moment(
+            moment()
+              .startOf("year")
+              .add(data?.endTimeShift2 + 7 * 60 * 60 * 1000, "ms")
+              .format("HH:mm"),
+            "HH:mm"
+          ),
+        ],
       });
       setClinicData({
         ...data,
@@ -70,11 +105,19 @@ const ClinicProfileFormContainer = () => {
 
   const handleUpdateProfile = async (values) => {
     try {
+      console.log(values.operatingTimeMorning[0].valueOf());
       await updateClinic({
         clinicAddress: values.clinicAddress,
         description: values.description,
         name: values.name,
         wardId: values.location[2],
+        bookingGap: values.bookingGap,
+        facebookPageId: values.facebookPageId,
+        expiredDay: values.expiredDay,
+        startTimeShift1: values.operatingTimeMorning[0].valueOf(),
+        endTimeShift1: values.operatingTimeMorning[1].valueOf(),
+        startTimeShift2: values.operatingTimeEvening[0].valueOf(),
+        endTimeShift2: values.operatingTimeEvening[1].valueOf(),
       });
       notification["success"]({
         message: `Update successfully`,
@@ -96,49 +139,89 @@ const ClinicProfileFormContainer = () => {
 
   return (
     <>
-      <Row justify="center" style={{ marginTop: "10rem" }}>
-        <Col span={8}>
+      <Row justify="center">
+        <Col span={24}>
           <AvatarUploadContainer
             form={form}
             imageData={form.getFieldValue("imageUrl")}
             fetchProfile={fetchProfile}
           />
         </Col>
-        <Col span={8}>
+      </Row>
+      <Row justify="center">
+        <Col span={18}>
           <Form
             form={form}
             onFinish={handleUpdateProfile}
             layout="vertical"
             initialValues={clinicData}
           >
-            <Form.Item
-              name="name"
-              label="Clinic name"
-              rules={ClinicProfileValidation.clinicName}
-              required
-            >
-              <Input placeholder="Clinic's Name" />
-            </Form.Item>
-            <Form.Item
-              name="taxCode"
-              label="Clinic tax code"
-              rules={ClinicProfileValidation.taxId}
-            >
-              <Input placeholder="Clinic's Tax Code" readOnly />
-            </Form.Item>
+            <Row justify="space-around" gutter={[64, 16]}>
+              <Col span={12}>
+                <Typography.Title level={5}>
+                  General attributes
+                </Typography.Title>
+                <Form.Item
+                  name="name"
+                  label="Clinic name"
+                  rules={ClinicProfileValidation.clinicName}
+                  required
+                >
+                  <Input placeholder="Clinic's Name" />
+                </Form.Item>
+                <Form.Item
+                  name="taxCode"
+                  label="Clinic tax code"
+                  rules={ClinicProfileValidation.taxId}
+                >
+                  <Input placeholder="Clinic's Tax Code" readOnly />
+                </Form.Item>
 
-            <Form.Item
-              name={"clinicAddress"}
-              label="Clinic address"
-              rules={ClinicProfileValidation.address}
-              required
-            >
-              <Input placeholder="Clinic's Address" />
-            </Form.Item>
-            <LocationInputContainer defaultValues={clinicData?.location} />
-            <Form.Item label="Clinic description" name="description" required>
-              <TextArea row={5} />
-            </Form.Item>
+                <Form.Item
+                  name={"clinicAddress"}
+                  label="Clinic address"
+                  rules={ClinicProfileValidation.address}
+                  required
+                >
+                  <Input placeholder="Clinic's Address" />
+                </Form.Item>
+                <LocationInputContainer defaultValues={clinicData?.location} />
+                <Form.Item
+                  label="Clinic description"
+                  name="description"
+                  required
+                >
+                  <TextArea row={5} />
+                </Form.Item>
+              </Col>
+              <Col span={12}>
+                <Typography.Title level={5}>
+                  Opperation attributes
+                </Typography.Title>
+                <OperatingHourFormComponent />
+                <Form.Item
+                  name={"bookingGap"}
+                  label="Booking gap"
+                  rules={ClinicProfileValidation.bookingGap}
+                >
+                  <Input placeholder="Booking gap" type={"number"} />
+                </Form.Item>
+                <Form.Item
+                  name={"facebookPageId"}
+                  label="Facebook page ID"
+                  rules={ClinicProfileValidation.facebookPageId}
+                >
+                  <Input placeholder="Facebook page ID" />
+                </Form.Item>
+                <Form.Item
+                  name={"expiredDay"}
+                  label="Expired booking day"
+                  rules={ClinicProfileValidation.expiredDay}
+                >
+                  <Input placeholder="Expired booking day" type={"number"} />
+                </Form.Item>
+              </Col>
+            </Row>
             <Row justify="center">
               <Form.Item>
                 <Button

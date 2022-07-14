@@ -1,6 +1,7 @@
 import React from "react";
 import { Avatar, Button, List, Typography } from "antd";
 import { CalendarOutlined } from "@ant-design/icons";
+import "./BookingList.style.scss";
 
 const BookingListComponent = ({ bookingListData }) => {
   return (

@@ -1,8 +1,12 @@
+.anticon-info-circle {
+  display: none;
+}
+
 .clinic-filter-part {
   background: #ffffff;
   border: 1px solid #d6cbcb;
   border-radius: 15px;
-  height: 67vh;
+  height: auto;
   padding: 20px;
   line-height: 2.5em;
   width: 30vw;
@@ -21,6 +25,18 @@
   }
 }
 
+.clinic-filter-part-mobile {
+  .clinic-filter-part-title {
+    font-size: 1.8em;
+    font-weight: bold;
+  }
+
+  .clinic-filter-part-subtitle {
+    font-weight: 500;
+    margin-bottom: 30px;
+  }
+}
+
 @media (min-width: 1024px) {
   .clinic-page {
     .clinic-filter-part {
@@ -28,12 +44,39 @@
     }
   }
 
-  .card-clinic-preview {
+  HEAD .card-clinic-preview {
     margin-left: 37vw;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
+  .filter-icon {
+    display: none !important;
+  }
+
+  .card-clinic-preview {
+    margin-left: 37vw;
+  }
+
+  .mobile {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .clinic-filter {
+    label {
+      display: none !important;
+    }
+  }
+
+  .filter-icon {
+    display: none !important;
+  }
+
+  .mobile {
+    display: none !important;
+  }
   .clinic-page {
     .clinic-filter-part {
       width: 25vw;
@@ -61,19 +104,39 @@
 }
 
 @media (min-width: 575px) and (max-width: 767px) {
+  .action-group-clinic-page {
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+
+  .clinic-filter {
+    label {
+      display: none !important;
+    }
+  }
+
+  .clinic-card-element {
+    display: none !important;
+  }
+
+  .mobile {
+    display: flex !important;
+  }
+
   .clinic-page {
     .ant-pagination {
       position: static !important;
-      margin-top: 50px;
+
       margin-left: 7.5%;
     }
   }
 
   .clinic-filter-part {
-    margin-left: 7.5% !important;
-    width: 85% !important;
-    height: auto !important;
-    position: static;
+    // margin-left: 7.5% !important;
+    // width: 85% !important;
+    // height: auto !important;
+    // position: static;
+    display: none !important;
   }
 
   .card-clinic-preview {
@@ -88,6 +151,24 @@
 }
 
 @media (max-width: 575px) {
+  .action-group-clinic-page {
+    display: flex !important;
+    justify-content: space-between !important;
+  }
+
+  .clinic-card-element {
+    display: none !important;
+  }
+
+  .clinic-filter {
+    label {
+      display: none !important;
+    }
+  }
+
+  .mobile {
+    display: flex !important;
+  }
   .clinic-name {
     font-size: 1.2em !important;
     margin-bottom: 0px !important;
@@ -110,16 +191,17 @@
   .clinic-page {
     .ant-pagination {
       position: static !important;
-      margin-top: 50px;
+      // margin-top: 50px;
       margin-left: 7.5%;
     }
   }
 
   .clinic-filter-part {
-    margin-left: 7.5% !important;
-    width: 85% !important;
-    height: auto !important;
-    position: static;
+    // margin-left: 7.5% !important;
+    // width: 85% !important;
+    // height: auto !important;
+    // position: static;
+    display: none !important;
   }
 
   .card-clinic-preview {

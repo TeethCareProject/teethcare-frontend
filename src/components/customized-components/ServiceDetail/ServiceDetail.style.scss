@@ -1,0 +1,75 @@
+@media (min-width: 481px) and (max-width: 767px) {
+  .service-detail-page {
+    display: flex;
+    justify-content: center;
+
+    .service-detail-container {
+      width: 80%;
+      flex-direction: column;
+      align-items: center;
+
+      .service-image-container {
+        img {
+          width: 100% !important;
+          margin-right: 0px !important;
+        }
+      }
+    }
+
+    .service-image-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .service-content-container {
+      width: 100% !important;
+      margin-left: 0px !important;
+    }
+
+    .service-clinic-info {
+      height: 200px !important;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .service-detail-page {
+    display: flex;
+    justify-content: center;
+
+    .service-detail-container {
+      width: 80%;
+      flex-direction: column;
+      align-items: center;
+
+      .service-image-container {
+        img {
+          width: 100% !important;
+          margin-right: 0px !important;
+        }
+      }
+    }
+
+    .service-image-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .service-content-container {
+      width: 100% !important;
+      margin-left: 0px !important;
+    }
+
+    .service-clinic-info {
+      height: 100px !important;
+
+      .service-clinic-location {
+        display: none !important;
+      }
+
+      .service-clinic-rating {
+        display: none !important;
+      }
+    }
+  }
+}

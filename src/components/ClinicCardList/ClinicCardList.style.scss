@@ -42,4 +42,12 @@
   font-size: 1.2em;
   font-weight: 600;
   color: black;
+
+  .ant-card-meta-description {
+    display: -webkit-box;
+    max-width: 80%;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }

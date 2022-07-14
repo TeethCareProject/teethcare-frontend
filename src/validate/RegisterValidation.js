@@ -57,7 +57,20 @@ export const ClinicRegisterValidation = {
       },
     }),
   ],
-  operatingTimeMorning: [REQUIRED_VALIDATOR("Morning operating time")],
+  operatingTimeMorning: [
+    REQUIRED_VALIDATOR("Morning operating time"),
+    ({ getFieldValue }) => ({
+      validator(_, value) {
+        if (
+          !value ||
+          !checkTimeOverlapped(getFieldValue("operatingTimeEvening"), value)
+        )
+          return Promise.resolve();
+
+        return Promise.reject(new Error("Two time mustn't be overlapped!"));
+      },
+    }),
+  ],
   operatingTimeEvening: [
     REQUIRED_VALIDATOR("Evening operating time"),
     ({ getFieldValue }) => ({

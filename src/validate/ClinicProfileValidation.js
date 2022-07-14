@@ -16,4 +16,7 @@ export const ClinicProfileValidation = {
   district: [REQUIRED_VALIDATOR("District")],
   ward: [REQUIRED_VALIDATOR("Ward")],
   phone: [REQUIRED_VALIDATOR("Phone number")],
+  bookingGap: [REQUIRED_VALIDATOR("Booking gap")],
+  facebookPageId: [REQUIRED_VALIDATOR("Facebook page ID")],
+  expiredDay: [REQUIRED_VALIDATOR("Expired booking day")],
 };

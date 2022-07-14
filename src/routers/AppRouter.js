@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import NavigationBar from "../components/commons/NavigationBar/NavigationBar.component";
+import NavigationBarContainer from "../containers/NavigationBar/NavigationBar.container";
 import { Redirect, Route, Switch } from "react-router-dom";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
@@ -79,7 +79,7 @@ const AppRouter = () => {
 
   return (
     <>
-      <NavigationBar />
+      <NavigationBarContainer location={location.pathname} />
       <MobileMenuBar title="Teethcare" location={location.pathname} />
       <Switch>
         <Route path={RoutePath.INTERNAL_ERROR_PAGE} exact>

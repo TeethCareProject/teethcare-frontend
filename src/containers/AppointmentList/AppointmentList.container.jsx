@@ -113,30 +113,54 @@ const AppointmentListContainer = () => {
   );
 };
 
-const SearchForm = ({ resetAction, ...antdProps }) => {
+const SearchForm = ({ resetAction, form, ...antdProps }) => {
   return (
-    <Form layout="vertical" {...antdProps}>
+    <Form form={form} layout="vertical" {...antdProps}>
       <Row gutter={[16, 16]} align="bottom">
-        <Col xs={9} sm={9} md={9} lg={8}>
+        <Col xs={24} sm={24} md={9} lg={8}>
           <Form.Item name="appointmentId" label="Search appointment Id">
             <Input placeholder="Search by appointment Id" />
           </Form.Item>
         </Col>
-        <Col xs={9} sm={9} md={9} lg={8}>
+        <Col
+          className="search-name-appointment-list"
+          xs={24}
+          sm={24}
+          md={9}
+          lg={8}
+        >
           <Form.Item name="clinicName" label="Search clinic name">
             <Input placeholder="Search by Clinic name" />
           </Form.Item>
         </Col>
-        <Col xs={3} sm={3} md={3} lg={2}>
+        <Col xs={24} sm={12} md={3} lg={2}>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Search
-            </Button>
+            <div
+              className="search-btn-appointment"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "-40px",
+              }}
+            >
+              <Button type="primary" htmlType="submit">
+                Search
+              </Button>
+            </div>
           </Form.Item>
         </Col>
-        <Col xs={0} sm={3} md={3} lg={3}>
+        <Col xs={0} sm={12} md={2} lg={2}>
           <Form.Item>
-            <Button onClick={resetAction}>Reset</Button>
+            <div
+              className="reset-btn-booking"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "-40px",
+              }}
+            >
+              <Button onClick={() => resetAction()}>Reset</Button>
+            </div>
           </Form.Item>
         </Col>
       </Row>
