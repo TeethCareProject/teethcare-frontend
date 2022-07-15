@@ -14,6 +14,7 @@ const PatientActionButtonGroupComponent = ({
   handleAssign,
   handleGiveFeedback,
 }) => {
+  console.log(bookingData?.status);
   return (
     <>
       <div style={{ background: "white", padding: "16px" }}>
@@ -26,17 +27,24 @@ const PatientActionButtonGroupComponent = ({
         />
       </div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <Space>
-          <Typography>Give your feedback for this clinic!!</Typography>
-          <Button
-            type="primary"
-            onClick={() => {
-              handleGiveFeedback(bookingId);
-            }}
-          >
-            Give feedback
-          </Button>
-        </Space>
+        {bookingData &&
+        bookingData?.status !==
+          BookingStatusConstants.DONE ? null : bookingData &&
+          bookingData?.feedbackResponse ? (
+          <Typography>You already gave feedback</Typography>
+        ) : (
+          <Space>
+            <Typography>Give your feedback for this clinic!!</Typography>
+            <Button
+              type="primary"
+              onClick={() => {
+                handleGiveFeedback(bookingId);
+              }}
+            >
+              Give feedback
+            </Button>
+          </Space>
+        )}
         {bookingData &&
         convertMomentToMilliseconds(moment()) - bookingData?.createBookingTime <
           120 * 1000 &&
