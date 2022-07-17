@@ -105,7 +105,6 @@ const ClinicProfileFormContainer = () => {
 
   const handleUpdateProfile = async (values) => {
     try {
-      console.log(values.operatingTimeMorning[0].valueOf());
       await updateClinic({
         clinicAddress: values.clinicAddress,
         description: values.description,

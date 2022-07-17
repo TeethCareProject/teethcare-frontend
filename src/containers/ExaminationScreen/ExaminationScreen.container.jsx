@@ -42,7 +42,7 @@ const ExaminationScreenContainer = () => {
 
   return (
     <>
-      <Row style={{ marginLeft: 20 }}>
+      <Row style={{ marginLeft: 20, marginTop: 20 }}>
         {showInfo ? (
           <Alert
             message="Waiting for confirm updated..."

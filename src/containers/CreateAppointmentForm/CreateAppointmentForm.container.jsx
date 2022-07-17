@@ -78,7 +78,8 @@ const CreateAppointmentFormContainer = ({ bookingId, bookingData }) => {
       />
       {bookingData &&
       bookingData?.confirmed &&
-      bookingData?.status === BookingStatusConstants.TREATMENT ? (
+      bookingData?.status === BookingStatusConstants.TREATMENT &&
+      nextBooking ? (
         <PageHeader
           ghost={false}
           title="Next examination:"

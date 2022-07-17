@@ -46,6 +46,7 @@ const DentistBookingDetailComponent = ({ booking, returnToDashboard }) => {
         }}
       >
         <Typography.Title level={4}>Booking details:</Typography.Title>
+        <div>Booking id: {booking?.id}</div>
         <div>Examination Time: {examinationTime}</div>
         <div>Current Services: </div>
         <List

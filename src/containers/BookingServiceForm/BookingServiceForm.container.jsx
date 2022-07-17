@@ -44,7 +44,7 @@ const BookingServiceFormContainer = () => {
             convertMomentToMilliseconds(values.desiredCheckingDate) +
             values.desiredHour * 60 * 60 * 1000,
           description: values.description,
-          voucherCode: values.voucherCode,
+          voucherCode: values.voucherCode ? values.voucherCode : null,
         });
         history.push(RoutePath.BOOKING_SUCCESSFUL_PAGE);
       } catch (e) {
