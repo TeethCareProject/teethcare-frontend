@@ -40,6 +40,8 @@ const NotificationContainer = () => {
       getNotificationList({
         size: pageSize * (currentPage + 1),
         page: 0,
+        sortBy: "time",
+        sortDir: "desc",
       })
     );
   };
