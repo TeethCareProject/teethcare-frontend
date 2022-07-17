@@ -4,7 +4,6 @@ import {
 } from "../utils/convert.utils";
 
 const ClinicOperatingTimeMapper = (clinicData) => {
-  console.log(clinicData);
   return {
     startTimeShiftHour1: convertMillisecondsToHour(clinicData?.startTimeShift1),
     startTimeShiftMinute1:
