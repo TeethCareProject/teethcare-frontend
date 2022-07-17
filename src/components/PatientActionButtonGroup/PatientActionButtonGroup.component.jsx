@@ -15,6 +15,7 @@ const PatientActionButtonGroupComponent = ({
   handleAssign,
   handleGiveFeedback,
 }) => {
+  console.log(bookingData?.status);
   return (
     <>
       <div style={{ background: "white", padding: "16px" }}>
