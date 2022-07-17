@@ -8,7 +8,6 @@ const confirmBookingNotificationHandler = (notificationData, role) => {
       description: notificationData.body,
     });
     if (role === "DENTIST") {
-      console.log("a");
       window.location.reload();
     }
   } else {

@@ -17,7 +17,6 @@ const FeedbackFormContainer = ({
         duration: 2,
       });
     } catch (e) {
-      console.log(e);
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
         description: `There is problem while giving feedback, try again later`,
