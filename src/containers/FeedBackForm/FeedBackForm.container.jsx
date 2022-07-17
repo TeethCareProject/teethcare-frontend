@@ -12,7 +12,12 @@ const FeedbackFormContainer = ({
       await giveFeedBack(bookingId, values.detail, values.ratingScore);
       Modal.destroyAll();
       await fetchBookingData();
+      notification["success"]({
+        message: `Feedback successfully!`,
+        duration: 2,
+      });
     } catch (e) {
+      console.log(e);
       notification["error"]({
         message: `Something went wrong! Try again latter!`,
         description: `There is problem while giving feedback, try again later`,

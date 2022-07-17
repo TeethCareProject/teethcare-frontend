@@ -7,8 +7,13 @@ import { CallAPI } from "./axiosBase";
 export const addFcmToken = (fcmToken) =>
   CallAPI(`${ADD_TOKEN_END_POINT}`, "POST", { fcmToken: fcmToken });
 
-export const getNotifications = ({ page, size }) =>
-  CallAPI(`${NOTIFICATION_END_POINT}`, "GET", {}, { page, size });
+export const getNotifications = ({ page, size, sortBy, sortDir }) =>
+  CallAPI(
+    `${NOTIFICATION_END_POINT}`,
+    "GET",
+    {},
+    { page, size, sortBy, sortDir }
+  );
 
 export const markNotificationAsRead = (notificationId) =>
   CallAPI(`${NOTIFICATION_END_POINT}/${notificationId}/read`, "PUT");

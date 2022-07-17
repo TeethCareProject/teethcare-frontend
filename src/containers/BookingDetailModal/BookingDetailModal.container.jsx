@@ -114,6 +114,7 @@ const BookingDetailModalContainer = ({ bookingId, setNeededBooking }) => {
           bookingData={bookingData}
           disabled={disabled}
           handleAssign={handleAssign}
+          fetchBookingData={fetchBookingData}
         />
       ) : null}
       {bookingId && role === RoleConstant.CUSTOMER_SERVICE && !isUpdated ? (

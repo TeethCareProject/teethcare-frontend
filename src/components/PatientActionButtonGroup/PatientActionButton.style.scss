@@ -1,0 +1,15 @@
+@media (max-width: 768px) {
+  .patient-button {
+    display: block !important;
+
+    .cancel-btn-container {
+      display: flex !important;
+      justify-content: center;
+
+      .cancel-btn {
+        margin-left: 0 !important;
+        margin-top: 20px;
+      }
+    }
+  }
+}
