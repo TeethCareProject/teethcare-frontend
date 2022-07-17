@@ -111,9 +111,23 @@ const BookingListContainer = () => {
           bookingId={neededBooking}
           setNeededBooking={setNeededBooking}
         />
+        <div
+          className="booking-list-pagination-mobile"
+          style={{ marginTop: "1rem" }}
+        >
+          <Pagination
+            total={totalElements}
+            current={currentPage}
+            pageSize={pageSize}
+            onChange={(page) => {
+              setCurrentPage(page);
+            }}
+          />
+        </div>
         <BookingListComponent bookingListData={bookingListData} />
         <div style={{ marginTop: "1rem" }}>
           <Pagination
+            className="booking-list-pagination"
             total={totalElements}
             current={currentPage}
             pageSize={pageSize}

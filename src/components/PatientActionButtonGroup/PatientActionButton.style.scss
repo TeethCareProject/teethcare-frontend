@@ -1,3 +1,7 @@
+.booking-list-pagination-mobile {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .patient-button {
     display: block !important;
@@ -11,5 +15,15 @@
         margin-top: 20px;
       }
     }
+  }
+
+  .booking-list-pagination-mobile {
+    display: block;
+    margin-top: 0px !important;
+    margin-bottom: 10px;
+  }
+
+  .booking-list-pagination {
+    display: none;
   }
 }
