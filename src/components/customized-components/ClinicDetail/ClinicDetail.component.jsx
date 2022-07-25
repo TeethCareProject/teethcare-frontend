@@ -12,6 +12,7 @@ import FeedbackPreviewComponent from "../FeedbackPreview/FeedbackPreview.compone
 import { getClinicOperatingTime } from "../../../utils/convert.utils";
 
 const ClinicDetailComponent = ({ clinicData, feedback }) => {
+  console.log(feedback)
   const { Meta } = Card;
   return (
     <>
