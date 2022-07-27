@@ -28,9 +28,6 @@ const DentistBookingDetailComponent = ({ booking, returnToDashboard }) => {
               </span>
             </div>
             <div>
-              Date of birth: <span>{booking?.patient?.dateOfBirth}</span>
-            </div>
-            <div>
               Gender: <span>{booking?.patient?.gender}</span>
             </div>
           </Col>

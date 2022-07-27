@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, DatePicker, Button, Input, Typography } from "antd";
 import moment from "moment";
-import { getDisabledTime } from "../../utils/convert.utils";
+import { convertMillisecondsToHour, getDisabledTime } from "../../utils/convert.utils";
 import { useSelector } from "react-redux";
 import { CreateAppointmentFormValidation } from "../../validate/CreateAppointmentFormValidation";
 import ClinicOperatingTimeMapper from "../../mapper/ClinicOperatingTimeMapper";
@@ -16,9 +16,43 @@ const CreateAppointmentFormComponent = ({
   const { TextArea } = Input;
   const clinic = useSelector((state) => state?.authentication?.user?.clinic);
 
-  const disabledDateTime = () => ({
-    disabledHours: () => getDisabledTime(ClinicOperatingTimeMapper(clinic)),
-  });
+  const disabledDateTime = (date) => {
+    const clinicWorkingTimes = {
+      clinicShift1: {
+        startTime: clinic?.startTimeShift1,
+        endTime: clinic?.endTimeShift1,
+      },
+      clinicShift2: {
+        startTime: clinic?.startTimeShift2,
+        endTime: clinic?.endTimeShift2,
+      },
+    };
+    return {
+      disabledHours: () => getDisabledTime(ClinicOperatingTimeMapper(clinic)),
+      disabledMinutes: () => {
+        if (date == null) return;
+        for (const shiftName in clinicWorkingTimes) {
+          const shift = clinicWorkingTimes[shiftName];
+          if (date.hour() == convertMillisecondsToHour(shift.startTime)) {
+            const calculatedMinute = Math.floor(
+              (shift.startTime % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const minutesArr = [];
+            for (let i = 0; i <= calculatedMinute; i++) minutesArr.push(i);
+            return minutesArr;
+          }
+          if (date.hour() == convertMillisecondsToHour(shift.endTime)) {
+            const calculatedMinute = Math.floor(
+              (shift.endTime % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const minutesArr = [];
+            for (let i = calculatedMinute; i <= 59; i++) minutesArr.push(i);
+            return minutesArr;
+          }
+        }
+      },
+    };
+  };
 
   return (
     <>
@@ -40,14 +74,16 @@ const CreateAppointmentFormComponent = ({
           rules={CreateAppointmentFormValidation.appointmentDate}
         >
           <DatePicker
-            showTime={{ format: "HH" }}
-            format={`${dateFormat}:00`}
-            disabledDate={(current) => {
-              let customDate = moment().format("DD-MM-YYYY HH");
-              return current && current < moment(customDate, "DD-MM-YYYY HH");
-            }}
-            disabledTime={disabledDateTime}
-          />
+              showTime
+              placeholder="Select Time"
+              style={{ marginLeft: 10 }}
+              disabledTime={disabledDateTime}
+              disabledDate={(current) => {
+                let customDate = moment().format("DD-MM-YYYY");
+                return current && current < moment(customDate, "DD-MM-YYYY");
+              }}
+              format="YYYY-MM-DD HH:mm"
+            />
         </Form.Item>
         <div
           style={{

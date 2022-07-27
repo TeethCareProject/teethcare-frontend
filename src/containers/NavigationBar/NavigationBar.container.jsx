@@ -13,6 +13,7 @@ const NavigationBarContainer = ({ location }) => {
   const userName = useSelector(
     (state) =>
       state?.authentication?.user?.firstName +
+      " " +
       state?.authentication?.user?.lastName
   );
 
@@ -44,6 +45,9 @@ const NavigationBarContainer = ({ location }) => {
         break;
       case "Dashboard":
         history.push(RoutePath.DASHBOARD_PAGE);
+        break;
+      case "Register":
+        history.push(RoutePath.REGISTER_PARE);
         break;
       default:
         break;
