@@ -20,7 +20,6 @@ function getItem(label, key, icon, onClick) {
 export const navigationList = [
   getItem("Dashboard", "sub1", <MailOutlined />),
   getItem("Booking management", "sub2", <AppstoreOutlined />),
-  getItem("My clinic", "sub3", <SettingOutlined />),
   getItem("My clinic Feedback", "sub4", <SettingOutlined />),
   getItem("My clinic Feedback report", "sub6", <SettingOutlined />),
   getItem("My clinic services", "sub5", <SettingOutlined />),
@@ -29,7 +28,6 @@ export const navigationList = [
 export const elementList = [
   <div>Dashboard element</div>,
   <BookingManagementTableContainer />,
-  <div>My clinic</div>,
   <div style={{ width: "80%" }}>
     <FeedbackListContainer />
   </div>,

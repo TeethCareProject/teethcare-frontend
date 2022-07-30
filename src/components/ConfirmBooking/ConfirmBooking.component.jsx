@@ -105,7 +105,10 @@ const ConfirmBookingComponent = ({
             />
             {bookingData?.voucher ? (
               <span>
-                {bookingData?.voucher.name + " - " + bookingData?.voucher.price}
+                {bookingData?.voucher.voucherCode +
+                  " (Discount: " +
+                  bookingData?.voucher.discountValue +
+                  " VND)"}
               </span>
             ) : (
               "N/A"

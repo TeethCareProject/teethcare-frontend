@@ -27,7 +27,7 @@ const DentistBookingDetailComponent = ({ booking, returnToDashboard }) => {
                 {booking?.patient?.firstName + " " + booking?.patient?.lastName}
               </span>
             </div>
-            <div>
+          <div>
               Gender: <span>{booking?.patient?.gender}</span>
             </div>
           </Col>
