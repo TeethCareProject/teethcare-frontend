@@ -1,35 +1,29 @@
 import React from "react";
-import { Comment, Tooltip, Avatar } from "antd";
-import moment from "moment";
+import { Comment, Avatar, Rate } from "antd";
+import "./FeedbackPreview.style.scss";
 
 const FeedbackPreviewComponent = ({ feedbacks }) => {
-  return feedbacks?.map((feedback, index) => (
-    <Comment
-      key={index}
-      author={
-        <a>
-          {`${
-            feedback?.patientResponse?.firstName +
-            " " +
-            feedback?.patientResponse?.lastName
-          }`}
-        </a>
-      }
-      avatar={<Avatar src={feedback?.patientResponse?.avatarImage} />}
-      content={
-        <p>
-          We supply a series of design principles, practical patterns and high
-          quality design resources (Sketch and Axure), to help people create
-          their product prototypes beautifully and efficiently.
-        </p>
-      }
-      datetime={
-        <Tooltip title={moment().format("YYYY-MM-DD HH:mm:ss")}>
-          <span>{moment().fromNow()}</span>
-        </Tooltip>
-      }
-    />
-  ));
+  return feedbacks
+    ?.filter((feedback) => feedback.status === "ACTIVE")
+    .map((feedback, index) => (
+      <Comment
+        key={index}
+        author={
+          <span>
+            {`${
+              feedback?.bookingResponse?.patient?.firstName +
+              " " +
+              feedback?.bookingResponse?.patient?.lastName
+            }`}
+          </span>
+        }
+        avatar={
+          <Avatar src={feedback?.bookingResponse?.patient?.avatarImage} />
+        }
+        content={<p>{feedback?.detail}</p>}
+        datetime={<Rate disabled value={feedback?.ratingScore} />}
+      />
+    ));
 };
 
 export default FeedbackPreviewComponent;

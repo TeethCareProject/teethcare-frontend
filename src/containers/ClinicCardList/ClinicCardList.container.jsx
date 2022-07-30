@@ -132,12 +132,12 @@ const ClinicCardListContainer = () => {
     try {
       let data;
       if (!options) {
-        data = (await getClinics({ pageSize: null })).data;
+        data = (await getClinics({ pageSize: null, status: "ACTIVE" })).data;
       } else {
-        data = (await getClinics({ ...options })).data;
+        data = (await getClinics({ ...options, status: "ACTIVE" })).data;
       }
 
-      const mapperClinicData = data?.content?.map((clinic) => ({
+      const mapperClinicData = data?.content.map((clinic) => ({
         ...clinic,
         onClick: () => handleClick(clinic?.id),
       }));

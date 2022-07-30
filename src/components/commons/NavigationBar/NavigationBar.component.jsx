@@ -63,6 +63,9 @@ const NavigationBarComponent = ({
             <div className="nav-element" onClick={(e) => onClick(e)}>
               Login
             </div>
+            <div className="nav-element" onClick={(e) => onClick(e)}>
+              Register
+            </div>
           </div>
         )}
       </Space>

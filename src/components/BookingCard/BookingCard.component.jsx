@@ -71,39 +71,43 @@ const BookingCardComponent = ({ booking }) => {
           </div>
           <div>
             <Typography.Title level={4}>Next examination</Typography.Title>
-            <Row style={{ display: "flex", justifyContent: "space-between" }}>
+            <Row
+              style={{
+                width: "80%",
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
               {booking
                 ?.filter((bookingElement, index) => index > 0 && index < 4)
                 .map((bookingElement) => (
-                  <Col span={2}>
-                    <Card
-                      style={{ width: 250 }}
-                      cover={
-                        <img
-                          style={{ height: 250 }}
-                          alt="example"
-                          src="http://australiandentalclinic.vn/wp-content/uploads/2017/02/teeth-whitening-sample1.jpg"
-                        />
-                      }
-                    >
-                      <Meta
-                        title={
-                          bookingElement?.patient?.firstName +
-                          " " +
-                          bookingElement?.patient?.lastName
-                        }
-                        description={convertMillisecondsToDate(
-                          bookingElement?.examinationTime
-                        )}
+                  <Card
+                    style={{ width: 250 }}
+                    cover={
+                      <img
+                        style={{ height: 250 }}
+                        alt="example"
+                        src="http://australiandentalclinic.vn/wp-content/uploads/2017/02/teeth-whitening-sample1.jpg"
                       />
-                      <Button
-                        type="link"
-                        onClick={() => bookingElement?.onClick()}
-                      >
-                        View detail
-                      </Button>
-                    </Card>
-                  </Col>
+                    }
+                  >
+                    <Meta
+                      title={
+                        bookingElement?.patient?.firstName +
+                        " " +
+                        bookingElement?.patient?.lastName
+                      }
+                      description={convertMillisecondsToDate(
+                        bookingElement?.examinationTime
+                      )}
+                    />
+                    <Button
+                      type="link"
+                      onClick={() => bookingElement?.onClick()}
+                    >
+                      View detail
+                    </Button>
+                  </Card>
                 ))}
             </Row>
           </div>

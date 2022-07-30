@@ -29,7 +29,9 @@ const CSActionButtonGroupComponent = ({
       </Space>
       {bookingData?.confirmed &&
       bookingData?.status === BookingStatusConstants.TREATMENT ? (
-        <Button onClick={() => checkOutHandler()}>Checkout</Button>
+        <Button style={{ marginTop: 20 }} onClick={() => checkOutHandler()}>
+          Checkout
+        </Button>
       ) : null}
     </>
   );

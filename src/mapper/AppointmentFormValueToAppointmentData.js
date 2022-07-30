@@ -1,11 +1,15 @@
-import { convertDateToMilliseconds } from "../utils/convert.utils";
+import { convertMomentToMilliseconds } from "../utils/convert.utils";
 
 const AppointmentFormValueToAppointmentData = (values) => {
   return {
     preBookingId: values.preBookingId,
-    appointmentDate: convertDateToMilliseconds(values.appointmentDate),
+    appointmentDate:
+      convertMomentToMilliseconds(values.appointmentDate) +
+      values.desiredHour * 60 * 60 * 1000,
     expirationAppointmentDate:
-      convertDateToMilliseconds(values.appointmentDate) + 7 * 24 * 3600 * 1000,
+      convertMomentToMilliseconds(values.appointmentDate) +
+      values.desiredHour * 60 * 60 * 1000 +
+      7 * 24 * 3600 * 1000,
     note: values.note,
   };
 };

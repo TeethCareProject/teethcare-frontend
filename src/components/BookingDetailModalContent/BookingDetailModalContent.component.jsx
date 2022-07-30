@@ -69,6 +69,20 @@ const BookingDetailModalContentComponent = ({ bookingData }) => {
           </List.Item>
         )}
       />
+      <div>
+        Voucher: {`${" "}`}
+        <span>
+          {bookingData?.voucher
+            ? `${bookingData?.voucher?.voucherCode} (Discount: ${bookingData?.voucher?.discountValue}VND)`
+            : null}
+        </span>
+      </div>
+      <div>
+        <span style={{ fontWeight: 500 }}>Total: {`${" "}`}</span>
+        <span>
+          {bookingData?.finalPrice ? `${bookingData?.finalPrice} VND` : null}
+        </span>
+      </div>
     </>
   );
 };

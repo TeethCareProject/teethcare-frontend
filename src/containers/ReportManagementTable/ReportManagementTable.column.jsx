@@ -33,10 +33,8 @@ const ReportManagementTableColumn = [
       let color = "green";
 
       //TODO:check this again with backend for real status
-      if (status === "INACTIVE") {
+      if (status === "REJECTED") {
         color = "volcano";
-      } else if (status === "PENDING") {
-        color = "geekblue";
       }
 
       return (
