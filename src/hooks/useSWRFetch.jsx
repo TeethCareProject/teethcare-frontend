@@ -14,6 +14,7 @@ export const useSWRFetch = (
       CallAPI(endpoint, "GET", {}, params, configHeaders, responseType),
     {
       refreshInterval: refreshInterval,
+      revalidateOnMount: true,
     }
   );
 

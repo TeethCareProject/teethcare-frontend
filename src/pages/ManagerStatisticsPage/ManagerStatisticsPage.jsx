@@ -15,7 +15,7 @@ const ManagerStatisticsPage = () => {
     (state) => state?.authentication?.user?.clinic?.id
   );
 
-  const [dateRange, setDateRange] = useState([moment.now(), moment.now()]);
+  const [dateRange, setDateRange] = useState([null, null]);
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
@@ -24,7 +24,7 @@ const ManagerStatisticsPage = () => {
 
   const { response, isLoading, isError } = useSWRFetch(
     `${CLINIC_END_POINT}/${clinicId}/statistics`,
-    { startDate: dateRange[0].valueOf(), endDate: dateRange[1].valueOf() },
+    { startDate: dateRange[0]?.valueOf(), endDate: dateRange[1]?.valueOf() },
     null,
     null,
     5000
@@ -52,24 +52,24 @@ const ManagerStatisticsPage = () => {
       {
         type: "Failed",
         value: data?.bookingStatisticResponse?.failedBooking,
-        color: "rgba(253,216,14,0.87)",
+        color: "#f34b49",
       },
       {
         type: "Pending",
         value: data?.bookingStatisticResponse?.pendingBooking,
-        color: "#f34b49",
+        color: "#096dd9",
       },
       {
         type: "Processing",
         value: data?.bookingStatisticResponse?.processingBooking,
-        color: "#096dd9",
+        color: "rgba(253,216,14,0.87)",
       },
     ].find((category) => category.type === type).color;
 
   const bookingChartConfig = {
     defaultTitle: "Total booking",
     defaultValue: `${data?.bookingTotal}`,
-    contentSuffix: " Jobfair(s)",
+    contentSuffix: "%",
     color: bookingStatusColorMapping,
     width: 450,
     height: 450,
