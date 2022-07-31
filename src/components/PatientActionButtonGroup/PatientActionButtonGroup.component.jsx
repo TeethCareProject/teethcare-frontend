@@ -30,17 +30,19 @@ const PatientActionButtonGroupComponent = ({
         className="patient-button"
         style={{ display: "flex", justifyContent: "space-between" }}
       >
-        <Space>
-          <Typography>Give your feedback for this clinic!!</Typography>
-          <Button
-            type="primary"
-            onClick={() => {
-              handleGiveFeedback(bookingId);
-            }}
-          >
-            Give feedback
-          </Button>
-        </Space>
+        {bookingData.status === BookingStatusConstants.DONE ? (
+          <Space>
+            <Typography>Give your feedback for this clinic!!</Typography>
+            <Button
+              type="primary"
+              onClick={() => {
+                handleGiveFeedback(bookingId);
+              }}
+            >
+              Give feedback
+            </Button>
+          </Space>
+        ) : null}
         {bookingData &&
         convertMomentToMilliseconds(moment()) - bookingData?.createBookingTime <
           120 * 1000 &&
