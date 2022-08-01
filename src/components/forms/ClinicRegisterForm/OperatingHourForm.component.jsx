@@ -10,7 +10,7 @@ const OperatingHourFormComponent = () => {
         name="operatingTimeMorning"
         label="Morning Time"
         shouldUpdate
-        dependencies={["operatingTimeEvening"]}
+        // dependencies={["operatingTimeEvening"]}
         rules={ClinicRegisterValidation.operatingTimeMorning}
       >
         <TimePicker.RangePicker format="HH:mm" />

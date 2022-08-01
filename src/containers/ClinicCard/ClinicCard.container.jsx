@@ -26,7 +26,8 @@ const ClinicCardContainer = ({ clinicData, layoutDirection }) => {
     try {
       const { data } = await getClinics({
         sortBy: "avgRatingScore",
-        sortDir: "desc"
+        sortDir: "desc",
+        status: "ACTIVE"
       });
 
       const mapperClinicData = data?.content?.map((clinic) => ({
