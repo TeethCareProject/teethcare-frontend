@@ -6,6 +6,7 @@ import {
 import ClinicProfileFormContainer from "../../containers/ClinicProfile/ClinicProfileForm.container";
 import StaffManagementTableContainer from "../../containers/StaffManagementTable/StaffManagementTable.container";
 import VoucherManagementTableContainer from "../../containers/VoucherManagementTable/VoucherManagementTable.container";
+import ManagerStatisticsPage from "../ManagerStatisticsPage/ManagerStatisticsPage";
 
 function getItem(label, key, icon, onClick) {
   return {
@@ -25,7 +26,7 @@ export const navigationList = [
 ];
 
 export const elementList = [
-  <div>Dashboard element</div>,
+  <ManagerStatisticsPage />,
   <StaffManagementTableContainer />,
   <div>Report request</div>,
   <ClinicProfileFormContainer />,
