@@ -9,6 +9,7 @@ const CreateAppointmentFormComponent = ({
   isDisplayed,
   availableHourList,
   handleGetAvailableHourList,
+  bookingData
 }) => {
   const { TextArea } = Input;
 

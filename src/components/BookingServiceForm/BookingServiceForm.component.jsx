@@ -200,10 +200,10 @@ const ServiceCard = ({ serviceData }) => {
               {`Clinic: ${serviceData?.clinicName}`}
             </Typography.Title>
             <Descriptions>
-              <DescriptionsItem label="Service: " span={24}>
+              <DescriptionsItem label="Service " span={24}>
                 {serviceData?.serviceName}
               </DescriptionsItem>
-              <DescriptionsItem label="Price: " span={24}>
+              <DescriptionsItem label="Price " span={24}>
                 {serviceData?.servicePrice}
               </DescriptionsItem>
             </Descriptions>

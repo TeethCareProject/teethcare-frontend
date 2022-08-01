@@ -64,25 +64,24 @@ const BookingDetailModalContentComponent = ({ bookingData }) => {
                   level={5}
                 >{`Service name: ${service.name}`}</Typography.Title>
               }
-              description={`Price: ${service.price}`}
             />
           </List.Item>
         )}
       />
-      <div>
-        Voucher: {`${" "}`}
-        <span>
+      <div style={{marginBottom: 10}}>
+       <span>  Voucher: {`${" "}`}</span>
+        <span >
           {bookingData?.voucher
             ? `${bookingData?.voucher?.voucherCode} (Discount: ${bookingData?.voucher?.discountValue}VND)`
+            : "N/A"}
+        </span>
+        <div>
+        {bookingData?.totalPrice
+            ? `Total price: ${bookingData?.totalPrice}`
             : null}
-        </span>
+        </div>
       </div>
-      <div>
-        <span style={{ fontWeight: 500 }}>Total: {`${" "}`}</span>
-        <span>
-          {bookingData?.finalPrice ? `${bookingData?.finalPrice} VND` : null}
-        </span>
-      </div>
+      
     </>
   );
 };

@@ -87,7 +87,6 @@ const BookingDetailComponent = ({ bookingData }) => {
                       level={5}
                     >{`Service name: ${service.name}`}</Typography.Title>
                   }
-                  description={`Description: ${service.description}`}
                 />
               </List.Item>
             )}

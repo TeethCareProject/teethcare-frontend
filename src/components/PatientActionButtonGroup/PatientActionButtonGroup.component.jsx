@@ -30,7 +30,7 @@ const PatientActionButtonGroupComponent = ({
         className="patient-button"
         style={{ display: "flex", justifyContent: "space-between" }}
       >
-        {bookingData.status === BookingStatusConstants.DONE ? (
+        {bookingData?.status === BookingStatusConstants.DONE ? (
           <Space>
             <Typography>Give your feedback for this clinic!!</Typography>
             <Button
@@ -46,8 +46,8 @@ const PatientActionButtonGroupComponent = ({
         {bookingData &&
         convertMomentToMilliseconds(moment()) - bookingData?.createBookingTime <
           120 * 1000 &&
-        (bookingData.status === BookingStatusConstants.PENDING ||
-          bookingData.status === BookingStatusConstants.REQUEST) ? (
+        (bookingData?.status === BookingStatusConstants.PENDING ||
+          bookingData?.status === BookingStatusConstants.REQUEST) ? (
           <div className="cancel-btn-container">
             <Tooltip title="You can not cancel booking after 120s since created ">
               <Button

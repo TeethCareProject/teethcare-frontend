@@ -1,5 +1,6 @@
 import { Space, Tag, Button } from "antd";
 import voucherStatusConstants from "../../constants/VoucherStatusConstants";
+import { convertMillisecondsToDate } from "../../utils/convert.utils";
 
 const VoucherManagementTableColumn = [
   {
@@ -28,7 +29,7 @@ const VoucherManagementTableColumn = [
     dataIndex: "expiredTime",
     key: "expiredTime",
     render: (_, record) => (
-      <p>{record?.expiredTime ? record?.expiredTime : "N/A"}</p>
+      <p>{record?.expiredTime ? convertMillisecondsToDate(record?.expiredTime) : "N/A"}</p>
     ),
   },
   {
