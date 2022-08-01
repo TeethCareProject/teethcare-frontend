@@ -22,10 +22,18 @@ const AppointmentListComponent = ({ appointmentListData }) => {
                   <span style={{ color: "red", fontWeight: "500" }}>
                     {appointment.appointmentDate <
                     convertMomentToMilliseconds(moment()) ? (
-                      <span>{`(${countDayBetween(
-                        moment(),
-                        appointment.expireAppointmentDate
-                      )} day left until expired)`}</span>
+                      <span>
+                        {appointment?.expireAppointmentDate -
+                          convertMomentToMilliseconds(moment()) >
+                        0 ? (
+                          <span>{`(${countDayBetween(
+                            moment(),
+                            appointment.expireAppointmentDate
+                          )} day left until expired)`}</span>
+                        ) : (
+                          "EXPIRED"
+                        )}
+                      </span>
                     ) : (
                       <span>
                         {`(${countDayBetween(
@@ -61,10 +69,17 @@ const AppointmentListComponent = ({ appointmentListData }) => {
                     <span style={{ color: "red", fontWeight: "500" }}>
                       {appointment.appointmentDate <
                       convertMomentToMilliseconds(moment()) ? (
-                        <span>{`(${countDayBetween(
-                          moment(),
-                          appointment.expireAppointmentDate
-                        )} day left until expired)`}</span>
+                        <span>
+                          {appointment?.expireAppointmentDate >
+                          convertMomentToMilliseconds(moment()) ? (
+                            <span>{`(${countDayBetween(
+                              moment(),
+                              appointment.expireAppointmentDate
+                            )} day left until expired)`}</span>
+                          ) : (
+                            <span>Expired</span>
+                          )}
+                        </span>
                       ) : (
                         <span>{`(${countDayBetween(
                           moment(),

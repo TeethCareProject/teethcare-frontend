@@ -10,7 +10,7 @@ const ClinicOperatingTimeMapper = (clinicData) => {
       convertMillisecondsToMinutes(
         clinicData?.startTimeShift1 % (60 * 60 * 1000)
       ) === 0
-        ? ":00"
+        ? "00"
         : convertMillisecondsToMinutes(
             clinicData?.startTimeShift1 % (60 * 60 * 1000)
           ),
@@ -19,7 +19,7 @@ const ClinicOperatingTimeMapper = (clinicData) => {
       convertMillisecondsToMinutes(
         clinicData?.endTimeShift1 % (60 * 60 * 1000)
       ) === 0
-        ? ":00"
+        ? "00"
         : convertMillisecondsToMinutes(
             clinicData?.endTimeShift1 % (60 * 60 * 1000)
           ),

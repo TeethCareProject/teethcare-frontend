@@ -15,7 +15,6 @@ const PatientActionButtonGroupComponent = ({
   handleAssign,
   handleGiveFeedback,
 }) => {
-  console.log(bookingData?.status);
   return (
     <>
       <div style={{ background: "white", padding: "16px" }}>
@@ -31,22 +30,24 @@ const PatientActionButtonGroupComponent = ({
         className="patient-button"
         style={{ display: "flex", justifyContent: "space-between" }}
       >
-        <Space>
-          <Typography>Give your feedback for this clinic!!</Typography>
-          <Button
-            type="primary"
-            onClick={() => {
-              handleGiveFeedback(bookingId);
-            }}
-          >
-            Give feedback
-          </Button>
-        </Space>
+        {bookingData?.status === BookingStatusConstants.DONE ? (
+          <Space>
+            <Typography>Give your feedback for this clinic!!</Typography>
+            <Button
+              type="primary"
+              onClick={() => {
+                handleGiveFeedback(bookingId);
+              }}
+            >
+              Give feedback
+            </Button>
+          </Space>
+        ) : null}
         {bookingData &&
         convertMomentToMilliseconds(moment()) - bookingData?.createBookingTime <
           120 * 1000 &&
-        (bookingData.status === BookingStatusConstants.PENDING ||
-          bookingData.status === BookingStatusConstants.REQUEST) ? (
+        (bookingData?.status === BookingStatusConstants.PENDING ||
+          bookingData?.status === BookingStatusConstants.REQUEST) ? (
           <div className="cancel-btn-container">
             <Tooltip title="You can not cancel booking after 120s since created ">
               <Button

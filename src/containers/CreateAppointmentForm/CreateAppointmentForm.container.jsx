@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CreateAppointmentFormComponent from "../../components/CreateAppointmentForm/CreateAppointmentForm.component";
+import { useSelector } from "react-redux";
 import { createAppointments } from "../../services/teeth-apis/AppointmentController";
+import { getAvailableTime } from "../../services/teeth-apis/BookingController";
 import AppointmentFormValueToAppointmentData from "../../mapper/AppointmentFormValueToAppointmentData";
 import { getAllBooking } from "../../services/teeth-apis/BookingController";
 import { notification, Form, PageHeader, Descriptions, Col } from "antd";
@@ -14,9 +16,14 @@ const CreateAppointmentFormContainer = ({ bookingId, bookingData }) => {
   const [form] = Form.useForm();
   const [isDisplayed, setIsDisplayed] = useState(false);
   const [bookingArray, setBookingArray] = useState();
+  const [availableHourList, setAvailableHourList] = useState([]);
 
   const index = bookingArray ? 0 : -1;
   const nextBooking = bookingArray ? bookingArray[0] : null;
+
+  const clinicId = useSelector(
+    (state) => state.authentication.user?.clinic?.id
+  );
 
   const onFinish = async (values) => {
     try {
@@ -64,6 +71,26 @@ const CreateAppointmentFormContainer = ({ bookingId, bookingData }) => {
     }
   };
 
+  const handleGetAvailableHourList = async () => {
+    try {
+      const { data } = await getAvailableTime(
+        clinicId,
+        form
+          ?.getFieldValue("appointmentDate")
+          ?.set({ hour: 0, minute: 0, second: 0, millisecond: 0 })
+          ?.valueOf()
+      );
+
+      setAvailableHourList(data?.availableTimeList);
+    } catch (e) {
+      notification["error"]({
+        message: `Something went wrong! Try again latter!`,
+        description: `There is problem while fetching available hours, try again later`,
+        duration: 2,
+      });
+    }
+  };
+
   useEffect(() => {
     fetchBookingArray();
   }, [bookingId]);
@@ -75,6 +102,8 @@ const CreateAppointmentFormContainer = ({ bookingId, bookingData }) => {
         onFinish={onFinish}
         goToNextExamination={goToNextExamination}
         isDisplayed={isDisplayed}
+        availableHourList={availableHourList}
+        handleGetAvailableHourList={handleGetAvailableHourList}
       />
       {bookingData &&
       bookingData?.confirmed &&

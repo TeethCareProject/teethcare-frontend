@@ -1,24 +1,17 @@
 import React from "react";
-import { Form, DatePicker, Button, Input, Typography } from "antd";
+import { Form, DatePicker, Button, Input, Typography, Radio } from "antd";
 import moment from "moment";
-import { getDisabledTime } from "../../utils/convert.utils";
-import { useSelector } from "react-redux";
 import { CreateAppointmentFormValidation } from "../../validate/CreateAppointmentFormValidation";
-import ClinicOperatingTimeMapper from "../../mapper/ClinicOperatingTimeMapper";
-
 const CreateAppointmentFormComponent = ({
   onFinish,
   goToNextExamination,
   form,
   isDisplayed,
+  availableHourList,
+  handleGetAvailableHourList,
+  bookingData
 }) => {
-  const dateFormat = "DD-MM-YYYY HH";
   const { TextArea } = Input;
-  const clinic = useSelector((state) => state?.authentication?.user?.clinic);
-
-  const disabledDateTime = () => ({
-    disabledHours: () => getDisabledTime(ClinicOperatingTimeMapper(clinic)),
-  });
 
   return (
     <>
@@ -40,15 +33,32 @@ const CreateAppointmentFormComponent = ({
           rules={CreateAppointmentFormValidation.appointmentDate}
         >
           <DatePicker
-            showTime={{ format: "HH" }}
-            format={`${dateFormat}:00`}
             disabledDate={(current) => {
-              let customDate = moment().format("DD-MM-YYYY HH");
-              return current && current < moment(customDate, "DD-MM-YYYY HH");
+              let customDate = moment().format("DD-MM-YYYY");
+              return current && current < moment(customDate, "DD-MM-YYYY");
             }}
-            disabledTime={disabledDateTime}
+            onChange={() => handleGetAvailableHourList()}
           />
         </Form.Item>
+        {availableHourList && availableHourList?.length > 0 ? (
+          <Form.Item
+            name="desiredHour"
+            required
+            label="Desired time"
+            initialValue={availableHourList[0]}
+          >
+            <Radio.Group
+              defaultValue={availableHourList[0]}
+              buttonStyle="solid"
+            >
+              {availableHourList.map((hour) => (
+                <Radio.Button value={hour}>{`${hour}:00`}</Radio.Button>
+              ))}
+            </Radio.Group>
+          </Form.Item>
+        ) : (
+          <Typography>No available time, please choose other day</Typography>
+        )}
         <div
           style={{
             display: "flex",

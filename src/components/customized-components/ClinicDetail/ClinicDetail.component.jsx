@@ -172,7 +172,7 @@ const ClinicDetailComponent = ({ clinicData, feedback }) => {
       </div>
       <div className="clinic-detail-page-feedback-container">
         <div style={{ fontSize: "2em", fontWeight: "bold" }}>Feedbacks</div>
-        <FeedbackPreviewComponent feedbacks={feedback?.content} />
+        <FeedbackPreviewComponent feedbacks={feedback?.content} style={{paddingBottom: 20}}/>
       </div>
     </>
   );

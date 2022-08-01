@@ -78,15 +78,11 @@ const BookingServiceFormComponent = ({
         </Row>
         <Row gutter={[40, 16]} justify="center">
           <Col xs={16} sm={8} md={8} lg={8}>
-            <Form.Item label="Date of birth" rules={[{ required: true }]}>
-              <DatePicker disabled />
-            </Form.Item>
-          </Col>
-          <Col xs={16} sm={8} md={8} lg={8}>
             <Form.Item name="phone" label="Phone" rules={[{ required: true }]}>
               <Input disabled placeholder={form.getFieldValue("phone")} />
             </Form.Item>
           </Col>
+          <Col xs={16} sm={8} md={8} lg={8}></Col>
         </Row>
         <Row gutter={[40, 4]} justify="center">
           <Col span={16}>
@@ -204,10 +200,10 @@ const ServiceCard = ({ serviceData }) => {
               {`Clinic: ${serviceData?.clinicName}`}
             </Typography.Title>
             <Descriptions>
-              <DescriptionsItem label="Service: " span={24}>
+              <DescriptionsItem label="Service " span={24}>
                 {serviceData?.serviceName}
               </DescriptionsItem>
-              <DescriptionsItem label="Price: " span={24}>
+              <DescriptionsItem label="Price " span={24}>
                 {serviceData?.servicePrice}
               </DescriptionsItem>
             </Descriptions>

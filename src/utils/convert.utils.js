@@ -50,10 +50,10 @@ export const getClinicOperatingTime = (clinicData, option) => {
 };
 
 export const getDisabledTime = (clinicData) => {
-  let start1 = clinicData?.startTimeShift1;
-  let end1 = clinicData?.endTimeShift1;
-  let start2 = clinicData?.startTimeShift2;
-  let end2 = clinicData?.endTimeShift2;
+  let start1 = clinicData?.startTimeShiftHour1;
+  let end1 = clinicData?.endTimeShiftHour1;
+  let start2 = clinicData?.startTimeShiftHour2;
+  let end2 = clinicData?.endTimeShiftHour2;
 
   let range1 = getTimeRange(0, start1);
   let range2 = getTimeRange(end1 + 1, start2);
